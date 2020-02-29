@@ -6,14 +6,19 @@ import { Route, Redirect } from 'react-router-dom'
 import AuthLayout from '../pages/_layouts/auth';
 import DashboardLayout from '../pages/_layouts/dashboard'
 
+import store from '../store'
+
 
 export default function RouteWrapper({
     component: Component,
     isPrivate,
-    ... rest
+    ...rest
 }){
-    const signed = false;
+
+    const { signed } = store.getState().auth;
     let Layout = null;
+
+   
 
     if(!signed && isPrivate){
         return <Redirect to="/Login"/>
@@ -46,11 +51,12 @@ export default function RouteWrapper({
 
 RouteWrapper.prototype = {
     isPrivate: PropTypes.bool,
+    teste: PropTypes.string,
     component: PropTypes.oneOfType([
        PropTypes.element, PropTypes.func 
     ]).isRequired
 };
 
-RouteWrapper.defaulProps = {
+RouteWrapper.defaultProps = {
     isPrivate: false,
 }
