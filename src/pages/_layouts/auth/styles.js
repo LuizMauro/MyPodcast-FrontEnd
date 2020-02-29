@@ -26,7 +26,7 @@ export const Content = styled.div`
             border-radius:5px;
             height: 44px;
             padding:0 15px;
-            color:#fff;
+            color:#000;
             margin:0 0 10px;
         }
 

@@ -1,17 +1,33 @@
-import React from 'react'
-
+import React, { useRef } from 'react'
+import { useDispatch}  from 'react-redux'
 import { Link } from 'react-router-dom';
+import { Form }  from '@unform/web'
+import * as Yup from 'yup';
 
-export default function index() {
+import { logarRequest } from '../../store/modules/auth/actions'
+
+import Input from '../../components/Input';
+
+function Login() {
+    const formRef = useRef(null);
+    const dispatch = useDispatch();
+
+
+   function handleSubmit({email, senha }){
+    dispatch(logarRequest(email, senha))
+   }
+
     return (
        <>
-            <form>
-                <input type="email" placeholder="Seu e-mail" />
-                <input type="password"  placeholder="Sua senha" />
-
+            <Form ref={formRef}  onSubmit={handleSubmit}>
+                <Input name="email" type="email" placeholder="E-mail"  />
+                <Input name="senha" type="password" placeholder="Senha"  />
                 <button type="submit">Entrar</button>
+
                 <Link to="/cadastro">Criar conta gratuita</Link>
-            </form>
+            </Form>
        </>
     )
 }
+
+export default Login;
