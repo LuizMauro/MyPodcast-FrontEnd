@@ -1,12 +1,10 @@
 import React from 'react'
 import { Form }  from '@unform/web'
-import * as Yup from 'yup'
+
 
 import Input from '../../components/Input'
 
-const schema = Yup.object().shape({
-    
-});
+
 
 export default function index() {
 

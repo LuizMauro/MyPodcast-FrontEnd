@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { useDispatch}  from 'react-redux'
 import { Link } from 'react-router-dom';
 import { Form }  from '@unform/web'
-import * as Yup from 'yup';
+
 
 import { logarRequest } from '../../store/modules/auth/actions'
 
