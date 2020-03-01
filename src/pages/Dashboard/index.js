@@ -1,9 +1,20 @@
 import React from 'react'
+import { useDispatch }  from 'react-redux';
+import { signOut } from '../../store/modules/auth/actions'
 
-export default function index() {
+export default function Dashboard() {
+    const dispatch = useDispatch();
+
+    function handleSignOut(){
+        dispatch(signOut())
+    }
+
+
     return (
         <div>
-            <h1>Dashboard</h1>  
+            <h1>ADM</h1>  
+
+            <button type='button' onClick={handleSignOut}>Sair</button>
         </div>
     )
 }

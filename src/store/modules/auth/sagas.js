@@ -15,17 +15,24 @@ export function* logar({ payload }){
 
     const { token, user} = response.data;
 
-    if(!(user.tus_id === 4)){
-        console.tron.error('Sem permissao - ADM');
-        return;
-    }
-
     yield put(logarSuccess(token, user));
 
-    history.push('/dashboard');
+    if((user.tus_id === 4)){
+        history.push('/adm/dashboard');
+    }
+
+    if((user.tus_id === 3)){
+        history.push('/mod/dashboard');
+    }
+
 
 }
 
+export function signOut(){
+    history.push('/');
+}
+
 export default all([
-    takeLatest('@auth/SIGN_IN_REQUEST', logar)
+    takeLatest('@auth/SIGN_IN_REQUEST', logar),
+    takeLatest('@auth/SIGN_OUT', signOut)
 ])
