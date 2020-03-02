@@ -5,6 +5,7 @@ import DashboardLayout from '../pages/_layouts/dashboard';
 
 import { store } from '../store';
 
+
 export default function PrivateRoutePOD({
 	component: Component,
 	path,
@@ -36,6 +37,8 @@ export default function PrivateRoutePOD({
 	}
 }
 
+
 PrivateRoutePOD.prototype = {
 	component: PropTypes.func.isRequired
 };
+
