@@ -25,6 +25,10 @@ export function* logar({ payload }){
         history.push('/mod/dashboard');
     }
 
+    if((user.tus_id === 2)){
+        history.push('/podcaster/dashboard');
+    }
+
 
 }
 

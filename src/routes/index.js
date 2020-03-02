@@ -4,13 +4,17 @@ import { Switch, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
-import SEGUNDATELAADM from '../pages/TESTETELA2';
 
 import Dashboard from '../pages/Dashboard';
+import SEGUNDATELAADM from '../pages/TESTETELA2';
+
 import DashboardMod from '../pages/DashboardMod';
+
+import DashboardPodcaster from '../pages/DashboardPodcaster';
 
 import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
+import PrivateRoutePod from './PrivateRoutePod';
 
 export default function Routes() {
 	return (
@@ -23,6 +27,12 @@ export default function Routes() {
 
 			<PrivateRouteADM path="/adm/dashboard" exact component={Dashboard} />
 			<PrivateRouteADM path="/adm/teste" exact component={SEGUNDATELAADM} />
+
+			<PrivateRoutePod
+				path="/podcaster/dashboard"
+				exact
+				component={DashboardPodcaster}
+			/>
 
 			<Route path="/" component={() => <h1>404</h1>} />
 		</Switch>
