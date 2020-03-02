@@ -1,15 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { Form }  from '@unform/web'
-
-
 import Input from '../../components/Input'
 
+import { signUpRequest }  from '../../store/modules/auth/actions';
 
 
-export default function index() {
+export default function Cadastro() {
+    const dispatch =  useDispatch();
 
-    function handleSubmit(data){
-        console.tron.log(data);
+    function handleSubmit({nome, senha, email, cpf, tipoUser}){
+        dispatch(signUpRequest(nome, senha, email, cpf, tipoUser));
     }
 
     return (
@@ -19,7 +20,7 @@ export default function index() {
                 <Input name="email" type="email" placeholder="Seu e-mail" />
                 <Input name="senha" type="password" placeholder="Sua senha " />
                 <Input name="cpf" type="text" placeholder="CPF" />
-                <Input name="tipo usuario" type="text" placeholder="teste tus_id"/>
+                <Input name="tipoUser" type="text" placeholder="teste tus_id"/>
 	
                 <button type="submit">Cadastrar</button>
             </Form>

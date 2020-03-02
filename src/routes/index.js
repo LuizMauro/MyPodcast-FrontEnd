@@ -5,8 +5,13 @@ import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
 
+
 import Dashboard from '../pages/Dashboard';
-import SEGUNDATELAADM from '../pages/TESTETELA2';
+
+
+
+import Dashboard from '../pages/Dashboard';
+
 
 import DashboardMod from '../pages/DashboardMod';
 
@@ -14,7 +19,9 @@ import DashboardPodcaster from '../pages/DashboardPodcaster';
 
 import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
-import PrivateRoutePod from './PrivateRoutePod';
+import PrivateRoutePOD from './PrivateRoutePod';
+
+
 
 export default function Routes() {
 	return (
@@ -26,7 +33,12 @@ export default function Routes() {
 			<PrivateRouteMOD path="/mod/dashboard" exact component={DashboardMod} />
 
 			<PrivateRouteADM path="/adm/dashboard" exact component={Dashboard} />
-			<PrivateRouteADM path="/adm/teste" exact component={SEGUNDATELAADM} />
+	
+			<PrivateRoutePOD
+				path="/podcaster/dashboard"
+				exact
+				component={DashboardPodcaster}
+			/>
 
 			<PrivateRoutePod
 				path="/podcaster/dashboard"

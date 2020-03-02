@@ -18,8 +18,19 @@ export function logarFailure(){
     };
 }
 
+
+export function signUpRequest(nome, senha, email, cpf, tus_id){
+    return {
+        type: '@auth/SIGN_UP_REQUEST',
+        payload:{ nome, senha, email, cpf, tus_id }
+    }
+}
+
+
 export function signOut(){
     return{
         type: '@auth/SIGN_OUT',
     }
 }
+
+
