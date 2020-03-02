@@ -1,22 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import DashboardLayout from '../pages/_layouts/dashboard';
 
-import {store} from '../store';
+import { store } from '../store';
 
-const PrivateRouteADM = ({ component: Component,path ,...rest})=>(
-    <Route
-        {...rest}
-            render={props => (((store.getState().auth) && (store.getState().user.profile.tus_descricao === "Administrador") && (path.includes("/adm"))))? (
-                <Component { ...props}/>
-            ):(
-                <h1>Area restrita </h1>
-            )}
-    />
-);
+export default function PrivateRouteADM({
+	component: Component,
+	path,
+	...rest
+}) {
+	const { signed } = store.getState().auth;
+	let Layout = null;
 
-PrivateRouteADM.prototype = {
-    component: PropTypes.func.isRequired,
+	if (signed) {
+		Layout = DashboardLayout;
+		return (
+			<Route
+				{...rest}
+				render={(props) =>
+					store.getState().auth &&
+					store.getState().user.profile.tus_descricao === 'Administrador' &&
+					path.includes('/adm') ? (
+						<Layout>
+							<Component {...props} />
+						</Layout>
+					) : (
+						<h1>Area restrita </h1>
+					)
+				}
+			/>
+		);
+	} else {
+		return <Redirect to="/Login" />;
+	}
 }
 
-export default PrivateRouteADM;
+PrivateRouteADM.prototype = {
+	component: PropTypes.func.isRequired
+};

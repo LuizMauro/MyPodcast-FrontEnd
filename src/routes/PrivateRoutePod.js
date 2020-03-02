@@ -5,13 +5,13 @@ import DashboardLayout from '../pages/_layouts/dashboard';
 
 import { store } from '../store';
 
-export default function PrivateRouteMOD({
+export default function PrivateRoutePOD({
 	component: Component,
 	path,
 	...rest
 }) {
-    const { signed } = store.getState().auth;
-    let Layout = null;
+	const { signed } = store.getState().auth;
+	let Layout = null;
 
 	if (signed) {
 		Layout = DashboardLayout;
@@ -20,8 +20,8 @@ export default function PrivateRouteMOD({
 				{...rest}
 				render={(props) =>
 					store.getState().auth &&
-					store.getState().user.profile.tus_descricao === 'Moderador' &&
-					path.includes('/mod') ? (
+					store.getState().user.profile.tus_descricao === 'Podcaster' &&
+					path.includes('/podcaster') ? (
 						<Layout>
 							<Component {...props} />
 						</Layout>
@@ -36,6 +36,6 @@ export default function PrivateRouteMOD({
 	}
 }
 
-PrivateRouteMOD.prototype = {
+PrivateRoutePOD.prototype = {
 	component: PropTypes.func.isRequired
 };
