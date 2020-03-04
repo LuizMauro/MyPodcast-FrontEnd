@@ -8,11 +8,6 @@ import Login from '../pages/Login';
 
 import Dashboard from '../pages/Dashboard';
 
-
-
-import Dashboard from '../pages/Dashboard';
-
-
 import DashboardMod from '../pages/DashboardMod';
 
 import DashboardPodcaster from '../pages/DashboardPodcaster';
@@ -35,12 +30,6 @@ export default function Routes() {
 			<PrivateRouteADM path="/adm/dashboard" exact component={Dashboard} />
 	
 			<PrivateRoutePOD
-				path="/podcaster/dashboard"
-				exact
-				component={DashboardPodcaster}
-			/>
-
-			<PrivateRoutePod
 				path="/podcaster/dashboard"
 				exact
 				component={DashboardPodcaster}
