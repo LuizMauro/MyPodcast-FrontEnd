@@ -1,11 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Home from '../pages/Home';
+import Home from '../pages/examples/Teste';
 import Cadastro from '../pages/Cadastro';
 
 
 import DashboardPodcaster from '../pages/DashboardPodcaster';
+import DashboardMod from '../pages/DashboardMod';
+import Dashboard from '../pages/Dashboard';
+
+
 import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
 import PrivateRoutePOD from './PrivateRoutePod';
