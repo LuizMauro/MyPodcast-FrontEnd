@@ -5,13 +5,7 @@ import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 
 
-
-import Dashboard from '../pages/Dashboard';
-
-import DashboardMod from '../pages/DashboardMod';
-
 import DashboardPodcaster from '../pages/DashboardPodcaster';
-
 import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
 import PrivateRoutePOD from './PrivateRoutePod';
