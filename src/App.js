@@ -13,6 +13,8 @@ import { store, persistor } from './store'
 
 import GlobalStyle from './styles/global'
 
+
+
 function App() {
   return (
     <Provider store={store}>

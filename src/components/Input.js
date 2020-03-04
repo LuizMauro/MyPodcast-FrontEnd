@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from '@unform/core';
 
-export default function Input({ name, ...rest }) {
+
+import {
+  FormGroup,
+  Input
+} from "reactstrap";
+
+export default function InputTest({ name, className , ...rest }) {
   const inputRef = useRef(null);
 
   const { fieldName, defaultValue = '', registerField, placeholder = '' ,error } = useField(name);
@@ -17,8 +23,9 @@ export default function Input({ name, ...rest }) {
 
   return(
       <div>
-         <input ref={inputRef} placeholder={placeholder} defaultValue={defaultValue} {...rest} />
-         { error && <span style={{color:'red'}}> {error} </span> }
+        <FormGroup className= {error ? "has-error" : "has-success"}>
+          <input className={className}  ref={inputRef}  placeholder={placeholder} defaultValue={defaultValue} {...rest}  />
+        </FormGroup> 
       </div>
   );
 }

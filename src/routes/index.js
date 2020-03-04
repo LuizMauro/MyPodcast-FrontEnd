@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
-import Login from '../pages/Login';
+
 
 
 import Dashboard from '../pages/Dashboard';
@@ -16,6 +16,16 @@ import DashboardPodcaster from '../pages/DashboardPodcaster';
 import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
 import PrivateRoutePOD from './PrivateRoutePod';
+
+import Login from '../pages/examples/Login'
+
+
+
+import "../assets/css/argon-design-system-react.css";
+import "../assets/css/custom.css";
+
+
+
 
 export default function Routes() {
 	return (
