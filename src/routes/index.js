@@ -6,6 +6,7 @@ import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
 import PrivateRoutePOD from './PrivateRoutePod';
 
+
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Dashboard from '../pages/Dashboard';
@@ -16,7 +17,6 @@ import Login from '../pages/examples/Login'
 
 import "../assets/css/argon-design-system-react.css";
 import "../assets/css/custom.css";
-
 
 
 export default function Routes() {

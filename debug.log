@@ -298,6 +298,7 @@
 [0304/145017.300:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0304/145017.300:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0304/145017.300:ERROR:crash_report_database_win.cc(469)] failed to stat report
+<<<<<<< HEAD
 [0305/105856.775:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0305/105856.775:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0305/105856.775:ERROR:crash_report_database_win.cc(469)] failed to stat report
@@ -313,3 +314,20 @@
 [0305/105856.776:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0305/105856.776:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0305/105856.776:ERROR:crash_report_database_win.cc(469)] failed to stat report
+=======
+[0304/162714.589:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.590:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.591:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.591:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.591:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0304/162714.591:ERROR:crash_report_database_win.cc(469)] failed to stat report
+>>>>>>> master
