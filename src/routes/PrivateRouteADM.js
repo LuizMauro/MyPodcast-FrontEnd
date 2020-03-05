@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import DashboardLayout from '../pages/_layouts/dashboard';
+import ErrorPage from '../pages/Error'
 
 import { store } from '../store';
 
@@ -26,7 +27,7 @@ export default function PrivateRouteADM({
 							<Component {...props} />
 						</Layout>
 					) : (
-						<h1>Area restrita </h1>
+						<ErrorPage/>
 					)
 				}
 			/>

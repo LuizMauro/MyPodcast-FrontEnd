@@ -64,3 +64,47 @@
     border-color: #30b993;
     box-shadow: 6px 6px 30px rgba(0,0,0,0.2) !important;
 }
+
+.buttonActive{
+    width: 100%;
+    height: 100%;
+    background: rgb(27, 253, 190) !important;
+    border: none;
+    padding: 10px 0px;
+    color: rgb(35, 38, 89) !important;
+}
+
+.has-success .form-control {
+    color: #fff;
+}
+
+.form-control.is-invalid {
+   border: none;
+    padding-right: calc(1.5em + 1.25rem);
+    background-size: calc(0.75em + 0.625rem) calc(0.75em + 0.625rem);
+    color: #FE2946;
+}
+.has-danger:after {
+    content: "" !important;
+    background-color: #FE2946;
+}
+.has-success:after {
+    content: "" !important;
+    background: rgb(27, 253, 190) !important;
+}
+
+.Toastify__toast{
+  border-radius: 5px !important;
+}
+
+
+.Toastify__toast--error {
+    background: #FE2946 !important; 
+    
+}
+
+.Toastify__toast-body {
+    margin: auto 0;
+    flex: 1 1;
+  font-weight: bold;
+}

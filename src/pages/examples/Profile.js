@@ -21,8 +21,8 @@ import React from "react";
 import { Button, Card, Container, Row, Col } from "reactstrap";
 
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
+
+
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -33,7 +33,7 @@ class Profile extends React.Component {
   render() {
     return (
       <>
-        <DemoNavbar />
+     
         <main className="profile-page" ref="main">
           <section className="section-profile-cover section-shaped my-0">
             {/* Circles background */}
@@ -71,11 +71,7 @@ class Profile extends React.Component {
                     <Col className="order-lg-2" lg="3">
                       <div className="card-profile-image">
                         <a href="#pablo" onClick={e => e.preventDefault()}>
-                          <img
-                            alt="..."
-                            className="rounded-circle"
-                            src={require("assets/img/theme/team-4-800x800.jpg")}
-                          />
+                         
                         </a>
                       </div>
                     </Col>
@@ -160,7 +156,7 @@ class Profile extends React.Component {
             </Container>
           </section>
         </main>
-        <SimpleFooter />
+     
       </>
     );
   }

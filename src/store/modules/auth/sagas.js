@@ -60,7 +60,7 @@ export function* signUp({payload}){
             cpf, 
             tus_id
         });
-
+        console.tron.log("CHEGOU AQUi")
         history.push('/Login');
     }catch(err){
         console.tron.log(err);
