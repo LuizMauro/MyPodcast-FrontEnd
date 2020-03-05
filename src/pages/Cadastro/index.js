@@ -27,7 +27,6 @@ export default function Cadastro() {
 
 	function handleSubmit({ nome, senha, email, cpf }) {
 		if (tusId != '') {
-			console.log(tusId);
 			dispatch(signUpRequest(nome, senha, email, cpf, tusId));
 		}
 	}
