@@ -22,9 +22,16 @@ export function* logar({ payload }){
 
         yield put(logarSuccess(token, user));
 
+
         if((user.tus_id === 4)){
             history.push('/adm/dashboard');
         }
+
+        if((user.tus_id === 2)){
+            history.push('/podcaster/dashboard');
+        }
+
+
 
         if((user.tus_id === 3)){
             history.push('/mod/dashboard');
