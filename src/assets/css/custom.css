@@ -107,4 +107,13 @@
     margin: auto 0;
     flex: 1 1;
   font-weight: bold;
+.border-secundary{
+    border-color: #1BFDBE;
+}
+
+.hr-primary{
+    border:0;
+    height:1px;
+    background-color:#30b993;
+    margin: 10px 0 20px;
 }
