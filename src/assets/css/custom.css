@@ -1,119 +1,118 @@
-@media (max-width: 991.98px)
-{
-.navbar-nav .nav-link {
-    padding: .625rem 0;
-    color: #fff !important;
-}
-.navbar-collapse .navbar-toggler span {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    border-radius: 2px;
-    opacity: 1;
-    background: #fff;
-}
+@media (max-width: 991.98px) {
+	.navbar-nav .nav-link {
+		padding: 0.625rem 0;
+		color: #fff !important;
+	}
 
-.navbar-collapse .collapse-brand img {
-    height: 100px;
-    box-shadow: 6px 6px 30px rgba(0,0,0,0.5) !important;
-}
+	.navbar-collapse .navbar-toggler span {
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 2px;
+		border-radius: 2px;
+		opacity: 1;
+		background: #fff;
+	}
+
+	.navbar-collapse .collapse-brand img {
+		height: 100px;
+		box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.5) !important;
+	}
 }
 
 .navbar-brand {
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: .875rem;
-    letter-spacing: .05px;
-    box-shadow: 6px 6px 30px rgba(0,0,0,0.5) !important;
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.875rem;
+	letter-spacing: 0.05px;
+	box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
 .bg-white {
-    background-color: #151734!important;
+	background-color: #151734 !important;
 }
 .bg-secondary {
-    background-color: #151734!important;
+	background-color: #151734 !important;
 }
 
 .has-success .form-control {
-    background-color: #232659;
-    box-shadow: 6px 6px 30px rgba(0,0,0,0.2) !important;
-    border: none !important;
+	background-color: #232659;
+	box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.2) !important;
+	border: none !important;
 }
 .has-danger .form-control {
-    background-color: #232659;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.2) !important;
+	background-color: #232659;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
-.shadow{
-    box-shadow: 6px 6px 30px rgba(0,0,0,0.2) !important;
+.shadow {
+	box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
 .btn-primary {
-    color: #151734;
-    background-color: #1BFDBE;
-    border-color: #1BFDBE;
-    box-shadow: 6px 6px 30px rgba(0,0,0,0.2) !important;
-
+	color: #151734;
+	background-color: #1bfdbe;
+	border-color: #1bfdbe;
+	box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
 .btn-primary:hover {
-    color: #151734;
-    background-color: #30b993;
-    border-color: #30b993;
-    box-shadow: 6px 6px 30px rgba(0,0,0,0.2) !important;
+	color: #151734;
+	background-color: #30b993;
+	border-color: #30b993;
+	box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
-.buttonActive{
-    width: 100%;
-    height: 100%;
-    background: rgb(27, 253, 190) !important;
-    border: none;
-    padding: 10px 0px;
-    color: rgb(35, 38, 89) !important;
+.buttonActive {
+	width: 100%;
+	height: 100%;
+	background: rgb(27, 253, 190) !important;
+	border: none;
+	padding: 10px 0px;
+	color: rgb(35, 38, 89) !important;
 }
 
 .has-success .form-control {
-    color: #fff;
+	color: #fff;
 }
 
 .form-control.is-invalid {
-   border: none;
-    padding-right: calc(1.5em + 1.25rem);
-    background-size: calc(0.75em + 0.625rem) calc(0.75em + 0.625rem);
-    color: #FE2946;
+	border: none;
+	padding-right: calc(1.5em + 1.25rem);
+	background-size: calc(0.75em + 0.625rem) calc(0.75em + 0.625rem);
+	color: #fe2946;
 }
 .has-danger:after {
-    content: "" !important;
-    background-color: #FE2946;
+	content: '' !important;
+	background-color: #fe2946;
 }
 .has-success:after {
-    content: "" !important;
-    background: rgb(27, 253, 190) !important;
+	content: '' !important;
+	background: rgb(27, 253, 190) !important;
 }
 
-.Toastify__toast{
-  border-radius: 5px !important;
+.Toastify__toast {
+	border-radius: 5px !important;
 }
-
 
 .Toastify__toast--error {
-    background: #FE2946 !important; 
-    
+	background: #fe2946 !important;
 }
 
 .Toastify__toast-body {
-    margin: auto 0;
-    flex: 1 1;
-  font-weight: bold;
-.border-secundary{
-    border-color: #1BFDBE;
+	margin: auto 0;
+	flex: 1 1;
+	font-weight: bold;
 }
 
-.hr-primary{
-    border:0;
-    height:1px;
-    background-color:#30b993;
-    margin: 10px 0 20px;
+.border-secundary {
+	border-color: #1bfdbe;
+}
+
+.hr-primary {
+	border: 0;
+	height: 1px;
+	background-color: #30b993;
+	margin: 10px 0 20px;
 }

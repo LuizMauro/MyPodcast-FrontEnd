@@ -60,15 +60,8 @@ export default function Cadastro() {
 
 				formRef.current.setErrors(errorMessages);
 
-			}
-	function handleSubmit({ nome, senha, email, cpf }) {
-		if (tusId != '') {
-			dispatch(signUpRequest(nome, senha, email, cpf, tusId));
+			}	
 		}
-	
-	
-
-		
 	}
 
 	function setProfile(id) {
@@ -191,3 +184,5 @@ export default function Cadastro() {
 		</>
 	);
 }
+
+
