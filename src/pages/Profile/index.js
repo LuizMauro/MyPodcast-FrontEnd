@@ -22,6 +22,8 @@ export default function Cadastro() {
 	const dispatch = useDispatch();
 	const profile = useSelector((state) => state.user.profile);
 	const [podcast, setPodcast] = useState([]);
+	const [editMode, setEditMode] = useState(false);
+
 	console.log(profile);
 
 	useEffect(() => {
@@ -30,7 +32,6 @@ export default function Cadastro() {
 
 	async function exibirPodcasts() {
 		const response = await api.get('/profile');
-		console.log(response.data);
 		setPodcast(response.data);
 	}
 
@@ -46,7 +47,13 @@ export default function Cadastro() {
 						<Col lg="10">
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
-									<Form initialData={profile} onSubmit={handleSubmit}>
+									<Form
+										initialData={profile}
+										onSubmit={handleSubmit}
+										style={
+											editMode ? { display: 'block' } : { display: 'none' }
+										}
+									>
 										<Input
 											className="has-success form-control"
 											name="usu_nome"
@@ -82,11 +89,37 @@ export default function Cadastro() {
 										/>
 
 										<div className="text-center">
-											<Button type="submit" className="my-2" color="primary">
-												Editar Perfil
+											<Button
+												type="submit"
+												className="my-2"
+												color="primary"
+												onClick={() => setEditMode(false)}
+											>
+												Salvar alterações
 											</Button>
 										</div>
 									</Form>
+									<div>
+										<div
+											className="text-center"
+											style={
+												editMode ? { display: 'none' } : { display: 'block' }
+											}
+										>
+											<p>Nome: {profile.usu_nome}</p>
+											<p>E-mail: {profile.usu_email}</p>
+											<p>CPF: {profile.usu_cpf}</p>
+											<Button
+												type="submit"
+												className="my-2"
+												color="primary"
+												onClick={() => setEditMode(true)}
+											>
+												Editar Perfil
+											</Button>
+										</div>
+									</div>
+
 									<Row className="mt-3">
 										<Col sm="4">
 											<Card
