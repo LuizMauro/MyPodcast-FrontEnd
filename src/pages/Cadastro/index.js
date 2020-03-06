@@ -7,6 +7,7 @@ import { IoMdMicrophone, IoMdHeadset } from 'react-icons/io';
 import { signUpRequest } from '../../store/modules/auth/actions';
 import Input from '../../components/Input';
 
+import { cpfMask } from '../../utils/Mask'
 import {
 	Button,
 	Card,
@@ -17,7 +18,6 @@ import {
 } from 'reactstrap';
 
 export default function Cadastro() {
-
 	const formRef = useRef(null);
 	const dispatch = useDispatch();
 
@@ -25,6 +25,8 @@ export default function Cadastro() {
 	const [buttonPodCaster, setButtonPodCaster] = useState('');
 	const [buttonOuvinte, setButtonOuvinte] = useState('');
 	const [errorProvider, setErrorProvider] = useState('');
+
+	const [cpfMaskValue, setValueMask] = useState('');
 	
 	async function handleSubmit({ nome, senha, email, cpf }) {
 		try{
@@ -59,10 +61,10 @@ export default function Cadastro() {
 				console.log(errorMessages)
 
 				formRef.current.setErrors(errorMessages);
-
-			}	
-		}
+			}
+		}	
 	}
+
 
 	function setProfile(id) {
 		if(id === 1){
@@ -75,6 +77,13 @@ export default function Cadastro() {
 		setErrorProvider("")
 		setTusId(id);	
 	}
+
+	function setMaskCPF(e){
+		setValueMask(cpfMask(e.target.value))
+	
+	}
+
+
 
 	return (
 		<>
@@ -109,7 +118,7 @@ export default function Cadastro() {
 													style={{
 														width: '100%',
 														height: '100%',
-														background: '#232659',
+														background: '#232669',
 														border: 'none',
 														padding: '10px 0 10px 0',
 														color: '#1BFDBE'
@@ -146,6 +155,8 @@ export default function Cadastro() {
 											name="cpf"
 											type="text"
 											placeholder="CPF"
+											value={cpfMaskValue}
+											onChange={setMaskCPF}
 										/>
 										{/* <Input className="has-success form-control" name="tipoUser" type="text" placeholder="teste tus_id"/>*/}
 
@@ -184,5 +195,3 @@ export default function Cadastro() {
 		</>
 	);
 }
-
-

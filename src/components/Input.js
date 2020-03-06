@@ -6,7 +6,7 @@ import {
   FormGroup
 } from "reactstrap";
 
-export default function InputTest({ name, className , ...rest }) {
+export default function Input({ name, className , ...rest }) {
   const inputRef = useRef(null);
 
   const { fieldName, defaultValue = '', registerField, placeholder = '' , error } = useField(name);
@@ -23,7 +23,7 @@ export default function InputTest({ name, className , ...rest }) {
   return(
       <div>
         <FormGroup className= {error ? "has-danger form-group" : "has-success"}>
-            <input className={error  ? "is-invalid form-control" : "has-success form-control"}  ref={inputRef}  placeholder={placeholder} defaultValue={defaultValue} {...rest}   />
+            <input className={error  ? "is-invalid form-control" : "has-success form-control"}  ref={inputRef}  placeholder={placeholder} {...rest}   />
             {error &&  <span style={{color:"#FE2946", fontSize:12}}> {error} </span> }
         </FormGroup> 
       </div>

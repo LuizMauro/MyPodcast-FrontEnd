@@ -25,23 +25,23 @@ export function* logar({ payload }) {
 			history.push('/adm/dashboard');
 		}
 
-		if (user.tus_id === 2) {
-			history.push('/podcaster/dashboard');
-		}
+        if((user.tus_id === 2)){
+            history.push('/podcaster/dashboard');
+        }
 
-		if (user.tus_id === 3) {
-			history.push('/mod/dashboard');
-		}
+        if((user.tus_id === 3)){
+            history.push('/mod/dashboard');
+        }
+        
+        if((user.tus_id === 4)){
+            history.push('/adm/dashboard');
+        }
 
-		if (user.tus_id === 2) {
-			history.push('/podcaster/dashboard');
-		}
-	} catch (err) {
-		toast.error('Falha na autenticaçao, verifique seus dados');
-		yield put(logarFailure());
-	}
+    }catch(err){
+        toast.error('Falha na autenticaçao, verifique seus dados');
+        yield put(logarFailure())
+    }
 }
-
 export function signOut() {
 	history.push('/');
 }

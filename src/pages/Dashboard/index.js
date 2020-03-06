@@ -4,6 +4,31 @@ import { signOut } from '../../store/modules/auth/actions'
 
 import api from '../../services/api'
 
+// nodejs library that concatenates classes
+//import classNames from "classnames";
+// react plugin used to create charts
+//import { Line, Bar } from "react-chartjs-2";
+
+// reactstrap components
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  Label,
+  FormGroup,
+  Input,
+  Table,
+  Row,
+  Col,
+  UncontrolledTooltip
+} from "reactstrap";
 
 
 export default function Dashboard() {
@@ -20,6 +45,9 @@ export default function Dashboard() {
         <div>
             <h1>ADM</h1>  
 
+              
+     
+        
             <button type='button' onClick={handleSignOut}>Sair</button>
         </div>
     )
