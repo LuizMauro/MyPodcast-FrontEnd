@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
 
@@ -12,14 +11,8 @@ import { updateProfileRequest } from '../../store/modules/user/actions';
 import {
 	Button,
 	Card,
-	CardHeader,
 	CardBody,
 	CardTitle,
-	CardText,
-	FormGroup,
-	InputGroupAddon,
-	InputGroupText,
-	InputGroup,
 	Container,
 	Row,
 	Col
