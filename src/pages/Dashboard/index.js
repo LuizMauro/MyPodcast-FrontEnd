@@ -5,9 +5,9 @@ import { signOut } from '../../store/modules/auth/actions'
 import api from '../../services/api'
 
 // nodejs library that concatenates classes
-import classNames from "classnames";
+//import classNames from "classnames";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+//import { Line, Bar } from "react-chartjs-2";
 
 // reactstrap components
 import {
