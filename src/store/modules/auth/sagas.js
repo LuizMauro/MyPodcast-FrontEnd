@@ -33,9 +33,6 @@ export function* logar({ payload }) {
             history.push('/mod/dashboard');
         }
         
-        if((user.tus_id === 4)){
-            history.push('/adm/dashboard');
-        }
 
     }catch(err){
         toast.error('Falha na autenticaçao, verifique seus dados');
