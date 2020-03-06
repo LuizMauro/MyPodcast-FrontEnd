@@ -109,7 +109,7 @@ export default function Cadastro() {
 													style={{
 														width: '100%',
 														height: '100%',
-														background: '#232659',
+														background: '#232669',
 														border: 'none',
 														padding: '10px 0 10px 0',
 														color: '#1BFDBE'
