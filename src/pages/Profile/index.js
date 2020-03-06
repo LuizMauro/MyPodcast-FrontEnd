@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
 
@@ -12,24 +11,18 @@ import { updateProfileRequest } from '../../store/modules/user/actions';
 import {
 	Button,
 	Card,
-	CardHeader,
 	CardBody,
 	CardTitle,
-	CardText,
-	FormGroup,
-	InputGroupAddon,
-	InputGroupText,
-	InputGroup,
 	Container,
 	Row,
 	Col
 } from 'reactstrap';
 
-export default function Cadastro() {
+export default function Profile() {
+	const formRef = useRef(null);
 	const dispatch = useDispatch();
 	const profile = useSelector((state) => state.user.profile);
 	const [podcast, setPodcast] = useState([]);
-	const [editMode, setEditMode] = useState(false);
 	console.log(profile);
 
 	useEffect(() => {
@@ -53,13 +46,7 @@ export default function Cadastro() {
 						<Col lg="10">
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
-									<Form
-										initialData={profile}
-										onSubmit={handleSubmit}
-										style={
-											!editMode ? { display: 'none' } : { display: 'default' }
-										}
-									>
+									<Form ref={formRef} initialData={profile} onSubmit={handleSubmit}>
 										<Input
 											className="has-success form-control"
 											name="usu_nome"
@@ -100,27 +87,6 @@ export default function Cadastro() {
 											</Button>
 										</div>
 									</Form>
-
-									<div
-										style={
-											editMode ? { display: 'none' } : { display: 'default' }
-										}
-									>
-										<p>Nome de Usuário: {profile.usu_nome}</p>
-										<p>E-mail: {profile.usu_email} </p>
-										<p>CPF: {profile.usu_cpf}</p>
-
-										<div className="text-center">
-											<Button
-												className="my-2"
-												color="primary"
-												onClick={() => setEditMode(true)}
-											>
-												Editar Perfil
-											</Button>
-										</div>
-									</div>
-
 									<Row className="mt-3">
 										<Col sm="4">
 											<Card
@@ -179,7 +145,7 @@ export default function Cadastro() {
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
-																pod.fbk_status === 2 &&
+																pod.fbk_status == 2 &&
 																pod.pod_nome}
 														</li>
 													))}
