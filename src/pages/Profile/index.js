@@ -27,6 +27,7 @@ export default function Cadastro() {
 	const formRef = useRef(null);
 	const dispatch = useDispatch();
 	const profile = useSelector((state) => state.user.profile);
+	console.log(profile);
 
 	function handleSubmit(data) {
 		console.tron.log(data);
@@ -42,22 +43,20 @@ export default function Cadastro() {
 						<Col lg="10">
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
-									<Form
-										ref={formRef}
-										initialData={profile}
-										onSubmit={handleSubmit}
-									>
+									<Form initialData={profile} onSubmit={handleSubmit}>
 										<Input
 											className="has-success form-control"
 											name="usu_nome"
 											type="text"
 											placeholder="Nome"
+											required
 										/>
 										<Input
 											className="has-success form-control"
 											name="usu_email"
 											type="email"
 											placeholder="Seu e-mail"
+											required
 										/>
 										<hr className="hr-primary" />
 										<Input
