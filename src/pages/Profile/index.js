@@ -123,7 +123,7 @@ export default function Cadastro() {
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
-																pod.fbk_status === 1 &&
+																pod.fbk_status == 1 &&
 																pod.pod_nome}
 														</li>
 													))}
@@ -145,7 +145,7 @@ export default function Cadastro() {
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
-																pod.fbk_status === 2 &&
+																pod.fbk_status == 2 &&
 																pod.pod_nome}
 														</li>
 													))}
