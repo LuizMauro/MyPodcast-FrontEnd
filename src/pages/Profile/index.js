@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
 
@@ -11,15 +12,20 @@ import { updateProfileRequest } from '../../store/modules/user/actions';
 import {
 	Button,
 	Card,
+	CardHeader,
 	CardBody,
 	CardTitle,
+	CardText,
+	FormGroup,
+	InputGroupAddon,
+	InputGroupText,
+	InputGroup,
 	Container,
 	Row,
 	Col
 } from 'reactstrap';
 
-export default function Profile() {
-	const formRef = useRef(null);
+export default function Cadastro() {
 	const dispatch = useDispatch();
 	const profile = useSelector((state) => state.user.profile);
 	const [podcast, setPodcast] = useState([]);
@@ -31,6 +37,7 @@ export default function Profile() {
 
 	async function exibirPodcasts() {
 		const response = await api.get('/profile');
+		console.log(response.data);
 		setPodcast(response.data);
 	}
 
@@ -46,7 +53,7 @@ export default function Profile() {
 						<Col lg="10">
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
-									<Form ref={formRef} initialData={profile} onSubmit={handleSubmit}>
+									<Form initialData={profile} onSubmit={handleSubmit}>
 										<Input
 											className="has-success form-control"
 											name="usu_nome"
@@ -83,7 +90,7 @@ export default function Profile() {
 
 										<div className="text-center">
 											<Button type="submit" className="my-2" color="primary">
-												Salvar
+												Editar Perfil
 											</Button>
 										</div>
 									</Form>
@@ -145,7 +152,7 @@ export default function Profile() {
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
-																pod.fbk_status == 2 &&
+																pod.fbk_status === 2 &&
 																pod.pod_nome}
 														</li>
 													))}
