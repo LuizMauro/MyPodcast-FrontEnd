@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
+
+import api from '../../services/api';
 
 import { useSelector } from 'react-redux';
 import { updateProfileRequest } from '../../store/modules/user/actions';
@@ -10,27 +11,31 @@ import { updateProfileRequest } from '../../store/modules/user/actions';
 import {
 	Button,
 	Card,
-	CardHeader,
 	CardBody,
 	CardTitle,
-	CardText,
-	FormGroup,
-	InputGroupAddon,
-	InputGroupText,
-	InputGroup,
 	Container,
 	Row,
 	Col
 } from 'reactstrap';
 
 export default function Cadastro() {
-	const formRef = useRef(null);
 	const dispatch = useDispatch();
 	const profile = useSelector((state) => state.user.profile);
+	const [podcast, setPodcast] = useState([]);
+	const [editMode, setEditMode] = useState(false);
+
+	console.log(profile);
+
+	useEffect(() => {
+		exibirPodcasts();
+	}, [profile]);
+
+	async function exibirPodcasts() {
+		const response = await api.get('/profile');
+		setPodcast(response.data);
+	}
 
 	function handleSubmit(data) {
-		console.tron.log(data);
-		console.log(data);
 		dispatch(updateProfileRequest(data));
 	}
 
@@ -43,21 +48,25 @@ export default function Cadastro() {
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
 									<Form
-										ref={formRef}
 										initialData={profile}
 										onSubmit={handleSubmit}
+										style={
+											editMode ? { display: 'block' } : { display: 'none' }
+										}
 									>
 										<Input
 											className="has-success form-control"
 											name="usu_nome"
 											type="text"
 											placeholder="Nome"
+											required
 										/>
 										<Input
 											className="has-success form-control"
 											name="usu_email"
 											type="email"
 											placeholder="Seu e-mail"
+											required
 										/>
 										<hr className="hr-primary" />
 										<Input
@@ -80,49 +89,99 @@ export default function Cadastro() {
 										/>
 
 										<div className="text-center">
-											<Button type="submit" className="my-2" color="primary">
-												Editar Perfil
+											<Button
+												type="submit"
+												className="my-2"
+												color="primary"
+												onClick={() => setEditMode(false)}
+											>
+												Salvar alterações
 											</Button>
 										</div>
 									</Form>
+									<div>
+										<div
+											className="text-center"
+											style={
+												editMode ? { display: 'none' } : { display: 'block' }
+											}
+										>
+											<p>Nome: {profile.usu_nome}</p>
+											<p>E-mail: {profile.usu_email}</p>
+											<p>CPF: {profile.usu_cpf}</p>
+											<Button
+												type="submit"
+												className="my-2"
+												color="primary"
+												onClick={() => setEditMode(true)}
+											>
+												Editar Perfil
+											</Button>
+										</div>
+									</div>
+
 									<Row className="mt-3">
 										<Col sm="4">
 											<Card
-												body
-												className="bg-secondary shadow border-secundary"
+												style={{
+													borderRadius: 15,
+													background: '#151734'
+												}}
+												className="teste card-body mb-3"
 											>
-												<CardTitle>Favoritos</CardTitle>
+												<CardTitle className="title-primary">
+													Favoritos
+												</CardTitle>
 												<ul>
-													<li>Podcast 1</li>
-													<li>Podcast 2</li>
-													<li>Podcast 3</li>
+													{podcast.map((pod) => (
+														<li key={podcast.fbk_id}>
+															{pod.tfb_id === 1 && pod.pod_nome}
+														</li>
+													))}
 												</ul>
 											</Card>
 										</Col>
 										<Col sm="4">
 											<Card
-												body
-												className="bg-secondary shadow border-secundary"
+												style={{
+													borderRadius: 15,
+													background: '#151734'
+												}}
+												className="teste card-body mb-3"
 											>
-												<CardTitle>Acompanhando</CardTitle>
+												<CardTitle className="title-primary">
+													Acompanhando
+												</CardTitle>
 												<ul>
-													<li>Podcast 1</li>
-													<li>Podcast 2</li>
-													<li>Podcast 3</li>
+													{podcast.map((pod) => (
+														<li key={podcast.fbk_id}>
+															{pod.tfb_id === 2 &&
+																pod.fbk_status == 1 &&
+																pod.pod_nome}
+														</li>
+													))}
 												</ul>
 											</Card>
 										</Col>
 										<Col sm="4">
 											<Card
-												body
-												className="bg-secondary shadow border-secundary"
+												style={{
+													borderRadius: 15,
+													background: '#151734'
+												}}
+												className="teste card-body mb-3"
 											>
-												<CardTitle>Pretendo Acompanhar</CardTitle>
-
+												<CardTitle className="title-primary">
+													Pretendo Acompanhar
+												</CardTitle>
 												<ul>
-													<li>Podcast 1</li>
-													<li>Podcast 2</li>
-													<li>Podcast 3</li>
+													{podcast.map((pod) => (
+														<li key={podcast.fbk_id}>
+															{pod.tfb_id === 2 &&
+																pod.fbk_status == 2 &&
+																pod.pod_nome}
+														</li>
+													))}
 												</ul>
 											</Card>
 										</Col>

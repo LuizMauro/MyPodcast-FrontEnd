@@ -23,7 +23,7 @@ export default function Input({ name, className , ...rest }) {
   return(
       <div>
         <FormGroup className= {error ? "has-danger form-group" : "has-success"}>
-            <input className={error  ? "is-invalid form-control" : "has-success form-control"}  ref={inputRef}  placeholder={placeholder} {...rest}   />
+            <input className={error  ? "is-invalid form-control" : "has-success form-control"}  ref={inputRef}  defaultValue={defaultValue} placeholder={placeholder} {...rest}   />
             {error &&  <span style={{color:"#FE2946", fontSize:12}}> {error} </span> }
         </FormGroup> 
       </div>
