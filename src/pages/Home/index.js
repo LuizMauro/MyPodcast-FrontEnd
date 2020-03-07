@@ -1,8 +1,9 @@
 import React,{ useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, } from 'react-router-dom'
 import Menu from '../../components/Menu'
 import api from '../../services/api'
 import { IoIosSearch, IoMdHeadset } from 'react-icons/io';
+import history from '../../services/history'
 
 // reactstrap components
 import {
@@ -10,13 +11,26 @@ import {
   Button,
   Input,
   FormGroup,
-  Form
 } from "reactstrap";
+
+import { Form }  from '@unform/web'
 
 export default function Home() {
   const [podcasts, setPodcasts] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [pesquisa, setPesquisa] = useState("");
+  const [select, setSelect] = useState("");
+ 
 
+
+  function handleSubmit(){
+    if(select === "" && pesquisa ===""){
+      history.push("/pesquisar");
+    }else{
+      history.push(`/pesquisar/${select}/${pesquisa}`);
+    }
+   
+   }
 
   useEffect(() => {
 
@@ -42,29 +56,35 @@ export default function Home() {
       <>
         <Menu></Menu>
         <Container>
-            <Form>
+           
               <FormGroup className="search-home-shadow">
                   <div style={{display:"flex", direction:"row", flex:0.5, justifyContent:"center", marginTop:"10%"}}>
                     <div style={{flex:1}}>
-                      <Input className="select-home" type="select" name="select" id="exampleSelect" placeholder="Selecione">
+                      <Input 
+                      className="select-home"
+                       type="select"
+                        name="select" 
+                        id="exampleSelect" p
+                        onChange={(e) => setSelect(e.target.value) }
+                        >
+
                       <option disabled selected> Selecione </option>
                         {categorias.map(item =>(
                           item.ctg_status === 1 &&
-                            <option key={item.ctg_id}>{item.ctg_descricao}</option>
+                            <option key={item.ctg_id} value={item.ctg_id}>{item.ctg_descricao}</option>
                         ))}
                       
                       </Input>
                     </div>
                     <div style={{flex:2}}>
-                      <Input className="input-search-home" type="text" name="pesquisa" />
+                      <Input onChange={(e) => setPesquisa(e.target.value)} className="input-search-home" type="text" name="pesquisa" />
                     </div>
 
                     <div style={{lex:1}}>
-                      <Button className="button-search-home"><IoIosSearch size={30}></IoIosSearch></Button>
+                      <Button onClick={handleSubmit} className="button-search-home"><IoIosSearch size={30}></IoIosSearch></Button>
                     </div>
                   </div>
-                </FormGroup>
-            </Form>    
+                </FormGroup>  
         </Container>
 
         

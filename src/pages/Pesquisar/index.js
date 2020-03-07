@@ -1,34 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom';
-import { Form } from '@unform/web';
-import Input from '../../components/Input';
+import {Link, useParams} from 'react-router-dom';
 
 import api from '../../services/api';
 
-import { useSelector } from 'react-redux';
-import { updateProfileRequest } from '../../store/modules/user/actions';
+
 
 import {
-	Button,
-	Card,
-	CardBody,
-	CardTitle,
 	Container,
-	Row,
-	Col
 } from 'reactstrap';
 
 export default function Cadastro() {
-	const dispatch = useDispatch();
-	const profile = useSelector((state) => state.user.profile);
-	console.log(profile);
+	const [podcasts, setPodcasts] = useState([]);
+	const params = useParams();
 
-	useEffect(() => {}, [profile]);
+	useEffect(() => {
 
-	function handleSubmit(data) {
-		dispatch(updateProfileRequest(data));
-	}
+		async function loadPodCastsAll(){
+			const response = await api.get('/podcasts');
+			setPodcasts(response.data);
+		  }
+
+		  async function loadPodCastsCategoria(){
+			const response = await api.get(`/pesquisar/${params.select}`);
+			setPodcasts(response.data);
+		  }
+
+		  async function loadPodCastsCategoriaAndNome(){
+			const response = await api.get(`/pesquisar/${params.select}/${params.pesquisa}`);
+			setPodcasts(response.data);
+		  }
+
+		  if(params.select !=="" && params.pesquisa !==""){
+			loadPodCastsCategoriaAndNome();
+		  }else if(params.select !== "" && params.pesquisa ===""){
+			loadPodCastsCategoria();
+		  }else{
+			loadPodCastsAll();
+		  }
+  
+	}, []);
+
 
 	return (
 		<>

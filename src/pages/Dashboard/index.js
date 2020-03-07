@@ -13,7 +13,6 @@ import api from '../../services/api'
 // reactstrap components
 import {
     Card,
-    CardHeader,
     CardBody,
     CardFooter,
     CardTitle,

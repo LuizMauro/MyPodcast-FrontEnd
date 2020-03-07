@@ -30,11 +30,13 @@ export default function Routes() {
 			<Route path="/" exact component={Home} />
 			<Route path="/Cadastro" component={Cadastro} />
 			<Route path="/Login" component={Login} />
-<<<<<<< HEAD
-			<Route path="/Pesquisar" component={Pesquisar} />
-=======
+			
+			<Route path="/Pesquisar/" exact component={Pesquisar} />
+			<Route path="/Pesquisar/:select/" exact component={Pesquisar} />
+			<Route path="/Pesquisar/:select/:pesquisa" exact component={Pesquisar} />
+			<Route path="/Pesquisar/:pesquisa/" exact component={Pesquisar} />
+
 			<Route path="/Podcast" component={PodCast} />
->>>>>>> LuizMauro
 
 			<PrivateRoute path="/Profile" component={Profile} />
 
