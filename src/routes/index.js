@@ -17,6 +17,7 @@ import Dashboard from '../pages/Dashboard';
 import DashboardMod from '../pages/DashboardMod';
 import DashboardPodcaster from '../pages/DashboardPodcaster';
 import Login from '../pages/Login';
+import Pesquisar from '../pages/Pesquisar';
 import NotFound404 from '../pages/NotFound';
 //Imports CSS
 import '../assets/css/argon-design-system-react.css';
@@ -28,6 +29,7 @@ export default function Routes() {
 			<Route path="/" exact component={Home} />
 			<Route path="/Cadastro" component={Cadastro} />
 			<Route path="/Login" component={Login} />
+			<Route path="/Pesquisar" component={Pesquisar} />
 
 			<PrivateRoute path="/Profile" component={Profile} />
 
