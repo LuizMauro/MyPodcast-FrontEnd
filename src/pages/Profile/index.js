@@ -28,7 +28,7 @@ export default function Cadastro() {
 
 	useEffect(() => {
 		exibirPodcasts();
-	}, []);
+	}, [profile]);
 
 	async function exibirPodcasts() {
 		const response = await api.get('/profile');
