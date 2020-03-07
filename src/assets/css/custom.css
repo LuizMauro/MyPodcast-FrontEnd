@@ -130,6 +130,7 @@
 	font-size: 20px;
 	outline: 0;
 }
+
 .select-home:focus{
 	background-color: #151734;
 	border: none;
@@ -222,4 +223,12 @@ option{
 .badge {
 	color: #151734 !important;
 
+}
+
+.title-primary{
+	color:#30b993;
+}
+
+.borderBottom{
+	border-bottom: 0.5px dashed #232659;
 }
