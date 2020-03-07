@@ -189,3 +189,6 @@ option{
 	color:#30b993;
 }
 
+.borderBottom{
+	border-bottom: 0.5px dashed #232659;
+}

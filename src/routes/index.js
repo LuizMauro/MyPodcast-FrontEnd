@@ -18,6 +18,7 @@ import DashboardMod from '../pages/DashboardMod';
 import DashboardPodcaster from '../pages/DashboardPodcaster';
 import Login from '../pages/Login';
 import NotFound404 from '../pages/NotFound';
+import PodCast from '../pages/Podcast'
 //Imports CSS
 import '../assets/css/argon-design-system-react.css';
 import '../assets/css/custom.css';
@@ -28,6 +29,7 @@ export default function Routes() {
 			<Route path="/" exact component={Home} />
 			<Route path="/Cadastro" component={Cadastro} />
 			<Route path="/Login" component={Login} />
+			<Route path="/Podcast" component={PodCast} />
 
 			<PrivateRoute path="/Profile" component={Profile} />
 
@@ -40,6 +42,8 @@ export default function Routes() {
 				exact
 				component={DashboardPodcaster}
 			/>
+
+		
 
 			<Route path="/" component={NotFound404} />
 		</Switch>
