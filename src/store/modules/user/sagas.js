@@ -15,11 +15,16 @@ export function* updateProfile({ payload }) {
 
 		const response = yield call(api.put, 'edituser', profile);
 
-		toast.success('Perfil atualizado com sucesso');
-
-		yield put(updateProfileSuccess(response.data));
+		if (response.data.usuNomeExists) {
+			toast.error('Nome de usuário indisponível');
+		} else if (response.data.usuEmailExists) {
+			toast.error('E-mail já cadastrado');
+		} else {
+			toast.success('Perfil atualizado com sucesso');
+			yield put(updateProfileSuccess(response.data));
+		}
 	} catch (err) {
-		toast.sucess('Erro ao atualizar perfil, confira seus dados.');
+		toast.error('Erro ao atualizar perfil');
 		yield put(updateProfileFailure);
 	}
 }
