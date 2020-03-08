@@ -1,6 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../store/modules/auth/actions'
+import Menu from '../../components/Menu'
+
+
 
 import api from '../../services/api'
 
@@ -32,8 +35,11 @@ export default function Dashboard() {
 
 
     return (
-
+        
+        
         <span>
+            
+            <Menu></Menu>
             <div className="content p-20 m-10">
                 <h1>ADM</h1>
 

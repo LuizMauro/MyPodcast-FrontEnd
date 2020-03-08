@@ -8,6 +8,7 @@ import './config/ReactotronConfig'
 
 import Routes from './routes';
 import history from './services/history'
+import SideBar from './sidebar';
 
 import { store, persistor } from './store'
 
@@ -24,6 +25,7 @@ function App() {
           <Routes />
         </Router>
         <GlobalStyle />
+        <SideBar />
         <ToastContainer autoClose={3000} />
       </PersistGate>
  
