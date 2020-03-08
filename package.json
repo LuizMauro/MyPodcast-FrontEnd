@@ -21,6 +21,7 @@
     "nouislider": "14.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
+    "react-burger-menu": "^2.6.13",
     "react-datetime": "2.16.3",
     "react-dom": "^16.13.0",
     "react-icons": "^3.9.0",
