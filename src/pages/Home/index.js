@@ -26,6 +26,10 @@ export default function Home() {
   function handleSubmit(){
     if(select === "" && pesquisa ===""){
       history.push("/pesquisar");
+    }else if(select !== "" && pesquisa ===""){
+      history.push(`/pesquisar/${select}/`);
+    }else if(select === "" && pesquisa !==""){
+      history.push(`/pesquisar/${pesquisa}/`);
     }else{
       history.push(`/pesquisar/${select}/${pesquisa}`);
     }
