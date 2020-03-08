@@ -31,12 +31,9 @@ export default function Routes() {
 			<Route path="/Cadastro" component={Cadastro} />
 			<Route path="/Login" component={Login} />
 			
-			<Route path="/Pesquisar/" exact component={Pesquisar} />
-			<Route path="/Pesquisar/:select/" exact component={Pesquisar} />
-			<Route path="/Pesquisar/:select/:pesquisa" exact component={Pesquisar} />
-			<Route path="/Pesquisar/:pesquisa/" exact component={Pesquisar} />
-
-			<Route path="/Podcast" component={PodCast} />
+			<Route path="/Pesquisar/"  component={Pesquisar} />
+		
+			<Route path="/Podcast/:pod_id" component={PodCast} />
 
 			<PrivateRoute path="/Profile" component={Profile} />
 

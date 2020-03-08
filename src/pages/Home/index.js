@@ -2,7 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import {Link, } from 'react-router-dom'
 import Menu from '../../components/Menu'
 import api from '../../services/api'
-import { IoIosSearch, IoMdHeadset } from 'react-icons/io';
+import { IoIosSearch } from 'react-icons/io';
 import history from '../../services/history'
 
 // reactstrap components
@@ -13,7 +13,6 @@ import {
   FormGroup,
 } from "reactstrap";
 
-import { Form }  from '@unform/web'
 
 export default function Home() {
   const [podcasts, setPodcasts] = useState([]);
@@ -24,16 +23,7 @@ export default function Home() {
 
 
   function handleSubmit(){
-    if(select === "" && pesquisa ===""){
-      history.push("/pesquisar");
-    }else if(select !== "" && pesquisa ===""){
-      history.push(`/pesquisar/${select}/`);
-    }else if(select === "" && pesquisa !==""){
-      history.push(`/pesquisar/${pesquisa}/`);
-    }else{
-      history.push(`/pesquisar/${select}/${pesquisa}`);
-    }
-   
+      history.push(`/pesquisar?select=${select}&pesquisa=${pesquisa}`);
    }
 
   useEffect(() => {
@@ -74,7 +64,7 @@ export default function Home() {
 
                       <option disabled selected> Selecione </option>
                         {categorias.map(item =>(
-                          item.ctg_status === 1 &&
+                         
                             <option key={item.ctg_id} value={item.ctg_id}>{item.ctg_descricao}</option>
                         ))}
                       

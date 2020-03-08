@@ -1,5 +1,5 @@
 import React,{ useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import Menu from '../../components/Menu'
 import api from '../../services/api'
 import { FaSpotify, FaInternetExplorer } from 'react-icons/fa';
@@ -8,20 +8,24 @@ import { IoIosHeart } from 'react-icons/io'
 // reactstrap components
 import {
   Container,
-  Button,
   Input,
-  FormGroup,
-  Form,
-  Card
 } from "reactstrap";
 
-export default function Home() {
+export default function Podcast() {
+    const { pod_id } =  useParams();
+    const [podcast, setPodcast] = useState("");
 
-
+    async function loadPodcast(){
+        console.log("TESTE",pod_id);
+        const response = await api.get(`/podcast/${pod_id}`);
+        setPodcast(response.data);
+        console.log("TESTE", response.data)
+    }
 
 
   useEffect(() => {
-
+       loadPodcast();
+       console.log(podcast);
 
   },[])
   
@@ -31,10 +35,13 @@ export default function Home() {
       <>
         <Menu></Menu>
 
+     
+       
+
         <Container>
             <div className="bg-secondary shadow" style={{marginTop:"5%", display:"flex", flexWrap: "wrap", marginBottom:50}}>
 
-                <div style={{ height: "auto", minWidth:300, display:"flex", flexDirection:"column"}}>
+                <div  style={{ height: "auto", minWidth:300, display:"flex", flexDirection:"column"}}>
                     <div style={{height:350, width:400, padding:20}} className="borderBottom">
                         <img className="shadow"
                         width="100%" 
@@ -114,8 +121,6 @@ export default function Home() {
                     </div>
 
                 </div>
-
-               
             </div>
         </Container> 
       </>
