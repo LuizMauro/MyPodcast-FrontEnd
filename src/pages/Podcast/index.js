@@ -38,6 +38,7 @@ export default function Podcast() {
 	}, []);
 
 	async function favoritar() {
+		console.log(profile)
 		if (profile) {
 			const verifica = await api.get(`findfavorito/${pod_id}`);
 
@@ -54,19 +55,16 @@ export default function Podcast() {
 	}
 
 	function handleChange(e) {
-		setOpcao(e.target.selectedOptions[0].value);
-		console.log(e.target.selectedOptions[0].value);
-	}
-
-	async function marcarPodcast() {
-		console.log('teste goroi');
 		if (profile) {
-			const verifica = await api.get(`acompanhando/${pod_id}`);
+			//const verifica = await api.get(`acompanhando/${pod_id}`);
 
-			console.log(verifica.data);
+			//console.log(verifica.data);
+			setOpcao(e.target.selectedOptions[0].value);
+		console.log(e.target.selectedOptions[0].value);
 		} else {
 			console.log('n tá lotado n pode marca');
 		}
+		
 	}
 
 	return (
