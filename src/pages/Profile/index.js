@@ -32,6 +32,7 @@ export default function Cadastro() {
 
 	async function exibirPodcasts() {
 		const response = await api.get('/profile');
+		console.log(response.data)
 		setPodcast(response.data);
 	}
 
@@ -135,7 +136,7 @@ export default function Cadastro() {
 												<ul>
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
-															{pod.tfb_id === 1 && pod.pod_nome}
+															{(pod.tfb_id === 1 && pod.fbk_status === 1) && pod.pod_nome}
 														</li>
 													))}
 												</ul>
@@ -156,7 +157,7 @@ export default function Cadastro() {
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
-																pod.fbk_status == 1 &&
+																pod.fbk_status === 1 &&
 																pod.pod_nome}
 														</li>
 													))}
@@ -178,7 +179,7 @@ export default function Cadastro() {
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
-																pod.fbk_status == 2 &&
+																pod.fbk_status === 2 &&
 																pod.pod_nome}
 														</li>
 													))}

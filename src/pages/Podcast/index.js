@@ -8,7 +8,7 @@ import { IoIosHeart } from 'react-icons/io';
 import { useSelector } from 'react-redux';
 
 // reactstrap components
-import { Container, Input } from 'reactstrap';
+import { Container, Input, Button } from 'reactstrap';
 
 export default function Podcast() {
 	const { pod_id } = useParams();
@@ -38,11 +38,12 @@ export default function Podcast() {
 	}, []);
 
 	async function favoritar() {
-		console.log(profile)
+		console.log(profile);
 		if (profile) {
 			const verifica = await api.get(`findfavorito/${pod_id}`);
+			console.log(verifica.data)
 
-			if (verifica.data) {
+			if (verifica.data.fbk_status === 1) {
 				await api.put(`profile/favoritar/${pod_id}`);
 				console.log('vc desfavoritou');
 			} else {
@@ -54,17 +55,44 @@ export default function Podcast() {
 		}
 	}
 
-	function handleChange(e) {
+	async function marcarPodcast(e) {
 		if (profile) {
-			//const verifica = await api.get(`acompanhando/${pod_id}`);
+			const verifica = await api.get(`acompanhando/${pod_id}`);
+			console.log('status é', verifica.data.fbk_status);
 
-			//console.log(verifica.data);
-			setOpcao(e.target.selectedOptions[0].value);
-		console.log(e.target.selectedOptions[0].value);
+			if (verifica.data.fbk_status === 0) {
+				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
+
+				await api.put(`acompanhando/${pod_id}/${e}`);
+				console.log('sou o 0');
+				
+			} else if (verifica.data.fbk_status === 1) {
+				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
+				await api.put(`acompanhando/${pod_id}/${e}`);
+				console.log('sou o 1');
+			} else if (verifica.data.fbk_status === 2) {
+				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
+				await api.put(`acompanhando/${pod_id}/${e}`);
+				console.log('sou o 2');
+			} else if (!verifica.data.fbk_status) {
+				//Se não marcou ainda, marca podcast por aqui pelo status vindo do botao
+
+				if (e === 1) {
+					// Marcar como acompanhando
+					await api.post(`${pod_id}/acompanhando`);
+				} else if (e === 2) {
+					// Marcar como pretendo acompanhar
+					await api.post(`${pod_id}/acompanhar`);
+				} else {
+					console.log('nao tem como marcar como nao marcado');
+				}
+			}
+
+			setOpcao(e);
+			console.log(e);
 		} else {
 			console.log('n tá lotado n pode marca');
 		}
-		
 	}
 
 	return (
@@ -123,21 +151,51 @@ export default function Podcast() {
 							</Input>
 						</div>
 
-						<div style={{ padding: 5, display: 'flex' }}>
-							<select
-								className="select-home shadow p-3"
-								style={{ color: '#fff' }}
-								type="select"
-								name="select"
-								id="exampleSelect"
-								placeholder="Selecione"
-								value={opcao}
-								onChange={(e) => handleChange(e)}
+						<div
+							style={{ padding: 2, display: 'flex', flexDirection: 'column' }}
+						>
+							<Button
+								style={{
+									width: '50%',
+									height: '60%',
+									background: '#232659',
+									border: 'none',
+									color: '#1BFDBE',
+									marginBottom: 5,
+									padding: 0
+								}}
+								onClick={(e) => marcarPodcast(1)}
 							>
-								<option value="Marcar Como">Marcar como</option>
-								<option value="Acompanhando">Acompanhando</option>
-								<option value="Pretendo Acompanhar">Pretendo Acompanhar</option>
-							</select>
+								<p>Acompanhando</p>
+							</Button>
+							<Button
+								style={{
+									width: '50%',
+									height: '60%',
+									background: '#232669',
+									border: 'none',
+									color: '#1BFDBE',
+									marginBottom: 5,
+									padding: 0
+								}}
+								onClick={(e) => marcarPodcast(2)}
+							>
+								<p>Pretendo Acompanhar</p>
+							</Button>
+							<Button
+								style={{
+									width: '50%',
+									height: '60%',
+									background: '#232669',
+									border: 'none',
+									color: '#1BFDBE',
+									marginBottom: 5,
+									padding: 0
+								}}
+								onClick={(e) => marcarPodcast(0)}
+							>
+								<p className={'mt-2'}>Nada</p>
+							</Button>
 						</div>
 					</div>
 					<div
