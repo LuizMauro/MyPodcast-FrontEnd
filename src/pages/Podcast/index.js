@@ -15,7 +15,6 @@ export default function Podcast() {
 	const [podcast, setPodcast] = useState('');
 	const [categoria, setCategoria] = useState([]);
 	const [endereco, setEndereco] = useState([]);
-
 	const [opcao, setOpcao] = useState('');
 
 	const profile = useSelector((state) => state.user.profile);

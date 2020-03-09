@@ -7,11 +7,15 @@ import { Container } from 'reactstrap';
 
 export default function Pesquisar() {
 	const [podcasts, setPodcasts] = useState([]);
-	let query	= new URLSearchParams(useLocation().search)
+	let cate = [];
+	let query = new URLSearchParams(useLocation().search);
+	const select = query.get('select');
+	console.log('select é',select);
 
 	async function loadPodCastsAll() {
-		const response = await api.get('/podcasts');
+		const response = await api.get('/allpodcasts');
 		setPodcasts(response.data);
+		console.log('infos:', response.data);
 	}
 
 	async function loadPodCastsCategoria(select) {
@@ -22,58 +26,45 @@ export default function Pesquisar() {
 	async function loadPodCastsNome(pesquisa) {
 		const response = await api.get(`/pesquisarnome/${pesquisa}`);
 		setPodcasts(response.data);
-		
 	}
 
 	async function loadPodCastsCategoriaAndNome(select, pesquisa) {
 		const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
-		
-			console.log(response.data)
-		
+
+		console.log(response.data);
+
 		setPodcasts([response.data]);
-		console.log("AKI", response.data)
+		console.log('AKI', response.data);
 	}
 
-
-
-
-
 	useEffect(() => {
-	 const select = query.get("select");
-	 const pesquisa = query.get("pesquisa");
-	 
-	 if(select === "" && pesquisa === ""){
-		loadPodCastsAll();
-	 }else if(select === "" && pesquisa !== ""){
-		loadPodCastsNome(pesquisa);
-	 }else if(select !== "" && pesquisa === ""){
-		 
-		loadPodCastsCategoria(select);
-	 }else if(select !== "" && pesquisa !== ""){
-		loadPodCastsCategoriaAndNome(select, pesquisa);
-	 }
+		const select = query.get('select');
+		const pesquisa = query.get('pesquisa');
 
-		
+		if (select === '' && pesquisa === '') {
+			loadPodCastsAll();
+		} else if (select === '' && pesquisa !== '') {
+			loadPodCastsNome(pesquisa);
+		} else if (select !== '' && pesquisa === '') {
+			loadPodCastsCategoria(select);
+		} else if (select !== '' && pesquisa !== '') {
+			loadPodCastsCategoriaAndNome(select, pesquisa);
+		}
 	}, []);
 
-	
-
 	return (
-	
 		<>
-		{console.log("ok", podcasts)}
+			{console.log('ok', podcasts)}
 			<section className="section section-shaped section-lg">
 				<Container className="pt-lg-1">
 					<p className="h2 p mt-5">{podcasts.length} Resultados encontrados</p>
-					<p className="h4 p">Todas as categorias</p>
+					{!select && <p className="h4 p">Todas as categorias</p>}
 
 					<ul
 						className="d-flex py-2  flex-column flex-md-row justify-content-between"
 						style={{ flexWrap: 'wrap' }}
 					>
 						{podcasts.map((item) => (
-						
-
 							<li
 								className="custom-card mx-5 mb-3 flex-column"
 								style={{ display: 'flex', flex: 'auto' }}
@@ -97,7 +88,10 @@ export default function Pesquisar() {
 								<div
 									style={{ flex: 1, padding: '5px 10px', alignSelf: 'center' }}
 								>
-									<Link to={`podcast/${item.pod_id}`} style={{ textAlign: 'center' }}>
+									<Link
+										to={`podcast/${item.pod_id}`}
+										style={{ textAlign: 'center' }}
+									>
 										<p
 											style={{
 												fontSize: '1rem',
@@ -110,9 +104,12 @@ export default function Pesquisar() {
 											{item.pod_nome}
 										</p>
 									</Link>
-									<span className="badge bg-green m-2">
-										{item.ctg_descricao}
-									</span>
+									<div style={{display:'none'}}>{cate =  item.ctg_descricao.split(',')}</div>
+									{cate.map((cat) => (
+										<span className="badge bg-green m-2">
+											{cat}
+										</span>
+									))}
 								</div>
 							</li>
 						))}
