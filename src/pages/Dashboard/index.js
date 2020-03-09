@@ -40,7 +40,7 @@ export default function Dashboard() {
             <div className="content p-20 m-10">
                 <h1>ADM</h1>
 
-                <Row>
+                <Row className="p-50 m-50">
                     <Col lg="3" md="6" sm="6">
                         <Card className="card-stats">
                             <CardBody>
@@ -147,7 +147,7 @@ export default function Dashboard() {
                     </Col>
                 </Row>
 
-                <Row>
+                <Row className="p-50 m-50">
                     <Col lg="3" md="6" sm="6">
                         <Card className="card-stats">
                             <CardBody>
