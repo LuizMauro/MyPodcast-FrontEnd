@@ -34,11 +34,8 @@ export default function Dashboard() {
     }
 
 
-    return (
-        
-        
-        <span>
-            
+    return (     
+        <>
             <Sidebar></Sidebar>
             <div className="content p-20 m-10">
                 <h1>ADM</h1>
@@ -260,10 +257,6 @@ export default function Dashboard() {
 
                 <button className="button" type='button' onClick={handleSignOut}>Sair</button>
             </div>
-
-        </span>
-
-
-
+        </>
     )
 }
