@@ -254,8 +254,9 @@ export default function Dashboard() {
                     </Col>
                 </Row>
                 
-
-                <button className="button" type='button' onClick={handleSignOut}>Sair</button>
+                <Row>
+                    <button className="button" type='button' onClick={handleSignOut}>Sair</button>
+                </Row>
             </div>
         </>
     )
