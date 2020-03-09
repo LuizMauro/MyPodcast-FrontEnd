@@ -10,24 +10,36 @@ export default props => {
         Home
       </a>
 
-      <a className="menu-item" href="/laravel">
-        Laravel
+      <a className="menu-item" href="/Users">
+        Usuários
       </a>
 
       <a className="menu-item" href="/angular">
-        Angular
+        Solicitações de Cadastro
       </a>
 
       <a className="menu-item" href="/react">
-        React
+        Podcasts
       </a>
 
       <a className="menu-item" href="/vue">
-        Vue
+        Moderadores
       </a>
 
       <a className="menu-item" href="/node">
-        Node
+        Categorias
+      </a>
+    
+     <a className="menu-item" href="/node">
+        Tags de cometário
+      </a>
+    
+      <a className="menu-item" href="/node">
+        Publicidade
+      </a>
+    
+     <a className="menu-item" href="/node">
+        Relatório
       </a>
     </Menu>
   );
