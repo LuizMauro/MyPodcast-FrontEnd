@@ -5,6 +5,8 @@ import api from '../../services/api';
 import { FaSpotify, FaInternetExplorer } from 'react-icons/fa';
 import { IoIosHeart } from 'react-icons/io';
 
+import { useSelector } from 'react-redux';
+
 // reactstrap components
 import { Container, Input } from 'reactstrap';
 
@@ -13,6 +15,10 @@ export default function Podcast() {
 	const [podcast, setPodcast] = useState('');
 	const [categoria, setCategoria] = useState([]);
 	const [endereco, setEndereco] = useState([]);
+
+	const [opcao, setOpcao] = useState('');
+
+	const profile = useSelector((state) => state.user.profile);
 
 	async function loadPodcast() {
 		console.log('TESTE', pod_id);
@@ -30,6 +36,38 @@ export default function Podcast() {
 		loadPodcast();
 		console.log(podcast);
 	}, []);
+
+	async function favoritar() {
+		if (profile) {
+			const verifica = await api.get(`findfavorito/${pod_id}`);
+
+			if (verifica.data) {
+				await api.put(`profile/favoritar/${pod_id}`);
+				console.log('vc desfavoritou');
+			} else {
+				console.log('vc favoritou');
+				await api.post(`${pod_id}/favoritar`);
+			}
+		} else {
+			console.log('n ta logado n pode favorita ');
+		}
+	}
+
+	function handleChange(e) {
+		setOpcao(e.target.selectedOptions[0].value);
+		console.log(e.target.selectedOptions[0].value);
+	}
+
+	async function marcarPodcast() {
+		console.log('teste goroi');
+		if (profile) {
+			const verifica = await api.get(`acompanhando/${pod_id}`);
+
+			console.log(verifica.data);
+		} else {
+			console.log('n tá lotado n pode marca');
+		}
+	}
 
 	return (
 		<>
@@ -62,13 +100,19 @@ export default function Podcast() {
 								width="100%"
 								height="100%"
 								style={{ borderRadius: 10 }}
-								src="https://img.freepik.com/fotos-gratis/gotas-de-oleo-na-imagem-abstrata-padrao-psicodelico-de-agua_23-2148290141.jpg?size=626&ext=jpg"
+								src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
 							/>
 							<h2 style={{ color: '#fff' }}>Nota: 5.9</h2>
 						</div>
 
 						<div style={{ padding: 20, display: 'flex' }}>
-							<IoIosHeart size={50} color="#FF3144" className="shadow" />
+							<IoIosHeart
+								size={50}
+								style={{ cursor: 'pointer' }}
+								color="#FF3144"
+								className="shadow"
+								onClick={() => favoritar()}
+							/>
 							<Input
 								className="select-home shadow"
 								style={{ color: '#fff' }}
@@ -82,16 +126,20 @@ export default function Podcast() {
 						</div>
 
 						<div style={{ padding: 5, display: 'flex' }}>
-							<Input
-								className="select-home shadow"
+							<select
+								className="select-home shadow p-3"
 								style={{ color: '#fff' }}
 								type="select"
 								name="select"
 								id="exampleSelect"
 								placeholder="Selecione"
+								value={opcao}
+								onChange={(e) => handleChange(e)}
 							>
-								<option>Marcar como</option>
-							</Input>
+								<option value="Marcar Como">Marcar como</option>
+								<option value="Acompanhando">Acompanhando</option>
+								<option value="Pretendo Acompanhar">Pretendo Acompanhar</option>
+							</select>
 						</div>
 					</div>
 					<div
@@ -144,7 +192,7 @@ export default function Podcast() {
 									color: '#fff'
 								}}
 							>
-								<h5 style={{ color: '#fff' }}>Ano criacao</h5>
+								<h5 style={{ color: '#fff' }}>Ano de criação</h5>
 								<p>{podcast.pod_anocriacao}</p>
 							</div>
 							<div
@@ -164,8 +212,8 @@ export default function Podcast() {
 									color: '#fff'
 								}}
 							>
-								<h5 style={{ color: '#fff' }}>Tempo Medio de duraçao</h5>
-								<p>05 horas</p>
+								<h5 style={{ color: '#fff' }}>Média de Duração</h5>
+								<p>{podcast.pod_duracao}min</p>
 							</div>
 						</div>
 
