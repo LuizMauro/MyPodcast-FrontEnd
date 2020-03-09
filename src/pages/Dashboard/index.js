@@ -42,7 +42,7 @@ export default function Dashboard() {
 
                 <Row className="p-50 m-50">
                     <Col lg="3" md="6" sm="6">
-                        <Card className="card-stats">
+                        <Card className="card-stats .bg-dark">
                             <CardBody>
                                 <Row>
                                     <Col md="4" xs="5">
