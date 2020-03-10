@@ -7,7 +7,6 @@ import { Container } from 'reactstrap';
 
 export default function Pesquisar() {
 	const [podcasts, setPodcasts] = useState([]);
-	const [categorias, setCategorias] = useState([]);
 	let cate = [];
 	let query = new URLSearchParams(useLocation().search);
 	const select = query.get('select');
