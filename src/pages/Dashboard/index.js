@@ -44,19 +44,19 @@ export default function Dashboard() {
                 <Router>
                 //<div className="App">
                 <Navbar />
-                <Route exact path="/">
+                <Route exact path="/Dashboard/">
                 <Home />
                 </Route>
-                <Route path="/about">
+                <Route path="/Dashboard/about">
                 <About />
                 </Route>
-                <Route path="/education">
+                <Route path="/Dashboard/education">
                 <Education />
                 </Route>
-                <Route path="/skills">
+                <Route path="/Dashboard/skills">
                 <Skills />
                 </Route>
-                <Route path="/contact">
+                <Route path="/Dashboard/contact">
                 <Contact />
                 </Route>
                 </div>
