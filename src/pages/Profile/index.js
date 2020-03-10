@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
+import { MdClose } from 'react-icons/md';
+import './style.css';
 
 import api from '../../services/api';
 
@@ -18,7 +20,7 @@ import {
 	Col
 } from 'reactstrap';
 
-export default function Cadastro() {
+export default function Profile() {
 	const dispatch = useDispatch();
 	const profile = useSelector((state) => state.user.profile);
 	const [podcast, setPodcast] = useState([]);
@@ -32,7 +34,7 @@ export default function Cadastro() {
 
 	async function exibirPodcasts() {
 		const response = await api.get('/profile');
-		console.log(response.data)
+		console.log(response.data);
 		setPodcast(response.data);
 	}
 
@@ -46,7 +48,14 @@ export default function Cadastro() {
 				<Container className="pt-lg-1">
 					<Row style={{ justifyContent: 'center' }}>
 						<Col lg="10">
-							<Card className="bg-secondary shadow border-0">
+							<Card className="bg-secondary shadow border-0 ">
+								<MdClose
+									size={24}
+									color={'#fff'}
+									className="closeIcon"
+									style={editMode ? { display: 'block' } : { display: 'none' }}
+									onClick={() => setEditMode(false)}
+								/>
 								<CardBody className="px-lg-5 py-lg-5">
 									<Form
 										initialData={profile}
@@ -136,7 +145,9 @@ export default function Cadastro() {
 												<ul>
 													{podcast.map((pod) => (
 														<li key={podcast.fbk_id}>
-															{(pod.tfb_id === 1 && pod.fbk_status === 1) && pod.pod_nome}
+															{pod.tfb_id === 1 &&
+																pod.fbk_status === 1 &&
+																pod.pod_nome}
 														</li>
 													))}
 												</ul>
