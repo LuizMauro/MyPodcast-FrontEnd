@@ -1,13 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../store/modules/auth/actions'
-import Sidebar from '../../components/Sidebar'
-
-import {
-  BrowserRouter as Router,
-  Route,
-} from "react-router-dom";
-import Navbar from './components/NavbarDash/Navbar';
 
 
 import api from '../../services/api'
@@ -262,26 +255,6 @@ export default function Dashboard() {
                     <button className="button" type='button' onClick={handleSignOut}>Sair</button>
                 </Row>
             </div>
-                <Router>
-                //<div className="App">
-                <Navbar />
-                <Route exact path="/Dashboard/">
-                <Home />
-                </Route>
-                <Route path="/Dashboard/about">
-                <About />
-                </Route>
-                <Route path="/Dashboard/education">
-                <Education />
-                </Route>
-                <Route path="/Dashboard/skills">
-                <Skills />
-                </Route>
-                <Route path="/Dashboard/contact">
-                <Contact />
-                </Route>
-                </div>
-                </Router>
         </>
     )
 }
