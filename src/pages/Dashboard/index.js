@@ -4,6 +4,12 @@ import { signOut } from '../../store/modules/auth/actions'
 import Sidebar from '../../components/Sidebar'
 import '../../assets/css/Dashboard.css'
 
+import Home from './contents/Home';
+import About from './contents/About';
+import Education from './contents/Education';
+import Skills from './contents/Skills';
+import Contact from './contents/Contact';
+
 import {
   BrowserRouter as Router,
   Route,
