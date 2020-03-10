@@ -7,15 +7,14 @@ import { Container } from 'reactstrap';
 
 export default function Pesquisar() {
 	const [podcasts, setPodcasts] = useState([]);
+	const [categorias, setCategorias] = useState([]);
 	let cate = [];
 	let query = new URLSearchParams(useLocation().search);
 	const select = query.get('select');
-	console.log('select é',select);
 
 	async function loadPodCastsAll() {
 		const response = await api.get('/allpodcasts');
 		setPodcasts(response.data);
-		console.log('infos:', response.data);
 	}
 
 	async function loadPodCastsCategoria(select) {
@@ -31,10 +30,7 @@ export default function Pesquisar() {
 	async function loadPodCastsCategoriaAndNome(select, pesquisa) {
 		const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
 
-		console.log(response.data);
-
-		setPodcasts([response.data]);
-		console.log('AKI', response.data);
+		setPodcasts(response.data);
 	}
 
 	useEffect(() => {
@@ -104,11 +100,12 @@ export default function Pesquisar() {
 											{item.pod_nome}
 										</p>
 									</Link>
-									<div style={{display:'none'}}>{cate =  item.ctg_descricao.split(',')}</div>
+									<div style={{ display: 'none' }}>
+										{(cate = item.ctg_descricao.split(','))}
+										{}
+									</div>
 									{cate.map((cat) => (
-										<span className="badge bg-green m-2">
-											{cat}
-										</span>
+										<span className="badge bg-green m-2">{cat}</span>
 									))}
 								</div>
 							</li>
