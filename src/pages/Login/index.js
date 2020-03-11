@@ -84,14 +84,13 @@ export default function Login(){
                         href="#pablo"
                         onClick={e => e.preventDefault()}
                       >
-                        <small>Forgot password?</small>
+                        <small>Esqueci a senha</small>
                       </a>
                     </Col>
                     <Col className="text-right" xs="6">
                       <a
                         className="text-light"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
+                        href="/cadastro"
                       >
                         <small>Criar nova conta</small>
                       </a>

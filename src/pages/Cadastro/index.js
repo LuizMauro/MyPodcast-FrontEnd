@@ -170,19 +170,17 @@ export default function Cadastro() {
 										<Col xs="6">
 											<a
 												className="text-light"
-												href="#pablo"
+												href="#"
 												onClick={(e) => e.preventDefault()}
 											>
-												<small>Esqueci a senha</small>
 											</a>
 										</Col>
 										<Col className="text-right" xs="6">
 											<a
 												className="text-light"
-												href="#pablo"
-												onClick={(e) => e.preventDefault()}
+												href="/login"
 											>
-												<small>Criar nova conta</small>
+												<small>Já possuo uma conta</small>
 											</a>
 										</Col>
 									</Row>

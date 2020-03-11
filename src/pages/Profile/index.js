@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
 import { MdClose } from 'react-icons/md';
@@ -7,7 +7,6 @@ import './style.css';
 
 import api from '../../services/api';
 
-import { useSelector } from 'react-redux';
 import { updateProfileRequest } from '../../store/modules/user/actions';
 
 import {
