@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Menu from '../../components/Menu';
 import api from '../../services/api';
-import { FaSpotify, FaInternetExplorer } from 'react-icons/fa';
+import { FaSpotify, FaInternetExplorer, FaYoutube } from 'react-icons/fa';
 import { IoIosHeart } from 'react-icons/io';
 
 import { useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ export default function Podcast() {
 		console.log(profile);
 		if (profile) {
 			const verifica = await api.get(`findfavorito/${pod_id}`);
-			console.log(verifica.data)
+			console.log(verifica.data);
 
 			if (verifica.data.fbk_status === 1) {
 				await api.put(`profile/favoritar/${pod_id}`);
@@ -64,7 +64,6 @@ export default function Podcast() {
 
 				await api.put(`acompanhando/${pod_id}/${e}`);
 				console.log('sou o 0');
-				
 			} else if (verifica.data.fbk_status === 1) {
 				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
 				await api.put(`acompanhando/${pod_id}/${e}`);
@@ -278,10 +277,19 @@ export default function Podcast() {
 								{endereco.map((item) => (
 									<div style={{ padding: 5, margin: 5 }}>
 										<a target="_blank" href={item}>
-											<FaInternetExplorer
-												style={{ color: '#0f7aca' }}
-												size={50}
-											/>
+											{item.includes('spotify.com') ? (
+												<FaSpotify style={{ color: '#1DB954	' }} size={50} />
+											) : item.includes('youtube.com') ? (
+												<FaYoutube
+													style={{ color: 'ff0000' }}
+													size={50}
+												/>
+											) : (
+												<FaInternetExplorer
+													style={{ color: '#0f7aca' }}
+													size={50}
+												/>
+											)}
 										</a>
 									</div>
 								))}

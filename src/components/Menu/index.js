@@ -24,7 +24,7 @@ export default function index() {
                 {/* Navbar default */}
                 <Navbar className="navbar-dark bg-default" expand="lg">
                 <Container>
-                  <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
+                  <NavbarBrand href="/" >
                   <img
                     style={{width:50, height:50 }}
                      alt="..."
