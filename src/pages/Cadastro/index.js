@@ -32,7 +32,7 @@ export default function Cadastro() {
 		try{
 			
 			const schema = Yup.object().shape({
-				nome: Yup.string().required("O nome é obrigatorio"),
+				nome: Yup.string().required("O nome de usuário é obrigatorio"),
 				email: Yup.string().email("Digite um email valido").required("O email é obrigatorio"),
 				senha: Yup.string().required("A senha é obrigatorio").min(6, "Minimo de 6 caracteres"),
 				cpf: Yup.string().required("O cpf é obrigatorio"),
@@ -139,7 +139,7 @@ export default function Cadastro() {
 										<Input
 											name="nome"
 											type="text"
-											placeholder="Nome"
+											placeholder="Nome de usuário"
 										/>
 										<Input
 											name="email"
