@@ -45,38 +45,38 @@ export default function Dashboard() {
 			<Router>
 				<div>
 					<Navbar />
-					<Route exact path="/adm/Dashboard">
+					<Route exact path="/adm/dashboard">
 						<Home />
 					</Route>
-					<Route path="/adm/Dashboard/usuarios">
+					<Route path="/adm/dashboard/usuarios">
 						<Usuarios />
 					</Route>
 					
-					<Route path="/adm/Dashboard/podcasts">
+					<Route path="/adm/dashboard/podcasts">
 						<Podcasts />
 					</Route>
 
-					<Route path="/adm/Dashboard/categorias">
+					<Route path="/adm/dashboard/categorias">
 						<Categorias />
 					</Route>
 
-					<Route path="/adm/Dashboard/solicitacoes">
+					<Route path="/adm/dashboard/solicitacoes">
 						<Solicitacoes />
 					</Route>
 
-					<Route path="/adm/Dashboard/moderadores">
+					<Route path="/adm/dashboard/moderadores">
 						<Moderadores />
 					</Route>
 
-					<Route path="/adm/Dashboard/tags">
+					<Route path="/adm/dashboard/tags">
 						<Tags />
 					</Route>
 
-					<Route path="/adm/Dashboard/publicidade">
+					<Route path="/adm/dashboard/publicidade">
 						<Publicidade />
 					</Route>
 
-					<Route path="/adm/Dashboard/relatorio">
+					<Route path="/adm/dashboard/relatorio">
 						<Relatorio />
 					</Route>
 
