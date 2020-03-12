@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class About extends Component {
+class Publicidade extends Component {
     render() {
         return (
             <div className="condiv">
@@ -24,5 +24,5 @@ class About extends Component {
         }
     }
     
-export default About
+export default Publicidade
     

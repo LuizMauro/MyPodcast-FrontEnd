@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navitem from './NavItemDash';
+import Navitem from '../NavItemDash/Navitem';
 
 class Navbar extends Component {
     constructor(props)
@@ -23,10 +23,14 @@ class Navbar extends Component {
             <nav>
             <ul>
             <Navitem item="Home" tolink="/Dashboard/"  activec={this.activeitem}></Navitem>
-            <Navitem item="About" tolink="/Dashboard/about"  activec={this.activeitem}></Navitem>
-            <Navitem item="Education" tolink="/Dashboard/education"  activec={this.activeitem}></Navitem>
-            <Navitem item="Skills" tolink="/Dashboard/skills"  activec={this.activeitem}></Navitem>
-            <Navitem item="Contact" tolink="/Dashboard/contact"  activec={this.activeitem}></Navitem>
+            <Navitem item="Usuarios" tolink="/Dashboard/usuarios"  activec={this.activeitem}></Navitem>
+            <Navitem item="Podcasts" tolink="/Dashboard/podcasts"  activec={this.activeitem}></Navitem>
+            <Navitem item="Moderadores" tolink="/Dashboard/moderadores"  activec={this.activeitem}></Navitem>
+            <Navitem item="Solicitacao" tolink="/Dashboard/solicitacao"  activec={this.activeitem}></Navitem>
+            <Navitem item="Categorias" tolink="/Dashboard/Categorias"  activec={this.activeitem}></Navitem>
+            <Navitem item="Publicidade" tolink="/Dashboard/Publicidade"  activec={this.activeitem}></Navitem>
+            <Navitem item="Tags" tolink="/Dashboard/tags"  activec={this.activeitem}></Navitem>
+            <Navitem item="Relatorio" tolink="/Dashboard/relatorio"  activec={this.activeitem}></Navitem>
             </ul>
             </nav>
             )

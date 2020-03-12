@@ -4,6 +4,23 @@ import { signOut } from '../../store/modules/auth/actions';
 
 import api from '../../services/api';
 
+import {
+	BrowserRouter as Router,
+	Route,
+  } from "react-router-dom";
+
+import Navbar from '../../components/NavbarDash/Navbar';
+import Home from './contents/Home';
+import Usuarios from './contents/Usuarios';
+import Podcasts from './contents/Podcasts';
+import Categorias from './contents/Categorias';
+import Solicitacoes from './contents/Solicitacoes';
+import Moderadores from './contents/Moderadores';
+import Tags from './contents/Tags';
+import Publicidade from './contents/Publicidade';
+import Relatorio from './contents/Relatorio';
+
+
 // nodejs library that concatenates classes
 //import classNames from "classnames";
 // react plugin used to create charts
@@ -24,229 +41,48 @@ export default function Dashboard() {
 
 	return (
 		<>
-			<div className="content p-20 m-10">
-				<h1>ADM</h1>
 
-				<Row className="p-50 m-50">
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-				</Row>
+			<Router>
+				<div>
+					<Navbar />
+					<Route exact path="/adm/Dashboard">
+						<Home />
+					</Route>
+					<Route path="/adm/Dashboard/usuarios">
+						<Usuarios />
+					</Route>
+					
+					<Route path="/adm/Dashboard/podcasts">
+						<Podcasts />
+					</Route>
 
-				<Row className="p-50 m-50">
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-					<Col lg="3" md="6" sm="6">
-						<Card className="card-stats .bg-dark">
-							<CardBody>
-								<Row>
-									<Col md="4" xs="5">
-										<div className="icon-big text-center icon-warning">
-											<i className="nc-icon nc-globe text-warning" />
-										</div>
-									</Col>
-									<Col md="8" xs="7">
-										<div className="numbers">
-											<p className="card-category">Capacity</p>
-											<CardTitle tag="p">150GB</CardTitle>
-											<p />
-										</div>
-									</Col>
-								</Row>
-							</CardBody>
-							<CardFooter>
-								<hr />
-								<div className="stats">
-									<i className="fas fa-sync-alt" /> Update Now
-								</div>
-							</CardFooter>
-						</Card>
-					</Col>
-				</Row>
+					<Route path="/adm/Dashboard/categorias">
+						<Categorias />
+					</Route>
 
-				<Row>
-					<button className="button" type="button" onClick={handleSignOut}>
-						Sair
-					</button>
-				</Row>
-			</div>
+					<Route path="/adm/Dashboard/solicitacoes">
+						<Solicitacoes />
+					</Route>
+
+					<Route path="/adm/Dashboard/moderadores">
+						<Moderadores />
+					</Route>
+
+					<Route path="/adm/Dashboard/tags">
+						<Tags />
+					</Route>
+
+					<Route path="/adm/Dashboard/publicidade">
+						<Publicidade />
+					</Route>
+
+					<Route path="/adm/Dashboard/relatorio">
+						<Relatorio />
+					</Route>
+
+				</div>
+			</Router>
+
 		</>
 	);
 }
