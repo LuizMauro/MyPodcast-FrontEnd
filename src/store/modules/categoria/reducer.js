@@ -5,5 +5,14 @@ const INITIAL_STATE = {
 };
 
 export default function user(state = INITIAL_STATE, action) {
-	return produce(state, (draft) => {});
+	return produce(state, (draft) => {
+		switch (action.type) {
+			case '@ctg/CREATE_CATEGORIA_REQUEST': {
+				draft.ctg_categoria = action.payload.ctg_categoria;
+				break;
+			}
+
+			default:
+		}
+	});
 }

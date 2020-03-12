@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { IoMdMicrophone, IoMdHeadset } from 'react-icons/io';
-import { createCategoriaRequest } from '../../../store/modules/categoria/actions';
+import api from '../../../services/api';
+import { toast } from 'react-toastify';
 
 import Input from '../../../components/Input';
 
@@ -12,7 +11,6 @@ import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 
 export default function Categoria() {
 	const formRef = useRef(null);
-	const dispatch = useDispatch();
 
 	async function handleSubmit({ ctg_descricao }) {
 		try {
@@ -27,7 +25,16 @@ export default function Categoria() {
 				}
 			);
 
-			dispatch(createCategoriaRequest(ctg_descricao));
+			const response = await api.post('/adm/categoria', { ctg_descricao });
+
+			if (response.data.ctgExists) {
+				toast.error('Categoria já cadastrada!');
+			} else if (response.data.ctgCreated) {
+				toast.success('Categoria cadastrada!');
+			} else {
+				toast.error('Falha no cadastro');
+			}
+
 			formRef.current.setErrors(false);
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
