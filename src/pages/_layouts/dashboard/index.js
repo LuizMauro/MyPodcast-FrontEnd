@@ -8,8 +8,8 @@ import Navbar from '../../../components/NavbarDash/Navbar';
 export default function DashboardLayout({ children }) {
     return (
         <Wrapper>
-            <Navbar/>
-            {children}
+            <Navbar teste={children}/>
+            
         </Wrapper>
     )
 }

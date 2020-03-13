@@ -24,4 +24,13 @@ export default createGlobalStyle`
     height: 100vh;
     }
 
+    .active{
+        background:#232659;
+        border-top-left-radius:20px;
+        border-bottom-left-radius:20px;
+        margin-bottom:10px;
+        width:200%;
+        padding:15px 0px;
+    }
+
 `;
