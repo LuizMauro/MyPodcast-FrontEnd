@@ -24,7 +24,7 @@ class Navbar extends Component {
                     <Navitem item="Usuarios" tolink="/adm/dashboard/usuarios" activec={this.activeitem}></Navitem>
                     <Navitem item="Podcasts" tolink="/adm/dashboard/podcasts" activec={this.activeitem}></Navitem>
                     <Navitem item="Moderadores" tolink="/adm/dashboard/moderadores" activec={this.activeitem}></Navitem>
-                    <Navitem item="Solicitacao" tolink="/adm/dashboard/solicitacao" activec={this.activeitem}></Navitem>
+                    <Navitem item="Solicitacao" tolink="/adm/dashboard/solicitacoes" activec={this.activeitem}></Navitem>
                     <Navitem item="Categorias" tolink="/adm/dashboard/categorias" activec={this.activeitem}></Navitem>
                     <Navitem item="Tags" tolink="/adm/dashboard/tags" activec={this.activeitem}></Navitem>
                     <Navitem item="Publicidade" tolink="/adm/dashboard/publicidade" activec={this.activeitem}></Navitem>

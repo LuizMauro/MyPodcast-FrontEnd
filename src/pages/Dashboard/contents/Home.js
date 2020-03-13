@@ -8,7 +8,8 @@ class Home extends Component {
         return (
             <div className="condiv home">
             <img className="profilepic"></img>
-            
+
+                <h1>HOME</h1>
            
             </div>
             )
