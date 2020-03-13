@@ -12,7 +12,7 @@ import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 export default function Categoria() {
 	const formRef = useRef(null);
 
-	async function handleSubmit({ ctg_descricao }) {
+	async function handleSubmit({ ctg_descricao, reset }) {
 		try {
 			const schema = Yup.object().shape({
 				ctg_descricao: Yup.string().required('A categoria é obrigatória')
@@ -31,6 +31,8 @@ export default function Categoria() {
 				toast.error('Categoria já cadastrada!');
 			} else if (response.data.ctgCreated) {
 				toast.success('Categoria cadastrada!');
+				formRef.current.reset();
+				
 			} else {
 				toast.error('Falha no cadastro');
 			}
