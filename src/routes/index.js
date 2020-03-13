@@ -27,7 +27,8 @@ import DashboardMod from '../pages/DashboardMod';
 
 //ADM
 import Dashboard from '../pages/Dashboard';
-import Categoria from '../pages/Dashboard/Categoria'
+import Categoria from '../pages/Dashboard/Categoria';
+import PodcastDash from '../pages/Dashboard/Podcast';
 
 //Imports CSS
 import '../assets/css/argon-design-system-react.css';
@@ -47,7 +48,16 @@ export default function Routes() {
 			<PrivateRouteMOD path="/mod/dashboard" exact component={DashboardMod} />
 
 			<PrivateRouteADM path="/adm/dashboard" exact component={Dashboard} />
-			<PrivateRouteADM path="/adm/dashboard/categoria" exact component={Categoria} />
+			<PrivateRouteADM
+				path="/adm/dashboard/categoria"
+				exact
+				component={Categoria}
+			/>
+			<PrivateRouteADM
+				path="/adm/dashboard/podcast"
+				exact
+				component={PodcastDash}
+			/>
 
 			<PrivateRoutePOD
 				path="/podcaster/dashboard"
