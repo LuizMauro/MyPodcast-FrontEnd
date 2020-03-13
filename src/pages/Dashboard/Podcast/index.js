@@ -6,7 +6,7 @@ import api from '../../../services/api';
 import { toast } from 'react-toastify';
 
 import Input from '../../../components/Input';
-import FileInput from '../../../components/FileInput/FileInput'
+import FileInput from '../../../components/FileInput/FileInput';
 
 import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 
@@ -27,18 +27,19 @@ export default function Podcast() {
 	}) {
 		const list_of_categoria = ctg_id.split(',');
 
-		const data = {
-			pod_nome,
-			pod_descricao,
-			pod_criador,
-			pod_anocriacao,
-			pod_duracao,
-			list_of_categoria,
-			end_link1,
-			end_link2,
-			end_link3,
-			file
-		};
+		const data = new FormData();
+
+		data.append('pod_nome', pod_nome);
+		data.append('pod_descricao', pod_descricao);
+		data.append('pod_criador', pod_criador);
+		data.append('pod_anocriacao', pod_anocriacao);
+		data.append('pod_duracao', pod_duracao);
+		data.append('pod_permissao', 1);
+		data.append('list_of_categoria', list_of_categoria);
+		data.append('end_link1', end_link1);
+		data.append('end_link2', end_link2);
+		data.append('end_link3', end_link3);
+		data.append('file', file);
 
 		console.log('infos', data);
 		try {
@@ -93,7 +94,10 @@ export default function Podcast() {
 					<Row style={{ justifyContent: 'center' }}>
 						<Col lg="12">
 							<Card className="bg-secondary shadow border-0">
-								<CardBody className="px-lg-5 py-lg-5">
+								<CardBody
+									className="px-lg-5 py-lg-5"
+									enctype="multipart/form-data"
+								>
 									<Form ref={formRef} onSubmit={handleSubmit}>
 										<Row lg="12" className="mb-3"></Row>
 
@@ -148,16 +152,16 @@ export default function Podcast() {
 											id="pod_endereco_img"
 											accept="image/*"
 											data-file={file}
-											ref={formRef}
 											onChange={(event) => setFile(event.target.files[0])}
 										/>
-										<FileInput name="pod_endereco_img"
+										<FileInput
+											name="pod_endereco_img"
 											type="file"
 											id="pod_endereco_img"
 											accept="image/*"
 											data-file={file}
-											ref={formRef}
-											onChange={(event) => setFile(event.target.files[0]) }></FileInput>
+											onChange={(event) => setFile(event.target.files[0])}
+										></FileInput>
 
 										<div className="text-center">
 											<Button type="submit" className="my-2" color="primary">

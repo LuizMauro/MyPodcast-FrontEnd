@@ -27,11 +27,10 @@ import DashboardMod from '../pages/DashboardMod';
 
 //ADM
 import Dashboard from '../pages/Dashboard';
-import PodcastAdm from '../pages/Dashboard/Podcast';
+import PodcastsAdm from '../pages/Dashboard/Podcast';
 import CategoriasAdm from '../pages/Dashboard/Categoria';
 import HomeAdm from '../pages/Dashboard/contents/Home';
 import UsuariosAdm from '../pages/Dashboard/contents/Usuarios';
-import PodcastsAdm from '../pages/Dashboard/contents/Podcasts';
 import SolicitacoesAdm from '../pages/Dashboard/contents/Solicitacoes';
 import ModeradoresAdm from '../pages/Dashboard/contents/Moderadores';
 import TagsAdm from '../pages/Dashboard/contents/Tags';
