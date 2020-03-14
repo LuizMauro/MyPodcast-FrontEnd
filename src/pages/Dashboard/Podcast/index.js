@@ -25,7 +25,13 @@ export default function Podcast() {
 		end_link2,
 		end_link3
 	}) {
+
 		const list_of_categoria = ctg_id.split(',');
+
+		if(list_of_categoria.length > 5){
+			toast.error('O podcast pode ter no máximo 5 categorias')
+			return;
+		}
 
 		const data = new FormData();
 
@@ -41,7 +47,6 @@ export default function Podcast() {
 		data.append('end_link3', end_link3);
 		data.append('file', file);
 
-		console.log('infos', data);
 		try {
 			const schema = Yup.object().shape({
 				pod_nome: Yup.string().required('O nome do Podcast obrigatória'),
@@ -54,8 +59,8 @@ export default function Podcast() {
 				ctg_id: Yup.string().required('As categorias são obrigatórias'),
 				end_link1: Yup.string().required('O 1º endereço é obrigatório')
 			});
-			/*
-			await schema.validate(
+
+		/*	await schema.validate(
 				{ pod_nome },
 				{ pod_descricao },
 				{ pod_criador },
@@ -69,6 +74,13 @@ export default function Podcast() {
 			); */
 
 			const response = await api.post('/adm/criarpodcast', data);
+
+			if(response.data.podCreated){
+				toast.success('Podcast cadastrado!');
+				console.log(response.data);
+			}else if(response.data.nomeExists){
+				toast.error('Nome de Podcast já cadastrado')
+			}
 			console.log(response.data);
 
 			formRef.current.setErrors(false);
@@ -145,14 +157,6 @@ export default function Podcast() {
 											name="end_link3"
 											type="text"
 											placeholder="Endereço 3 do Podcast"
-										/>
-										<Input
-											name="pod_endereco_img"
-											type="file"
-											id="pod_endereco_img"
-											accept="image/*"
-											data-file={file}
-											onChange={(event) => setFile(event.target.files[0])}
 										/>
 										<FileInput
 											name="pod_endereco_img"
