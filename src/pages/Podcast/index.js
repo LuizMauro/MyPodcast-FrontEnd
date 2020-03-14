@@ -275,7 +275,7 @@ export default function Podcast() {
 							<h5 style={{ color: '#fff' }}>Disponivel em</h5>
 							<div style={{ display: 'flex', flexDirection: 'row' }}>
 								{endereco.map((item) => ( 
-									<div style={{ padding: 5, margin: 5 }}>
+									item.includes('.com') && (<div style={{ padding: 5, margin: 5 }}>
 										<a target="_blank" href={item}>
 											{item.includes('spotify.com') ? (
 												<FaSpotify style={{ color: '#1DB954	' }} size={50} />
@@ -291,7 +291,8 @@ export default function Podcast() {
 												/>
 											)}
 										</a>
-									</div>
+									</div>) 
+									
 								))}
 							</div>
 						</div>
