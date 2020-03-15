@@ -80,6 +80,10 @@ export default function Podcast() {
 				console.log(response.data);
 			}else if(response.data.nomeExists){
 				toast.error('Nome de Podcast já cadastrado')
+			}else if(response.data.descricaoExists){
+				toast.error('Este podcast já foi cadastrado')
+			}else if(response.data.linkExists){
+				toast.error('Link(s) inválido(s)')
 			}
 			console.log(response.data);
 
