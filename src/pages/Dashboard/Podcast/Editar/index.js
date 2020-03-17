@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import Input from '../../../../components/Input';
 import FileInput from '../../../../components/FileInput/FileInput';
-import PodcastList from '../../../../styles/PodcastList';
+import PodcastList from '../../../../styles/ItemList';
 import { FaPen, FaTimes } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 
@@ -30,7 +30,7 @@ export default function Podcast() {
 
 	useEffect(() => {
 		exibirPodcasts();
-	}, []);
+	}, [editMode]);
 
 	async function exibirPodcasts() {
 		const response = await api.get('/allpodcasts');
@@ -75,12 +75,16 @@ export default function Podcast() {
 		data.append('pod_criador', pod_criador);
 		data.append('pod_anocriacao', pod_anocriacao);
 		data.append('pod_duracao', pod_duracao);
+		data.append('pod_status', 1);
 		data.append('pod_permissao', 1);
+		data.append('pod_destaque', 0);
 		data.append('list_of_categoria', list_of_categoria);
 		data.append('end_link1', end_link1);
 		data.append('end_link2', end_link2);
 		data.append('end_link3', end_link3);
 		data.append('file', file);
+
+		const pod_id = editarPod.pod_id;
 
 		try {
 			const schema = Yup.object().shape({
@@ -95,7 +99,7 @@ export default function Podcast() {
 				end_link1: Yup.string().required('O 1º endereço é obrigatório')
 			});
 
-			const response = await api.post('/adm/criarpodcast', data);
+			const response = await api.put(`/adm/editarpodcast/${pod_id}`, data);
 
 			if (response.data.podCreated) {
 				toast.success('Podcast cadastrado!');
@@ -155,12 +159,14 @@ export default function Podcast() {
 									>
 										{podcasts.map((item) => (
 											<PodcastList>
-												<Link
-													to={`../../../podcast/${item.pod_id}`}
-													className="linktittle"
-												>
-													{item.pod_nome}
-												</Link>
+												<div className="item">
+													<Link
+														to={`../../../podcast/${item.pod_id}`}
+														className="linktittle"
+													>
+														{item.pod_nome}
+													</Link>
+												</div>
 												<div className="icons">
 													<button
 														className="edit"
@@ -242,7 +248,7 @@ export default function Podcast() {
 
 										<div className="text-center">
 											<Button type="submit" className="my-2" color="primary">
-												Cadastrar
+												Salvar Alterações
 											</Button>
 										</div>
 									</Form>

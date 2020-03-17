@@ -23,9 +23,7 @@ const List = styled.li`
 		color: rgb(18, 171, 29) !important;
 		transition: 0.3s ease-in;
 	}
-	.linktittle {
-		margin-right: 20px;
-		font-size: 21px;
+	.item {
 		width: 100%;
 		display: block;
 		margin-block-start: 1em;
@@ -34,6 +32,10 @@ const List = styled.li`
 		margin-inline-end: 0px;
 		margin-top: 0;
 		margin-bottom: 1rem;
+	}
+	.linktittle {
+		margin-right: 20px;
+		font-size: 21px;
 	}
 	.p-done {
 		text-decoration: line-through;
