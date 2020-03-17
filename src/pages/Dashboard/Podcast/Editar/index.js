@@ -155,7 +155,12 @@ export default function Podcast() {
 									>
 										{podcasts.map((item) => (
 											<PodcastList>
-												<p>{item.pod_nome}</p>
+												<Link
+													to={`../../../podcast/${item.pod_id}`}
+													className="linktittle"
+												>
+													{item.pod_nome}
+												</Link>
 												<div className="icons">
 													<button
 														className="edit"
