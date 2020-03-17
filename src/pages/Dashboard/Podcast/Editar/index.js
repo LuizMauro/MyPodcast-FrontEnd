@@ -88,13 +88,13 @@ export default function EditarPodcast() {
 
 		try {
 			const schema = Yup.object().shape({
-				pod_nome: Yup.string().required('O nome do Podcast obrigatória'),
+				pod_nome: Yup.string().required('O nome do Podcast é obrigatório'),
 				pod_descricao: Yup.string().required(
 					'A descrição do Podcast é obrigatória'
 				),
 				pod_criador: Yup.string().required('O nome do criador é obrigatório'),
 				pod_anocriacao: Yup.string().required('O ano de criação é obrigatório'),
-				pod_duracao: Yup.string().required('A duração é obrigatório'),
+				pod_duracao: Yup.string().required('A duração é obrigatória'),
 				ctg_id: Yup.string().required('As categorias são obrigatórias'),
 				end_link1: Yup.string().required('O 1º endereço é obrigatório')
 			});
