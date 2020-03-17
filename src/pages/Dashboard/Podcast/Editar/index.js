@@ -94,7 +94,7 @@ export default function Podcast() {
 				),
 				pod_criador: Yup.string().required('O nome do criador é obrigatório'),
 				pod_anocriacao: Yup.string().required('O ano de criação é obrigatório'),
-				pod_duracao: Yup.string().required('A duração é obrigatório'),
+				pod_duracao: Yup.string().required('A duração é obrigatória'),
 				ctg_id: Yup.string().required('As categorias são obrigatórias'),
 				end_link1: Yup.string().required('O 1º endereço é obrigatório')
 			});
