@@ -27,7 +27,8 @@ import DashboardMod from '../pages/DashboardMod';
 
 //ADM
 import Dashboard from '../pages/Dashboard';
-import PodcastsAdm from '../pages/Dashboard/Podcast';
+import PodcastAdmCadastrar from '../pages/Dashboard/Podcast/Cadastrar';
+import PodcastAdmEditar from '../pages/Dashboard/Podcast/Editar';
 import CategoriasAdm from '../pages/Dashboard/Categoria';
 import HomeAdm from '../pages/Dashboard/contents/Home';
 import UsuariosAdm from '../pages/Dashboard/contents/Usuarios';
@@ -78,9 +79,15 @@ export default function Routes() {
 			/>
 			<PrivateRouteADM
 				exact
-				path="/adm/dashboard/podcasts"
+				path="/adm/dashboard/podcasts/cadastrar"
 				exact
-				component={PodcastsAdm}
+				component={PodcastAdmCadastrar}
+			/>
+			<PrivateRouteADM
+				exact
+				path="/adm/dashboard/podcasts/editar"
+				exact
+				component={PodcastAdmEditar}
 			/>
 			<PrivateRouteADM
 				exact

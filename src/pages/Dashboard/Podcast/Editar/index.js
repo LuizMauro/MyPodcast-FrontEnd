@@ -1,18 +1,54 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import api from '../../../services/api';
+import api from '../../../../services/api';
 import { toast } from 'react-toastify';
 
-import Input from '../../../components/Input';
-import FileInput from '../../../components/FileInput/FileInput';
+import Input from '../../../../components/Input';
+import FileInput from '../../../../components/FileInput/FileInput';
+import PodcastList from '../../../../styles/PodcastList';
+import { FaPen, FaTimes } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
 
-import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
+import {
+	Button,
+	Card,
+	CardBody,
+	Container,
+	Row,
+	Col,
+	CardTitle
+} from 'reactstrap';
 
 export default function Podcast() {
+	const [editMode, setEditMode] = useState(false);
 	const formRef = useRef(null);
 	const [file, setFile] = useState(null);
+	const [podcasts, setPodcasts] = useState([]);
+	const [editarPod, setEditarPod] = useState([]);
+
+	useEffect(() => {
+		exibirPodcasts();
+	}, []);
+
+	async function exibirPodcasts() {
+		const response = await api.get('/allpodcasts');
+		console.log(response.data);
+		setPodcasts(response.data);
+	}
+
+	async function editarPodcast(podcast) {
+		const links = podcast.end_link.split(',');
+
+		podcast.end_link1 = links[0];
+		podcast.end_link2 = links[1];
+		podcast.end_link3 = links[2];
+
+		console.log(podcast);
+		setEditMode(true);
+		setEditarPod(podcast);
+	}
 
 	async function handleSubmit({
 		pod_nome,
@@ -25,11 +61,10 @@ export default function Podcast() {
 		end_link2,
 		end_link3
 	}) {
-
 		const list_of_categoria = ctg_id.split(',');
 
-		if(list_of_categoria.length > 5){
-			toast.error('O podcast pode ter no máximo 5 categorias')
+		if (list_of_categoria.length > 5) {
+			toast.error('O podcast pode ter no máximo 5 categorias');
 			return;
 		}
 
@@ -60,30 +95,17 @@ export default function Podcast() {
 				end_link1: Yup.string().required('O 1º endereço é obrigatório')
 			});
 
-		/*	await schema.validate(
-				{ pod_nome },
-				{ pod_descricao },
-				{ pod_criador },
-				{ pod_anocriacao },
-				{ pod_duracao },
-				{ ctg_id },
-				{ end_link1 },
-				{
-					abortEarly: false
-				}
-			); */
-
 			const response = await api.post('/adm/criarpodcast', data);
 
-			if(response.data.podCreated){
+			if (response.data.podCreated) {
 				toast.success('Podcast cadastrado!');
 				console.log(response.data);
-			}else if(response.data.nomeExists){
-				toast.error('Nome de Podcast já cadastrado')
-			}else if(response.data.descricaoExists){
-				toast.error('Este podcast já foi cadastrado')
-			}else if(response.data.linkExists){
-				toast.error('Link(s) inválido(s)')
+			} else if (response.data.nomeExists) {
+				toast.error('Nome de Podcast já cadastrado');
+			} else if (response.data.descricaoExists) {
+				toast.error('Este podcast já foi cadastrado');
+			} else if (response.data.linkExists) {
+				toast.error('Link(s) inválido(s)');
 			}
 			console.log(response.data);
 
@@ -105,6 +127,7 @@ export default function Podcast() {
 
 	return (
 		<>
+			{console.log(podcasts)}
 			<section className="section section-shaped section-lg">
 				<Container className="pt-lg-1">
 					<Row style={{ justifyContent: 'center' }}>
@@ -114,7 +137,48 @@ export default function Podcast() {
 									className="px-lg-5 py-lg-5"
 									enctype="multipart/form-data"
 								>
-									<Form ref={formRef} onSubmit={handleSubmit}>
+									<CardTitle>Podcasts Cadastrados</CardTitle>
+
+									<MdClose
+										size={24}
+										color={'#fff'}
+										className="closeIcon"
+										style={
+											editMode ? { display: 'block' } : { display: 'none' }
+										}
+										onClick={() => setEditMode(false)}
+									/>
+									<ul
+										style={
+											editMode ? { display: 'none' } : { display: 'block' }
+										}
+									>
+										{podcasts.map((item) => (
+											<PodcastList>
+												<p>{item.pod_nome}</p>
+												<div className="icons">
+													<button
+														className="edit"
+														onClick={(e) => editarPodcast(item)}
+													>
+														<FaPen size={18} />
+													</button>
+													<button className="delete">
+														<FaTimes size={18} />
+													</button>
+												</div>
+											</PodcastList>
+										))}
+									</ul>
+
+									<Form
+										ref={formRef}
+										onSubmit={handleSubmit}
+										initialData={editarPod}
+										style={
+											editMode ? { display: 'block' } : { display: 'none' }
+										}
+									>
 										<Row lg="12" className="mb-3"></Row>
 
 										<Input
@@ -183,7 +247,9 @@ export default function Podcast() {
 												className="text-light"
 												href="#"
 												onClick={(e) => e.preventDefault()}
-											></a>
+											>
+												uat
+											</a>
 										</Col>
 										<Col className="text-right" xs="6"></Col>
 									</Row>
