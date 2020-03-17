@@ -21,7 +21,7 @@ import {
 	CardTitle
 } from 'reactstrap';
 
-export default function Podcast() {
+export default function EditarPodcast() {
 	const [editMode, setEditMode] = useState(false);
 	const formRef = useRef(null);
 	const [file, setFile] = useState(null);
