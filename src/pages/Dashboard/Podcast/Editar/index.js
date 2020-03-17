@@ -88,7 +88,7 @@ export default function Podcast() {
 
 		try {
 			const schema = Yup.object().shape({
-				pod_nome: Yup.string().required('O nome do Podcast obrigatória'),
+				pod_nome: Yup.string().required('O nome do Podcast é obrigatório'),
 				pod_descricao: Yup.string().required(
 					'A descrição do Podcast é obrigatória'
 				),
