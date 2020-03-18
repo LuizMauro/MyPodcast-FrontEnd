@@ -1,0 +1,9 @@
+@media (max-width: 772px) {
+	.subitem {
+		width: 40% !important;
+	}
+
+	.edit {
+		right: -50px !important;
+	}
+}
