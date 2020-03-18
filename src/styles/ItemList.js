@@ -34,7 +34,7 @@ const List = styled.li`
 		margin-bottom: 1rem;
 	}
 
-	.subitem{
+	.subitem {
 		width: 50%;
 		display: block;
 		margin-block-start: 1em;
@@ -52,9 +52,7 @@ const List = styled.li`
 	.p-done {
 		text-decoration: line-through;
 	}
-	.button-done {
-		color: rgb(18, 171, 29);
-	}
+
 	.icons {
 		position: relative;
 		.delete:hover,

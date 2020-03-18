@@ -23,15 +23,13 @@ import {
 } from 'reactstrap';
 
 export default function EditarPodcast() {
-	const [editMode, setEditMode] = useState(false);
-	const formRef = useRef(null);
-	const [file, setFile] = useState(null);
 	const [usuario, setUsuario] = useState([]);
-	const [editarPod, setEditarPod] = useState([]);
+	const [userFiltrado, setUserFiltrado] = useState([]);
+	const [userStatus, setUserStatus] = useState(null);
 
 	useEffect(() => {
 		exibirUsuarios();
-	}, [editMode]);
+	}, [userStatus]);
 
 	async function exibirUsuarios() {
 		const response = await api.get('/adm/users');
@@ -39,16 +37,8 @@ export default function EditarPodcast() {
 		setUsuario(response.data);
 	}
 
-	async function editarPodcast(podcast) {
-		const links = podcast.end_link.split(',');
-
-		podcast.end_link1 = links[0];
-		podcast.end_link2 = links[1];
-		podcast.end_link3 = links[2];
-
-		console.log(podcast);
-		setEditMode(true);
-		setEditarPod(podcast);
+	async function exibirStatus(status) {
+		setUserStatus(status);
 	}
 
 	return (
@@ -65,47 +55,79 @@ export default function EditarPodcast() {
 								>
 									<CardTitle>Usuários do Sistema</CardTitle>
 									<Row className="mt-1">
-										<Col md="2" xs="6">
-											<button onClick="">Ativados</button>
+										<Col md="2" xs="4">
+											<button onClick={(e) => exibirStatus(null)}>Todos</button>
 										</Col>
-										<Col md="2" xs="6">
-											<button onClick="">Desativados</button>
+										<Col md="2" xs="4">
+											<button onClick={(e) => exibirStatus(1)}>Ativados</button>
+										</Col>
+										<Col md="2" xs="4">
+											<button onClick={(e) => exibirStatus(0)}>
+												Desativados
+											</button>
 										</Col>
 										<Col className="text-right" xs="6"></Col>
 									</Row>
 									<Row className="my-3">
-										<Col xs="6">
-											Usuário
-										</Col>
-										<Col xs="6">
-											Perfil
-										</Col>
+										<Col xs="6">Usuário</Col>
+										<Col xs="6">Perfil</Col>
 										<Col className="text-right" xs="6"></Col>
 									</Row>
 									<ul>
-										{usuario.map((item) => (
-											<PodcastList>
-												<div className="subitem">
-													<Link
-														to={`../../../podcast/${item.pod_id}`}
-														className="linktittle"
-													>
-														{item.usu_nome}
-													</Link>
-												</div>
-												<div className="subitem">
-													<Link
-														to={`../../../podcast/${item.pod_id}`}
-														className="linktittle"
-													>
-														{item.tus_descricao}
-													</Link>
-												</div>
-												<div className="icons">
-													<button className="edit">EDITAR</button>
-												</div>
-											</PodcastList>
-										))}
+										{console.log('status é', userStatus)}
+										{usuario.map((item) =>
+											userStatus === 1 || userStatus === 0 ? (
+												userStatus === item.usu_status && (
+													<h1>
+														<PodcastList>
+															<div className="subitem">
+																<Link
+																	to={`../../../podcast/${item.pod_id}`}
+																	className="linktittle"
+																>
+																	{item.usu_nome}
+																</Link>
+															</div>
+															<div className="subitem">
+																<Link
+																	to={`../../../podcast/${item.pod_id}`}
+																	className="linktittle"
+																>
+																	{item.tus_descricao}
+																</Link>
+															</div>
+															<div className="icons">
+												<button className="edit">{item.usu_status ? 'Desativar' : 'Ativar'}</button>
+															</div>
+														</PodcastList>
+													</h1>
+												)
+											) : (
+												<h1>
+													<PodcastList>
+														<div className="subitem">
+															<Link
+																to={`../../../podcast/${item.pod_id}`}
+																className="linktittle"
+															>
+																{item.usu_nome}
+															</Link>
+														</div>
+														<div className="subitem">
+															<Link
+																to={`../../../podcast/${item.pod_id}`}
+																className="linktittle"
+															>
+																{item.tus_descricao}
+															</Link>
+														</div>
+														<div className="icons">
+															<button className="edit">{item.usu_status ? 'Desativar' : 'Ativar'}</button>
+														</div>
+													</PodcastList>
+												</h1>
+											)
+										)}
 									</ul>
 								</CardBody>
 							</Card>
