@@ -1,15 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Form } from '@unform/web';
-import * as Yup from 'yup';
 import api from '../../../services/api';
 import { toast } from 'react-toastify';
 
-import Input from '../../../components/Input';
-import FileInput from '../../../components/FileInput/FileInput';
 import PodcastList from '../../../styles/ItemList';
-import { FaPen, FaTimes } from 'react-icons/fa';
-import { MdClose } from 'react-icons/md';
 import './style.css';
 
 import {
@@ -24,7 +18,6 @@ import {
 
 export default function EditarPodcast() {
 	const [usuario, setUsuario] = useState([]);
-	const [userFiltrado, setUserFiltrado] = useState([]);
 	const [userStatus, setUserStatus] = useState(null);
 
 	useEffect(() => {
@@ -39,6 +32,22 @@ export default function EditarPodcast() {
 
 	async function exibirStatus(status) {
 		setUserStatus(status);
+	}
+
+	async function mudarStatus(item) {
+		try {
+			const response = await api.put(
+				`/adm/users/${item.usu_id}/${item.usu_status ? 0 : 1}`
+			);
+
+			if (item.usu_status) {
+				toast.success('Usuário desativado.');
+			} else {
+				toast.success('Usuário ativado');
+			}
+		} catch (err) {
+			toast.error('Não foi possível ativar/desativar usuário');
+		}
 	}
 
 	return (
@@ -97,7 +106,12 @@ export default function EditarPodcast() {
 																</Link>
 															</div>
 															<div className="icons">
-												<button className="edit">{item.usu_status ? 'Desativar' : 'Ativar'}</button>
+																<button
+																	className="edit"
+																	onClick={(e) => mudarStatus(item)}
+																>
+																	{item.usu_status ? 'Desativar' : 'Ativar'}
+																</button>
 															</div>
 														</PodcastList>
 													</h1>
@@ -122,7 +136,12 @@ export default function EditarPodcast() {
 															</Link>
 														</div>
 														<div className="icons">
-															<button className="edit">{item.usu_status ? 'Desativar' : 'Ativar'}</button>
+															<button
+																className="edit"
+																onClick={(e) => mudarStatus(item)}
+															>
+																{item.usu_status ? 'Desativar' : 'Ativar'}
+															</button>
 														</div>
 													</PodcastList>
 												</h1>
