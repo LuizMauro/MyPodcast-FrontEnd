@@ -19,10 +19,11 @@ import {
 export default function Usuario() {
 	const [usuario, setUsuario] = useState([]);
 	const [userStatus, setUserStatus] = useState(null);
+	const [edit, setEdit] = useState(false);
 
 	useEffect(() => {
 		exibirUsuarios();
-	}, [userStatus]);
+	}, [edit]);
 
 	async function exibirUsuarios() {
 		const response = await api.get('/adm/users');
@@ -41,8 +42,10 @@ export default function Usuario() {
 			);
 
 			if (item.usu_status) {
+				setEdit(edit ? false : true);
 				toast.success('Usuário desativado.');
 			} else {
+				setEdit(edit ? false : true);
 				toast.success('Usuário ativado');
 			}
 		} catch (err) {

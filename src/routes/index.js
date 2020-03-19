@@ -34,7 +34,6 @@ import SolicitacoesAdm from '../pages/Dashboard/Solicitacao';
 import UsuariosAdm from '../pages/Dashboard/Usuario';
 import ModeradoresAdm from '../pages/Dashboard/Moderador';
 import HomeAdm from '../pages/Dashboard/contents/Home';
-import TagsAdm from '../pages/Dashboard/contents/Tags';
 import PublicidadeAdm from '../pages/Dashboard/contents/Publicidade';
 import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
 
@@ -100,12 +99,6 @@ export default function Routes() {
 				path="/adm/dashboard/moderadores"
 				exact
 				component={ModeradoresAdm}
-			/>
-			<PrivateRouteADM
-				exact
-				path="/adm/dashboard/tags"
-				exact
-				component={TagsAdm}
 			/>
 			<PrivateRouteADM
 				exact

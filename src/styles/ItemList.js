@@ -20,9 +20,10 @@ const List = styled.li`
 		cursor: pointer;
 	}
 	button:hover {
-		color: rgb(27, 253, 190) !important;
+		color: rgb(27, 253, 190)  !important;
 		transition: 0.3s ease-in;
 	}
+	
 	.item {
 		width: 100%;
 		display: block;
@@ -57,7 +58,7 @@ const List = styled.li`
 		position: relative;
 		.delete:hover,
 		.edit:hover {
-			color: rgb(27, 253, 190) !important;
+			color: rgb(27, 253, 190)  !important;
 			transition: 0.3s ease-in;
 		}
 		.delete {

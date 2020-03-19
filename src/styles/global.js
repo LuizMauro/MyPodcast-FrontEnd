@@ -24,6 +24,10 @@ export default createGlobalStyle`
     height: 100vh;
     }
 
+    button:focus{
+        outline:0;
+    }
+
     .active{
         background:#232659;
         border-top-left-radius:20px;

@@ -69,7 +69,6 @@ class Navbar extends Component {
                                 <Navitem item="Moderadores" tolink="/adm/dashboard/moderadores" activec={this.activeitem}></Navitem>
                                 <Navitem item="Solicitacao" tolink="/adm/dashboard/solicitacoes" activec={this.activeitem}></Navitem>
                                 <Navitem item="Categorias" tolink="/adm/dashboard/categorias" activec={this.activeitem}></Navitem>
-                                <Navitem item="Tags" tolink="/adm/dashboard/tags" activec={this.activeitem}></Navitem>
                                 <Navitem item="Publicidade" tolink="/adm/dashboard/publicidade" activec={this.activeitem}></Navitem>
                                 <Navitem item="Relatorio" tolink="/adm/dashboard/relatorio" activec={this.activeitem}></Navitem>
                             </ul>

@@ -13,8 +13,13 @@ button:hover {
 }
 
 button:hover {
-	color: rgb(146, 145, 145) !important;
 	transition: 0.3s ease-in;
+}
+
+.activated,
+.activated:hover {
+	border-bottom: 2px solid rgb(27, 253, 190);
+	transition: 0s;
 }
 
 @media (max-width: 772px) {

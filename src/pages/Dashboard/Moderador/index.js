@@ -19,10 +19,11 @@ import {
 export default function Moderador() {
 	const [usuario, setUsuario] = useState([]);
 	const [tusId, setTusId] = useState(3);
+	const [edit, setEdit] = useState(false);
 
 	useEffect(() => {
 		exibirUsuarios();
-	}, [tusId]);
+	}, [edit]);
 
 	async function exibirUsuarios() {
 		const response = await api.get('/adm/modusers');
@@ -34,16 +35,18 @@ export default function Moderador() {
 		setTusId(status);
 	}
 
-	async function mudarStatus(item) {
+	async function mudarTusId(item) {
 		try {
-			const response = await api.put(
-				`/adm/users/${item.usu_id}/${item.usu_status ? 0 : 1}`
+			await api.put(
+				`/adm/users/tipo/${item.usu_id}/${item.tus_id === 3 ? 1 : 3}`
 			);
 
-			if (item.usu_status) {
-				toast.success('Usuário desativado.');
+			if (item.tus_id === 3) {
+				setEdit(edit ? false : true);
+				toast.success('O usuário não é mais moderador');
 			} else {
-				toast.success('Usuário ativado');
+				setEdit(edit ? false : true);
+				toast.success('O usuário agora é moderador');
 			}
 		} catch (err) {
 			toast.error('Não foi possível ativar/desativar usuário');
@@ -62,15 +65,25 @@ export default function Moderador() {
 									className="px-lg-5 py-lg-5"
 									enctype="multipart/form-data"
 								>
-									 <CardTitle>{tusId === 3 ? 'Adicionar Moderador' : 'Remover Moderador'}</CardTitle>
+									<CardTitle>
+										{tusId === 3
+											? 'Moderadores do Sistema'
+											: 'Adicionar Moderador'}
+									</CardTitle>
 									<Row className="mt-1">
 										<Col md="3" xs="5">
-											<button onClick={(e) => exibirEspecifico(3)}>
+											<button
+												className={tusId === 3 ? 'activated' : ''}
+												onClick={(e) => exibirEspecifico(3)}
+											>
 												Moderadores
 											</button>
 										</Col>
-										<Col md="3" xs="7">
-											<button onClick={(e) => exibirEspecifico(1)}>
+										<Col md="5" xs="7">
+											<button
+												className={tusId === 1 ? 'activated' : ''}
+												onClick={(e) => exibirEspecifico(1)}
+											>
 												Adicionar Moderador
 											</button>
 										</Col>
@@ -91,12 +104,17 @@ export default function Moderador() {
 																	{item.usu_nome}
 																</Link>
 															</div>
-															<div className="subitem" style={{textAlign:'end'}}>
+															<div
+																className="subitem"
+																style={{ textAlign: 'end' }}
+															>
 																<button
 																	className="edit"
-																	onClick={(e) => mudarStatus(item)}
+																	onClick={(e) => mudarTusId(item)}
 																>
-																	{item.tus_id === 1 ? 'Tornar Moderador' : 'Remover Moderação'}
+																	{item.tus_id === 1
+																		? 'Tornar Moderador'
+																		: 'Remover Moderação'}
 																</button>
 															</div>
 														</PodcastList>
