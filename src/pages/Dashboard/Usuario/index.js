@@ -16,7 +16,7 @@ import {
 	CardTitle
 } from 'reactstrap';
 
-export default function EditarPodcast() {
+export default function Usuario() {
 	const [usuario, setUsuario] = useState([]);
 	const [userStatus, setUserStatus] = useState(null);
 

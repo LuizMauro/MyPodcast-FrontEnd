@@ -16,11 +16,11 @@ const List = styled.li`
 		width: auto;
 		margin-right: 20px;
 		align-self: start;
-		color: rgb(165, 245, 171);
+		color: rgb(27, 253, 190);
 		cursor: pointer;
 	}
 	button:hover {
-		color: rgb(18, 171, 29) !important;
+		color: rgb(27, 253, 190) !important;
 		transition: 0.3s ease-in;
 	}
 	.item {
@@ -57,7 +57,7 @@ const List = styled.li`
 		position: relative;
 		.delete:hover,
 		.edit:hover {
-			color: rgb(146, 145, 145) !important;
+			color: rgb(27, 253, 190) !important;
 			transition: 0.3s ease-in;
 		}
 		.delete {
