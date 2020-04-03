@@ -169,12 +169,12 @@ export default function EditarPodcast() {
 												</div>
 												<div className="icons">
 													<button
-														className="edit"
+														className="button edit"
 														onClick={(e) => editarPodcast(item)}
 													>
 														<FaPen size={18} />
 													</button>
-													<button className="delete">
+													<button className="button delete">
 														<FaTimes size={18} />
 													</button>
 												</div>

@@ -98,7 +98,7 @@ export default function Solicitacao() {
 														<p>{item.usu_nome}</p>
 													</div>
 													<button
-														className="button"
+														className="button" style={{color:'#151734'}}
 														onClick={(e) => toggle(item)}
 													>
 														Detalhes
