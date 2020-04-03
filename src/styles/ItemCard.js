@@ -8,7 +8,7 @@ const List = styled.ul`
 	gap:20px;
 
 	li{
-	borderRadius: 15;
+	border-radius: 15;
 	background:#151734;
 	border:2px solid red
 	}
@@ -39,7 +39,7 @@ const List = styled.ul`
 		background-color: #1BFDBE;
 		border:none;
 		filter: brightness(90%);
-		padding: 5px 20px
+		padding: 5px 20px;
 		border-radius:20px;
 
 	}

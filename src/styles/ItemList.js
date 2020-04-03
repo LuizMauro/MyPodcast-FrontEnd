@@ -6,8 +6,8 @@ const List = styled.li`
 	color: #666;
 	align-content: stretch;
 	display: flex;
-	button,
-	button:hover {
+	.button,
+	.button:hover {
 		border: 0;
 		background-color: transparent;
 		margin: 0;
@@ -19,7 +19,7 @@ const List = styled.li`
 		color: rgb(27, 253, 190);
 		cursor: pointer;
 	}
-	button:hover {
+	.button:hover {
 		color: rgb(27, 253, 190)  !important;
 		transition: 0.3s ease-in;
 	}

@@ -1,5 +1,5 @@
-button,
-button:hover {
+.button,
+.button:hover {
 	border: 0;
 	background-color: transparent;
 	margin: 0;
@@ -12,7 +12,7 @@ button:hover {
 	cursor: pointer;
 }
 
-button:hover {
+.button:hover {
 	transition: 0.3s ease-in;
 }
 

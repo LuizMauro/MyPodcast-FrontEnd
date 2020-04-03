@@ -73,7 +73,7 @@ export default function Moderador() {
 									<Row className="mt-1">
 										<Col md="3" xs="5">
 											<button
-												className={tusId === 3 ? 'activated' : ''}
+												className={'button',tusId === 3 ? 'activated' : ''}
 												onClick={(e) => exibirEspecifico(3)}
 											>
 												Moderadores
@@ -81,7 +81,7 @@ export default function Moderador() {
 										</Col>
 										<Col md="5" xs="7">
 											<button
-												className={tusId === 1 ? 'activated' : ''}
+												className={'button',tusId === 1 ? 'activated' : ''}
 												onClick={(e) => exibirEspecifico(1)}
 											>
 												Adicionar Moderador
@@ -108,8 +108,8 @@ export default function Moderador() {
 																className="subitem"
 																style={{ textAlign: 'end' }}
 															>
-																<button
-																	className="edit"
+																<button 
+																	className="edit button"
 																	onClick={(e) => mudarTusId(item)}
 																>
 																	{item.tus_id === 1
