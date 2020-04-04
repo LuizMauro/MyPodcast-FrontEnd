@@ -86,7 +86,7 @@ export default function Solicitacao() {
 									enctype="multipart/form-data"
 								>
 									<CardTitle>Solicitações de Cadastro</CardTitle>
-									<PodcastCard>
+									<PodcastCard className="solicitacoes">
 										{solicitacao.map((item) => (
 											<li>
 												<div className="card_content">
@@ -98,7 +98,7 @@ export default function Solicitacao() {
 														<p>{item.usu_nome}</p>
 													</div>
 													<button
-														className="button"
+														className="button" style={{color:'#151734'}}
 														onClick={(e) => toggle(item)}
 													>
 														Detalhes
