@@ -131,11 +131,11 @@ class Navbar extends Component {
             <div className="shadow" style={{width:'100%', padding: 20, background:"#151734", position: "fixed", zIndex: 999}}>
               {this.state.abrir ? (
                   <div>
-                    <button onClick={() => this.onSetSidebarOpen()}><FaAngleRight size={50} color="#1bfdbe"></FaAngleRight></button>
+                    <button style={{background: "none", border:0}} onClick={() => this.onSetSidebarOpen()}><FaAngleRight size={50} color="#1bfdbe"></FaAngleRight></button>
                   </div>
                 ):(
                   <div>
-                      <button onClick={() => this.onSetSidebarExit()}><FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft></button>
+                      <button style={{background: "none", border:0}} onClick={() => this.onSetSidebarExit()}><FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft></button>
                     
                   </div>
                 )} 
