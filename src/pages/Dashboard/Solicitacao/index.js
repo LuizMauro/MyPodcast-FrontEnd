@@ -86,7 +86,7 @@ export default function Solicitacao() {
 									enctype="multipart/form-data"
 								>
 									<CardTitle>Solicitações de Cadastro</CardTitle>
-									<PodcastCard>
+									<PodcastCard className="solicitacoes">
 										{solicitacao.map((item) => (
 											<li>
 												<div className="card_content">
