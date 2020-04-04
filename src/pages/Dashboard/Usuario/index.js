@@ -68,13 +68,26 @@ export default function Usuario() {
 									<CardTitle>Usuários do Sistema</CardTitle>
 									<Row className="mt-1">
 										<Col md="2" xs="4">
-											<button onClick={(e) => exibirStatus(null)}>Todos</button>
+											<button
+												className="button"
+												onClick={(e) => exibirStatus(null)}
+											>
+												Todos
+											</button>
 										</Col>
 										<Col md="2" xs="4">
-											<button onClick={(e) => exibirStatus(1)}>Ativados</button>
+											<button
+												className="button"
+												onClick={(e) => exibirStatus(1)}
+											>
+												Ativados
+											</button>
 										</Col>
 										<Col md="2" xs="4">
-											<button onClick={(e) => exibirStatus(0)}>
+											<button
+												className="button"
+												onClick={(e) => exibirStatus(0)}
+											>
 												Desativados
 											</button>
 										</Col>
@@ -90,37 +103,6 @@ export default function Usuario() {
 										{usuario.map((item) =>
 											userStatus === 1 || userStatus === 0 ? (
 												userStatus === item.usu_status && (
-													<h1>
-														<PodcastList>
-															<div className="subitem">
-																<Link
-																	to={`../../../podcast/${item.pod_id}`}
-																	className="linktittle"
-																>
-																	{item.usu_nome}
-																</Link>
-															</div>
-															<div className="subitem">
-																<Link
-																	to={`../../../podcast/${item.pod_id}`}
-																	className="linktittle"
-																>
-																	{item.tus_descricao}
-																</Link>
-															</div>
-															<div className="icons">
-																<button
-																	className="edit"
-																	onClick={(e) => mudarStatus(item)}
-																>
-																	{item.usu_status ? 'Desativar' : 'Ativar'}
-																</button>
-															</div>
-														</PodcastList>
-													</h1>
-												)
-											) : (
-												<h1>
 													<PodcastList>
 														<div className="subitem">
 															<Link
@@ -140,14 +122,41 @@ export default function Usuario() {
 														</div>
 														<div className="icons">
 															<button
-																className="edit"
+																className="button"
 																onClick={(e) => mudarStatus(item)}
 															>
 																{item.usu_status ? 'Desativar' : 'Ativar'}
 															</button>
 														</div>
 													</PodcastList>
-												</h1>
+												)
+											) : (
+												<PodcastList>
+													<div className="subitem">
+														<Link
+															to={`../../../podcast/${item.pod_id}`}
+															className="linktittle"
+														>
+															{item.usu_nome}
+														</Link>
+													</div>
+													<div className="subitem">
+														<Link
+															to={`../../../podcast/${item.pod_id}`}
+															className="linktittle"
+														>
+															{item.tus_descricao}
+														</Link>
+													</div>
+													<div className="icons">
+														<button
+															className="button"
+															onClick={(e) => mudarStatus(item)}
+														>
+															{item.usu_status ? 'Desativar' : 'Ativar'}
+														</button>
+													</div>
+												</PodcastList>
 											)
 										)}
 									</ul>

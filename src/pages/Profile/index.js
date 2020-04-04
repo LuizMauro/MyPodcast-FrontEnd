@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
+import Menu from '../../components/Menu';
 import { MdClose } from 'react-icons/md';
 import './style.css';
 
@@ -35,6 +36,7 @@ export default function Profile() {
 		const response = await api.get('/profile');
 		console.log(response.data);
 		setPodcast(response.data);
+		
 	}
 
 	function handleSubmit(data) {
@@ -43,19 +45,20 @@ export default function Profile() {
 
 	return (
 		<>
+		<Menu></Menu>
 			<section className="section section-shaped section-lg">
-				<Container className="pt-lg-1">
+				<Container>
 					<Row style={{ justifyContent: 'center' }}>
-						<Col lg="10">
+						<Col lg="12">
 							<Card className="bg-secondary shadow border-0 ">
 								<MdClose
-									size={24}
+									size={40}
 									color={'#fff'}
 									className="closeIcon"
 									style={editMode ? { display: 'block' } : { display: 'none' }}
 									onClick={() => setEditMode(false)}
 								/>
-								<CardBody className="px-lg-5 py-lg-5">
+								<CardBody className="px-lg-3 py-lg-3">
 									<Form
 										initialData={profile}
 										onSubmit={handleSubmit}
@@ -63,7 +66,16 @@ export default function Profile() {
 											editMode ? { display: 'block' } : { display: 'none' }
 										}
 									>
-										<Input
+											<div style={{display:"flex",flexDirection:"row" ,padding:20,  alignItems:"center"}}>
+											<div style={{width:"30%", height: "30%", margin:5}}>
+													<img
+														style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+														src={'https://api.adorable.io/avatars/285/' + profile.usu_email}
+													/>
+											</div>
+
+											<div style={{display:"flex", width:500, padding:20, flexDirection:"column"}}>
+											<Input
 											className="has-success form-control"
 											name="usu_nome"
 											type="text"
@@ -78,6 +90,7 @@ export default function Profile() {
 											required
 										/>
 										<hr className="hr-primary" />
+										<h4 style={{color: "#fff"}}> Alterar senha</h4>
 										<Input
 											className="has-success form-control"
 											name="senhaAntiga"
@@ -96,11 +109,14 @@ export default function Profile() {
 											type="password"
 											placeholder="Confirmar nova senha"
 										/>
+											</div>
+										</div>
+
+									
 
 										<div className="text-center">
 											<Button
 												type="submit"
-												className="my-2"
 												color="primary"
 												onClick={() => setEditMode(false)}
 											>
@@ -109,41 +125,52 @@ export default function Profile() {
 										</div>
 									</Form>
 									<div>
-										<div
-											className="text-center"
-											style={
-												editMode ? { display: 'none' } : { display: 'block' }
-											}
-										>
-											<p>Nome: {profile.usu_nome}</p>
-											<p>E-mail: {profile.usu_email}</p>
-											<p>CPF: {profile.usu_cpf}</p>
-											<Button
-												type="submit"
-												className="my-2"
-												color="primary"
-												onClick={() => setEditMode(true)}
-											>
-												Editar Perfil
-											</Button>
+								
+										<div style={editMode ? { display: 'none' } : { display: '' }}>
+										<div style={{display:"flex",flexDirection:"row" , justifyContent:"center", alignItems:"center"}}>
+											<div style={{width:"25%", height: "25%", margin:5}}>
+													<img
+														style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+														src={'https://api.adorable.io/avatars/285/' + profile.usu_email}
+													/>
+								
+													<Button
+														style={{width:"100%"}}
+														type="submit"
+														className="my-3"
+														color="primary"
+														onClick={() => setEditMode(true)}
+													>
+														Editar Perfil
+												    </Button>
+											</div>
+
+											<div style={{display:"flex", width:500, flexDirection:"column"}}>
+												<h4 style={{margin:15, color:"#fff"}}><strong>Nome:</strong> {profile.usu_nome}</h4>
+												<h4 style={{margin:15, color:"#fff"}}><strong>E-mail:</strong>  {profile.usu_email}</h4>
+												<h4 style={{margin:15, color:"#fff"}}><strong>CPF:</strong>  {profile.usu_cpf}</h4>
+											</div>
 										</div>
 									</div>
+	
+								</div>
 
-									<Row className="mt-3">
+									<Row className="mt-5">
 										<Col sm="4">
 											<Card
 												style={{
 													borderRadius: 15,
-													background: '#151734'
+													background: '#151734',
+													minHeight: 250
 												}}
 												className="teste card-body mb-3"
 											>
 												<CardTitle className="title-primary">
-													Favoritos
+													<h4 style={{color:"#1bfdbe", fontWeight:"bold"}}>Favoritos</h4>
 												</CardTitle>
 												<ul>
 													{podcast.map((pod) => (
-														<li key={podcast.fbk_id}>
+														<li style={{color:'#fff'}} key={podcast.fbk_id}>
 															{pod.tfb_id === 1 &&
 																pod.fbk_status === 1 &&
 																pod.pod_nome}
@@ -156,16 +183,17 @@ export default function Profile() {
 											<Card
 												style={{
 													borderRadius: 15,
-													background: '#151734'
+													background: '#151734',
+													minHeight: 250
 												}}
 												className="teste card-body mb-3"
 											>
 												<CardTitle className="title-primary">
-													Acompanhando
+												<h4 style={{color:"#1bfdbe", fontWeight:"bold"}}>Acompanhando</h4>
 												</CardTitle>
 												<ul>
 													{podcast.map((pod) => (
-														<li key={podcast.fbk_id}>
+														<li style={{color:'#fff'}} key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
 																pod.fbk_status === 1 &&
 																pod.pod_nome}
@@ -178,16 +206,17 @@ export default function Profile() {
 											<Card
 												style={{
 													borderRadius: 15,
-													background: '#151734'
+													background: '#151734',
+													minHeight: 250
 												}}
 												className="teste card-body mb-3"
 											>
 												<CardTitle className="title-primary">
-													Pretendo Acompanhar
+												<h4 style={{color:"#1bfdbe", fontWeight:"bold"}}>Pretendo acompanhar</h4>
 												</CardTitle>
 												<ul>
 													{podcast.map((pod) => (
-														<li key={podcast.fbk_id}>
+														<li style={{color:'#fff'}} key={podcast.fbk_id}>
 															{pod.tfb_id === 2 &&
 																pod.fbk_status === 2 &&
 																pod.pod_nome}

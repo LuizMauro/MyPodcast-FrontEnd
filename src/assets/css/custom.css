@@ -294,3 +294,11 @@ option{
 .button, .button:hover{
 	padding: 1px !important;
 }
+
+.custom-toggle input:checked + .custom-toggle-slider:before {
+    background: #1BFDBE;
+    transform: translateX(1.625rem);
+}
+.custom-toggle input:checked + .custom-toggle-slider {
+    border: 1px solid #1BFDBE;
+}

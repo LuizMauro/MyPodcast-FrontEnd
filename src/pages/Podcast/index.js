@@ -3,7 +3,11 @@ import { Link, useParams } from 'react-router-dom';
 import Menu from '../../components/Menu';
 import api from '../../services/api';
 import { FaSpotify, FaInternetExplorer, FaYoutube } from 'react-icons/fa';
-import { IoIosHeart } from 'react-icons/io';
+import Lottie from 'react-lottie'
+import * as animationData from '../../assets/animations/like.json'
+import { toast } from 'react-toastify';
+import history from '../../services/history';
+
 
 import { useSelector } from 'react-redux';
 
@@ -16,6 +20,8 @@ export default function Podcast() {
 	const [categoria, setCategoria] = useState([]);
 	const [endereco, setEndereco] = useState([]);
 	const [opcao, setOpcao] = useState('');
+	const [acompnhamento, setAcompanhamento] = useState([]);
+	const [favorito, setFavoritar] = useState([]);
 
 	const profile = useSelector((state) => state.user.profile);
 
@@ -29,6 +35,22 @@ export default function Podcast() {
 		setEndereco(end_link.split(','));
 
 		console.log('TESTE', response.data);
+
+		setaCheckBox();
+		setaFavoritar();
+
+	}
+
+	async function setaCheckBox(){
+		const acompanhandoResp = await api.get(`acompanhando/${pod_id}`);
+		
+		setAcompanhamento(acompanhandoResp.data);
+	}
+
+	async function setaFavoritar(){
+		const verifica = await api.get(`findfavorito/${pod_id}`);
+		console.log(verifica.data);
+		setFavoritar(verifica.data);
 	}
 
 	useEffect(() => {
@@ -37,10 +59,9 @@ export default function Podcast() {
 	}, []);
 
 	async function favoritar() {
-		console.log(profile);
 		if (profile) {
 			const verifica = await api.get(`findfavorito/${pod_id}`);
-			console.log(verifica.data);
+			console.log("tese",verifica.data);
 
 			if (verifica.data.fbk_status === 1) {
 				await api.put(`profile/favoritar/${pod_id}`);
@@ -50,8 +71,11 @@ export default function Podcast() {
 				await api.post(`${pod_id}/favoritar`);
 			}
 		} else {
+			toast.error("Você precisa estar lagado para fazer essa ação")
+			history.push("/login");
 			console.log('n ta logado n pode favorita ');
 		}
+		setaFavoritar();
 	}
 
 	async function marcarPodcast(e) {
@@ -82,16 +106,30 @@ export default function Podcast() {
 					// Marcar como pretendo acompanhar
 					await api.post(`${pod_id}/acompanhar`);
 				} else {
+					toast.error("Você não pode escolher essa opção")
 					console.log('nao tem como marcar como nao marcado');
 				}
 			}
 
+			setaCheckBox();
 			setOpcao(e);
 			console.log(e);
 		} else {
-			console.log('n tá lotado n pode marca');
+			toast.error("Você precisa estar lagado para fazer essa ação")
+			history.push("/login");
 		}
 	}
+
+	const defaultOptions = {
+        loop: false,
+        autoplay: true, 
+        animationData: animationData.default,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+	  };
+	  
+	
 
 	return (
 		<>
@@ -119,6 +157,7 @@ export default function Podcast() {
 							style={{ height: 350, width: 400, padding: 20 }}
 							className="borderBottom"
 						>
+							
 							<img
 								className="shadow"
 								width="100%"
@@ -130,21 +169,34 @@ export default function Podcast() {
 						</div>
 
 						<div style={{ padding: 20, display: 'flex' }}>
-							<IoIosHeart
-								size={50}
-								style={{ cursor: 'pointer' }}
-								color="#FF3144"
-								className="shadow"
-								onClick={() => favoritar()}
-							/>
-							<Input
-								className="select-home shadow"
-								style={{ color: '#fff' }}
-								type="select"
-								name="select"
-								id="exampleSelect"
-								placeholder="Selecione"
-							>
+
+							{favorito.fbk_status !== 1 ? (
+								<a onClick={() => favoritar()}>
+								<Lottie style={{marginTop: -25}} options={defaultOptions}
+											height={100}
+											width={100}
+											speed={2}
+											direction={-3}
+										/>
+								</a>
+							):(
+								<a onClick={() => favoritar()}>
+								<Lottie style={{marginTop: -25}} options={defaultOptions}
+											height={100}
+											width={100}
+											
+										/>
+								</a>
+							)}
+
+								<Input
+									className="select-home shadow"
+									style={{ color: '#fff' }}
+									type="select"
+									name="select"
+									id="exampleSelect"
+									placeholder="Selecione"
+								>
 								<option>Avaliar</option>
 							</Input>
 						</div>
@@ -152,48 +204,39 @@ export default function Podcast() {
 						<div
 							style={{ padding: 2, display: 'flex', flexDirection: 'column' }}
 						>
-							<Button
-								style={{
-									width: '50%',
-									height: '60%',
-									background: '#232659',
-									border: 'none',
-									color: '#1BFDBE',
-									marginBottom: 5,
-									padding: 0
-								}}
-								onClick={(e) => marcarPodcast(1)}
-							>
-								<p>Acompanhando</p>
-							</Button>
-							<Button
-								style={{
-									width: '50%',
-									height: '60%',
-									background: '#232669',
-									border: 'none',
-									color: '#1BFDBE',
-									marginBottom: 5,
-									padding: 0
-								}}
-								onClick={(e) => marcarPodcast(2)}
-							>
-								<p>Pretendo Acompanhar</p>
-							</Button>
-							<Button
-								style={{
-									width: '50%',
-									height: '60%',
-									background: '#232669',
-									border: 'none',
-									color: '#1BFDBE',
-									marginBottom: 5,
-									padding: 0
-								}}
-								onClick={(e) => marcarPodcast(0)}
-							>
-								<p className={'mt-2'}>Nada</p>
-							</Button>
+
+						
+						<div style={{display:"flex", flexDirection:"row", justifyContent: "center", alignItems: "center", margin: 10}}>
+							<label className="custom-toggle" style={{marginRight:20}}>
+									<input type="checkbox" checked={acompnhamento.fbk_status === 1 ? true : false} onChange={(e) => marcarPodcast(1)}  />
+									<span className="custom-toggle-slider rounded-circle" />
+							</label>
+							<h4 style={{width:250}}>Acompanhar</h4>
+						</div>
+
+						<div style={{display:"flex", flexDirection:"row", justifyContent: "center", alignItems: "center", margin: 10}}>
+							<label className="custom-toggle" style={{marginRight:20}}>
+									<input type="checkbox" checked={acompnhamento.fbk_status === 2 ? true : false} onChange={(e) => marcarPodcast(2)}  />
+									<span className="custom-toggle-slider rounded-circle" />
+							</label>
+							<h4 style={{width:250}}>Pretendo acompanhar</h4>
+						</div>
+
+						<div style={{display:"flex", flexDirection:"row", justifyContent: "center", alignItems: "center", margin: 10}}>
+							<label className="custom-toggle" style={{marginRight:20}}>
+									<input type="checkbox" checked={acompnhamento.fbk_status === 0 ? true : false} onChange={(e) => marcarPodcast(0)}  />
+									<span className="custom-toggle-slider rounded-circle" />
+							</label>
+							<h4 style={{width:250}}>Não acompanhar</h4>
+						</div>
+							
+
+							
+
+						
+							
+
+						
 						</div>
 					</div>
 					<div
