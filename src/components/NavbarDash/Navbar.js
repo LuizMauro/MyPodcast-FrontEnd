@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import Navitem from '../NavItemDash/Navitem';
 import Sidebar from "react-sidebar";
+import { FaMicrophone, FaUserAlt, FaListUl, FaUsersCog, FaRegIdCard, FaFileContract, FaHashtag, FaHome, FaAngleLeft, FaAngleRight} from 'react-icons/fa'
+import { GoMegaphone }  from 'react-icons/go'
 
-const mql = window.matchMedia(`(min-width: 800px)`);
+import "./styles.css"
+
+const mql = window.matchMedia(`(min-width: 900px)`);
 
 class Navbar extends Component {
     constructor(props) {
@@ -62,15 +66,55 @@ class Navbar extends Component {
               sidebar ={ 
                         <nav>
                             <ul>
-                                <Navitem item="Home" tolink="/adm/dashboard/" activec={this.activeitem}></Navitem>
-                                <Navitem item="Usuarios" tolink="/adm/dashboard/usuarios" activec={this.activeitem}></Navitem>
-                                <Navitem item="Cadastrar Podcast" tolink="/adm/dashboard/podcasts/cadastrar" activec={this.activeitem}></Navitem>
-                                <Navitem item="Editar Podcast" tolink="/adm/dashboard/podcasts/editar" activec={this.activeitem}></Navitem>
-                                <Navitem item="Moderadores" tolink="/adm/dashboard/moderadores" activec={this.activeitem}></Navitem>
-                                <Navitem item="Solicitacao" tolink="/adm/dashboard/solicitacoes" activec={this.activeitem}></Navitem>
-                                <Navitem item="Categorias" tolink="/adm/dashboard/categorias" activec={this.activeitem}></Navitem>
-                                <Navitem item="Publicidade" tolink="/adm/dashboard/publicidade" activec={this.activeitem}></Navitem>
-                                <Navitem item="Relatorio" tolink="/adm/dashboard/relatorio" activec={this.activeitem}></Navitem>
+
+                                <Navitem 
+                                item="Home" tolink="/adm/dashboard/" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaHome style={{width:25, height:25}}></FaHome>}
+                                />
+                              
+
+                                <Navitem 
+                                item="Podcaster" tolink="/adm/dashboard/podcasts" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaMicrophone style={{width:25, height:25}}></FaMicrophone>}
+                                />
+
+                                <Navitem 
+                                item="Categorias" tolink="/adm/dashboard/categorias" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaListUl style={{width:25, height:25}}></FaListUl>}
+                                />
+
+                                <Navitem 
+                                item="Usuarios" tolink="/adm/dashboard/usuarios" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaUserAlt style={{width:25, height:25}}></FaUserAlt>}
+                                />
+
+                                <Navitem 
+                                item="Moderadores" tolink="/adm/dashboard/moderadores" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaUsersCog style={{width:25, height:25}}></FaUsersCog>}
+                                />  
+
+                                <Navitem 
+                                item="Solicitações" tolink="/adm/dashboard/solicitacoes" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaRegIdCard style={{width:25, height:25}}></FaRegIdCard>}
+                                />  
+
+  
+                                <Navitem 
+                                item="Tags de comentario" tolink="/adm/dashboard/tags" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaHashtag style={{width:25, height:25}}></FaHashtag>}
+                                /> 
+
+
+                                <Navitem 
+                                item="Publicidade" tolink="/adm/dashboard/solicitacoes" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<GoMegaphone style={{width:25, height:25}}></GoMegaphone>}
+                                />  
+
+                                <Navitem 
+                                item="Relatorio" tolink="/adm/dashboard/solicitacoes" activec={this.activeitem}
+                                style={{width: '100%'}} icone={<FaFileContract style={{width:25, height:25}}></FaFileContract>}
+                                /> 
+
                             </ul>
                         </nav>
                        }   
@@ -80,22 +124,28 @@ class Navbar extends Component {
               styles={{
                 sidebar: {
                   padding:20,
-                  background:"#fff"
+                  background:"#151734",
                 }}}
             >
             
+            <div className="shadow" style={{width:'100%', padding: 20, background:"#151734", position: "fixed", zIndex: 999}}>
               {this.state.abrir ? (
-                <div>
-                  <button onClick={() => this.onSetSidebarOpen()}>Abrir</button>
-                </div>
-              ):(
-                <div>
-                    <button onClick={() => this.onSetSidebarExit()}>Fechar</button>
-                  
-                </div>
-              )} 
+                  <div>
+                    <button onClick={() => this.onSetSidebarOpen()}><FaAngleRight size={50} color="#1bfdbe"></FaAngleRight></button>
+                  </div>
+                ):(
+                  <div>
+                      <button onClick={() => this.onSetSidebarExit()}><FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft></button>
+                    
+                  </div>
+                )} 
+            </div>
+
              
-             {this.props.teste}
+            <div style={{marginTop: 20  }}>
+              {this.props.teste}
+            </div>
+            
 
             </Sidebar>
             </>

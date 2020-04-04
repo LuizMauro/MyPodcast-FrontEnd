@@ -9,7 +9,6 @@ export default function DashboardLayout({ children }) {
     return (
         <Wrapper>
             <Navbar teste={children}/>
-            
         </Wrapper>
     )
 }
