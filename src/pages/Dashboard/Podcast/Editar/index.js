@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import Input from '../../../../components/Input';
 import FileInput from '../../../../components/FileInput/FileInput';
 import PodcastList from '../../../../styles/ItemList';
-import { FaPen, FaTimes } from 'react-icons/fa';
+import { FaPen, FaTimes, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 
 import {
@@ -18,7 +18,7 @@ import {
 	Container,
 	Row,
 	Col,
-	CardTitle
+	CardTitle,
 } from 'reactstrap';
 
 export default function EditarPodcast() {
@@ -30,12 +30,22 @@ export default function EditarPodcast() {
 
 	useEffect(() => {
 		exibirPodcasts();
-	}, [editMode]);
+	}, [podcasts,editMode]);
 
 	async function exibirPodcasts() {
 		const response = await api.get('/allpodcasts');
 		console.log(response.data);
 		setPodcasts(response.data);
+	}
+
+	async function deletarPodcast(podcast) {
+		try {
+			await api.put(`/adm/podcast/${podcast.pod_id}/0`);
+
+			toast.success('Podcast deletado');
+		} catch (err) {
+			toast.error('Não foi possível deletar podcast.');
+		}
 	}
 
 	async function editarPodcast(podcast) {
@@ -59,7 +69,7 @@ export default function EditarPodcast() {
 		ctg_id,
 		end_link1,
 		end_link2,
-		end_link3
+		end_link3,
 	}) {
 		const list_of_categoria = ctg_id.split(',');
 
@@ -96,7 +106,7 @@ export default function EditarPodcast() {
 				pod_anocriacao: Yup.string().required('O ano de criação é obrigatório'),
 				pod_duracao: Yup.string().required('A duração é obrigatória'),
 				ctg_id: Yup.string().required('As categorias são obrigatórias'),
-				end_link1: Yup.string().required('O 1º endereço é obrigatório')
+				end_link1: Yup.string().required('O 1º endereço é obrigatório'),
 			});
 
 			const response = await api.put(`/adm/editarpodcast/${pod_id}`, data);
@@ -141,6 +151,24 @@ export default function EditarPodcast() {
 									className="px-lg-5 py-lg-5"
 									enctype="multipart/form-data"
 								>
+									<Row>
+										<Col lg="6">
+											<p>Buscar</p>
+										</Col>
+										<Col
+											lg="6"
+											style={{ textAlign: 'end' }}
+											style={
+												editMode
+													? { display: 'none' }
+													: { display: 'flex', justifyContent: 'flex-end' }
+											}
+										>
+											<Link className="btn btn-primary" to="podcasts/cadastrar">
+												<FaPlus size={18} /> Podcast
+											</Link>
+										</Col>
+									</Row>
 									<CardTitle>Podcasts Cadastrados</CardTitle>
 
 									<MdClose
@@ -174,7 +202,10 @@ export default function EditarPodcast() {
 													>
 														<FaPen size={18} />
 													</button>
-													<button className="button delete">
+													<button
+														className="button delete"
+														onClick={(e) => deletarPodcast(item)}
+													>
 														<FaTimes size={18} />
 													</button>
 												</div>
@@ -252,18 +283,6 @@ export default function EditarPodcast() {
 											</Button>
 										</div>
 									</Form>
-									<Row className="mt-1">
-										<Col xs="6">
-											<a
-												className="text-light"
-												href="#"
-												onClick={(e) => e.preventDefault()}
-											>
-												uat
-											</a>
-										</Col>
-										<Col className="text-right" xs="6"></Col>
-									</Row>
 								</CardBody>
 							</Card>
 						</Col>

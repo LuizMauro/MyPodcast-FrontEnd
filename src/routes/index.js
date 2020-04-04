@@ -78,13 +78,13 @@ export default function Routes() {
 			/>
 			<PrivateRouteADM
 				exact
-				path="/adm/dashboard/podcasts"
+				path="/adm/dashboard/podcasts/cadastrar"
 				exact
 				component={PodcastAdmCadastrar}
 			/>
 			<PrivateRouteADM
 				exact
-				path="/adm/dashboard/podcasts/editar"
+				path="/adm/dashboard/podcasts/"
 				exact
 				component={PodcastAdmEditar}
 			/>
