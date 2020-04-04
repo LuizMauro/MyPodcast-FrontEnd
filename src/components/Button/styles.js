@@ -5,7 +5,7 @@ export const Button = styled.button`
         margin:10px;
         background: ${props => props.bg};
         color: ${props => props.color};
-        padding: 10px;
+        padding: 10px !important;
         height: ${props => props.height};
         width: ${props => props.width};
 
@@ -19,8 +19,6 @@ export const Button = styled.button`
 
         font-weight:700;
         cursor: pointer;
-
-      
 `;
 
 

@@ -1,0 +1,33 @@
+button,
+button:hover {
+	border: 0;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	height: auto;
+	width: auto;
+	margin-right: 20px;
+	align-self: start;
+	color: rgb(165, 245, 171);
+	cursor: pointer;
+}
+
+button:hover {
+	transition: 0.3s ease-in;
+}
+
+.activated,
+.activated:hover {
+	border-bottom: 2px solid rgb(27, 253, 190);
+	transition: 0s;
+}
+
+@media (max-width: 772px) {
+	.subitem {
+		width: 40% !important;
+	}
+
+	.edit {
+		right: 10px !important;
+	}
+}

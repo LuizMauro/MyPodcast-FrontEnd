@@ -1,0 +1,17 @@
+@media (max-width: 994.98px) {
+	.closeIcon {
+		right: 25px !important;
+		top: 5px;
+	}
+
+	.card-body {
+		padding-top: 2.8rem !important;
+	}
+}
+
+.closeIcon {
+	position: absolute;
+	right: 50px;
+	top: 15px;
+	cursor: pointer;
+}

@@ -21,26 +21,25 @@ export function* logar({ payload }) {
 
 		yield put(logarSuccess(token, user));
 
+		if (user.tus_id === 1) {
+			history.push('/');
+		}
+
+		if (user.tus_id === 2) {
+			history.push('/podcaster/dashboard');
+		}
+
+		if (user.tus_id === 3) {
+			history.push('/mod/dashboard');
+		}
+
 		if (user.tus_id === 4) {
 			history.push('/adm/dashboard');
 		}
-
-        if((user.tus_id === 2)){
-            history.push('/podcaster/dashboard');
-        }
-
-        if((user.tus_id === 3)){
-            history.push('/mod/dashboard');
-        }
-        
-        if((user.tus_id === 4)){
-            history.push('/adm/dashboard');
-        }
-
-    }catch(err){
-        toast.error('Falha na autenticaçao, verifique seus dados');
-        yield put(logarFailure())
-    }
+	} catch (err) {
+		toast.error('Usuário ou senha inválidos. Verifique seus dados.');
+		yield put(logarFailure());
+	}
 }
 export function signOut() {
 	history.push('/');
@@ -49,7 +48,7 @@ export function signOut() {
 export function* signUp({ payload }) {
 	try {
 		const { nome, email, senha, cpf, tus_id } = payload;
-		yield call(api.post, 'users', {
+		const response = yield call(api.post, 'users', {
 			nome,
 			senha,
 			email,
@@ -57,7 +56,13 @@ export function* signUp({ payload }) {
 			tus_id
 		});
 
-		history.push('/Login');
+		if (response.data.nomeExists) {
+			toast.error('Nome de usuário já cadastrado');
+		} else if (response.data.emailExists) {
+			toast.error('Email já cadastrado');
+		} else {
+			history.push('/Login');
+		}
 	} catch (err) {
 		console.tron.log(err);
 		toast.error('Falha no cadastro, Verifique seus dados!');
