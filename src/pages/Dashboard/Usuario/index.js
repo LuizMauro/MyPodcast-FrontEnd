@@ -13,7 +13,7 @@ import {
 	Container,
 	Row,
 	Col,
-	CardTitle
+	CardTitle,
 } from 'reactstrap';
 
 export default function Usuario() {
@@ -104,22 +104,8 @@ export default function Usuario() {
 											userStatus === 1 || userStatus === 0 ? (
 												userStatus === item.usu_status && (
 													<PodcastList>
-														<div className="subitem">
-															<Link
-																to={`../../../podcast/${item.pod_id}`}
-																className="linktittle"
-															>
-																{item.usu_nome}
-															</Link>
-														</div>
-														<div className="subitem">
-															<Link
-																to={`../../../podcast/${item.pod_id}`}
-																className="linktittle"
-															>
-																{item.tus_descricao}
-															</Link>
-														</div>
+														<div className="subitem">{item.usu_nome}</div>
+														<div className="subitem">{item.tus_descricao}</div>
 														<div className="icons">
 															<button
 																className="button"
@@ -132,22 +118,8 @@ export default function Usuario() {
 												)
 											) : (
 												<PodcastList>
-													<div className="subitem">
-														<Link
-															to={`../../../podcast/${item.pod_id}`}
-															className="linktittle"
-														>
-															{item.usu_nome}
-														</Link>
-													</div>
-													<div className="subitem">
-														<Link
-															to={`../../../podcast/${item.pod_id}`}
-															className="linktittle"
-														>
-															{item.tus_descricao}
-														</Link>
-													</div>
+													<div className="subitem">{item.usu_nome}</div>
+													<div className="subitem">{item.tus_descricao}</div>
 													<div className="icons">
 														<button
 															className="button"

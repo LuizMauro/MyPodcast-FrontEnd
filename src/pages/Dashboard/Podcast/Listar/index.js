@@ -30,7 +30,7 @@ export default function EditarPodcast() {
 
 	useEffect(() => {
 		exibirPodcasts();
-	}, [podcasts,editMode]);
+	}, [editMode]);
 
 	async function exibirPodcasts() {
 		const response = await api.get('/allpodcasts');
@@ -151,19 +151,17 @@ export default function EditarPodcast() {
 									className="px-lg-5 py-lg-5"
 									enctype="multipart/form-data"
 								>
-									<Row>
+									<Row
+										style={
+											editMode
+												? { display: 'none' }
+												: { display: 'flex', justifyContent: 'flex-end' }
+										}
+									>
 										<Col lg="6">
 											<p>Buscar</p>
 										</Col>
-										<Col
-											lg="6"
-											style={{ textAlign: 'end' }}
-											style={
-												editMode
-													? { display: 'none' }
-													: { display: 'flex', justifyContent: 'flex-end' }
-											}
-										>
+										<Col lg="6" style={{ textAlign: 'end' }}>
 											<Link className="btn btn-primary" to="podcasts/cadastrar">
 												<FaPlus size={18} /> Podcast
 											</Link>
@@ -221,7 +219,6 @@ export default function EditarPodcast() {
 											editMode ? { display: 'block' } : { display: 'none' }
 										}
 									>
-										<Row lg="12" className="mb-3"></Row>
 
 										<Input
 											name="pod_nome"

@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import api from '../../../services/api';
+import api from '../../../../services/api';
 import { toast } from 'react-toastify';
 
-import Input from '../../../components/Input';
+import Input from '../../../../components/Input';
 
 import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 
@@ -15,13 +15,13 @@ export default function Categoria() {
 	async function handleSubmit({ ctg_descricao, reset }) {
 		try {
 			const schema = Yup.object().shape({
-				ctg_descricao: Yup.string().required('A categoria é obrigatória')
+				ctg_descricao: Yup.string().required('A categoria é obrigatória'),
 			});
 
 			await schema.validate(
 				{ ctg_descricao },
 				{
-					abortEarly: false
+					abortEarly: false,
 				}
 			);
 
@@ -32,7 +32,6 @@ export default function Categoria() {
 			} else if (response.data.ctgCreated) {
 				toast.success('Categoria cadastrada!');
 				formRef.current.reset();
-				
 			} else {
 				toast.error('Falha no cadastro');
 			}
@@ -62,7 +61,6 @@ export default function Categoria() {
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
 									<Form ref={formRef} onSubmit={handleSubmit}>
-										<Row lg="12" className="mb-3"></Row>
 
 										<Input
 											name="ctg_descricao"

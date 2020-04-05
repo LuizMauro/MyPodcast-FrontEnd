@@ -22,7 +22,7 @@ import {
 	Modal,
 	ModalHeader,
 	ModalBody,
-	ModalFooter
+	ModalFooter,
 } from 'reactstrap';
 
 export default function Solicitacao() {
@@ -86,27 +86,34 @@ export default function Solicitacao() {
 									enctype="multipart/form-data"
 								>
 									<CardTitle>Solicitações de Cadastro</CardTitle>
-									<PodcastCard className="solicitacoes">
-										{solicitacao.map((item) => (
-											<li>
-												<div className="card_content">
-													<p>{item.pod_nome}</p>
-												</div>
-												<div className="card_info">
-													<div className="description">
-														<p>Usuário</p>
-														<p>{item.usu_nome}</p>
+									{solicitacao.length > 0 ? (
+										<PodcastCard className="solicitacoes">
+											{solicitacao.map((item) => (
+												<li>
+													<div className="card_content">
+														<p>{item.pod_nome}</p>
 													</div>
-													<button
-														className="button" style={{color:'#151734'}}
-														onClick={(e) => toggle(item)}
-													>
-														Detalhes
-													</button>
-												</div>
-											</li>
-										))}
-									</PodcastCard>
+													<div className="card_info">
+														<div className="description">
+															<p>Usuário</p>
+															<p>{item.usu_nome}</p>
+														</div>
+														<button
+															className="button"
+															style={{ color: '#151734' }}
+															onClick={(e) => toggle(item)}
+														>
+															Detalhes
+														</button>
+													</div>
+												</li>
+											))}
+										</PodcastCard>
+									) : (
+										<h2 style={{ textAlign: 'center' }}>
+											Nenhuma solicitação de cadastro no momento.
+										</h2>
+									)}
 								</CardBody>
 							</Card>
 						</Col>
@@ -124,7 +131,7 @@ export default function Solicitacao() {
 									marginTop: '5%',
 									display: 'flex',
 									flexWrap: 'wrap',
-									marginBottom: 50
+									marginBottom: 50,
 								}}
 							>
 								<div
@@ -132,7 +139,7 @@ export default function Solicitacao() {
 										height: 'auto',
 										minWidth: 300,
 										display: 'flex',
-										flexDirection: 'column'
+										flexDirection: 'column',
 									}}
 								>
 									<div
@@ -152,7 +159,7 @@ export default function Solicitacao() {
 										style={{
 											padding: 2,
 											display: 'flex',
-											flexDirection: 'column'
+											flexDirection: 'column',
 										}}
 									></div>
 								</div>
@@ -161,7 +168,7 @@ export default function Solicitacao() {
 										minWidth: 300,
 										flex: 1,
 										display: 'flex',
-										flexDirection: 'column'
+										flexDirection: 'column',
 									}}
 								>
 									<div style={{ flex: 1 }} className="px-3">
@@ -183,7 +190,7 @@ export default function Solicitacao() {
 														margin: 5,
 														backgroundColor: '#212454',
 														borderRadius: 5,
-														color: '#fff'
+														color: '#fff',
 													}}
 												>
 													{cat}
@@ -203,7 +210,7 @@ export default function Solicitacao() {
 											style={{
 												margin: 20,
 												borderRadius: 5,
-												color: '#fff'
+												color: '#fff',
 											}}
 										>
 											<h5 style={{ color: '#fff' }}>Ano de criação</h5>
@@ -213,7 +220,7 @@ export default function Solicitacao() {
 											style={{
 												margin: 20,
 												borderRadius: 5,
-												color: '#fff'
+												color: '#fff',
 											}}
 										>
 											<h5 style={{ color: '#fff' }}>Podcaster</h5>
@@ -223,7 +230,7 @@ export default function Solicitacao() {
 											style={{
 												margin: 20,
 												borderRadius: 5,
-												color: '#fff'
+												color: '#fff',
 											}}
 										>
 											<h5 style={{ color: '#fff' }}>Média de Duração</h5>

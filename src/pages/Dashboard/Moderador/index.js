@@ -97,12 +97,9 @@ export default function Moderador() {
 													<h1>
 														<PodcastList>
 															<div className="item">
-																<Link
-																	to={`../../../podcast/${item.pod_id}`}
-																	className="linktittle"
-																>
+																
 																	{item.usu_nome}
-																</Link>
+																
 															</div>
 															<div
 																className="subitem"
