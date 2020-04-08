@@ -54,6 +54,7 @@ export default function EditarPodcast() {
 
 		try {
 			dispatch(updateCategoriaRequest(ctg_descricao,ctgid))
+			setEditMode(false);
 		} catch (err) {
 			toast.error('Não foi possível editar categoria');
 		}

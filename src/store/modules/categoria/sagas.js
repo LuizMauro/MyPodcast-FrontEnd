@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import api from '../../../services/api';
+import history from '../../../services/history';
 import { toast } from 'react-toastify';
 
 export function* createCategoria({ payload }) {
@@ -15,6 +16,7 @@ export function* createCategoria({ payload }) {
 			toast.error('Categoria já cadastrada!');
 		} else if (response.data.ctgCreated) {
 			toast.success('Categoria cadastrada!');
+			history.push('../categorias');
 		} else {
 			toast.error('Falha no cadastro');
 		}
