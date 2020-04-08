@@ -1,9 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createCategoriaRequest } from '../../../../store/modules/categoria/actions';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import api from '../../../../services/api';
-import { toast } from 'react-toastify';
 
 import Input from '../../../../components/Input';
 
@@ -11,6 +10,7 @@ import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 
 export default function Categoria() {
 	const formRef = useRef(null);
+	const dispatch = useDispatch();
 
 	async function handleSubmit({ ctg_descricao, reset }) {
 		try {
@@ -25,16 +25,7 @@ export default function Categoria() {
 				}
 			);
 
-			const response = await api.post('/adm/categoria', { ctg_descricao });
-
-			if (response.data.ctgExists) {
-				toast.error('Categoria já cadastrada!');
-			} else if (response.data.ctgCreated) {
-				toast.success('Categoria cadastrada!');
-				formRef.current.reset();
-			} else {
-				toast.error('Falha no cadastro');
-			}
+			dispatch(createCategoriaRequest(ctg_descricao))
 
 			formRef.current.setErrors(false);
 		} catch (err) {
@@ -61,7 +52,6 @@ export default function Categoria() {
 							<Card className="bg-secondary shadow border-0">
 								<CardBody className="px-lg-5 py-lg-5">
 									<Form ref={formRef} onSubmit={handleSubmit}>
-
 										<Input
 											name="ctg_descricao"
 											type="text"

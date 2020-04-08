@@ -1,15 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Form } from '@unform/web';
-import * as Yup from 'yup';
 import api from '../../../services/api';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { updateSolicitacaoRequest } from '../../../store/modules/podcast/actions'
 
-import Input from '../../../components/Input';
-import FileInput from '../../../components/FileInput/FileInput';
 import PodcastCard from '../../../styles/ItemCard';
-import { FaPen, FaTimes } from 'react-icons/fa';
-import { MdClose } from 'react-icons/md';
 
 import {
 	Button,
@@ -26,12 +21,12 @@ import {
 } from 'reactstrap';
 
 export default function Solicitacao() {
-	const formRef = useRef(null);
 	const [solicitacao, setSolicitacao] = useState([]);
 	const [podcast, setPodcast] = useState([]);
 	const [categoria, setCategoria] = useState([]);
 	const [endereco, setEndereco] = useState([]);
 	const [modal, setModal] = useState(false);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		exibirSolicitacoes();
@@ -55,9 +50,7 @@ export default function Solicitacao() {
 
 	async function permitir(pod_id, pod_permissao) {
 		try {
-			const response = await api.put(
-				`/adm/podcasts/solicitacao/${pod_id}/${pod_permissao}`
-			);
+			dispatch(updateSolicitacaoRequest(pod_id,pod_permissao))
 
 			if (pod_permissao === 1) {
 				toast.success('Cadastro de Podcast permitido');

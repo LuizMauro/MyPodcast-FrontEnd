@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateModeradorRequest } from '../../../store/modules/user/actions'
 import api from '../../../services/api';
 import { toast } from 'react-toastify';
 
@@ -13,13 +15,14 @@ import {
 	Container,
 	Row,
 	Col,
-	CardTitle
+	CardTitle,
 } from 'reactstrap';
 
 export default function Moderador() {
 	const [usuario, setUsuario] = useState([]);
 	const [tusId, setTusId] = useState(3);
 	const [edit, setEdit] = useState(false);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		exibirUsuarios();
@@ -37,9 +40,7 @@ export default function Moderador() {
 
 	async function mudarTusId(item) {
 		try {
-			await api.put(
-				`/adm/users/tipo/${item.usu_id}/${item.tus_id === 3 ? 1 : 3}`
-			);
+			dispatch(updateModeradorRequest(item.usu_id, item.tus_id));
 
 			if (item.tus_id === 3) {
 				setEdit(edit ? false : true);
@@ -96,16 +97,12 @@ export default function Moderador() {
 												tusId === item.tus_id && (
 													<h1>
 														<PodcastList>
-															<div className="item">
-																
-																	{item.usu_nome}
-																
-															</div>
+															<div className="item">{item.usu_nome}</div>
 															<div
 																className="subitem"
 																style={{ textAlign: 'end' }}
 															>
-																<button 
+																<button
 																	className="edit button"
 																	onClick={(e) => mudarTusId(item)}
 																>

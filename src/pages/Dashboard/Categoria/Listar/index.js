@@ -4,9 +4,10 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import api from '../../../../services/api';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { updateCategoriaRequest } from '../../../../store/modules/categoria/actions';
 
 import Input from '../../../../components/Input';
-import FileInput from '../../../../components/FileInput/FileInput';
 import PodcastList from '../../../../styles/ItemList';
 import { FaPen, FaTimes, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
@@ -24,9 +25,9 @@ import {
 export default function EditarPodcast() {
 	const [editMode, setEditMode] = useState(false);
 	const formRef = useRef(null);
-	const [file, setFile] = useState(null);
 	const [categorias, setCategorias] = useState([]);
 	const [editarCat, setEditarCat] = useState([]);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		exibirCategorias();
@@ -38,15 +39,6 @@ export default function EditarPodcast() {
 		setCategorias(response.data);
 	}
 
-	async function deletarCategoria(podcast) {
-		try {
-			await api.put(`/adm/podcast/${podcast.pod_id}/0`);
-
-			toast.success('Podcast deletado');
-		} catch (err) {
-			toast.error('Não foi possível deletar podcast.');
-		}
-	}
 
 	async function editarCategoria(categoria) {
 		setEditMode(true);
@@ -55,17 +47,13 @@ export default function EditarPodcast() {
 
 	async function handleSubmit({ ctg_descricao }) {
 		const ctgid = editarCat.ctg_id;
-		console.log('o id é', ctg_descricao);
 
 		const data = new FormData();
 
 		data.append('ctg_descricao', ctg_descricao);
 
 		try {
-			const response = await api.put(`/adm/categoria/${ctgid}`, data);
-
-			console.log(response.data);
-			toast.success('Categoria editada');
+			dispatch(updateCategoriaRequest(ctg_descricao,ctgid))
 		} catch (err) {
 			toast.error('Não foi possível editar categoria');
 		}
@@ -125,6 +113,7 @@ export default function EditarPodcast() {
 												<div className="icons">
 													<button
 														className="button edit"
+														style={{right:0}}
 														onClick={(e) => editarCategoria(item)}
 													>
 														<FaPen size={18} />
