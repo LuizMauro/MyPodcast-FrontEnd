@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../../services/api';
 import { toast } from 'react-toastify';
-
+import { useDispatch } from 'react-redux';
+import { updateStatusRequest } from '../../../store/modules/user/actions'
 import PodcastList from '../../../styles/ItemList';
 import './style.css';
 
@@ -20,6 +21,7 @@ export default function Usuario() {
 	const [usuario, setUsuario] = useState([]);
 	const [userStatus, setUserStatus] = useState(null);
 	const [edit, setEdit] = useState(false);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		exibirUsuarios();
@@ -37,9 +39,7 @@ export default function Usuario() {
 
 	async function mudarStatus(item) {
 		try {
-			const response = await api.put(
-				`/adm/users/${item.usu_id}/${item.usu_status ? 0 : 1}`
-			);
+			dispatch(updateStatusRequest(item.usu_id, item.usu_status))
 
 			if (item.usu_status) {
 				setEdit(edit ? false : true);

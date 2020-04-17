@@ -29,4 +29,30 @@ export function* updateProfile({ payload }) {
 	}
 }
 
-export default all([takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile)]);
+export function* updateStatus({ payload }) {
+	const { usu_id, usu_status } = payload;
+
+	try {
+		yield call(api.put, `/adm/users/${usu_id}/${usu_status ? 0 : 1}`);
+	} catch (err) {
+		toast.error('Erro ao ativar ou desativar usuário');
+		console.tron.log('o erro é', err);
+	}
+}
+
+export function* updateModerador({ payload }) {
+	const { usu_id, tus_id } = payload;
+
+	try {
+		yield call(api.put, `/adm/users/tipo/${usu_id}/${tus_id === 3 ? 1 : 3}`);
+	} catch (err) {
+		toast.error('Erro ao ativar ou desativar usuário');
+		console.tron.log('o erro é', err);
+	}
+}
+
+export default all([
+	takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile),
+	takeLatest('@user/UPDATE_STATUS_REQUEST', updateStatus),
+	takeLatest('@user/UPDATE_MODERADOR_REQUEST', updateModerador),
+]);
