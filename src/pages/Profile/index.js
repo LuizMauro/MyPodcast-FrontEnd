@@ -36,7 +36,7 @@ export default function Profile() {
 		const response = await api.get('/profile');
 		console.log(response.data);
 		setPodcast(response.data);
-		
+
 	}
 
 	function handleSubmit(data) {
@@ -112,7 +112,7 @@ export default function Profile() {
 											</div>
 										</div>
 
-									
+
 
 										<div className="text-center">
 											<Button
@@ -125,7 +125,7 @@ export default function Profile() {
 										</div>
 									</Form>
 									<div>
-								
+
 										<div style={editMode ? { display: 'none' } : { display: '' }}>
 										<div style={{display:"flex",flexDirection:"row" , justifyContent:"center", alignItems:"center"}}>
 											<div style={{width:"25%", height: "25%", margin:5}}>
@@ -133,7 +133,7 @@ export default function Profile() {
 														style={{ width: "100%", height: "100%", borderRadius: "50%" }}
 														src={'https://api.adorable.io/avatars/285/' + profile.usu_email}
 													/>
-								
+
 													<Button
 														style={{width:"100%"}}
 														type="submit"
@@ -152,7 +152,7 @@ export default function Profile() {
 											</div>
 										</div>
 									</div>
-	
+
 								</div>
 
 									<Row className="mt-5">

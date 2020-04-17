@@ -10,18 +10,22 @@ import history from '../../services/history';
 
 
 import { useSelector } from 'react-redux';
-
+import Comentario from '../../components/Comentarios'
 // reactstrap components
 import { Container, Input, Button } from 'reactstrap';
 
 export default function Podcast() {
+
+  const data  = [ {id: 1}, {id:2}, {id:3}];
+
+
 	const { pod_id } = useParams();
 	const [podcast, setPodcast] = useState('');
 	const [categoria, setCategoria] = useState([]);
 	const [endereco, setEndereco] = useState([]);
 	const [opcao, setOpcao] = useState('');
 	const [acompnhamento, setAcompanhamento] = useState([]);
-	const [favorito, setFavoritar] = useState([]);
+  const [favorito, setFavoritar] = useState([]);
 
 	const profile = useSelector((state) => state.user.profile);
 
@@ -43,7 +47,7 @@ export default function Podcast() {
 
 	async function setaCheckBox(){
 		const acompanhandoResp = await api.get(`acompanhando/${pod_id}`);
-		
+
 		setAcompanhamento(acompanhandoResp.data);
 	}
 
@@ -61,14 +65,13 @@ export default function Podcast() {
 	async function favoritar() {
 		if (profile) {
 			const verifica = await api.get(`findfavorito/${pod_id}`);
-			console.log("tese",verifica.data);
 
 			if (verifica.data.fbk_status === 1) {
 				await api.put(`profile/favoritar/${pod_id}`);
-				console.log('vc desfavoritou');
+				toast.success(`Você desfavoritou ${podcast.pod_nome}`);
 			} else {
-				console.log('vc favoritou');
 				await api.post(`${pod_id}/favoritar`);
+				toast.success(`Você favoritou ${podcast.pod_nome}`);
 			}
 		} else {
 			toast.error("Você precisa estar lagado para fazer essa ação")
@@ -85,17 +88,16 @@ export default function Podcast() {
 
 			if (verifica.data.fbk_status === 0) {
 				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
-
 				await api.put(`acompanhando/${pod_id}/${e}`);
-				console.log('sou o 0');
+
 			} else if (verifica.data.fbk_status === 1) {
 				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
 				await api.put(`acompanhando/${pod_id}/${e}`);
-				console.log('sou o 1');
+
 			} else if (verifica.data.fbk_status === 2) {
 				//Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
 				await api.put(`acompanhando/${pod_id}/${e}`);
-				console.log('sou o 2');
+
 			} else if (!verifica.data.fbk_status) {
 				//Se não marcou ainda, marca podcast por aqui pelo status vindo do botao
 
@@ -111,6 +113,16 @@ export default function Podcast() {
 				}
 			}
 
+			if(e === 0){
+				toast.success(`Você parou de acompanhar ${podcast.pod_nome}`);
+			}else if(e === 1){
+				toast.success(`Você começou a acompanhar ${podcast.pod_nome}`);
+			}else{
+				toast.success(`Você pretende acompanhar ${podcast.pod_nome}`);
+			}
+
+
+
 			setaCheckBox();
 			setOpcao(e);
 			console.log(e);
@@ -122,14 +134,14 @@ export default function Podcast() {
 
 	const defaultOptions = {
         loop: false,
-        autoplay: true, 
+        autoplay: true,
         animationData: animationData.default,
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid slice'
         }
 	  };
-	  
-	
+
+
 
 	return (
 		<>
@@ -142,7 +154,9 @@ export default function Podcast() {
 						marginTop: '5%',
 						display: 'flex',
 						flexWrap: 'wrap',
-						marginBottom: 50
+						marginBottom: 50,
+						borderRadius:10
+
 					}}
 				>
 					<div
@@ -157,7 +171,7 @@ export default function Podcast() {
 							style={{ height: 350, width: 400, padding: 20 }}
 							className="borderBottom"
 						>
-							
+
 							<img
 								className="shadow"
 								width="100%"
@@ -184,7 +198,7 @@ export default function Podcast() {
 								<Lottie style={{marginTop: -25}} options={defaultOptions}
 											height={100}
 											width={100}
-											
+
 										/>
 								</a>
 							)}
@@ -205,13 +219,13 @@ export default function Podcast() {
 							style={{ padding: 2, display: 'flex', flexDirection: 'column' }}
 						>
 
-						
+
 						<div style={{display:"flex", flexDirection:"row", justifyContent: "center", alignItems: "center", margin: 10}}>
 							<label className="custom-toggle" style={{marginRight:20}}>
 									<input type="checkbox" checked={acompnhamento.fbk_status === 1 ? true : false} onChange={(e) => marcarPodcast(1)}  />
 									<span className="custom-toggle-slider rounded-circle" />
 							</label>
-							<h4 style={{width:250}}>Acompanhar</h4>
+							<h4 style={{width:250, color: "#fff"}}>Acompanhar</h4>
 						</div>
 
 						<div style={{display:"flex", flexDirection:"row", justifyContent: "center", alignItems: "center", margin: 10}}>
@@ -219,7 +233,7 @@ export default function Podcast() {
 									<input type="checkbox" checked={acompnhamento.fbk_status === 2 ? true : false} onChange={(e) => marcarPodcast(2)}  />
 									<span className="custom-toggle-slider rounded-circle" />
 							</label>
-							<h4 style={{width:250}}>Pretendo acompanhar</h4>
+							<h4 style={{width:250, color: "#fff"}}>Pretendo acompanhar</h4>
 						</div>
 
 						<div style={{display:"flex", flexDirection:"row", justifyContent: "center", alignItems: "center", margin: 10}}>
@@ -227,16 +241,11 @@ export default function Podcast() {
 									<input type="checkbox" checked={acompnhamento.fbk_status === 0 ? true : false} onChange={(e) => marcarPodcast(0)}  />
 									<span className="custom-toggle-slider rounded-circle" />
 							</label>
-							<h4 style={{width:250}}>Não acompanhar</h4>
+							<h4 style={{width:250, color: "#fff"}}>Não acompanhar</h4>
 						</div>
-							
 
-							
 
-						
-							
 
-						
 						</div>
 					</div>
 					<div
@@ -249,7 +258,9 @@ export default function Podcast() {
 					>
 						<div style={{ flex: 1 }} className="borderBottom p-3">
 							<h2 style={{ color: '#fff', marginTop: 20 }}>
-								{podcast.pod_nome}
+								<strong>
+									{podcast.pod_nome}
+								</strong>
 							</h2>
 						</div>
 
@@ -257,7 +268,7 @@ export default function Podcast() {
 							style={{ height: 'auto', flex: 1 }}
 							className="borderBottom p-3"
 						>
-							<h5 style={{ color: '#fff' }}>Categorias</h5>
+							<h5 style={{ color: '#fff' }}><strong>Categorias</strong></h5>
 							<div style={{ display: 'flex', flexDirection: 'row' }}>
 								{categoria.map((cat) => (
 									<div
@@ -289,7 +300,7 @@ export default function Podcast() {
 									color: '#fff'
 								}}
 							>
-								<h5 style={{ color: '#fff' }}>Ano de criação</h5>
+								<h5 style={{ color: '#fff' }}><strong>Ano de criação</strong></h5>
 								<p>{podcast.pod_anocriacao}</p>
 							</div>
 							<div
@@ -299,7 +310,7 @@ export default function Podcast() {
 									color: '#fff'
 								}}
 							>
-								<h5 style={{ color: '#fff' }}>Podcaster</h5>
+								<h5 style={{ color: '#fff' }}><strong>Podcaster</strong></h5>
 								<p>{podcast.pod_criador}</p>
 							</div>
 							<div
@@ -309,7 +320,7 @@ export default function Podcast() {
 									color: '#fff'
 								}}
 							>
-								<h5 style={{ color: '#fff' }}>Média de Duração</h5>
+								<h5 style={{ color: '#fff' }}><strong>Média de Duração</strong></h5>
 								<p>{podcast.pod_duracao}min</p>
 							</div>
 						</div>
@@ -317,7 +328,7 @@ export default function Podcast() {
 						<div className="p-3" style={{ height: 'auto', flex: 1 }}>
 							<h5 style={{ color: '#fff' }}>Disponivel em</h5>
 							<div style={{ display: 'flex', flexDirection: 'row' }}>
-								{endereco.map((item) => ( 
+								{endereco.map((item) => (
 									item.includes('.com') && (<div style={{ padding: 5, margin: 5 }}>
 										<a target="_blank" href={item}>
 											{item.includes('spotify.com') ? (
@@ -334,12 +345,72 @@ export default function Podcast() {
 												/>
 											)}
 										</a>
-									</div>) 
-									
+									</div>)
+
 								))}
 							</div>
 						</div>
 					</div>
+				</div>
+
+
+				<h2 style={{color:"#fff", fontWeight:"bold"}}>Comentários</h2>
+				<div
+					className="bg-secondary shadow"
+					style={{
+            display: 'flex',
+            flexDirection:"column",
+						flexWrap: 'wrap',
+						marginBottom: 50,
+						borderRadius:10
+					}}
+				>
+					<div style={{display: "flex", flexDirection: "column",flex:1, padding:20}}>
+						<div style={{display: "flex", flexDirection: "row", flex:1, padding:5, height:50, marginBottom:10}}>
+							<div style={{width: 50, height:50}}>
+								{profile && (
+									<img
+									style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+									src={'https://api.adorable.io/avatars/285/' + profile.usu_email}
+									/>
+								)}
+
+							</div>
+							<div style={{width:"40%", height: 60,display:"flex",alignItems:"center", marginLeft:20}}>
+								<p style={{color:"#fff", fontWeight: "bold", fontSize:20}}>
+
+									{profile !== null ? profile.usu_nome : "Não logado"}
+								</p>
+							</div>
+
+						</div>
+						<textarea className="shadow" style={{width: "100%", background: "#232659", minHeight: 100, borderRadius:4, border:"1px solid #666", padding:5, color:"#fff"}}></textarea>
+						<div className="text-right" style={{marginTop: 10}}>
+							<Button type="submit" color="primary" onClick={() => {}}>
+								Comentar
+							</Button>
+						</div>
+					</div>
+
+
+          {/* lista comentarios */}
+
+          {data.map((item) => (
+             <Comentario data={item} profile={profile} />
+         ))}
+
+
+
+
+
+
+
+
+
+
+
+
+
 				</div>
 			</Container>
 		</>

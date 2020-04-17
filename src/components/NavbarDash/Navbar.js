@@ -75,6 +75,7 @@ class Navbar extends Component {
 		return (
 			<>
 				<Sidebar
+					className="teste"
 					sidebar={
 						<nav>
 							<ul>

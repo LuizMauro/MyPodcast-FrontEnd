@@ -103,14 +103,22 @@
 	background: #fe1030 !important;
 }
 
-.Toastify__toast-body {
-	margin: auto 0;
-	flex: 1 1;
+.Toastify__toast--success{
+	background-color: #1bfdbe !important;
+}
+
+.Toastify__toast--error .Toastify__toast-body {
 	font-weight: bold;
+	color: #fff;
+}
+
+.Toastify__toast--success .Toastify__toast-body {
+	font-weight: bold;
+	color: #151734;
 }
 
 .border-secundary {
-	border-color: #1bfdbe;
+	border-color: #1BFDBE;
 }
 
 .hr-primary {

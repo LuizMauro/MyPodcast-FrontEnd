@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 // reactstrap components
 import {
-    Container,  
+    Container,
   } from "reactstrap";
 import Lottie from 'react-lottie'
 import Menu from '../../components/Menu'
@@ -10,11 +10,11 @@ import * as animationData from '../../assets/animations/404.json'
 
 
 
-export default function NotFound(){ 
+export default function NotFound(){
 
     const defaultOptions = {
         loop: true,
-        autoplay: true, 
+        autoplay: true,
         animationData: animationData.default,
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid slice'

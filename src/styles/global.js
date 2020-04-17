@@ -12,7 +12,7 @@ export default createGlobalStyle`
         padding:0;
         outline:0;
         box-sizing:border-box;
-      
+
     }
 
     ul{
@@ -86,5 +86,25 @@ export default createGlobalStyle`
     background: rgba(0, 0, 0, 0.3);
     }
 
+    /* width */
+::-webkit-scrollbar {
+  width: 1%;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #151734;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1BFDBE;
+  border-radius: 2px;
+}
+
+
+
+
+}
 `;
