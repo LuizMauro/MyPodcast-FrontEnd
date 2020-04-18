@@ -52,11 +52,11 @@ export default function Podcast() {
     async function loadPodcast() {
       console.log("TESTE", pod_id);
       const response = await api.get(`/podcast/${pod_id}`);
-	  setPodcast(response.data);
-	  
-	  //Busca média do podcast
-	  const valor_media = await api.get(`${pod_id}/medianota`);
-	  setMedia(valor_media.data);
+      setPodcast(response.data);
+
+      //Busca média do podcast
+      const valor_media = await api.get(`${pod_id}/medianota`);
+      setMedia(valor_media.data);
 
       const { ctg_descricao, end_link } = response.data;
       setCategoria(ctg_descricao.split(","));
@@ -81,7 +81,7 @@ export default function Podcast() {
         toast.success(`Você desfavoritou ${podcast.pod_nome}`);
       } else {
         await api.post(`${pod_id}/favoritar`);
-		toast.success(`Você favoritou ${podcast.pod_nome}`);
+        toast.success(`Você favoritou ${podcast.pod_nome}`);
       }
     } else {
       toast.error("Você precisa estar lagado para fazer essa ação");
@@ -254,6 +254,11 @@ export default function Podcast() {
                 }}
                 onChange={avaliarPodcast}
                 value={nota}
+                className="select-home shadow"
+                style={{ color: "#fff" }}
+                type="select"
+                name="select"
+                id="exampleSelect"
               >
                 <option value="0">Dar uma nota</option>
                 <option value="1">1</option>
