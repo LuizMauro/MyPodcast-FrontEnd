@@ -168,7 +168,7 @@ export default function Podcast() {
         }
       }
 
-      if (valor === 0) {
+      if (valor == 0) {
         toast.success(`Você removeu sua nota`);
       }
       if (valor >= 1) {
