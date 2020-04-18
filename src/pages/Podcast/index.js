@@ -11,15 +11,7 @@ import history from "../../services/history";
 import { useSelector } from "react-redux";
 import Comentario from "../../components/Comentarios";
 // reactstrap components
-import {
-  Container,
-  Input,
-  Button,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Container, Button } from "reactstrap";
 
 export default function Podcast() {
   const data = [{ id: 1 }, { id: 2 }, { id: 3 }];
@@ -32,7 +24,7 @@ export default function Podcast() {
   const [acompnhamento, setAcompanhamento] = useState([]);
   const [favorito, setFavoritar] = useState([]);
   const [nota, setNota] = useState(null);
-  const [media, setMedia] = useState(null);
+  const [media, setMedia] = useState(0);
 
   const profile = useSelector((state) => state.user.profile);
 
@@ -57,6 +49,17 @@ export default function Podcast() {
       //Busca média do podcast
       const valor_media = await api.get(`${pod_id}/medianota`);
       setMedia(valor_media.data);
+
+      //Busca nota que usuário já deu (Se ele deu)
+      if (profile) {
+        const verifica = await api.get(`${pod_id}/avaliar`);
+        if (verifica.data.fbk_status === 1) {
+          //se caiu aqui ele já deu uma nota e vai exibir
+          setNota(verifica.data.fbk_valor);
+        }
+        //else if (!verifica.data.fbk_status) {
+        // }
+      }
 
       const { ctg_descricao, end_link } = response.data;
       setCategoria(ctg_descricao.split(","));
@@ -167,7 +170,8 @@ export default function Podcast() {
 
       if (valor === 0) {
         toast.success(`Você removeu sua nota`);
-      } else if (valor > 0) {
+      }
+      if (valor >= 1) {
         toast.success(`Você avaliou o podcast`);
       }
     } else {
@@ -219,7 +223,9 @@ export default function Podcast() {
                 style={{ borderRadius: 10 }}
                 src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
               />
-              <h2 style={{ color: "#fff" }}>Nota: 8.0 </h2>
+              <h2 style={{ color: "#fff" }}>
+                Nota: {parseInt(media.pod_media).toFixed(2)}
+              </h2>
             </div>
 
             <div style={{ padding: 20, display: "flex" }}>
