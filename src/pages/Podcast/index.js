@@ -26,6 +26,7 @@ export default function Podcast() {
 	const [opcao, setOpcao] = useState('');
 	const [acompnhamento, setAcompanhamento] = useState([]);
   const [favorito, setFavoritar] = useState([]);
+  const [nota, setNota] = useState(1.0);
 
 	const profile = useSelector((state) => state.user.profile);
 
@@ -142,6 +143,10 @@ export default function Podcast() {
 	  };
 
 
+    function handleAvaliar(e){
+      console.log("CHAMOU", e.target.value);
+    }
+
 
 	return (
 		<>
@@ -209,9 +214,10 @@ export default function Podcast() {
 									type="select"
 									name="select"
 									id="exampleSelect"
-									placeholder="Selecione"
+                  placeholder="Selecione"
+                  onChange={(e) => handleAvaliar(e)}
 								>
-								<option>Avaliar</option>
+
 							</Input>
 						</div>
 
@@ -397,7 +403,7 @@ export default function Podcast() {
 
           {data.map((item) => (
              <Comentario data={item} profile={profile} />
-         ))}
+         	))}
 
 
 
