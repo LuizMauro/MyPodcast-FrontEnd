@@ -4,8 +4,9 @@ import auth from './auth/sagas';
 import user from './user/sagas';
 import ctg from './categoria/sagas'
 import podcast from './podcast/sagas'
+import comentario from './comentario/sagas'
 
 export default function* rootSaga(){
-    return yield all([auth, user, ctg, podcast]);
+    return yield all([auth, user, ctg, podcast, comentario]);
     
 }

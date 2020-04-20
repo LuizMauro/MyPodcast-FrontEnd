@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Menu from "../../components/Menu";
 import api from "../../services/api";
 import { FaSpotify, FaInternetExplorer, FaYoutube } from "react-icons/fa";
 import Lottie from "react-lottie";
+import { Form } from "@unform/web";
+import { useDispatch } from "react-redux";
+import { createComentarioRequest } from "../../store/modules/comentario/actions";
+import Textarea from "../../components/Textarea";
 import * as animationData from "../../assets/animations/like.json";
 import { toast } from "react-toastify";
 import history from "../../services/history";
@@ -14,8 +18,6 @@ import Comentario from "../../components/Comentarios";
 import { Container, Button } from "reactstrap";
 
 export default function Podcast() {
-  const data = [{ id: 1 }, { id: 2 }, { id: 3 }];
-
   const { pod_id } = useParams();
   const [podcast, setPodcast] = useState("");
   const [categoria, setCategoria] = useState([]);
@@ -25,24 +27,15 @@ export default function Podcast() {
   const [favorito, setFavoritar] = useState([]);
   const [nota, setNota] = useState(null);
   const [media, setMedia] = useState(0);
+  const [comentarios, setComentarios] = useState([]);
+  const dispatch = useDispatch();
+  const formRef = useRef(null);
+  const [update, setUpdate] = useState(true);
 
   const profile = useSelector((state) => state.user.profile);
 
-  async function setaCheckBox() {
-    const acompanhandoResp = await api.get(`acompanhando/${pod_id}`);
-
-    setAcompanhamento(acompanhandoResp.data);
-  }
-
-  async function setaFavoritar() {
-    const verifica = await api.get(`findfavorito/${pod_id}`);
-    console.log(verifica.data);
-    setFavoritar(verifica.data);
-  }
-
   useEffect(() => {
     async function loadPodcast() {
-      console.log("TESTE", pod_id);
       const response = await api.get(`/podcast/${pod_id}`);
       setPodcast(response.data);
 
@@ -57,23 +50,32 @@ export default function Podcast() {
           //se caiu aqui ele já deu uma nota e vai exibir
           setNota(verifica.data.fbk_valor);
         }
-        //else if (!verifica.data.fbk_status) {
-        // }
       }
+
+      const comments = await api.get(`allcomentarios/${pod_id}`);
+      setComentarios(comments.data);
 
       const { ctg_descricao, end_link } = response.data;
       setCategoria(ctg_descricao.split(","));
       setEndereco(end_link.split(","));
-
-      console.log("TESTE", response.data);
 
       setaCheckBox();
       setaFavoritar();
     }
 
     loadPodcast();
-    console.log(podcast);
-  }, []);
+  }, [update]);
+
+  async function setaCheckBox() {
+    const acompanhandoResp = await api.get(`acompanhando/${pod_id}`);
+
+    setAcompanhamento(acompanhandoResp.data);
+  }
+
+  async function setaFavoritar() {
+    const verifica = await api.get(`findfavorito/${pod_id}`);
+    setFavoritar(verifica.data);
+  }
 
   async function favoritar() {
     if (profile) {
@@ -180,6 +182,13 @@ export default function Podcast() {
     }
   }
 
+  async function handleComentario({ cmt_conteudo }) {
+    setUpdate(true ? false : true)
+    dispatch(
+      createComentarioRequest(cmt_conteudo, podcast.pod_id, profile.usu_id)
+    );
+  }
+
   const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -192,7 +201,6 @@ export default function Podcast() {
   return (
     <>
       <Menu />
-
       <Container>
         <div
           className="bg-secondary shadow"
@@ -233,7 +241,7 @@ export default function Podcast() {
               }}
             >
               <h2 style={{ color: "#fff" }}>
-                Nota:
+                Nota:{" "}
                 {media.pod_media ? parseInt(media.pod_media).toFixed(2) : "N/A"}
               </h2>
             </div>
@@ -279,6 +287,14 @@ export default function Podcast() {
                 <option value="0">Dar uma nota</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
               </select>
             </div>
 
@@ -515,28 +531,26 @@ export default function Podcast() {
                 </p>
               </div>
             </div>
-            <textarea
-              className="shadow"
-              style={{
-                width: "100%",
-                background: "#232659",
-                minHeight: 100,
-                borderRadius: 4,
-                border: "1px solid #666",
-                padding: 5,
-                color: "#fff",
-              }}
-            ></textarea>
-            <div className="text-right" style={{ marginTop: 10 }}>
-              <Button type="submit" color="primary" onClick={() => {}}>
-                Comentar
-              </Button>
-            </div>
+            <Form ref={formRef} onSubmit={handleComentario}>
+              <Textarea
+                name="cmt_conteudo"
+                placeholder="Digite um comentário"
+                type="text"
+                required
+              ></Textarea>
+              <div className="text-right" style={{ marginTop: 10 }}>
+                <Button type="submit" color="primary">
+                  Comentar
+                </Button>
+              </div>
+            </Form>
           </div>
-
           {/* lista comentarios */}
-
-          <Comentario profile={profile} podcast={podcast} />
+          <Comentario
+            data={comentarios.map((item) => item)}
+            profile={profile}
+            podcast={podcast}
+          />
         </div>
       </Container>
     </>
