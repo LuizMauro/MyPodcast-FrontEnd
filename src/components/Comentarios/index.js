@@ -6,9 +6,11 @@ import { IoMdClose } from 'react-icons/io';
 import Lottie from 'react-lottie'
 import * as animationData from '../../assets/animations/like.json'
 
-export default function Comentario({data, profile}) {
-   const [comentarios, setComentarios] = useState(data);
+export default function Comentario({data, profile, podcast}) {
+   const [comentarios, setComentarios] = useState(1);
    const [responder, setResponder] = useState(false);
+
+   console.log('teste do podcast',podcast.pod_id)
 
 
    const defaultOptions = {

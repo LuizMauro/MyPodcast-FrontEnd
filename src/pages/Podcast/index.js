@@ -223,16 +223,26 @@ export default function Podcast() {
                 style={{ borderRadius: 10 }}
                 src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
               />
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingLeft: "30px",
+              }}
+            >
               <h2 style={{ color: "#fff" }}>
-                Nota: {parseInt(media.pod_media).toFixed(2)}
+                Nota:
+                {media.pod_media ? parseInt(media.pod_media).toFixed(2) : "N/A"}
               </h2>
             </div>
 
-            <div style={{ padding: 20, display: "flex" }}>
+            <div style={{ display: "flex" }}>
               {favorito.fbk_status !== 1 ? (
                 <a onClick={() => favoritar()}>
                   <Lottie
-                    style={{ marginTop: -25 }}
+                    style={{ marginTop: -25, marginBottom: -20 }}
                     options={defaultOptions}
                     height={100}
                     width={100}
@@ -243,7 +253,7 @@ export default function Podcast() {
               ) : (
                 <a onClick={() => favoritar()}>
                   <Lottie
-                    style={{ marginTop: -25 }}
+                    style={{ marginTop: -25, marginBottom: -20 }}
                     options={defaultOptions}
                     height={100}
                     width={100}
@@ -526,9 +536,7 @@ export default function Podcast() {
 
           {/* lista comentarios */}
 
-          {data.map((item) => (
-            <Comentario data={item} profile={profile} />
-          ))}
+          <Comentario profile={profile} podcast={podcast} />
         </div>
       </Container>
     </>
