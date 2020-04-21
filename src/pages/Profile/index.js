@@ -66,7 +66,7 @@ export default function Profile() {
 											editMode ? { display: 'block' } : { display: 'none' }
 										}
 									>
-											<div style={{display:"flex",flexDirection:"row" ,padding:20,  alignItems:"center"}}>
+											<div style={{display:"flex",flexDirection:"row" ,padding:20,  alignItems:"center", flexWrap: "wrap"}}>
 											<div style={{width:"30%", height: "30%", margin:5}}>
 													<img
 														style={{ width: "100%", height: "100%", borderRadius: "50%" }}
@@ -156,7 +156,7 @@ export default function Profile() {
 								</div>
 
 									<Row className="mt-5">
-										<Col sm="4">
+                  <Col lg="4" xs="12">
 											<Card
 												style={{
 													borderRadius: 15,
@@ -179,7 +179,7 @@ export default function Profile() {
 												</ul>
 											</Card>
 										</Col>
-										<Col sm="4">
+										<Col lg="4" xs="12">
 											<Card
 												style={{
 													borderRadius: 15,
@@ -202,7 +202,7 @@ export default function Profile() {
 												</ul>
 											</Card>
 										</Col>
-										<Col sm="4">
+                    <Col lg="4" xs="12">
 											<Card
 												style={{
 													borderRadius: 15,

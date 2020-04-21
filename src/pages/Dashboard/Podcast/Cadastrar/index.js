@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -10,9 +10,25 @@ import FileInput from '../../../../components/FileInput/FileInput';
 
 import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 
+import './inputTag.css'
+
 export default function Podcast() {
 	const formRef = useRef(null);
 	const [file, setFile] = useState(null);
+  const [selectCategorias, setSelectCategorias] = useState([]);
+  const [selectIdCategorias, setSelectIdCategorias] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+
+
+  async function loadCategoria() {
+    const response = await api.get('/categoria');
+    setCategorias(response.data);
+  }
+
+  useEffect(() => {
+    loadCategoria();
+  },[])
 
 	async function handleSubmit({
 		pod_nome,
@@ -20,18 +36,28 @@ export default function Podcast() {
 		pod_criador,
 		pod_anocriacao,
 		pod_duracao,
-		ctg_id,
+		//ctg_id,
 		end_link1,
 		end_link2,
 		end_link3
 	}) {
 
-		const list_of_categoria = ctg_id.split(',');
+	//	const list_of_categoria = ctg_id.split(',');
 
-		if(list_of_categoria.length > 5){
+		if(selectIdCategorias.length > 5){
 			toast.error('O podcast pode ter no máximo 5 categorias')
 			return;
 		}
+
+    const aux =  categorias.filter(({ctg_descricao}) => !selectCategorias.includes(ctg_descricao));
+    const arrayFinal = [];
+
+    aux.map((item)=>{
+      arrayFinal.push(item.ctg_id)
+
+    })
+
+    console.log("ENVIANDO PARA O BANCO -> ",arrayFinal);
 
 		const data = new FormData();
 
@@ -41,7 +67,7 @@ export default function Podcast() {
 		data.append('pod_anocriacao', pod_anocriacao);
 		data.append('pod_duracao', pod_duracao);
 		data.append('pod_permissao', 1);
-		data.append('list_of_categoria', list_of_categoria);
+		data.append('list_of_categoria', arrayFinal);
 		data.append('end_link1', end_link1);
 		data.append('end_link2', end_link2);
 		data.append('end_link3', end_link3);
@@ -56,22 +82,9 @@ export default function Podcast() {
 				pod_criador: Yup.string().required('O nome do criador é obrigatório'),
 				pod_anocriacao: Yup.string().required('O ano de criação é obrigatório'),
 				pod_duracao: Yup.string().required('A duração é obrigatório'),
-				ctg_id: Yup.string().required('As categorias são obrigatórias'),
+			//ctg_id: Yup.string().required('As categorias são obrigatórias'),
 				end_link1: Yup.string().required('O 1º endereço é obrigatório')
 			});
-
-		/*	await schema.validate(
-				{ pod_nome },
-				{ pod_descricao },
-				{ pod_criador },
-				{ pod_anocriacao },
-				{ pod_duracao },
-				{ ctg_id },
-				{ end_link1 },
-				{
-					abortEarly: false
-				}
-			); */
 
 			const response = await api.post('/adm/criarpodcast', data);
 
@@ -103,6 +116,37 @@ export default function Podcast() {
 		}
 	}
 
+
+
+  function removeCategoria(indexToRemove, id){
+
+      console.log(id)
+
+    setSelectIdCategorias(selectIdCategorias.filter(item => item !== id))
+
+
+    setSelectCategorias([...selectCategorias.filter((tag) => tag !== indexToRemove)]);
+  }
+
+  function setCategoria(value, i){
+    if(value !== ""){
+      if(selectCategorias.length === 5){
+        toast.error("O podcast pode ter no máximo 5 categorias")
+        return;
+      }
+
+      console.log("OK -> ", i)
+
+      setSelectIdCategorias([...selectIdCategorias, i])
+			setSelectCategorias([...selectCategorias, value]);
+      value= "";
+
+		}
+  }
+
+
+
+
 	return (
 		<>
 			<section className="section section-shaped section-lg">
@@ -114,65 +158,161 @@ export default function Podcast() {
 									className="px-lg-5 py-lg-5"
 									enctype="multipart/form-data"
 								>
-									<Form ref={formRef} onSubmit={handleSubmit}>
-										<Row lg="12" className="mb-3"></Row>
+									<Form ref={formRef} onSubmit={handleSubmit} >
+										<Row lg="12" className="mb-3">
 
-										<Input
-											name="pod_nome"
-											type="text"
-											placeholder="Nome do Podcast"
-										/>
-										<Input
-											name="pod_descricao"
-											type="text"
-											placeholder="Descrição do Podcast"
-										/>
-										<Input
-											name="pod_criador"
-											type="text"
-											placeholder="Nome do criador"
-										/>
-										<Input
-											name="pod_anocriacao"
-											type="text"
-											placeholder="Ano de criação"
-										/>
-										<Input
-											name="pod_duracao"
-											type="text"
-											placeholder="Média de duração em minutos"
-										/>
-										<Input
-											name="ctg_id"
-											type="text"
-											placeholder="Categorias separadas por vírgula"
-										/>
-										<Input
-											name="end_link1"
-											type="text"
-											placeholder="Endereço 1 do Podcast"
-										/>
-										<Input
-											name="end_link2"
-											type="text"
-											placeholder="Endereço 2 do Podcast"
-										/>
-										<Input
-											name="end_link3"
-											type="text"
-											placeholder="Endereço 3 do Podcast"
-										/>
-										<FileInput
-											name="pod_endereco_img"
-											type="file"
-											id="pod_endereco_img"
-											accept="image/*"
-											data-file={file}
-											onChange={(event) => setFile(event.target.files[0])}
-										></FileInput>
+                      <Col lg="6" xs="12">
+                        <FileInput
+                        style={{minHeight: 400}}
+                        name="pod_endereco_img"
+                        type="file"
+                        id="pod_endereco_img"
+                        accept="image/*"
+                        data-file={file}
+                        onChange={(event) => setFile(event.target.files[0])}
+                         />
+                      </Col>
+
+                      <Col lg="6" xs="12"  className="borderBottom">
+                        <h5 style={{color:"#fff"}}>Nome do podcast</h5>
+                        <Input
+                          name="pod_nome"
+                          type="text"
+                          placeholder="Nome do Podcast"
+                        />
+
+                        <h5 style={{color:"#fff"}}>Escolha até 5 categorias</h5>
+
+                        {true && (
+                           <ul id="tags" className="borderBottom">
+                            {
+
+                              categorias.filter(({ctg_descricao}) => !selectCategorias.includes(ctg_descricao)).map((v,i) =>{
+                                console.log("CAT ->", selectIdCategorias)
+
+                                return(
+
+                                  <li key={i} className="tag">
+                                    <span className='tag-title'>{v.ctg_descricao}</span>
+                                    <span className='tag-close-icon'
+                                      onClick={() => setCategoria(v.ctg_descricao, v.ctg_id)}
+                                    >
+                                      +
+                                    </span>
+                                  </li>
+                                )
+                              })
+                            }
+                          </ul>
+                        )}
+                        <h5 style={{color: "#fff"}}>Categorias selecionadas</h5>
+                        <ul id="tags">
+
+                                {  categorias.filter(({ctg_descricao}) => selectCategorias.includes(ctg_descricao)).map((v,i) => (
+
+                                 <>
+                                  <br/>
+                                  <li key={v.id} className="tag">
+                                    <span className='tag-title'>{v.ctg_descricao}</span>
+                                    <span className='tag-close-icon'
+                                      onClick={() => removeCategoria(v.ctg_descricao, v.ctg_id)}
+                                    >
+                                      x
+                                    </span>
+                                  </li>
+                                  </>
+                                ))}
+                        </ul>
+
+                      </Col>
+
+                    </Row>
+
+
+                    <Row  className="borderBottom">
+                      <Col lg="12" xs="12">
+                      <h5 style={{color: "#fff"}}>Descrição</h5>
+                        <Input
+											    name="pod_descricao"
+											    type="text"
+                          placeholder="Descrição do Podcast"
+                          style={{minHeight:200}}
+										    />
+                      </Col>
+                    </Row>
+
+
+                    <Row lg="12"  className="borderBottom">
+                      <Col lg="4" xs="12">
+                      <h5 style={{color: "#fff"}}>Ano de criação</h5>
+                        <Input
+                          name="pod_anocriacao"
+                          type="text"
+                          placeholder="Ano de criação"
+                        />
+                      </Col>
+
+                      <Col lg="4" xs="12">
+                      <h5 style={{color: "#fff"}}>Nome do criador</h5>
+                        <Input
+                          name="pod_criador"
+                          type="text"
+                          placeholder="Nome do criador"
+                        />
+                      </Col>
+
+                      <Col lg="4" xs="12">
+                      <h5 style={{color: "#fff"}}>Média de duração</h5>
+                        <Input
+											    name="pod_duracao"
+											    type="text"
+											    placeholder="Média de duração em minutos"
+										    />
+                      </Col>
+
+                    </Row>
+
+
+
+                    <Row>
+                      <Col lg="4" xs="12">
+                      <h5 style={{color: "#fff"}}>Endereço 1</h5>
+                        <Input
+                          name="end_link1"
+                          type="text"
+                          placeholder="Endereço 1 do Podcast"
+                        />
+                      </Col>
+
+                      <Col lg="4" xs="12">
+                      <h5 style={{color: "#fff"}}>Endereço 2</h5>
+                        <Input
+											    name="end_link2"
+											    type="text"
+											    placeholder="Endereço 2 do Podcast"
+										    />
+                      </Col>
+
+                      <Col lg="4" xs="12">
+                      <h5 style={{color: "#fff"}}>Endereço 3</h5>
+                        <Input
+											    name="end_link3"
+											    type="text"
+											    placeholder="Endereço 3 do Podcast"
+										    />
+                      </Col>
+                    </Row>
+
+
+
+
+
+
+
+
 
 										<div className="text-center">
-											<Button type="submit" className="my-2" color="primary">
+											<Button type="submit" className="my-2"  color="primary">
 												Cadastrar
 											</Button>
 										</div>

@@ -23,7 +23,6 @@ export default function Podcast() {
   const [opcao, setOpcao] = useState("");
   const [acompnhamento, setAcompanhamento] = useState([]);
   const [favorito, setFavoritar] = useState([]);
-
   const [nota, setNota] = useState(null);
   const [media, setMedia] = useState(0);
 
@@ -167,13 +166,19 @@ export default function Podcast() {
           toast.error("Opção inválida");
           console.log("nao tem como marcar como tirar a nota");
         }
+
       }
 
       if (valor == 0) {
+        const valor_media = await api.get(`${pod_id}/medianota`);
+        setMedia(valor_media.data);
         toast.success(`Você removeu sua nota`);
       }
       if (valor >= 1) {
-        toast.success(`Você avaliou o podcast`);
+        const valor_media = await api.get(`${pod_id}/medianota`);
+        setMedia(valor_media.data);
+
+        toast.success(`Você avaliou com nota `+ valor + ".0");
       }
     } else {
       toast.error("Você precisa logar para fazer essa ação");
@@ -215,7 +220,7 @@ export default function Podcast() {
           >
             <div
               style={{ height: 350, width: 400, padding: 20 }}
-              className="borderBottom"
+
             >
               <img
                 className="shadow"
@@ -224,7 +229,7 @@ export default function Podcast() {
                 style={{ borderRadius: 10 }}
                 src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
               />
-              <h2 style={{ color: "#fff" }}>
+              <h2 style={{ color: "#fff", flex:1 }}>
                 Nota: {parseInt(media.pod_media).toFixed(2)}
               </h2>
             </div>
@@ -253,23 +258,22 @@ export default function Podcast() {
               )}
 
               <select
-                style={{
-                  marginTop: 5,
-                  width: "100%",
-                  height: "40px",
-                  padding: 0,
-                }}
+              className="select-home shadow"
                 onChange={avaliarPodcast}
                 value={nota}
-                className="select-home shadow"
-                style={{ color: "#fff" }}
+                style={{color:"#fff", width:"100%"}}
+
+
                 type="select"
                 name="select"
                 id="exampleSelect"
               >
                 <option value="0">Dar uma nota</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
+                <option value="1">1.0</option>
+                <option value="2">2.0</option>
+                <option value="3">3.0</option>
+                <option value="4">4.0</option>
+                <option value="5">5.0</option>
               </select>
             </div>
 
@@ -525,16 +529,15 @@ export default function Podcast() {
             </div>
           </div>
 
-
           {/* lista comentarios */}
 
           {data.map((item) => (
-
-             <Comentario data={item} profile={profile} />
-         	))}
-
-				</div>
-			</Container>
-		</>
-	);
+            <Comentario data={item} profile={profile} />
+          ))}
+        </div>
+      </Container>
+    </>
+  );
 }
+
+

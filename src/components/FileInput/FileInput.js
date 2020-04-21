@@ -16,8 +16,10 @@ export default function FileInput({ name, ...rest }) {
 		const file = e.target.files?.[0];
 		if (!file) {
 			setPreview(null);
-		}
-		const previewURL = URL.createObjectURL(file);
+    }
+
+    const previewURL = URL.createObjectURL(e.target.files[0]);
+
 		setPreview(previewURL);
 	}, []);
 
@@ -31,6 +33,7 @@ export default function FileInput({ name, ...rest }) {
 				setPreview(null);
 			},
 			setValue(value) {
+        console.log("TESTE", value)
 				setPreview(value);
 			}
 		});
