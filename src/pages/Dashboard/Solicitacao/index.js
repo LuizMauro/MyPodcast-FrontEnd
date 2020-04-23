@@ -43,7 +43,7 @@ export default function Solicitacao() {
 	}
 
 	async function exibirSolicitacoes() {
-		const response = await api.get('/adm/podcasts/solicitacao');
+		const response = await api.get('/podcasts/solicitacao');
 		console.log(response.data);
 		setSolicitacao(response.data);
 	}

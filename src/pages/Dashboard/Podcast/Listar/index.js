@@ -40,7 +40,7 @@ export default function EditarPodcast() {
 
 	async function deletarPodcast(podcast) {
 		try {
-			await api.put(`/adm/podcast/${podcast.pod_id}/0`);
+			await api.put(`/podcast/${podcast.pod_id}/0`);
 
 			toast.success('Podcast deletado');
 		} catch (err) {
@@ -109,7 +109,7 @@ export default function EditarPodcast() {
 				end_link1: Yup.string().required('O 1º endereço é obrigatório'),
 			});
 
-			const response = await api.put(`/adm/editarpodcast/${pod_id}`, data);
+			const response = await api.put(`/editarpodcast/${pod_id}`, data);
 
 			if (response.data.podCreated) {
 				toast.success('Podcast cadastrado!');

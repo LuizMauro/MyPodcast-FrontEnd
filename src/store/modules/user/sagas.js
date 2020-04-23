@@ -33,7 +33,7 @@ export function* updateStatus({ payload }) {
 	const { usu_id, usu_status } = payload;
 
 	try {
-		yield call(api.put, `/adm/users/${usu_id}/${usu_status ? 0 : 1}`);
+		yield call(api.put, `/users/${usu_id}/${usu_status ? 0 : 1}`);
 	} catch (err) {
 		toast.error('Erro ao ativar ou desativar usuário');
 		console.tron.log('o erro é', err);
@@ -44,7 +44,7 @@ export function* updateModerador({ payload }) {
 	const { usu_id, tus_id } = payload;
 
 	try {
-		yield call(api.put, `/adm/users/tipo/${usu_id}/${tus_id === 3 ? 1 : 3}`);
+		yield call(api.put, `/users/tipo/${usu_id}/${tus_id === 3 ? 1 : 3}`);
 	} catch (err) {
 		toast.error('Erro ao ativar ou desativar usuário');
 		console.tron.log('o erro é', err);

@@ -29,7 +29,7 @@ export default function Moderador() {
 	}, [edit]);
 
 	async function exibirUsuarios() {
-		const response = await api.get('/adm/modusers');
+		const response = await api.get('/modusers');
 		console.log(response.data);
 		setUsuario(response.data);
 	}

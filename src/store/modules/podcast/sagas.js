@@ -66,7 +66,7 @@ export function* deletePodcast({ payload }) {
 	try {
 		const { ctg_descricao, ctg_id } = payload;
 
-		yield call(api.put, `/adm/Podcast/${ctg_id}`, {
+		yield call(api.put, `/Podcast/${ctg_id}`, {
 			ctg_descricao,
 		});
 		toast.success('Podcast editada');
@@ -79,7 +79,7 @@ export function* updateSolicitacao({ payload }) {
 	try {
 		const { pod_id, pod_permissao } = payload;
 
-		yield call(api.put, `/adm/podcasts/solicitacao/${pod_id}/${pod_permissao}`);
+		yield call(api.put, `/podcasts/solicitacao/${pod_id}/${pod_permissao}`);
 		
 	} catch (err) {
 		toast.error('Erro com a solicitação de cadastro.');

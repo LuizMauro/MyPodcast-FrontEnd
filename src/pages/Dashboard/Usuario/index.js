@@ -28,8 +28,7 @@ export default function Usuario() {
 	}, [edit]);
 
 	async function exibirUsuarios() {
-		const response = await api.get('/adm/users');
-		console.log(response.data);
+		const response = await api.get('/users');
 		setUsuario(response.data);
 	}
 
