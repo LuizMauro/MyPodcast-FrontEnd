@@ -18,6 +18,19 @@ export function* createComentario({ payload }) {
   }
 }
 
+export function* deleteComentario({ payload }) {
+  try {
+    const { pod_id, cmt_id } = payload;
+
+    yield call(api.put, `deletarcomentario/${pod_id}/${cmt_id}`);
+    toast.success("Comentário deletado.");
+  } catch (err) {
+    toast.error("Falha ao deletar comentário");
+    console.tron.log(err);
+  }
+}
+
 export default all([
   takeLatest("@ctg/CREATE_COMENTARIO_REQUEST", createComentario),
+  takeLatest("@ctg/DELETE_COMENTARIO_REQUEST", deleteComentario),
 ]);

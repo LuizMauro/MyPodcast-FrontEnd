@@ -556,6 +556,7 @@ export default function Podcast() {
             data={comentarios.map((item) => item)}
             profile={profile}
             podcast={podcast}
+            setUpdate={setUpdate}
           />
         </div>
       </Container>

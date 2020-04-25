@@ -12,3 +12,11 @@ export function updateCategoriaRequest(ctg_descricao, ctg_id) {
 	};
 }
 
+
+export function deleteComentarioRequest(pod_id, cmt_id) {
+	return {
+		type: '@ctg/DELETE_COMENTARIO_REQUEST',
+		payload: { pod_id, cmt_id }
+	};
+}
+
