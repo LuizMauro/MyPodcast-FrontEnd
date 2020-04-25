@@ -28,6 +28,7 @@ export default function Podcast() {
   const [nota, setNota] = useState(null);
   const [media, setMedia] = useState(0);
   const [comentarios, setComentarios] = useState([]);
+  const [likes, setLikes] = useState([]);
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const [update, setUpdate] = useState(true);

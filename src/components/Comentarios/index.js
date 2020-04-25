@@ -127,12 +127,12 @@ export default function Comentario({ data, profile, podcast, setUpdate }) {
               >
                 <a onClick={() => {}} style={{ marginRight: 20 }}>
                   <FiThumbsUp size={30} />
-                  199
+                  {item.qtd_likes}
                 </a>
 
                 <a onClick={() => {}}>
                   <FiThumbsDown size={30} />
-                  199
+                  {item.qtd_dislikes}
                 </a>
               </div>
 
