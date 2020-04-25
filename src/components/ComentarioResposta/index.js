@@ -2,77 +2,84 @@ import React, { useState, useRef } from "react";
 import { Button } from "reactstrap";
 import { IoMdClose } from "react-icons/io";
 
-export default function Resposta({ resposta, profile, responder, setResponder}) {
+export default function Resposta({
+  resposta,
+  profile,
+  responder,
+  setResponder,
+}) {
   return (
     <>
-    {resposta && (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginLeft: "5%",
-          marginTop: 10,
-        }}
-      >
-        Respostas
+      {resposta && (
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
-            height: 30,
-            marginTop: 5,
+            flexDirection: "column",
+            marginLeft: "5%",
+            marginTop: 10,
           }}
         >
-          <div style={{ width: 30, height: 30 }}>
-            {profile && (
-              <img
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50%",
-                }}
-                src={"https://api.adorable.io/avatars/285/" + profile.usu_email}
-              />
-            )}
-          </div>
-
+          Respostas
           <div
             style={{
-              width: "50%",
-              height: 40,
               display: "flex",
-              alignItems: "center",
-              marginLeft: 20,
+              flexDirection: "row",
+              height: 30,
+              marginTop: 5,
             }}
           >
-            <p
+            <div style={{ width: 30, height: 30 }}>
+              {profile && (
+                <img
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "50%",
+                  }}
+                  src={
+                    "https://api.adorable.io/avatars/285/" + profile.usu_email
+                  }
+                />
+              )}
+            </div>
+
+            <div
               style={{
-                color: "#fff",
-                fontWeight: "bold",
-                fontSize: 20,
+                width: "50%",
+                height: 40,
+                display: "flex",
+                alignItems: "center",
+                marginLeft: 20,
               }}
             >
-              {profile !== null ? profile.usu_nome : "Não logado"}
-            </p>
+              <p
+                style={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              >
+                {profile !== null ? profile.usu_nome : "Não logado"}
+              </p>
+            </div>
+          </div>
+          <div
+            className="shadow"
+            style={{
+              width: "100%",
+              background: "#232659",
+              minHeight: 80,
+              maxHeight: "auto",
+              borderRadius: 4,
+              padding: 10,
+              color: "#fff",
+            }}
+          >
+            Lorem Ipsum is simply dummy text of theblishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
           </div>
         </div>
-        <div
-          className="shadow"
-          style={{
-            width: "100%",
-            background: "#232659",
-            minHeight: 80,
-            maxHeight: "auto",
-            borderRadius: 4,
-            padding: 10,
-            color: "#fff",
-          }}
-        >
-          Lorem Ipsum is simply dummy text of theblishing software like Aldus
-          PageMaker including versions of Lorem Ipsum.
-        </div>
-      </div>
-    )}
+      )}
 
       {responder && (
         <>

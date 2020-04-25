@@ -12,8 +12,8 @@ import * as S from "./styled";
 import Lottie from "react-lottie";
 import * as animationData from "../../assets/animations/like.json";
 
-export default function Comentario({ data, profile, podcast, setUpdate }) {
-  const [responder, setResponder] = useState(false);
+export default function Comentario({ data, profile, podcast, setUpdate, update }) {
+  const [responder, setResponder] = useState([null]);
   const comentario = data;
   const resposta = false;
   const dispatch = useDispatch();
@@ -27,20 +27,35 @@ export default function Comentario({ data, profile, podcast, setUpdate }) {
     },
   };
 
+  async function handleLike(item) {
+    if(profile){
+
+    }
+  }
+
+  async function handleDislike(item) {
+    if(profile){
+
+    }
+  }
+
+  
+  
   async function editarComentario(item) {
     console.log("dados", item);
   }
 
   async function deletarComentario(comentario) {
-    console.log("ids", comentario.pod_id, comentario.cmt_id);
-    setUpdate(true ? false : true);
-    dispatch(deleteComentarioRequest(comentario.pod_id, comentario.cmt_id));
+    console.log("ids", comentario.pod_id, comentario.comment_id);
+    setUpdate(update ? false : true);
+    dispatch(deleteComentarioRequest(comentario.pod_id, comentario.comment_id));
   }
 
   return (
     <>
       {comentario.map((item) => (
         <div
+        key={item.comment_id}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -125,12 +140,21 @@ export default function Comentario({ data, profile, podcast, setUpdate }) {
                   margin: "10px 0",
                 }}
               >
-                <a onClick={() => {}} style={{ marginRight: 20 }}>
+                <a
+                  onClick={(e) => {
+                    handleLike(item);
+                  }}
+                  style={{ marginRight: 20 }}
+                >
                   <FiThumbsUp size={30} />
                   {item.qtd_likes}
                 </a>
 
-                <a onClick={() => {}}>
+                <a
+                  onClick={(e) => {
+                    handleDislike(item);
+                  }}
+                >
                   <FiThumbsDown size={30} />
                   {item.qtd_dislikes}
                 </a>

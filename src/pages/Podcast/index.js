@@ -190,7 +190,7 @@ export default function Podcast() {
   }
 
   async function handleComentario({ cmt_conteudo }) {
-    setUpdate(true ? false : true)
+    setUpdate(update ? false : true)
     dispatch(
       createComentarioRequest(cmt_conteudo, podcast.pod_id, profile.usu_id)
     );
@@ -558,6 +558,7 @@ export default function Podcast() {
             profile={profile}
             podcast={podcast}
             setUpdate={setUpdate}
+            update={update}
           />
         </div>
       </Container>

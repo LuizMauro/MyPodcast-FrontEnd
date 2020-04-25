@@ -38,7 +38,7 @@ export default function Input({ name, className, ...rest }) {
             borderRadius: 4,
             border: "1px solid #666",
             padding: 5,
-            color: "#fff",
+            color: "#FFF",
           }}
           ref={inputRef}
           defaultValue={defaultValue}
