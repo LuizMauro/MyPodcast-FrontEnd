@@ -30,7 +30,22 @@ export function* deleteComentario({ payload }) {
   }
 }
 
+export function* updateComentario({ payload }) {
+  try {
+    const { pod_id, cmt_id, cmt_conteudo } = payload;
+
+    yield call(api.put, `editarcomentario/${pod_id}/${cmt_id}`, {
+      cmt_conteudo,
+    });
+    toast.success("Comentário editado.");
+  } catch (err) {
+    toast.error("Falha ao editar comentário");
+    console.tron.log(err);
+  }
+}
+
 export default all([
   takeLatest("@ctg/CREATE_COMENTARIO_REQUEST", createComentario),
   takeLatest("@ctg/DELETE_COMENTARIO_REQUEST", deleteComentario),
+  takeLatest("@ctg/UPDATE_COMENTARIO_REQUEST", updateComentario),
 ]);

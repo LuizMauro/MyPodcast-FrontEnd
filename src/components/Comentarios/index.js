@@ -1,19 +1,32 @@
 import React, { useState, useRef } from "react";
 import { toast } from "react-toastify";
-import { Container, Button } from "reactstrap";
+import { Container, Button, Row, Col } from "reactstrap";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
+import { Form } from "@unform/web";
+import Textarea from "../Textarea";
 import { FaPen, FaTimes } from "react-icons/fa";
 import api from "../../services/api";
 import Resposta from "../ComentarioResposta/index";
 import { useDispatch } from "react-redux";
-import { deleteComentarioRequest } from "../../store/modules/comentario/actions";
+import {
+  deleteComentarioRequest,
+  updateComentarioRequest,
+} from "../../store/modules/comentario/actions";
 import * as S from "./styled";
 
 import Lottie from "react-lottie";
 import * as animationData from "../../assets/animations/like.json";
 
-export default function Comentario({ data, profile, podcast, setUpdate, update }) {
+export default function Comentario({
+  data,
+  profile,
+  podcast,
+  setUpdate,
+  update,
+}) {
   const [responder, setResponder] = useState([null]);
+  const [editMode, setEditMode] = useState(false);
+  const [cmtEdit, setCmtEdit] = useState([]);
   const comentario = data;
   const resposta = false;
   const dispatch = useDispatch();
@@ -28,34 +41,39 @@ export default function Comentario({ data, profile, podcast, setUpdate, update }
   };
 
   async function handleLike(item) {
-    if(profile){
-
+    if (profile) {
     }
   }
 
   async function handleDislike(item) {
-    if(profile){
-
+    if (profile) {
     }
   }
 
-  
-  
   async function editarComentario(item) {
-    console.log("dados", item);
+    console.log("dados do item", item);
+    setEditMode(true);
+    setCmtEdit(item);
+  }
+
+  async function handleEdit({ cmt_conteudo }) {
+    const cmtid = cmtEdit.comment_id;
+    dispatch(updateComentarioRequest(podcast.pod_id, cmtid, cmt_conteudo));
+    setUpdate(update ? false : true);
+    setEditMode(false);
   }
 
   async function deletarComentario(comentario) {
     console.log("ids", comentario.pod_id, comentario.comment_id);
-    setUpdate(update ? false : true);
     dispatch(deleteComentarioRequest(comentario.pod_id, comentario.comment_id));
+    setUpdate(update ? false : true);
   }
 
   return (
     <>
       {comentario.map((item) => (
         <div
-        key={item.comment_id}
+          key={item.comment_id}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -97,15 +115,68 @@ export default function Comentario({ data, profile, podcast, setUpdate, update }
           </div>
 
           <div
-            style={{
-              width: "100%",
-              background: "#232659",
-              minHeight: 80,
-              maxHeight: "auto",
-              borderRadius: 4,
-              padding: 10,
-              color: "#fff",
-            }}
+            style={
+              editMode && cmtEdit.comment_id === item.comment_id
+                ? {
+                    display: "block",
+                    width: "100%",
+                    background: "#232659",
+                    minHeight: 80,
+                    maxHeight: "auto",
+                    borderRadius: 4,
+                    padding: 10,
+                    color: "#fff",
+                  }
+                : { display: "none" }
+            }
+          >
+            <Form initialData={cmtEdit} onSubmit={handleEdit}>
+              <Textarea
+                name="cmt_conteudo"
+                placeholder="Digite um comentário"
+                type="text"
+                required
+              ></Textarea>
+              <Row>
+                <Col lg="6" className="text-left" style={{ marginTop: 10 }}>
+                  <Button onClick={(e) => setEditMode(false)} color="primary">
+                    Cancelar
+                  </Button>
+                </Col>
+                <Col lg="6" className="text-right" style={{ marginTop: 10 }}>
+                  <Button type="submit" color="primary">
+                    Salvar
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+
+          <S.CommentWrapper
+            key={item.comment_id}
+            style={
+              editMode && cmtEdit.comment_id === item.comment_id
+                ? {
+                    display: "none",
+                    width: "100%",
+                    background: "#232659",
+                    minHeight: 80,
+                    maxHeight: "auto",
+                    borderRadius: 4,
+                    padding: 10,
+                    color: "#fff",
+                  }
+                : {
+                    display: "block",
+                    width: "100%",
+                    background: "#232659",
+                    minHeight: 80,
+                    maxHeight: "auto",
+                    borderRadius: 4,
+                    padding: 10,
+                    color: "#fff",
+                  }
+            }
           >
             {profile.usu_id === item.usu_id && (
               <S.IconWrapper>
@@ -190,7 +261,7 @@ export default function Comentario({ data, profile, podcast, setUpdate, update }
               setResponder={setResponder}
               setUpdate={setUpdate}
             />
-          </div>
+          </S.CommentWrapper>
         </div>
       ))}
     </>
