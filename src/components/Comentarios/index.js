@@ -24,7 +24,7 @@ export default function Comentario({
   setUpdate,
   update,
 }) {
-  const [responder, setResponder] = useState([null]);
+  const [responder, setResponder] = useState(0);
   const [editMode, setEditMode] = useState(false);
   const [cmtEdit, setCmtEdit] = useState([]);
   const comentario = data;
@@ -48,6 +48,10 @@ export default function Comentario({
   async function handleDislike(item) {
     if (profile) {
     }
+  }
+
+  async function habilitarResposta(id) {
+    setResponder(id);
   }
 
   async function editarComentario(item) {
@@ -241,7 +245,7 @@ export default function Comentario({
               >
                 <a
                   onClick={() => {
-                    setResponder(true);
+                    habilitarResposta(item.comment_id);
                   }}
                   style={{
                     alignItems: "center",
@@ -260,6 +264,7 @@ export default function Comentario({
               responder={responder}
               setResponder={setResponder}
               setUpdate={setUpdate}
+              item={item}
             />
           </S.CommentWrapper>
         </div>

@@ -7,6 +7,7 @@ export default function Resposta({
   profile,
   responder,
   setResponder,
+  item
 }) {
   return (
     <>
@@ -81,7 +82,7 @@ export default function Resposta({
         </div>
       )}
 
-      {responder && (
+      {responder == item.comment_id && (
         <>
           <div
             style={{
