@@ -1,14 +1,27 @@
 import React, { useState, useRef } from "react";
 import { Button } from "reactstrap";
 import { IoMdClose } from "react-icons/io";
+import { Form } from "@unform/web";
+import Textarea from "../Textarea";
+import { useDispatch } from "react-redux";
+import { answerComentarioRequest } from "../../store/modules/comentario/actions";
 
 export default function Resposta({
   resposta,
+  podcast,
   profile,
   responder,
   setResponder,
-  item
+  item,
 }) {
+  const dispatch = useDispatch();
+
+  async function handleResposta({ cmt_conteudo }) {
+    dispatch(
+      answerComentarioRequest(podcast.pod_id, 1, item.comment_id, cmt_conteudo)
+    );
+  }
+
   return (
     <>
       {resposta && (
@@ -103,24 +116,28 @@ export default function Resposta({
                 color="#fff"
               ></IoMdClose>
             </a>
-            <textarea
-              className="shadow"
-              style={{
-                width: "100%",
-                background: "#232659",
-                minHeight: 100,
-                borderRadius: 4,
-                border: "1px solid #666",
-                padding: 5,
-                color: "#fff",
-              }}
-              placeholder="Digite sua resposta"
-            ></textarea>
-            <div className="text-right" style={{ marginTop: 10 }}>
-              <Button type="submit" color="primary" onClick={() => {}}>
-                Responder
-              </Button>
-            </div>
+            <Form onSubmit={handleResposta}>
+              <Textarea
+                className="shadow"
+                name="cmt_conteudo"
+                required
+                style={{
+                  width: "100%",
+                  background: "#232659",
+                  minHeight: 100,
+                  borderRadius: 4,
+                  border: "1px solid #666",
+                  padding: 5,
+                  color: "#fff",
+                }}
+                placeholder="Digite sua resposta"
+              ></Textarea>
+              <div className="text-right" style={{ marginTop: 10 }}>
+                <Button type="submit" color="primary">
+                  Responder
+                </Button>
+              </div>
+            </Form>
           </div>
         </>
       )}

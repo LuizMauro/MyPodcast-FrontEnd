@@ -260,6 +260,7 @@ export default function Comentario({
 
             <Resposta
               resposta={resposta}
+              podcast={podcast}
               profile={profile}
               responder={responder}
               setResponder={setResponder}

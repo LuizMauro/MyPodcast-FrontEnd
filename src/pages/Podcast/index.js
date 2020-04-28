@@ -192,7 +192,7 @@ export default function Podcast() {
   async function handleComentario({ cmt_conteudo }) {
     setUpdate(update ? false : true)
     dispatch(
-      createComentarioRequest(cmt_conteudo, podcast.pod_id, profile.usu_id)
+      createComentarioRequest(cmt_conteudo, podcast.pod_id, 1)
     );
   }
 
