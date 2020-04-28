@@ -14,6 +14,14 @@ export const IconWrapper = styled.div`
     right: 0;
     top: 0;
   }
+
+  .edit-answer {
+    right: 45px !important;
+  }
+
+  .delete-answer {
+    right: 10px !important;
+  }
 `;
 
 export const CommentWrapper = styled.div`

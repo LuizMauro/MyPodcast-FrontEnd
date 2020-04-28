@@ -23,12 +23,14 @@ export default function Comentario({
   podcast,
   setUpdate,
   update,
+  //  resposta
 }) {
   const [responder, setResponder] = useState(0);
   const [editMode, setEditMode] = useState(false);
   const [cmtEdit, setCmtEdit] = useState([]);
   const comentario = data;
-  const resposta = false;
+  const [resposta, setResposta] = useState([]);
+
   const dispatch = useDispatch();
 
   const defaultOptions = {
@@ -55,7 +57,6 @@ export default function Comentario({
   }
 
   async function editarComentario(item) {
-    console.log("dados do item", item);
     setEditMode(true);
     setCmtEdit(item);
   }
@@ -75,201 +76,223 @@ export default function Comentario({
 
   return (
     <>
-      {comentario.map((item) => (
-        <div
-          key={item.comment_id}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            padding: 20,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flex: 1,
-              padding: 5,
-              height: 50,
-              marginBottom: 10,
-            }}
-          >
-            <div style={{ width: 50, height: 50 }}>
-              {profile && (
-                <img
-                  style={{ width: "100%", height: "100%", borderRadius: "50%" }}
-                  src={"https://api.adorable.io/avatars/285/" + item.usu_nome}
-                />
-              )}
-            </div>
+      {comentario.map(
+        (item) =>
+          !item.id_comentario_pai && (
             <div
-              style={{
-                width: "40%",
-                height: 60,
-                display: "flex",
-                alignItems: "center",
-                marginLeft: 20,
-              }}
-            >
-              <p style={{ color: "#fff", fontWeight: "bold", fontSize: 20 }}>
-                {item.usu_nome}
-              </p>
-            </div>
-          </div>
-
-          <div
-            style={
-              editMode && cmtEdit.comment_id === item.comment_id
-                ? {
-                    display: "block",
-                    width: "100%",
-                    background: "#232659",
-                    minHeight: 80,
-                    maxHeight: "auto",
-                    borderRadius: 4,
-                    padding: 10,
-                    color: "#fff",
-                  }
-                : { display: "none" }
-            }
-          >
-            <Form initialData={cmtEdit} onSubmit={handleEdit}>
-              <Textarea
-                name="cmt_conteudo"
-                placeholder="Digite um comentário"
-                type="text"
-                required
-              ></Textarea>
-              <Row>
-                <Col lg="6" className="text-left" style={{ marginTop: 10 }}>
-                  <Button onClick={(e) => setEditMode(false)} color="primary">
-                    Cancelar
-                  </Button>
-                </Col>
-                <Col lg="6" className="text-right" style={{ marginTop: 10 }}>
-                  <Button type="submit" color="primary">
-                    Salvar
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-
-          <S.CommentWrapper
-            key={item.comment_id}
-            style={
-              editMode && cmtEdit.comment_id === item.comment_id
-                ? {
-                    display: "none",
-                    width: "100%",
-                    background: "#232659",
-                    minHeight: 80,
-                    maxHeight: "auto",
-                    borderRadius: 4,
-                    padding: 10,
-                    color: "#fff",
-                  }
-                : {
-                    display: "block",
-                    width: "100%",
-                    background: "#232659",
-                    minHeight: 80,
-                    maxHeight: "auto",
-                    borderRadius: 4,
-                    padding: 10,
-                    color: "#fff",
-                  }
-            }
-          >
-            {profile.usu_id === item.usu_id && (
-              <S.IconWrapper>
-                <button
-                  className="button edit"
-                  onClick={(e) => editarComentario(item)}
-                >
-                  <FaPen size={18} />
-                </button>
-                <button
-                  className="button delete"
-                  onClick={(e) => deletarComentario(item)}
-                >
-                  <FaTimes size={18} />
-                </button>
-              </S.IconWrapper>
-            )}
-
-            <p style={{ margin: "15px 0" }}>{item.cmt_conteudo} </p>
-            <div
+              key={item.comment_id}
               style={{
                 display: "flex",
-                flexDirection: "row",
-                borderBottom: "1px dashed #ccc",
+                flexDirection: "column",
+                flex: 1,
+                padding: 20,
               }}
             >
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
                   flexDirection: "row",
-                  margin: "10px 0",
+                  flex: 1,
+                  padding: 5,
+                  height: 50,
+                  marginBottom: 10,
                 }}
               >
-                <a
-                  onClick={(e) => {
-                    handleLike(item);
-                  }}
-                  style={{ marginRight: 20 }}
-                >
-                  <FiThumbsUp size={30} />
-                  {item.qtd_likes}
-                </a>
-
-                <a
-                  onClick={(e) => {
-                    handleDislike(item);
-                  }}
-                >
-                  <FiThumbsDown size={30} />
-                  {item.qtd_dislikes}
-                </a>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: 30,
-                  flexDirection: "row",
-                }}
-              >
-                <a
-                  onClick={() => {
-                    habilitarResposta(item.comment_id);
-                  }}
+                <div style={{ width: 50, height: 50 }}>
+                  {profile && (
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                      }}
+                      src={
+                        "https://api.adorable.io/avatars/285/" + item.usu_nome
+                      }
+                    />
+                  )}
+                </div>
+                <div
                   style={{
+                    width: "40%",
+                    height: 60,
+                    display: "flex",
                     alignItems: "center",
-                    cursor: "pointer",
-                    color: "#1bfdbe",
+                    marginLeft: 20,
                   }}
                 >
-                  Responder
-                </a>
+                  <p
+                    style={{ color: "#fff", fontWeight: "bold", fontSize: 20 }}
+                  >
+                    {item.usu_nome}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <Resposta
-              resposta={resposta}
-              podcast={podcast}
-              profile={profile}
-              responder={responder}
-              setResponder={setResponder}
-              setUpdate={setUpdate}
-              item={item}
-            />
-          </S.CommentWrapper>
-        </div>
-      ))}
+              <div
+                style={
+                  editMode && cmtEdit.comment_id === item.comment_id
+                    ? {
+                        display: "block",
+                        width: "100%",
+                        background: "#232659",
+                        minHeight: 80,
+                        maxHeight: "auto",
+                        borderRadius: 4,
+                        padding: 10,
+                        color: "#fff",
+                      }
+                    : { display: "none" }
+                }
+              >
+                <Form initialData={cmtEdit} onSubmit={handleEdit}>
+                  <Textarea
+                    name="cmt_conteudo"
+                    placeholder="Digite um comentário"
+                    type="text"
+                    required
+                  ></Textarea>
+                  <Row>
+                    <Col lg="6" className="text-left" style={{ marginTop: 10 }}>
+                      <Button
+                        onClick={(e) => setEditMode(false)}
+                        color="primary"
+                      >
+                        Cancelar
+                      </Button>
+                    </Col>
+                    <Col
+                      lg="6"
+                      className="text-right"
+                      style={{ marginTop: 10 }}
+                    >
+                      <Button type="submit" color="primary">
+                        Salvar
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form>
+              </div>
+
+              <S.CommentWrapper
+                key={item.comment_id}
+                style={
+                  editMode && cmtEdit.comment_id === item.comment_id
+                    ? {
+                        display: "none",
+                        width: "100%",
+                        background: "#232659",
+                        minHeight: 80,
+                        maxHeight: "auto",
+                        borderRadius: 4,
+                        padding: 10,
+                        color: "#fff",
+                      }
+                    : {
+                        display: "block",
+                        width: "100%",
+                        background: "#232659",
+                        minHeight: 80,
+                        maxHeight: "auto",
+                        borderRadius: 4,
+                        padding: 10,
+                        color: "#fff",
+                      }
+                }
+              >
+                {profile.usu_id === item.usu_id && (
+                  <S.IconWrapper>
+                    <button
+                      className="button edit"
+                      onClick={(e) => editarComentario(item)}
+                    >
+                      <FaPen size={18} />
+                    </button>
+                    <button
+                      className="button delete"
+                      onClick={(e) => deletarComentario(item)}
+                    >
+                      <FaTimes size={18} />
+                    </button>
+                  </S.IconWrapper>
+                )}
+
+                <p style={{ margin: "15px 0" }}>{item.cmt_conteudo} </p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    borderBottom: "1px dashed #ccc",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      margin: "10px 0",
+                    }}
+                  >
+                    <a
+                      onClick={(e) => {
+                        handleLike(item);
+                      }}
+                      style={{ marginRight: 20 }}
+                    >
+                      <FiThumbsUp size={30} />
+                      {item.qtd_likes}
+                    </a>
+
+                    <a
+                      onClick={(e) => {
+                        handleDislike(item);
+                      }}
+                    >
+                      <FiThumbsDown size={30} />
+                      {item.qtd_dislikes}
+                    </a>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: 30,
+                      flexDirection: "row",
+                    }}
+                  >
+                    <a
+                      onClick={() => {
+                        habilitarResposta(item.comment_id);
+                      }}
+                      style={{
+                        alignItems: "center",
+                        cursor: "pointer",
+                        color: "#1bfdbe",
+                      }}
+                    >
+                      Responder
+                    </a>
+                  </div>
+                </div>
+
+                <Resposta
+                  podcast={podcast}
+                  profile={profile}
+                  responder={responder}
+                  setResponder={setResponder}
+                  setUpdate={setUpdate}
+                  item={item}
+                  comentario={comentario}
+                  setUpdate={setUpdate}
+                  update={update}
+                  setEditMode={setEditMode}
+                  editMode={editMode}
+                />
+              </S.CommentWrapper>
+            </div>
+          )
+      )}
     </>
   );
 }

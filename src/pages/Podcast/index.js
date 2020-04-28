@@ -32,6 +32,7 @@ export default function Podcast() {
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const [update, setUpdate] = useState(true);
+  const [resposta, setResposta] = useState([]);
 
   const profile = useSelector((state) => state.user.profile);
 
