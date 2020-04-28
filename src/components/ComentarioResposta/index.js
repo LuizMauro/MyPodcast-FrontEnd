@@ -129,7 +129,7 @@ export default function Resposta({
                   }}
                 >
                   <div style={{ width: 30, height: 30 }}>
-                    {profile && (
+                    
                       <img
                         style={{
                           width: "100%",
@@ -138,10 +138,10 @@ export default function Resposta({
                         }}
                         src={
                           "https://api.adorable.io/avatars/285/" +
-                          profile.usu_email
+                          answer.usu_id
                         }
                       />
-                    )}
+                  
                   </div>
 
                   <div
@@ -160,7 +160,7 @@ export default function Resposta({
                         fontSize: 20,
                       }}
                     >
-                      {profile !== null ? profile.usu_nome : "Não logado"}
+                      {answer.usu_nome}
                     </p>
                   </div>
                 </div>

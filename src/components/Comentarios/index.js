@@ -99,18 +99,14 @@ export default function Comentario({
                 }}
               >
                 <div style={{ width: 50, height: 50 }}>
-                  {profile && (
-                    <img
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "50%",
-                      }}
-                      src={
-                        "https://api.adorable.io/avatars/285/" + item.usu_nome
-                      }
-                    />
-                  )}
+                  <img
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                    }}
+                    src={"https://api.adorable.io/avatars/285/" + item.usu_nome}
+                  />
                 </div>
                 <div
                   style={{
@@ -200,7 +196,7 @@ export default function Comentario({
                       }
                 }
               >
-                {profile && (profile.usu_id === item.usu_id) && (
+                {profile && profile.usu_id === item.usu_id && (
                   <S.IconWrapper>
                     <button
                       className="button edit"
