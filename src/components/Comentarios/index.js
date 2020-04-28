@@ -200,7 +200,7 @@ export default function Comentario({
                       }
                 }
               >
-                {profile.usu_id === item.usu_id && (
+                {profile && (profile.usu_id === item.usu_id) && (
                   <S.IconWrapper>
                     <button
                       className="button edit"

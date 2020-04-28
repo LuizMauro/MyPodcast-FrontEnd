@@ -535,7 +535,7 @@ export default function Podcast() {
                 }}
               >
                 <p style={{ color: "#fff", fontWeight: "bold", fontSize: 20 }}>
-                  {profile !== null ? profile.usu_nome : "Não logado"}
+                  {profile !== null ? profile.usu_nome : "Entre para comentar."}
                 </p>
               </div>
             </div>

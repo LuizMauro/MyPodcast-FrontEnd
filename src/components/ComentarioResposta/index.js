@@ -164,7 +164,7 @@ export default function Resposta({
                     </p>
                   </div>
                 </div>
-                {profile.usu_id === answer.usu_id && (
+                {profile && (profile.usu_id === answer.usu_id) && (
                   <S.IconWrapper>
                     <button
                       className="button edit edit-answer"
