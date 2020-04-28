@@ -170,7 +170,6 @@ export default function Podcast() {
           toast.error("Opção inválida");
           console.log("nao tem como marcar como tirar a nota");
         }
-
       }
 
       if (valor == 0) {
@@ -182,7 +181,7 @@ export default function Podcast() {
         const valor_media = await api.get(`${pod_id}/medianota`);
         setMedia(valor_media.data);
 
-        toast.success(`Você avaliou com nota `+ valor + ".0");
+        toast.success(`Você avaliou com nota ` + valor + ".0");
       }
     } else {
       toast.error("Você precisa logar para fazer essa ação");
@@ -191,13 +190,12 @@ export default function Podcast() {
   }
 
   async function handleComentario({ cmt_conteudo }) {
-    if(profile){
-    setUpdate(update ? false : true)
-    dispatch(
-      createComentarioRequest(cmt_conteudo, podcast.pod_id, 1)
-    );}else{
-      toast.error('Você precisa entrar para realizar esta ação');
-      history.push('/cadastro');
+    if (profile) {
+      setUpdate(update ? false : true);
+      dispatch(createComentarioRequest(cmt_conteudo, podcast.pod_id, 1));
+    } else {
+      toast.error("Você precisa entrar para realizar esta ação");
+      history.push("/cadastro");
     }
   }
 
@@ -232,10 +230,7 @@ export default function Podcast() {
               flexDirection: "column",
             }}
           >
-            <div
-              style={{ height: 350, width: 400, padding: 20 }}
-
-            >
+            <div style={{ height: 350, width: 400, padding: 20 }}>
               <img
                 className="shadow"
                 width="100%"
@@ -243,7 +238,6 @@ export default function Podcast() {
                 style={{ borderRadius: 10 }}
                 src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
               />
-
             </div>
 
             <div
@@ -256,7 +250,6 @@ export default function Podcast() {
               <h2 style={{ color: "#fff" }}>
                 Nota:{" "}
                 {media.pod_media ? parseInt(media.pod_media).toFixed(2) : "N/A"}
-
               </h2>
             </div>
 
@@ -284,12 +277,10 @@ export default function Podcast() {
               )}
 
               <select
-              className="select-home shadow"
+                className="select-home shadow"
                 onChange={avaliarPodcast}
                 value={nota}
-                style={{color:"#fff", width:"100%"}}
-
-
+                style={{ color: "#fff", width: "100%" }}
                 type="select"
                 name="select"
                 id="exampleSelect"
@@ -306,7 +297,6 @@ export default function Podcast() {
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-
               </select>
             </div>
 
@@ -515,8 +505,8 @@ export default function Podcast() {
                 marginBottom: 10,
               }}
             >
-              <div style={{ width: 50, height: 50 }}>
-                {profile && (
+              {profile && (
+                <div style={{ width: 50, height: 50 }}>
                   <img
                     style={{
                       width: "100%",
@@ -527,8 +517,8 @@ export default function Podcast() {
                       "https://api.adorable.io/avatars/285/" + profile.usu_email
                     }
                   />
-                )}
-              </div>
+                </div>
+              )}
               <div
                 style={{
                   width: "40%",
@@ -539,7 +529,7 @@ export default function Podcast() {
                 }}
               >
                 <p style={{ color: "#fff", fontWeight: "bold", fontSize: 20 }}>
-                  {profile !== null ? profile.usu_nome : "Entre para comentar."}
+                  {profile !== null ? profile.usu_nome : "Faça login para comentar."}
                 </p>
               </div>
             </div>
@@ -570,5 +560,3 @@ export default function Podcast() {
     </>
   );
 }
-
-
