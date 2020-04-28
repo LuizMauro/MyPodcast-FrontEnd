@@ -191,10 +191,14 @@ export default function Podcast() {
   }
 
   async function handleComentario({ cmt_conteudo }) {
+    if(profile){
     setUpdate(update ? false : true)
     dispatch(
       createComentarioRequest(cmt_conteudo, podcast.pod_id, 1)
-    );
+    );}else{
+      toast.error('Você precisa entrar para realizar esta ação');
+      history.push('/cadastro');
+    }
   }
 
   const defaultOptions = {

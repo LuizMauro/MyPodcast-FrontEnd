@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { toast } from "react-toastify";
 import { Container, Button, Row, Col } from "reactstrap";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 import { Form } from "@unform/web";
@@ -213,7 +212,9 @@ export default function Comentario({
                   </S.IconWrapper>
                 )}
 
-                <p style={{ margin: "15px 0" }}>{item.cmt_conteudo} </p>
+                <p style={profile && { margin: "15px 0" }}>
+                  {item.cmt_conteudo}{" "}
+                </p>
                 <div
                   style={{
                     display: "flex",

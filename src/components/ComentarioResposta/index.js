@@ -4,6 +4,8 @@ import { IoMdClose } from "react-icons/io";
 import { Form } from "@unform/web";
 import Textarea from "../Textarea";
 import { useDispatch } from "react-redux";
+import history from "../../services/history";
+import { toast } from "react-toastify";
 import {
   answerComentarioRequest,
   deleteComentarioRequest,
@@ -28,10 +30,20 @@ export default function Resposta({
   const [cmtEdit, setCmtEdit] = useState([]);
 
   async function handleResposta({ cmt_conteudo, reset }) {
-    dispatch(
-      answerComentarioRequest(podcast.pod_id, 1, item.comment_id, cmt_conteudo)
-    );
-    setUpdate(update ? false : true);
+    if (profile) {
+      dispatch(
+        answerComentarioRequest(
+          podcast.pod_id,
+          1,
+          item.comment_id,
+          cmt_conteudo
+        )
+      );
+      setUpdate(update ? false : true);
+    } else {
+      toast.error("Você precisa entrar para realizar esta ação");
+      history.push("/cadastro");
+    }
   }
 
   async function editarComentario(item) {
@@ -129,19 +141,16 @@ export default function Resposta({
                   }}
                 >
                   <div style={{ width: 30, height: 30 }}>
-                    
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "50%",
-                        }}
-                        src={
-                          "https://api.adorable.io/avatars/285/" +
-                          answer.usu_id
-                        }
-                      />
-                  
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                      }}
+                      src={
+                        "https://api.adorable.io/avatars/285/" + answer.usu_id
+                      }
+                    />
                   </div>
 
                   <div
@@ -164,7 +173,7 @@ export default function Resposta({
                     </p>
                   </div>
                 </div>
-                {profile && (profile.usu_id === answer.usu_id) && (
+                {profile && profile.usu_id === answer.usu_id && (
                   <S.IconWrapper>
                     <button
                       className="button edit edit-answer"
