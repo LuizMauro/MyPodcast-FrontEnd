@@ -43,7 +43,41 @@ export default function Comentario({
 
   async function handleLike(item) {
     if (profile) {
+      const verifica = await api.get(`/likeuser/${item.comment_id}`);
+      console.log("tipo", verifica.data);
+
+      if (!verifica.data[0]) {
+        //se caiu aqui nao deu like ainda
+        const likar = await api.post(`/like/${item.comment_id}`);
+        console.log("dando like");
+
+      } else if (verifica.data[0].lik_status === 0) {
+        //Aqui dá like novamente se tirou o like antes
+        console.log("like de novo");
+        const dislikar = await api.put(
+          `/tirarlike/${verifica.data[0].lik_id}/1`
+        );
+
+      } else if (verifica.data[0]) {
+        //caiu aqui já deu like ou dislike (lik_tipo 1 ou 2), vai verificar qual pra fazer update
+
+        if (verifica.data[0].lik_tipo === 1) {
+          // Já tem like e tá clicando de novo no like pra tirar o like
+          console.log("tirando like");
+          const tirar = await api.put(
+            `/tirarlike/${verifica.data[0].lik_id}/0`
+          );
+
+        } else {
+          console.log("mudando para dislike");
+          const dislikar = await api.put(
+            `/mudarlike/${verifica.data[0].lik_id}/0`
+          );
+        }
+      }
     }
+
+    setUpdate(update ? false : true);
   }
 
   async function handleDislike(item) {
