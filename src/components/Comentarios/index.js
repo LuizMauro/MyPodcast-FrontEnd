@@ -50,25 +50,16 @@ export default function Comentario({
         //se caiu aqui nao deu like ainda
         const likar = await api.post(`/like/${item.comment_id}`);
         console.log("dando like");
-
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("like de novo");
-        
-        if(verifica.data[0].lik_tipo === 1){
-          await api.put(
-           `/likestatus/${verifica.data[0].lik_id}/1`
-         );
-         
-         }else{
-            await api.put(
-             `/mudarlike/${verifica.data[0].lik_id}/1`
-           );
-            await api.put(
-             `/likestatus/${verifica.data[0].lik_id}/1`
-           );
-         }
 
+        if (verifica.data[0].lik_tipo === 1) {
+          await api.put(`/likestatus/${verifica.data[0].lik_id}/1`);
+        } else {
+          await api.put(`/mudarlike/${verifica.data[0].lik_id}/1`);
+          await api.put(`/likestatus/${verifica.data[0].lik_id}/1`);
+        }
       } else if (verifica.data[0]) {
         //caiu aqui já deu like ou dislike (lik_tipo 1 ou 2), vai verificar qual pra fazer update
 
@@ -78,13 +69,11 @@ export default function Comentario({
           const tirar = await api.put(
             `/likestatus/${verifica.data[0].lik_id}/0`
           );
-
         } else {
           console.log("mudando para dislike");
           const dislikar = await api.put(
             `/mudarlike/${verifica.data[0].lik_id}/1`
           );
-
         }
       }
       setUpdate(update ? false : true);
@@ -100,25 +89,16 @@ export default function Comentario({
         //se caiu aqui nao deu dislike ainda
         console.log("dando dislike");
         const likar = await api.post(`/dislike/${item.comment_id}`);
-
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("dislike de novo");
 
-        if(verifica.data[0].lik_tipo === 0){
-         await api.put(
-          `/likestatus/${verifica.data[0].lik_id}/1`
-        );
-        
-        }else{
-           await api.put(
-            `/mudarlike/${verifica.data[0].lik_id}/0`
-          );
-           await api.put(
-            `/likestatus/${verifica.data[0].lik_id}/1`
-          );
+        if (verifica.data[0].lik_tipo === 0) {
+          await api.put(`/likestatus/${verifica.data[0].lik_id}/1`);
+        } else {
+          await api.put(`/mudarlike/${verifica.data[0].lik_id}/0`);
+          await api.put(`/likestatus/${verifica.data[0].lik_id}/1`);
         }
-
       } else if (verifica.data[0]) {
         //caiu aqui já deu like ou dislike (lik_tipo 1 ou 2), vai verificar qual pra fazer update
 
@@ -128,13 +108,11 @@ export default function Comentario({
           const tirar = await api.put(
             `/likestatus/${verifica.data[0].lik_id}/0`
           );
-
         } else {
           console.log("mudando para like");
           const dislikar = await api.put(
             `/mudarlike/${verifica.data[0].lik_id}/0`
           );
-
         }
       }
       setUpdate(update ? false : true);
@@ -326,7 +304,10 @@ export default function Comentario({
                       }}
                       style={{ marginRight: 20 }}
                     >
-                      <FiThumbsUp size={30} />
+                      <FiThumbsUp
+                        size={30}
+                        style={profile && { cursor: "pointer" }}
+                      />
                       {item.qtd_likes}
                     </a>
 
@@ -335,7 +316,10 @@ export default function Comentario({
                         handleDislike(item);
                       }}
                     >
-                      <FiThumbsDown size={30} />
+                      <FiThumbsDown
+                        size={30}
+                        style={profile && { cursor: "pointer" }}
+                      />
                       {item.qtd_dislikes}
                     </a>
                   </div>
