@@ -54,9 +54,20 @@ export default function Comentario({
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("like de novo");
-        const dislikar = await api.put(
-          `/tirarlike/${verifica.data[0].lik_id}/1`
-        );
+        
+        if(verifica.data[0].lik_tipo === 1){
+          await api.put(
+           `/likestatus/${verifica.data[0].lik_id}/1`
+         );
+         
+         }else{
+            await api.put(
+             `/mudarlike/${verifica.data[0].lik_id}/1`
+           );
+            await api.put(
+             `/likestatus/${verifica.data[0].lik_id}/1`
+           );
+         }
 
       } else if (verifica.data[0]) {
         //caiu aqui já deu like ou dislike (lik_tipo 1 ou 2), vai verificar qual pra fazer update
@@ -65,23 +76,68 @@ export default function Comentario({
           // Já tem like e tá clicando de novo no like pra tirar o like
           console.log("tirando like");
           const tirar = await api.put(
-            `/tirarlike/${verifica.data[0].lik_id}/0`
+            `/likestatus/${verifica.data[0].lik_id}/0`
           );
 
         } else {
           console.log("mudando para dislike");
           const dislikar = await api.put(
-            `/mudarlike/${verifica.data[0].lik_id}/0`
+            `/mudarlike/${verifica.data[0].lik_id}/1`
           );
+
         }
       }
+      setUpdate(update ? false : true);
     }
-
-    setUpdate(update ? false : true);
   }
 
   async function handleDislike(item) {
     if (profile) {
+      const verifica = await api.get(`/likeuser/${item.comment_id}`);
+      console.log("tipo", verifica.data);
+
+      if (!verifica.data[0]) {
+        //se caiu aqui nao deu dislike ainda
+        console.log("dando dislike");
+        const likar = await api.post(`/dislike/${item.comment_id}`);
+
+      } else if (verifica.data[0].lik_status === 0) {
+        //Aqui dá like novamente se tirou o like antes
+        console.log("dislike de novo");
+
+        if(verifica.data[0].lik_tipo === 0){
+         await api.put(
+          `/likestatus/${verifica.data[0].lik_id}/1`
+        );
+        
+        }else{
+           await api.put(
+            `/mudarlike/${verifica.data[0].lik_id}/0`
+          );
+           await api.put(
+            `/likestatus/${verifica.data[0].lik_id}/1`
+          );
+        }
+
+      } else if (verifica.data[0]) {
+        //caiu aqui já deu like ou dislike (lik_tipo 1 ou 2), vai verificar qual pra fazer update
+
+        if (verifica.data[0].lik_tipo === 0) {
+          // Já tem like e tá clicando de novo no like pra tirar o like
+          console.log("tirando dislike");
+          const tirar = await api.put(
+            `/likestatus/${verifica.data[0].lik_id}/0`
+          );
+
+        } else {
+          console.log("mudando para like");
+          const dislikar = await api.put(
+            `/mudarlike/${verifica.data[0].lik_id}/0`
+          );
+
+        }
+      }
+      setUpdate(update ? false : true);
     }
   }
 
