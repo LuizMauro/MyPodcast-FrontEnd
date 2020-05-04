@@ -39,27 +39,31 @@ export default function Podcast() {
   useEffect(() => {
     async function loadPodcast() {
       const response = await api.get(`/podcast/${pod_id}`);
-      setPodcast(response.data);
+      if (!response.data) {
+        history.push("/error");
+      } else {
+        setPodcast(response.data);
 
-      //Busca média do podcast
-      const valor_media = await api.get(`${pod_id}/medianota`);
-      setMedia(valor_media.data);
+        //Busca média do podcast
+        const valor_media = await api.get(`${pod_id}/medianota`);
+        setMedia(valor_media.data);
 
-      //Busca nota que usuário já deu (Se ele deu)
-      if (profile) {
-        const verifica = await api.get(`${pod_id}/avaliar`);
-        if (verifica.data.fbk_status === 1) {
-          //se caiu aqui ele já deu uma nota e vai exibir
-          setNota(verifica.data.fbk_valor);
+        //Busca nota que usuário já deu (Se ele deu)
+        if (profile) {
+          const verifica = await api.get(`${pod_id}/avaliar`);
+          if (verifica.data.fbk_status === 1) {
+            //se caiu aqui ele já deu uma nota e vai exibir
+            setNota(verifica.data.fbk_valor);
+          }
         }
+
+        const { ctg_descricao, end_link } = response.data;
+        setCategoria(ctg_descricao.split(","));
+        setEndereco(end_link.split(","));
       }
 
       const comments = await api.get(`allcomentarios/${pod_id}`);
       setComentarios(comments.data);
-
-      const { ctg_descricao, end_link } = response.data;
-      setCategoria(ctg_descricao.split(","));
-      setEndereco(end_link.split(","));
 
       setaCheckBox();
       setaFavoritar();
@@ -529,7 +533,9 @@ export default function Podcast() {
                 }}
               >
                 <p style={{ color: "#fff", fontWeight: "bold", fontSize: 20 }}>
-                  {profile !== null ? profile.usu_nome : "Faça login para comentar."}
+                  {profile !== null
+                    ? profile.usu_nome
+                    : "Faça login para comentar."}
                 </p>
               </div>
             </div>

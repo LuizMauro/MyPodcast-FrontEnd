@@ -120,6 +120,7 @@ export default function Routes() {
 			/>
 
 			<Route path="/" component={NotFound404} />
+			<Route path="/error" exact component={NotFound404} />
 		</Switch>
 	);
 }
