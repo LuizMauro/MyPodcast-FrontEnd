@@ -26,10 +26,10 @@ export function updateToPodcasterRequest() {
 	};
 }
 
-export function updateToPodcasterSuccess(profile) {
+export function updateToPodcasterSuccess(tus_descricao) {
 	return {
 		type: '@user/UPDATE_TOPODCASTER_SUCCESS',
-		payload: { profile }
+		payload: { tus_descricao }
 	};
 }
 

@@ -2,7 +2,7 @@ import { takeLatest, call, put, all } from "redux-saga/effects";
 
 import api from "../../../services/api";
 import history from "../../../services/history";
-import { updateProfileSuccess, updateProfileFailure } from "./actions";
+import { updateProfileSuccess, updateProfileFailure, updateToPodcasterSuccess } from "./actions";
 import { toast } from "react-toastify";
 
 export function* updateProfile({ payload }) {
@@ -28,7 +28,7 @@ export function* updateProfile({ payload }) {
     toast.error("Erro ao atualizar perfil");
     yield put(updateProfileFailure);
   }
-}
+} 
 
 export function* updateStatus({ payload }) {
   const { usu_id, usu_status } = payload;
@@ -54,10 +54,14 @@ export function* updateModerador({ payload }) {
 
 export function* updatePodcaster() {
   try {
-    yield call(api.put, `/virarpodcaster`);
+    const response = yield call(api.put, `/virarpodcaster`);
+    
+    yield put(updateToPodcasterSuccess(response.data.tus_descricao));
+
+    history.push("/podcaster/dashboard")
     toast.success("Agora você tem acesso ao painel de Podcaster");
 
-    history.push("/podcaster/dashboard");
+   
   } catch (err) {
     toast.error("Erro ao ativar ou desativar usuário");
     console.tron.log("o erro é", err);

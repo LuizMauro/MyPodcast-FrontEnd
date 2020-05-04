@@ -86,15 +86,15 @@ export default function Index() {
 
               <NavItem>
                 {profile ? (
-                  profile.tus_id === 4 ? (
+                  profile.tus_descricao === "Administrador" ? (
                     <NavLink className="nav-link-icon" href="/adm/dashboard">
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
-                  ) : profile.tus_id === 3 ? (
+                  ) : profile.tus_descricao === "Moderador" ? (
                     <NavLink className="nav-link-icon" href="/mod/dashboard/">
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
-                  ) : profile.tus_id === 2 ? (
+                  ) : profile.tus_descricao === "Podcaster" ? (
                     <NavLink
                       className="nav-link-icon"
                       href="/podcaster/dashboard"
