@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Menu from '../../components/Menu/index'
 
 import api from '../../services/api';
 
@@ -49,10 +50,11 @@ export default function Pesquisar() {
 
 	return (
 		<>
+		<Menu/>
 			{console.log('ok', podcasts)}
-			<section className="section section-shaped section-lg">
+			<section className="section section-shaped">
 				<Container className="pt-lg-1">
-					<p className="h2 p mt-5">{podcasts.length} Resultados encontrados</p>
+					<p className="h2 p mt-3">{podcasts.length} Resultados encontrados</p>
 					{!select && <p className="h4 p">Todas as categorias</p>}
 
 					<ul
