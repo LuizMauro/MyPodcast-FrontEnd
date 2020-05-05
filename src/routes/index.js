@@ -76,6 +76,7 @@ export default function Routes() {
 				component={CategoriasAdmCadastrar}
 			/>
 			<PrivateRouteADM exact path="/adm/dashboard" exact component={HomeAdm} />
+			
 			<PrivateRouteADM
 				exact
 				path="/adm/dashboard/usuarios"
