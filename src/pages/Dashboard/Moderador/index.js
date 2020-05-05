@@ -21,15 +21,15 @@ import {
 export default function Moderador() {
 	const [usuario, setUsuario] = useState([]);
 	const [tusId, setTusId] = useState(3);
-	const [edit, setEdit] = useState(false);
+	const [update, setUpdate] = useState(false);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		exibirUsuarios();
-	}, [edit]);
+	}, [update]);
 
 	async function exibirUsuarios() {
-		const response = await api.get('/modusers');
+		const response = await api.get('adm/modusers');
 		console.log(response.data);
 		setUsuario(response.data);
 	}
@@ -43,10 +43,10 @@ export default function Moderador() {
 			dispatch(updateModeradorRequest(item.usu_id, item.tus_id));
 
 			if (item.tus_id === 3) {
-				setEdit(edit ? false : true);
+				setUpdate(update === true ? false : true);
 				toast.success('O usuário não é mais moderador');
 			} else {
-				setEdit(edit ? false : true);
+				setUpdate(update === true ? false : true);
 				toast.success('O usuário agora é moderador');
 			}
 		} catch (err) {
