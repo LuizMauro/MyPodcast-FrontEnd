@@ -27,10 +27,11 @@ export default function EditarPodcast( ) {
 	const [file, setFile] = useState(null);
 	const [podcasts, setPodcasts] = useState([]);
 	const [editarPod, setEditarPod] = useState([]);
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
 		exibirPodcasts();
-	}, [editMode]);
+	}, [update]);
 
 	async function exibirPodcasts() {
 		const response = await api.get('/allpodcasts');
@@ -42,8 +43,10 @@ export default function EditarPodcast( ) {
 		try {
 			await api.put(`/podcast/${podcast.pod_id}/0`);
 
+			setUpdate(update ? false : true);
 			toast.success('Podcast deletado');
 		} catch (err) {
+			setUpdate(update ? false : true);
 			toast.error('Não foi possível deletar podcast.');
 		}
 	}

@@ -234,7 +234,7 @@ export default function Podcast() {
               flexDirection: "column",
             }}
           >
-            <div style={{ height: 350, width: 400, padding: 20 }}>
+            <div style={{ padding: 20 }}>
               <img
                 className="shadow"
                 width="100%"

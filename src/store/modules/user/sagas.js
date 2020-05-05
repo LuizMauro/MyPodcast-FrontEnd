@@ -45,7 +45,7 @@ export function* updateModerador({ payload }) {
   const { usu_id, tus_id } = payload;
 
   try {
-    yield call(api.put, `/users/tipo/${usu_id}/${tus_id === 3 ? 1 : 3}`);
+    yield call(api.put, `adm/users/tipo/${usu_id}/${tus_id === 3 ? 1 : 3}`);
   } catch (err) {
     toast.error("Erro ao ativar ou desativar usuário");
     console.tron.log("o erro é", err);
