@@ -9,12 +9,14 @@ import Input from '../../../../components/Input';
 import FileInput from '../../../../components/FileInput/FileInput';
 
 import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
+import { MdClose } from 'react-icons/md';
 
 import './inputTag.css'
 
 export default function Podcast() {
 	const formRef = useRef(null);
-	const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [selectCategorias, setSelectCategorias] = useState([]);
   const [selectIdCategorias, setSelectIdCategorias] = useState([]);
   const [categorias, setCategorias] = useState([]);
@@ -145,6 +147,16 @@ export default function Podcast() {
   }
 
 
+  function getFile(file){
+    setPreview(URL.createObjectURL(file));
+    setFile(file);
+
+  }
+
+  function deletePreview(){
+    setPreview(null);
+    setFile(null);
+  }
 
 
 	return (
@@ -162,15 +174,32 @@ export default function Podcast() {
 										<Row lg="12" className="mb-3">
 
                       <Col lg="6" xs="12">
-                        <FileInput
-                        style={{minHeight: 400}}
-                        name="pod_endereco_img"
-                        type="file"
-                        id="pod_endereco_img"
-                        accept="image/*"
-                        data-file={file}
-                        onChange={(event) => setFile(event.target.files[0])}
-                         />
+                        { preview ? (
+                           <div  lg="12" xs="12" style={{height:'100%'}}>
+                             <MdClose size={30}
+                                  color={'#fff'}
+                                  className="closeIcon"
+                                  onClick={() => deletePreview()}
+                                  />
+                              <img
+                                style={{ maxHeight: 400, height: "100%", width: '100%', borderRadius: 15 }}
+                                src={preview}
+                               />
+                           </div>
+                          
+                         
+                        ):(
+                          <input type="file"  style={{minHeight: 400}}
+                            name="pod_endereco_img"
+                            type="file"
+                            id="pod_endereco_img"
+                            accept="image/*"
+                            data-file={file}
+                            onChange={(event) => getFile(event.target.files[0])}>
+                        </input>
+                        )}
+                       
+
                       </Col>
 
                       <Col lg="6" xs="12"  className="borderBottom">
