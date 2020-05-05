@@ -1,8 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import "react-toastify/dist/ReactToastify.css";
 
 export default createGlobalStyle`
 
@@ -104,6 +102,10 @@ export default createGlobalStyle`
 }
 
 
+/* navbar menu */
+.icone-li a{
+  color:red !important;
+}
 
 
 }
