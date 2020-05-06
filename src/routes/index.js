@@ -20,7 +20,7 @@ import PodCast from '../pages/Podcast';
 import Profile from '../pages/Profile';
 
 //Podcaster
-import DashboardPodcaster from '../pages/DashboardPodcaster';
+import PodcasterPodcasts from '../pages/DashboardPodcaster/Podcast/Listar/index';
 
 //Moderador
 import DashboardMod from '../pages/DashboardMod';
@@ -59,9 +59,9 @@ export default function Routes() {
 
 			{/* POD  */}
 			<PrivateRoutePOD
-				path="/podcaster/dashboard"
+				path="/podcaster/dashboard/podcasts"
 				exact
-				component={DashboardPodcaster}
+				component={PodcasterPodcasts}
 			/>
 
 			{/* ADM */}
