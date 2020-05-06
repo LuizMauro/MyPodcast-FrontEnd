@@ -11,11 +11,12 @@ import Textarea from "../../components/Textarea";
 import * as animationData from "../../assets/animations/like.json";
 import { toast } from "react-toastify";
 import history from "../../services/history";
+import './style.css'
 
 import { useSelector } from "react-redux";
 import Comentario from "../../components/Comentarios";
 // reactstrap components
-import { Container, Button } from "reactstrap";
+import { Container, Button, CardImg } from "reactstrap";
 
 export default function Podcast() {
   const { pod_id } = useParams();
@@ -232,14 +233,12 @@ export default function Podcast() {
               minWidth: 300,
               display: "flex",
               flexDirection: "column",
+              margin:'0 auto'
             }}
           >
-            <div style={{ padding: 20 }}>
+            <div className="img" style={{ padding: 20 }}>
               <img
-                className="shadow"
-                width="100%"
-                height="100%"
-                style={{ borderRadius: 10 }}
+                className="shadow podcast-image"
                 src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
               />
             </div>
@@ -284,7 +283,7 @@ export default function Podcast() {
                 className="select-home shadow"
                 onChange={avaliarPodcast}
                 value={nota}
-                style={{ color: "#fff", width: "100%" }}
+                style={{ color: "#fff", width: "70%" }}
                 type="select"
                 name="select"
                 id="exampleSelect"
@@ -324,7 +323,7 @@ export default function Podcast() {
                   />
                   <span className="custom-toggle-slider rounded-circle" />
                 </label>
-                <h4 style={{ width: 250, color: "#fff" }}>Acompanhar</h4>
+                <h4 style={{ width: 250, color: "#fff" }}>Acompanhando</h4>
               </div>
 
               <div
@@ -391,7 +390,7 @@ export default function Podcast() {
               <h5 style={{ color: "#fff" }}>
                 <strong>Categorias</strong>
               </h5>
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div className="categorias-wrapper" style={{ display: "flex", flexDirection: "row" }}>
                 {categoria.map((cat) => (
                   <div
                     style={{
@@ -414,7 +413,7 @@ export default function Podcast() {
               </p>
             </div>
 
-            <div style={{ flex: 1, display: "flex" }} className="borderBottom">
+            <div style={{ flex: 1, display: "flex" }} className="borderBottom info-podcast">
               <div
                 style={{
                   margin: 20,
