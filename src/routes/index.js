@@ -34,7 +34,7 @@ import CategoriasAdmCadastrar from '../pages/Dashboard/Categoria/Cadastrar';
 import SolicitacoesAdm from '../pages/Dashboard/Solicitacao';
 import UsuariosAdm from '../pages/Dashboard/Usuario';
 import ModeradoresAdm from '../pages/Dashboard/Moderador';
-import HomeAdm from '../pages/Dashboard/contents/Home';
+import HomeAdm from '../pages/Dashboard/Home'
 import PublicidadeAdm from '../pages/Dashboard/contents/Publicidade';
 import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
 
