@@ -5,11 +5,7 @@ import {
   FaMicrophone,
   FaUserAlt,
   FaListUl,
-  FaUsersCog,
-  FaRegIdCard,
-  FaFileContract,
-  FaHashtag,
-  FaHome,
+  FaHandshake,
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
@@ -83,10 +79,10 @@ class SidebarPod extends Component {
                   item="Podcasts"
                   tolink="/podcaster/dashboard/podcasts"
                   activec={this.activeitem}
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", color:'red' }}
                   icone={
                     <FaMicrophone
-                      style={{ width: 25, height: 25 }}
+                      style={{ width: 70, height: 70 }}
                     ></FaMicrophone>
                   }
                 />
@@ -95,9 +91,11 @@ class SidebarPod extends Component {
                   item="Assinar Premium"
                   tolink="/podcaster/dashboard/assinar"
                   activec={this.activeitem}
-                  style={{ width: "100%" }}
+                  style={{ width: "100%"}}
                   icone={
-                    <FaListUl style={{ width: 25, height: 25 }}></FaListUl>
+                    <FaHandshake
+                      style={{ width: 70, height: 70 }}
+                    ></FaHandshake>
                   }
                 />
               </ul>

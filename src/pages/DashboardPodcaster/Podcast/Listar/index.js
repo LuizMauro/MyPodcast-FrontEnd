@@ -199,7 +199,7 @@ export default function EditarPodcast() {
                               {item.pod_nome}
                             </Link>
                           ) : (
-                            <h5>{item.pod_nome}</h5>
+                            <p style={{fontSize: '21px', margin:0}}>{item.pod_nome}</p>
                           )}
                         </div>
                         <div className="item">

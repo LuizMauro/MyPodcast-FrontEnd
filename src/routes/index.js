@@ -22,6 +22,7 @@ import Profile from '../pages/Profile';
 //Podcaster
 import PodcasterPodcasts from '../pages/DashboardPodcaster/Podcast/Listar/index';
 import PodcasterCadastrarPodcast from '../pages/DashboardPodcaster/Podcast/Cadastrar/index'
+import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/index'
 
 //Moderador
 import DashboardMod from '../pages/DashboardMod';
@@ -69,6 +70,12 @@ export default function Routes() {
 				path="/podcaster/dashboard/podcasts/cadastrar"
 				exact
 				component={PodcasterCadastrarPodcast}
+			/>
+			<PrivateRoutePOD
+				exact
+				path="/podcaster/dashboard/assinar"
+				exact
+				component={PodcasterAssinarPremium}
 			/>
 
 			{/* ADM */}
