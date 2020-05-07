@@ -18,162 +18,157 @@ export default function Podcast() {
   const formRef = useRef(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+
   const [selectCategorias, setSelectCategorias] = useState([]);
-  const [selectIdCategorias, setSelectIdCategorias] = useState([]);
-  const [categorias, setCategorias] = useState([]);
+  const [allCategorias, setAllCategorias] = useState([]);
 
   async function loadCategoria() {
-    const response = await api.get("/categoria");
-    setCategorias(response.data);
-  }
+
+    const response = await api.get('/categoria');
+
+    setAllCategorias(response.data); 
+  
 
   useEffect(() => {
     loadCategoria();
-  }, []);
+  },[])
 
-  async function handleSubmit({
-    pod_nome,
-    pod_descricao,
-    pod_criador,
-    pod_anocriacao,
-    pod_duracao,
-    //ctg_id,
-    end_link1,
-    end_link2,
-    end_link3,
-  }) {
-    //	const list_of_categoria = ctg_id.split(',');
-    if (selectIdCategorias.length > 5) {
-      toast.error("O podcast pode ter no máximo 5 categorias");
-      return;
-    }
-
-    const aux = categorias.filter(
-      ({ ctg_descricao }) => !selectCategorias.includes(ctg_descricao)
-    );
-    const arrayFinal = [];
-
-    aux.map((item) => {
-      arrayFinal.push(item.ctg_id);
-    });
-
-    console.log("ENVIANDO PARA O BANCO -> ", arrayFinal);
-
-    const data = new FormData();
-
-    data.append("pod_nome", pod_nome);
-    data.append("pod_descricao", pod_descricao);
-    data.append("pod_criador", pod_criador);
-    data.append("pod_anocriacao", pod_anocriacao);
-    data.append("pod_duracao", pod_duracao);
-    data.append("pod_permissao", 1);
-    data.append("list_of_categoria", arrayFinal);
-    data.append("end_link1", end_link1);
-    data.append("end_link2", end_link2);
-    data.append("end_link3", end_link3);
-    data.append("file", file);
-
-    if (!file) {
-      toast.error("Imagem obrigatória");
-      return;
-    }
-    try {
-      const schema = Yup.object().shape({
-        pod_descricao: Yup.string()
-          .max(600, "Máximo 600 caracteres")
-          .required("A descrição do Podcast é obrigatória"),
-        pod_anocriacao: Yup.number()
-          .required("Campo obrigatório!")
-          .min(1980)
-          .max(date(Date.now()).year, "Ano inválido!"),
-      });
-
-      await schema.validate(
-        { pod_descricao, pod_anocriacao, file },
-        {
-          abortEarly: false,
-        }
-      );
-
-      const response = await api.post("/adm/criarpodcast", data);
-
-      if (response.data.podCreated) {
-        toast.success("Podcast cadastrado!");
-        history.push("/adm/dashboard/podcasts")
-        console.log(response.data);
-      } else if (response.data.nomeExists) {
-        toast.error("Nome de Podcast já cadastrado");
-      } else if (response.data.descricaoExists) {
-        toast.error("Este podcast já foi cadastrado");
-      } else if (response.data.linkExists) {
-        toast.error("Link(s) inválido(s)");
-      }
-      console.log(response.data);
-
-      formRef.current.setErrors(false);
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errorMessages = {};
-
-        err.inner.forEach((error) => {
-          errorMessages[error.path] = error.message;
-        });
-
-        console.log(errorMessages);
-
-        formRef.current.setErrors(errorMessages);
-      }
-    }
+  function removeCategoria(cat){
+    console.log(cat.ctg_id)
+    //setSelectIdCategorias(selectIdCategorias.filter(item => item !== id))
+    setSelectCategorias([...selectCategorias.filter((obj) => obj !== cat)]);
   }
 
-  function removeCategoria(indexToRemove, id) {
-    console.log(id);
+  function setCategoria(cat){
 
-    setSelectIdCategorias(selectIdCategorias.filter((item) => item !== id));
-
-    setSelectCategorias([
-      ...selectCategorias.filter((tag) => tag !== indexToRemove),
-    ]);
-  }
-
-  function setCategoria(value, i) {
-    if (value !== "") {
-      if (selectCategorias.length === 5) {
-        toast.error("O podcast pode ter no máximo 5 categorias");
+    if(cat){
+      if(selectCategorias.length === 5){
+        toast.error("O podcast pode ter no máximo 5 categorias")
         return;
       }
-
-      console.log("OK -> ", i);
-
-      setSelectIdCategorias([...selectIdCategorias, i]);
-      setSelectCategorias([...selectCategorias, value]);
-      value = "";
-    }
+ 
+      //setSelectIdCategorias([...selectIdCategorias, i])
+			setSelectCategorias([...selectCategorias, cat]);
+  
+		}
   }
 
-  function getFile(file) {
+
+  function getFile(file){
     setPreview(URL.createObjectURL(file));
     setFile(file);
+
   }
 
-  function deletePreview() {
+  function deletePreview(){
     setPreview(null);
     setFile(null);
   }
 
-  return (
-    <>
-      <section className="section section-shaped section-lg">
-        <Container className="pt-lg-1">
-          <Row style={{ justifyContent: "center" }}>
-            <Col lg="12">
-              <Card className="bg-secondary shadow border-0">
-                <CardBody
-                  className="px-lg-5 py-lg-5"
-                  enctype="multipart/form-data"
-                >
-                  <Form ref={formRef} onSubmit={handleSubmit}>
-                    <Row lg="12" className="mb-3">
+
+  async function handleSubmit({
+		pod_nome,
+		pod_descricao,
+		pod_criador,
+		pod_anocriacao,
+		pod_duracao,
+		//ctg_id,
+		end_link1,
+		end_link2,
+		end_link3
+	}) {
+
+	//	const list_of_categoria = ctg_id.split(',');
+
+		if(selectCategorias.length > 5){
+			toast.error('O podcast pode ter no máximo 5 categorias')
+			return;
+		}
+
+    const aux =  allCategorias.filter((obj) => !selectCategorias.includes(obj));
+    const arrayFinal = [];
+
+    aux.map((item)=>{
+      arrayFinal.push(item.ctg_id)
+
+    })
+
+    console.log("ENVIANDO PARA O BANCO -> ",arrayFinal);
+
+
+
+		const data = new FormData();
+
+		data.append('pod_nome', pod_nome);
+		data.append('pod_descricao', pod_descricao);
+		data.append('pod_criador', pod_criador);
+		data.append('pod_anocriacao', pod_anocriacao);
+		data.append('pod_duracao', pod_duracao);
+		data.append('pod_permissao', 1);
+		data.append('list_of_categoria', arrayFinal);
+		data.append('end_link1', end_link1);
+		data.append('end_link2', end_link2);
+		data.append('end_link3', end_link3);
+		data.append('file', file);
+
+		try {
+			const schema = Yup.object().shape({
+				pod_nome: Yup.string().required('O nome do Podcast obrigatória'),
+				pod_descricao: Yup.string().required(
+					'A descrição do Podcast é obrigatória'
+				),
+				pod_criador: Yup.string().required('O nome do criador é obrigatório'),
+				pod_anocriacao: Yup.string().required('O ano de criação é obrigatório'),
+				pod_duracao: Yup.string().required('A duração é obrigatório'),
+			//ctg_id: Yup.string().required('As categorias são obrigatórias'),
+				end_link1: Yup.string().required('O 1º endereço é obrigatório')
+			});
+
+			const response = await api.post('/adm/criarpodcast', data);
+
+			if(response.data.podCreated){
+				toast.success('Podcast cadastrado!');
+				console.log(response.data);
+			}else if(response.data.nomeExists){
+				toast.error('Nome de Podcast já cadastrado')
+			}else if(response.data.descricaoExists){
+				toast.error('Este podcast já foi cadastrado')
+			}else if(response.data.linkExists){
+				toast.error('Link(s) inválido(s)')
+			}
+			console.log(response.data);
+
+			formRef.current.setErrors(false);
+		} catch (err) {
+			if (err instanceof Yup.ValidationError) {
+				const errorMessages = {};
+
+				err.inner.forEach((error) => {
+					errorMessages[error.path] = error.message;
+				});
+
+				console.log(errorMessages);
+
+				formRef.current.setErrors(errorMessages);
+			}
+		}
+	}
+
+     
+	return (
+		<>
+			<section className="section section-shaped section-lg">
+				<Container className="pt-lg-1">
+					<Row style={{ justifyContent: 'center' }}>
+						<Col lg="12">
+							<Card className="bg-secondary shadow border-0">
+								<CardBody
+									className="px-lg-5 py-lg-5"
+									enctype="multipart/form-data"
+								>
+									<Form ref={formRef} onSubmit={handleSubmit} >
+										<Row lg="12" className="mb-3">
+
                       <Col lg="6" xs="12">
                         {preview ? (
                           <div lg="12" xs="12" style={{ height: "100%" }}>
@@ -221,25 +216,17 @@ export default function Podcast() {
                         </h5>
 
                         {true && (
-                          <ul id="tags" className="borderBottom">
-                            {categorias
-                              .filter(
-                                ({ ctg_descricao }) =>
-                                  !selectCategorias.includes(ctg_descricao)
-                              )
-                              .map((v, i) => {
-                                console.log("CAT ->", selectIdCategorias);
+                           <ul id="tags" className="borderBottom">
+                            {
+                              allCategorias.filter((obj) => !selectCategorias.includes(obj)).map((cat) =>{
+                                console.log("CAT ->", selectCategorias)
 
-                                return (
-                                  <li key={i} className="tag">
-                                    <span className="tag-title">
-                                      {v.ctg_descricao}
-                                    </span>
-                                    <span
-                                      className="tag-close-icon"
-                                      onClick={() =>
-                                        setCategoria(v.ctg_descricao, v.ctg_id)
-                                      }
+                                return(
+
+                                  <li key={cat.ctg_id} className="tag">
+                                    <span className='tag-title'>{cat.ctg_descricao}</span>
+                                    <span className='tag-close-icon'
+                                      onClick={() => setCategoria(cat)}
                                     >
                                       +
                                     </span>
@@ -252,28 +239,21 @@ export default function Podcast() {
                           Categorias selecionadas
                         </h5>
                         <ul id="tags">
-                          {categorias
-                            .filter(({ ctg_descricao }) =>
-                              selectCategorias.includes(ctg_descricao)
-                            )
-                            .map((v, i) => (
-                              <>
-                                <br />
-                                <li key={v.id} className="tag">
-                                  <span className="tag-title">
-                                    {v.ctg_descricao}
-                                  </span>
-                                  <span
-                                    className="tag-close-icon"
-                                    onClick={() =>
-                                      removeCategoria(v.ctg_descricao, v.ctg_id)
-                                    }
-                                  >
-                                    x
-                                  </span>
-                                </li>
-                              </>
-                            ))}
+
+                                {  allCategorias.filter((obj) => selectCategorias.includes(obj)).map((cat) => (
+
+                                 <>
+                                  <br/>
+                                  <li key={cat.id} className="tag">
+                                    <span className='tag-title'>{cat.ctg_descricao}</span>
+                                    <span className='tag-close-icon'
+                                      onClick={() => removeCategoria(cat)}
+                                    >
+                                      x
+                                    </span>
+                                  </li>
+                                  </>
+                                ))}
                         </ul>
                       </Col>
                     </Row>
@@ -353,28 +333,31 @@ export default function Podcast() {
                       </Col>
                     </Row>
 
-                    <div className="text-center">
-                      <Button type="submit" className="my-2" color="primary">
-                        Cadastrar
-                      </Button>
-                    </div>
-                  </Form>
-                  <Row className="mt-1">
-                    <Col xs="6">
-                      <a
-                        className="text-light"
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                      ></a>
-                    </Col>
-                    <Col className="text-right" xs="6"></Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </>
-  );
+
+										<div className="text-center">
+											<Button type="submit" className="my-2"  color="primary">
+												Cadastrar
+											</Button>
+										</div>
+
+									</Form>
+									<Row className="mt-1">
+										<Col xs="6">
+											<a
+												className="text-light"
+												href="#"
+												onClick={(e) => e.preventDefault()}
+											></a>
+										</Col>
+										<Col className="text-right" xs="6"></Col>
+									</Row>
+								</CardBody>
+							</Card>
+						</Col>
+					</Row>
+				</Container>
+			</section>
+		</>
+	  );
+  }
 }
