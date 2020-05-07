@@ -76,6 +76,7 @@ class SidebarPod extends Component {
             <nav>
               <ul>
                 <Navitem
+                  className="teste-te"
                   item="Podcasts"
                   tolink="/podcaster/dashboard/podcasts"
                   activec={this.activeitem}

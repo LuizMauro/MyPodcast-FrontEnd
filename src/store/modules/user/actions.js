@@ -1,7 +1,7 @@
-export function updateProfileRequest(data) {
+export function updateProfileRequest(usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha) {
 	return {
 		type: '@user/UPDATE_PROFILE_REQUEST',
-		payload: { data }
+		payload: { usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha }
 	};
 }
 

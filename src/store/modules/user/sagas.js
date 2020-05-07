@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export function* updateProfile({ payload }) {
   try {
-    const { usu_nome, usu_email, ...rest } = payload.data;
+    const { usu_nome, usu_email, ...rest } = payload;
 
     const profile = Object.assign(
       { usu_nome, usu_email },

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@unform/web";
 import Input from "../../components/Input";
 import Menu from "../../components/Menu";
+import * as Yup from "yup";
 import { MdClose } from "react-icons/md";
 import "./style.css";
 
@@ -21,6 +22,7 @@ import {
 } from "reactstrap";
 
 export default function Profile() {
+  const formRef = useRef(null);
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
   const [podcast, setPodcast] = useState([]);
@@ -38,8 +40,70 @@ export default function Profile() {
     setPodcast(response.data);
   }
 
-  function handleSubmit(data) {
-    dispatch(updateProfileRequest(data));
+  async function handleSubmit({
+    usu_nome,
+    usu_email,
+    senhaAntiga,
+    usu_senha,
+    confirmaSenha,
+  }) {
+    try {
+      if (senhaAntiga && usu_senha && confirmaSenha) {
+        const schema = Yup.object().shape({
+          /*senhaAntiga: Yup.string().when("senhaAntiga", (senhaAntiga, field) =>
+          senhaAntiga
+            ? field
+                .required("Campo requerido")
+                .oneOf([Yup.ref("senhaAntiga")], "As senhas são diferentes")
+            : field
+        ),*/
+          usu_senha: Yup.string().matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&!@#%])[0-9a-zA-Z$*&!@#%]{6,45}$/,
+            "Senha fraca!"
+            //)
+            //.when("senha", (senha, field) =>
+            //  senha ? field.required("Campo requerido") : field
+          ),
+          confirmaSenha: Yup.string().when("usu_senha", (usu_senha, field) =>
+            usu_senha
+              ? field
+                  .required("Campo requerido")
+                  .oneOf([Yup.ref("usu_senha")], "As senhas são diferentes")
+              : field
+          ),
+        });
+
+        await schema.validate(
+          { usu_senha, confirmaSenha },
+          {
+            abortEarly: false,
+          }
+        );
+      }
+      
+      dispatch(
+        updateProfileRequest(
+          usu_nome,
+          usu_email,
+          senhaAntiga,
+          usu_senha,
+          confirmaSenha
+        )
+      );
+      formRef.current.setErrors(false);
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach((error) => {
+          errorMessages[error.path] = error.message;
+        });
+
+        console.log(errorMessages);
+
+        formRef.current.setErrors(errorMessages);
+      }
+    }
   }
 
   return (
@@ -59,6 +123,7 @@ export default function Profile() {
                 />
                 <CardBody className="px-lg-3 py-lg-3">
                   <Form
+                    ref={formRef}
                     initialData={profile}
                     onSubmit={handleSubmit}
                     style={
@@ -226,10 +291,12 @@ export default function Profile() {
                                 ` - `}
                               {pod.tfb_id === 1 &&
                                 pod.fbk_status === 1 &&
-                                !pod.nota && `N/A`}
+                                !pod.nota &&
+                                `N/A`}
                               {pod.tfb_id === 1 &&
                                 pod.fbk_status === 1 &&
-                                pod.nota !== 0 && pod.nota}
+                                pod.nota !== 0 &&
+                                pod.nota}
                             </li>
                           ))}
                         </ul>
@@ -255,15 +322,17 @@ export default function Profile() {
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
                                 pod.pod_nome}
-								{pod.tfb_id === 2 &&
+                              {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
                                 ` - `}
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
-                                !pod.nota && `N/A`}
+                                !pod.nota &&
+                                `N/A`}
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
-                                pod.nota !== 0 && pod.nota}
+                                pod.nota !== 0 &&
+                                pod.nota}
                             </li>
                           ))}
                         </ul>
@@ -289,15 +358,17 @@ export default function Profile() {
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
                                 pod.pod_nome}
-								{pod.tfb_id === 2 &&
+                              {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
                                 ` - `}
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
-                                !pod.nota && `N/A`}
+                                !pod.nota &&
+                                `N/A`}
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
-                                pod.nota !== 0 && pod.nota}
+                                pod.nota !== 0 &&
+                                pod.nota}
                             </li>
                           ))}
                         </ul>
