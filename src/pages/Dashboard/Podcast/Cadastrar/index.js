@@ -17,22 +17,57 @@ export default function Podcast() {
 	const formRef = useRef(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+
   const [selectCategorias, setSelectCategorias] = useState([]);
-  const [selectIdCategorias, setSelectIdCategorias] = useState([]);
-  const [categorias, setCategorias] = useState([]);
+  const [allCategorias, setAllCategorias] = useState([]);
 
 
 
   async function loadCategoria() {
     const response = await api.get('/categoria');
-    setCategorias(response.data);
+
+    setAllCategorias(response.data); 
+  
   }
 
   useEffect(() => {
     loadCategoria();
   },[])
 
-	async function handleSubmit({
+  function removeCategoria(cat){
+    console.log(cat.ctg_id)
+    //setSelectIdCategorias(selectIdCategorias.filter(item => item !== id))
+    setSelectCategorias([...selectCategorias.filter((obj) => obj !== cat)]);
+  }
+
+  function setCategoria(cat){
+
+    if(cat){
+      if(selectCategorias.length === 5){
+        toast.error("O podcast pode ter no máximo 5 categorias")
+        return;
+      }
+ 
+      //setSelectIdCategorias([...selectIdCategorias, i])
+			setSelectCategorias([...selectCategorias, cat]);
+  
+		}
+  }
+
+
+  function getFile(file){
+    setPreview(URL.createObjectURL(file));
+    setFile(file);
+
+  }
+
+  function deletePreview(){
+    setPreview(null);
+    setFile(null);
+  }
+
+
+  async function handleSubmit({
 		pod_nome,
 		pod_descricao,
 		pod_criador,
@@ -46,12 +81,12 @@ export default function Podcast() {
 
 	//	const list_of_categoria = ctg_id.split(',');
 
-		if(selectIdCategorias.length > 5){
+		if(selectCategorias.length > 5){
 			toast.error('O podcast pode ter no máximo 5 categorias')
 			return;
 		}
 
-    const aux =  categorias.filter(({ctg_descricao}) => !selectCategorias.includes(ctg_descricao));
+    const aux =  allCategorias.filter((obj) => !selectCategorias.includes(obj));
     const arrayFinal = [];
 
     aux.map((item)=>{
@@ -60,6 +95,8 @@ export default function Podcast() {
     })
 
     console.log("ENVIANDO PARA O BANCO -> ",arrayFinal);
+
+
 
 		const data = new FormData();
 
@@ -120,45 +157,6 @@ export default function Podcast() {
 
 
 
-  function removeCategoria(indexToRemove, id){
-
-      console.log(id)
-
-    setSelectIdCategorias(selectIdCategorias.filter(item => item !== id))
-
-
-    setSelectCategorias([...selectCategorias.filter((tag) => tag !== indexToRemove)]);
-  }
-
-  function setCategoria(value, i){
-    if(value !== ""){
-      if(selectCategorias.length === 5){
-        toast.error("O podcast pode ter no máximo 5 categorias")
-        return;
-      }
-
-      console.log("OK -> ", i)
-
-      setSelectIdCategorias([...selectIdCategorias, i])
-			setSelectCategorias([...selectCategorias, value]);
-      value= "";
-
-		}
-  }
-
-
-  function getFile(file){
-    setPreview(URL.createObjectURL(file));
-    setFile(file);
-
-  }
-
-  function deletePreview(){
-    setPreview(null);
-    setFile(null);
-  }
-
-
 	return (
 		<>
 			<section className="section section-shaped section-lg">
@@ -215,16 +213,15 @@ export default function Podcast() {
                         {true && (
                            <ul id="tags" className="borderBottom">
                             {
-
-                              categorias.filter(({ctg_descricao}) => !selectCategorias.includes(ctg_descricao)).map((v,i) =>{
-                                console.log("CAT ->", selectIdCategorias)
+                              allCategorias.filter((obj) => !selectCategorias.includes(obj)).map((cat) =>{
+                                console.log("CAT ->", selectCategorias)
 
                                 return(
 
-                                  <li key={i} className="tag">
-                                    <span className='tag-title'>{v.ctg_descricao}</span>
+                                  <li key={cat.ctg_id} className="tag">
+                                    <span className='tag-title'>{cat.ctg_descricao}</span>
                                     <span className='tag-close-icon'
-                                      onClick={() => setCategoria(v.ctg_descricao, v.ctg_id)}
+                                      onClick={() => setCategoria(cat)}
                                     >
                                       +
                                     </span>
@@ -237,14 +234,14 @@ export default function Podcast() {
                         <h5 style={{color: "#fff"}}>Categorias selecionadas</h5>
                         <ul id="tags">
 
-                                {  categorias.filter(({ctg_descricao}) => selectCategorias.includes(ctg_descricao)).map((v,i) => (
+                                {  allCategorias.filter((obj) => selectCategorias.includes(obj)).map((cat) => (
 
                                  <>
                                   <br/>
-                                  <li key={v.id} className="tag">
-                                    <span className='tag-title'>{v.ctg_descricao}</span>
+                                  <li key={cat.id} className="tag">
+                                    <span className='tag-title'>{cat.ctg_descricao}</span>
                                     <span className='tag-close-icon'
-                                      onClick={() => removeCategoria(v.ctg_descricao, v.ctg_id)}
+                                      onClick={() => removeCategoria(cat)}
                                     >
                                       x
                                     </span>
@@ -333,18 +330,12 @@ export default function Podcast() {
                     </Row>
 
 
-
-
-
-
-
-
-
 										<div className="text-center">
 											<Button type="submit" className="my-2"  color="primary">
 												Cadastrar
 											</Button>
 										</div>
+
 									</Form>
 									<Row className="mt-1">
 										<Col xs="6">

@@ -11,15 +11,7 @@ import PodcastList from '../../../../styles/ItemList';
 import { FaPen, FaTimes, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 
-import {
-	Button,
-	Card,
-	CardBody,
-	Container,
-	Row,
-	Col,
-	CardTitle,
-} from 'reactstrap';
+import { Button, Card, CardBody, Container, Row, Col, CardTitle } from 'reactstrap';
 
 export default function EditarPodcast( ) {
 	const [editMode, setEditMode] = useState(false);
@@ -28,11 +20,18 @@ export default function EditarPodcast( ) {
 	const [podcasts, setPodcasts] = useState([]);
 	const [editarPod, setEditarPod] = useState([]);
 	const [update, setUpdate] = useState(false);
+	const [preview, setPreview] = useState(null);
+
+	const [selectCategorias, setSelectCategorias] = useState([]);
+	const [allCategorias, setAllCategorias] = useState([]);
+
+
 
 	useEffect(() => {
 		exibirPodcasts();
 	}, [update]);
 
+	
 	async function exibirPodcasts() {
 		const response = await api.get('/allpodcasts');
 		console.log(response.data);
@@ -58,28 +57,91 @@ export default function EditarPodcast( ) {
 		podcast.end_link2 = links[1];
 		podcast.end_link3 = links[2];
 
-		console.log(podcast);
+		console.log(podcast.ctg_id);
 		setEditMode(true);
 		setEditarPod(podcast);
+
+		const response = await api.get('/categoria');
+		setAllCategorias(response.data);
+
+		const respAllCategorias = response.data;
+		const categoriasResponse =  podcast.ctg_id.split(",");
+
+		console.log(podcast)
+
+		
+		setPreview(`http://localhost:3333/files/${podcast.pod_endereco_img}`);
+
+	 	setSelectCategorias( respAllCategorias.filter(({ctg_id}) => categoriasResponse.includes(ctg_id.toString())))
+
+		
 	}
 
+
+
+	function removeCategoria(cat){
+		console.log(cat.ctg_id)
+		//setSelectIdCategorias(selectIdCategorias.filter(item => item !== id))
+		setSelectCategorias([...selectCategorias.filter((obj) => obj !== cat)]);
+	  }
+	
+	  function setCategoria(cat){
+	
+		if(cat){
+		  if(selectCategorias.length === 5){
+			toast.error("O podcast pode ter no máximo 5 categorias")
+			return;
+		  }
+	 
+		  //setSelectIdCategorias([...selectIdCategorias, i])
+				setSelectCategorias([...selectCategorias, cat]);
+	  
+			}
+	  }
+
+
+
+  function getFile(file){
+    setPreview(URL.createObjectURL(file));
+    setFile(file);
+
+  }
+
+  function deletePreview(){
+    setPreview(null);
+    setFile(null);
+  }
+
+
+
+  
 	async function handleSubmit({
 		pod_nome,
 		pod_descricao,
 		pod_criador,
 		pod_anocriacao,
 		pod_duracao,
-		ctg_id,
 		end_link1,
 		end_link2,
 		end_link3,
 	}) {
-		const list_of_categoria = ctg_id.split(',');
 
-		if (list_of_categoria.length > 5) {
-			toast.error('O podcast pode ter no máximo 5 categorias');
+		if(selectCategorias.length > 5){
+			toast.error('O podcast pode ter no máximo 5 categorias')
 			return;
 		}
+
+    const aux =  allCategorias.filter((obj) => !selectCategorias.includes(obj));
+    const arrayFinal = [];
+
+    aux.map((item)=>{
+      arrayFinal.push(item.ctg_id)
+
+    })
+
+    console.log("ENVIANDO PARA O BANCO -> ",arrayFinal);
+	console.log("ENVIANDO PARA O BANCO -> ",arrayFinal);
+	
 
 		const data = new FormData();
 
@@ -91,7 +153,7 @@ export default function EditarPodcast( ) {
 		data.append('pod_status', 1);
 		data.append('pod_permissao', 1);
 		data.append('pod_destaque', 0);
-		data.append('list_of_categoria', list_of_categoria);
+		data.append('list_of_categoria', arrayFinal	);
 		data.append('end_link1', end_link1);
 		data.append('end_link2', end_link2);
 		data.append('end_link3', end_link3);
@@ -112,7 +174,7 @@ export default function EditarPodcast( ) {
 				end_link1: Yup.string().required('O 1º endereço é obrigatório'),
 			});
 
-			const response = await api.put(`/editarpodcast/${pod_id}`, data);
+			const response = await api.put(`adm/editarpodcast/${pod_id}`, data);
 
 			if (response.data.podCreated) {
 				toast.success('Podcast cadastrado!');
@@ -141,6 +203,8 @@ export default function EditarPodcast( ) {
 			}
 		}
 	}
+
+
 
 	return (
 		<>
@@ -221,63 +285,170 @@ export default function EditarPodcast( ) {
 										style={
 											editMode ? { display: 'block' } : { display: 'none' }
 										}
-									>
+															>
 
-										<Input
-											name="pod_nome"
-											type="text"
-											placeholder="Nome do Podcast"
-										/>
-										<Input
-											name="pod_descricao"
-											type="text"
-											placeholder="Descrição do Podcast"
-										/>
-										<Input
-											name="pod_criador"
-											type="text"
-											placeholder="Nome do criador"
-										/>
-										<Input
-											name="pod_anocriacao"
-											type="text"
-											placeholder="Ano de criação"
-										/>
-										<Input
-											name="pod_duracao"
-											type="text"
-											placeholder="Média de duração em minutos"
-										/>
-										<Input
-											name="ctg_id"
-											type="text"
-											placeholder="Categorias separadas por vírgula"
-										/>
-										<Input
-											name="end_link1"
-											type="text"
-											placeholder="Endereço 1 do Podcast"
-										/>
-										<Input
-											name="end_link2"
-											type="text"
-											placeholder="Endereço 2 do Podcast"
-										/>
-										<Input
-											name="end_link3"
-											type="text"
-											placeholder="Endereço 3 do Podcast"
-										/>
-										<FileInput
-											name="pod_endereco_img"
-											type="file"
-											id="pod_endereco_img"
-											accept="image/*"
-											data-file={file}
-											onChange={(event) => setFile(event.target.files[0])}
-										></FileInput>
+						<Row lg="12" className="mb-3">
 
-										<div className="text-center">
+						<Col lg="6" xs="12">
+						{ preview ? (
+							<div  lg="12" xs="12" style={{height:'100%'}}>
+							<MdClose size={30}
+									color={'#fff'}
+									className="closeIcon"
+									onClick={() => deletePreview()}
+									/>
+								<img
+								style={{ maxHeight: 400, height: "100%", width: '100%', borderRadius: 15 }}
+								src={preview}
+								/>
+							</div>
+							
+						
+						):(
+							<input type="file"  style={{minHeight: 400}}
+							name="pod_endereco_img"
+							type="file"
+							id="pod_endereco_img"
+							accept="image/*"
+							data-file={file}
+							onChange={(event) => getFile(event.target.files[0])} />
+					
+						)}
+						
+
+						</Col>
+
+						<Col lg="6" xs="12"  className="borderBottom">
+						<h5 style={{color:"#fff"}}>Nome do podcast</h5>
+						<Input
+								name="pod_nome"
+								type="text"
+								placeholder="Nome do Podcast"
+						/>
+
+						<h5 style={{color:"#fff"}}>Escolha até 5 categorias</h5>
+
+						{true && (
+							<ul id="tags" className="borderBottom">
+							{
+								allCategorias.filter((obj) => !selectCategorias.includes(obj)).map((cat) =>{
+                                console.log("CAT ->", selectCategorias)
+
+								return(
+
+									<li key={cat.ctg_id} className="tag">
+                                    <span className='tag-title'>{cat.ctg_descricao}</span>
+                                    <span className='tag-close-icon'
+                                      onClick={() => setCategoria(cat)}
+                                    >
+                                      +
+                                    </span>
+                                  </li>
+								)
+								})
+							}
+							</ul>
+						)}
+						<h5 style={{color: "#fff"}}>Categorias selecionadas</h5>
+						<ul id="tags">
+
+						{  allCategorias.filter((obj) => selectCategorias.includes(obj)).map((cat) => (
+
+							<>
+							<br/>
+							<li key={cat.id} className="tag">
+							<span className='tag-title'>{cat.ctg_descricao}</span>
+							<span className='tag-close-icon'
+								onClick={() => removeCategoria(cat)}
+							>
+								x
+							</span>
+							</li>
+							</>
+							))}
+						</ul>
+
+						</Col>
+
+						</Row>
+
+
+						<Row  className="borderBottom">
+						<Col lg="12" xs="12">
+						<h5 style={{color: "#fff"}}>Descrição</h5>
+						<Input
+												name="pod_descricao"
+												type="text"
+							placeholder="Descrição do Podcast"
+							style={{minHeight:200}}
+											/>
+						</Col>
+						</Row>
+
+
+						<Row lg="12"  className="borderBottom">
+						<Col lg="4" xs="12">
+						<h5 style={{color: "#fff"}}>Ano de criação</h5>
+						<Input
+							name="pod_anocriacao"
+							type="text"
+							placeholder="Ano de criação"
+						/>
+						</Col>
+
+						<Col lg="4" xs="12">
+						<h5 style={{color: "#fff"}}>Nome do criador</h5>
+						<Input
+							name="pod_criador"
+							type="text"
+							placeholder="Nome do criador"
+						/>
+						</Col>
+
+						<Col lg="4" xs="12">
+						<h5 style={{color: "#fff"}}>Média de duração</h5>
+						<Input
+												name="pod_duracao"
+												type="text"
+												placeholder="Média de duração em minutos"
+											/>
+						</Col>
+
+						</Row>
+
+
+
+						<Row>
+						<Col lg="4" xs="12">
+						<h5 style={{color: "#fff"}}>Endereço 1</h5>
+						<Input
+							name="end_link1"
+							type="text"
+							placeholder="Endereço 1 do Podcast"
+						/>
+						</Col>
+
+						<Col lg="4" xs="12">
+						<h5 style={{color: "#fff"}}>Endereço 2</h5>
+						<Input
+												name="end_link2"
+												type="text"
+												placeholder="Endereço 2 do Podcast"
+											/>
+						</Col>
+
+						<Col lg="4" xs="12">
+						<h5 style={{color: "#fff"}}>Endereço 3</h5>
+						<Input
+												name="end_link3"
+												type="text"
+												placeholder="Endereço 3 do Podcast"
+											/>
+						</Col>
+						</Row>
+
+
+						<div className="text-center">
 											<Button type="submit" className="my-2" color="primary">
 												Salvar Alterações
 											</Button>
