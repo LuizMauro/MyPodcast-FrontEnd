@@ -2,12 +2,18 @@ import { takeLatest, call, put, all } from "redux-saga/effects";
 
 import api from "../../../services/api";
 import history from "../../../services/history";
-import { updateProfileSuccess, updateProfileFailure, updateToPodcasterSuccess } from "./actions";
+import {
+  updateProfileSuccess,
+  updateProfileFailure,
+  updateToPodcasterSuccess,
+} from "./actions";
+import { RefreshToken } from '../auth/actions';
+
 import { toast } from "react-toastify";
 
 export function* updateProfile({ payload }) {
   try {
-    const { usu_nome, usu_email, ...rest } = payload.data;
+    const { usu_nome, usu_email, ...rest } = payload;
 
     const profile = Object.assign(
       { usu_nome, usu_email },
@@ -28,7 +34,7 @@ export function* updateProfile({ payload }) {
     toast.error("Erro ao atualizar perfil");
     yield put(updateProfileFailure);
   }
-} 
+}
 
 export function* updateStatus({ payload }) {
   const { usu_id, usu_status } = payload;
@@ -55,13 +61,16 @@ export function* updateModerador({ payload }) {
 export function* updatePodcaster() {
   try {
     const response = yield call(api.put, `/virarpodcaster`);
+    const newresponse = yield call(api.put,`/refreshtoken`)
+
+    const { token, user } = newresponse.data;
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
     
-    yield put(updateToPodcasterSuccess(response.data.tus_descricao));
+    yield put(RefreshToken(token, user));
+    yield put(updateToPodcasterSuccess(response.data.tus_descricao,response.data.tus_id));
 
-    history.push("/podcaster/dashboard")
+    history.push("podcaster/dashboard/podcasts");
     toast.success("Agora você tem acesso ao painel de Podcaster");
-
-   
   } catch (err) {
     toast.error("Erro ao ativar ou desativar usuário");
     console.tron.log("o erro é", err);

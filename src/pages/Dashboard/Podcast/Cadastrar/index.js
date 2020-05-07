@@ -1,34 +1,33 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Form } from '@unform/web';
-import * as Yup from 'yup';
-import api from '../../../../services/api';
-import { toast } from 'react-toastify';
+import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Form } from "@unform/web";
+import * as Yup from "yup";
+import api from "../../../../services/api";
+import history from "../../../../services/history";
+import { toast } from "react-toastify";
+import Textarea from "../../../../components/Textarea";
+import Input from "../../../../components/Input";
+import FileInput from "../../../../components/FileInput/FileInput";
+import { date } from "../../../../utils/Date";
+import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
+import { MdClose } from "react-icons/md";
 
-import Input from '../../../../components/Input';
-import FileInput from '../../../../components/FileInput/FileInput';
-
-import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
-import { MdClose } from 'react-icons/md';
-
-import './inputTag.css'
+import "./inputTag.css";
 
 export default function Podcast() {
-	const formRef = useRef(null);
+  const formRef = useRef(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
   const [selectCategorias, setSelectCategorias] = useState([]);
   const [allCategorias, setAllCategorias] = useState([]);
 
-
-
   async function loadCategoria() {
+
     const response = await api.get('/categoria');
 
     setAllCategorias(response.data); 
   
-  }
 
   useEffect(() => {
     loadCategoria();
@@ -155,8 +154,7 @@ export default function Podcast() {
 		}
 	}
 
-
-
+     
 	return (
 		<>
 			<section className="section section-shaped section-lg">
@@ -172,43 +170,50 @@ export default function Podcast() {
 										<Row lg="12" className="mb-3">
 
                       <Col lg="6" xs="12">
-                        { preview ? (
-                           <div  lg="12" xs="12" style={{height:'100%'}}>
-                             <MdClose size={30}
-                                  color={'#fff'}
-                                  className="closeIcon"
-                                  onClick={() => deletePreview()}
-                                  />
-                              <img
-                                style={{ maxHeight: 400, height: "100%", width: '100%', borderRadius: 15 }}
-                                src={preview}
-                               />
-                           </div>
-                          
-                         
-                        ):(
-                          <input type="file"  style={{minHeight: 400}}
+                        {preview ? (
+                          <div lg="12" xs="12" style={{ height: "100%" }}>
+                            <MdClose
+                              size={30}
+                              color={"#fff"}
+                              className="closeIcon"
+                              onClick={() => deletePreview()}
+                            />
+                            <img
+                              style={{
+                                maxHeight: 400,
+                                height: "100%",
+                                width: "100%",
+                                borderRadius: 15,
+                              }}
+                              src={preview}
+                            />
+                          </div>
+                        ) : (
+                          <input
+                            type="file"
+                            style={{ minHeight: 400 }}
                             name="pod_endereco_img"
                             type="file"
                             id="pod_endereco_img"
                             accept="image/*"
                             data-file={file}
-                            onChange={(event) => getFile(event.target.files[0])}>
-                        </input>
+                            onChange={(event) => getFile(event.target.files[0])}
+                          ></input>
                         )}
-                       
-
                       </Col>
 
-                      <Col lg="6" xs="12"  className="borderBottom">
-                        <h5 style={{color:"#fff"}}>Nome do podcast</h5>
+                      <Col lg="6" xs="12" className="borderBottom">
+                        <h5 style={{ color: "#fff" }}>Nome do podcast</h5>
                         <Input
                           name="pod_nome"
                           type="text"
                           placeholder="Nome do Podcast"
+                          required
                         />
 
-                        <h5 style={{color:"#fff"}}>Escolha até 5 categorias</h5>
+                        <h5 style={{ color: "#fff" }}>
+                          Escolha até 5 categorias
+                        </h5>
 
                         {true && (
                            <ul id="tags" className="borderBottom">
@@ -226,12 +231,13 @@ export default function Podcast() {
                                       +
                                     </span>
                                   </li>
-                                )
-                              })
-                            }
+                                );
+                              })}
                           </ul>
                         )}
-                        <h5 style={{color: "#fff"}}>Categorias selecionadas</h5>
+                        <h5 style={{ color: "#fff" }}>
+                          Categorias selecionadas
+                        </h5>
                         <ul id="tags">
 
                                 {  allCategorias.filter((obj) => selectCategorias.includes(obj)).map((cat) => (
@@ -249,83 +255,81 @@ export default function Podcast() {
                                   </>
                                 ))}
                         </ul>
-
                       </Col>
-
                     </Row>
 
-
-                    <Row  className="borderBottom">
+                    <Row className="borderBottom">
                       <Col lg="12" xs="12">
-                      <h5 style={{color: "#fff"}}>Descrição</h5>
-                        <Input
-											    name="pod_descricao"
-											    type="text"
-                          placeholder="Descrição do Podcast"
-                          style={{minHeight:200}}
-										    />
+                        <h5 style={{ color: "#fff" }}>Descrição</h5>
+                        <Textarea
+                          name="pod_descricao"
+                          type="text"
+                          placeholder="Descreva o seu podcast em até 600 caracteres!"
+                          style={{ minHeight: 200 }}
+                          required
+                        />
                       </Col>
                     </Row>
 
-
-                    <Row lg="12"  className="borderBottom">
+                    <Row lg="12" className="borderBottom">
                       <Col lg="4" xs="12">
-                      <h5 style={{color: "#fff"}}>Ano de criação</h5>
+                        <h5 style={{ color: "#fff" }}>Ano de criação</h5>
                         <Input
                           name="pod_anocriacao"
-                          type="text"
+                          type="number"
+                          required
                           placeholder="Ano de criação"
                         />
                       </Col>
 
                       <Col lg="4" xs="12">
-                      <h5 style={{color: "#fff"}}>Nome do criador</h5>
+                        <h5 style={{ color: "#fff" }}>Nome do criador</h5>
                         <Input
                           name="pod_criador"
                           type="text"
+                          required
                           placeholder="Nome do criador"
                         />
                       </Col>
 
                       <Col lg="4" xs="12">
-                      <h5 style={{color: "#fff"}}>Média de duração</h5>
+                        <h5 style={{ color: "#fff" }}>Média de duração</h5>
                         <Input
-											    name="pod_duracao"
-											    type="text"
-											    placeholder="Média de duração em minutos"
-										    />
+                          name="pod_duracao"
+                          type="number"
+                          required
+                          placeholder="Média de duração em minutos"
+                        />
                       </Col>
-
                     </Row>
-
-
 
                     <Row>
                       <Col lg="4" xs="12">
-                      <h5 style={{color: "#fff"}}>Endereço 1</h5>
+                        <h5 style={{ color: "#fff" }}>Endereço 1</h5>
                         <Input
                           name="end_link1"
                           type="text"
                           placeholder="Endereço 1 do Podcast"
+                          required
                         />
                       </Col>
 
                       <Col lg="4" xs="12">
-                      <h5 style={{color: "#fff"}}>Endereço 2</h5>
+                        <h5 style={{ color: "#fff" }}>Endereço 2</h5>
                         <Input
-											    name="end_link2"
-											    type="text"
-											    placeholder="Endereço 2 do Podcast"
-										    />
+                          name="end_link2"
+                          type="text"
+                          placeholder="Endereço 2 do Podcast"
+                        />
                       </Col>
 
                       <Col lg="4" xs="12">
-                      <h5 style={{color: "#fff"}}>Endereço 3</h5>
+                        <h5 style={{ color: "#fff" }}>Endereço 3</h5>
                         <Input
-											    name="end_link3"
-											    type="text"
-											    placeholder="Endereço 3 do Podcast"
-										    />
+                          name="end_link3"
+                          type="text"
+                          placeholder="Endereço 3 do Podcast"
+                        />
                       </Col>
                     </Row>
 
@@ -354,5 +358,6 @@ export default function Podcast() {
 				</Container>
 			</section>
 		</>
-	);
+	  );
+  }
 }

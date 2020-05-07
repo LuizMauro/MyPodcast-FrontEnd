@@ -6,6 +6,7 @@ import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { updateToPodcasterRequest } from "../../store/modules/user/actions";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../store/modules/auth/actions";
+import '../../styles/global';
 
 // reactstrap components
 import {
@@ -87,22 +88,22 @@ export default function Index() {
               <NavItem>
                 {profile ? (
                   profile.tus_descricao === "Administrador" ? (
-                    <NavLink className="nav-link-icon" href="/adm/dashboard">
+                    <NavLink className="nav-link-icon icone-li" href="/adm/dashboard">
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
                   ) : profile.tus_descricao === "Moderador" ? (
-                    <NavLink className="nav-link-icon" href="/mod/dashboard/">
+                    <NavLink className="nav-link-icon icone-li" href="/mod/dashboard/">
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
                   ) : profile.tus_descricao === "Podcaster" ? (
                     <NavLink
-                      className="nav-link-icon"
-                      href="/podcaster/dashboard"
+                      className="nav-link-icon icone-li"
+                      href="/podcaster/dashboard/podcasts"
                     >
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
                   ) : (
-                    <NavLink className="nav-link-icon" href="#">
+                    <NavLink className="nav-link-icon icone-li" href="#">
                       <i className="ni ni-favourite-28" />{" "}
                       <a onClick={(e) => virarPodcaster(profile)}>
                         Tenho um Podcast
@@ -110,7 +111,7 @@ export default function Index() {
                     </NavLink>
                   )
                 ) : (
-                  <NavLink className="nav-link-icon" href="/login">
+                  <NavLink className="nav-link-icon icone-li" href="/login">
                     <i className="ni ni-favourite-28" /> Entrar
                   </NavLink>
                 )}
@@ -118,11 +119,11 @@ export default function Index() {
 
               <NavItem>
                 {profile ? (
-                  <NavLink className="nav-link-icon" href="/profile">
+                  <NavLink className="nav-link-icon icone-li" href="/profile">
                     <FaUserCircle color={"#FFF"} size={24} />
                   </NavLink>
                 ) : (
-                  <NavLink className="nav-link-icon" href="/cadastro">
+                  <NavLink className="nav-link-icon icone-li" href="/cadastro">
                     <i className="ni ni-favourite-28" /> Cadastrar-se
                   </NavLink>
                 )}

@@ -26,7 +26,7 @@ export function* logar({ payload }) {
 		}
 
 		if (user.tus_id === 2) {
-			history.push('/podcaster/dashboard');
+			history.push('/podcaster/dashboard/podcasts');
 		}
 
 		if (user.tus_id === 3) {
