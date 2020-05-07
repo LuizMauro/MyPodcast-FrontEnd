@@ -4,10 +4,10 @@ import { Form } from "@unform/web";
 import * as Yup from "yup";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
-
+import Textarea from "../../../../components/Textarea";
 import Input from "../../../../components/Input";
 import FileInput from "../../../../components/FileInput/FileInput";
-
+import { date } from "../../../../utils/Date";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
 import { MdClose } from "react-icons/md";
 
@@ -42,7 +42,6 @@ export default function Podcast() {
     end_link3,
   }) {
     //	const list_of_categoria = ctg_id.split(',');
-
     if (selectIdCategorias.length > 5) {
       toast.error("O podcast pode ter no máximo 5 categorias");
       return;
@@ -73,18 +72,27 @@ export default function Podcast() {
     data.append("end_link3", end_link3);
     data.append("file", file);
 
+    if (!file) {
+      toast.error("Imagem obrigatória");
+      return;
+    }
     try {
       const schema = Yup.object().shape({
-        pod_nome: Yup.string().required("O nome do Podcast obrigatória"),
-        pod_descricao: Yup.string().required(
-          "A descrição do Podcast é obrigatória"
-        ),
-        pod_criador: Yup.string().required("O nome do criador é obrigatório"),
-        pod_anocriacao: Yup.string().required("O ano de criação é obrigatório"),
-        pod_duracao: Yup.string().required("A duração é obrigatório"),
-        //ctg_id: Yup.string().required('As categorias são obrigatórias'),
-        end_link1: Yup.string().required("O 1º endereço é obrigatório"),
+        pod_descricao: Yup.string()
+          .max(600, "Máximo 600 caracteres")
+          .required("A descrição do Podcast é obrigatória"),
+        pod_anocriacao: Yup.number()
+          .required("Campo obrigatório!")
+          .min(1980)
+          .max(date(Date.now()).year, "Ano inválido!"),
       });
+
+      await schema.validate(
+        { pod_descricao, pod_anocriacao, file },
+        {
+          abortEarly: false,
+        }
+      );
 
       const response = await api.post("/adm/criarpodcast", data);
 
@@ -271,10 +279,10 @@ export default function Podcast() {
                     <Row className="borderBottom">
                       <Col lg="12" xs="12">
                         <h5 style={{ color: "#fff" }}>Descrição</h5>
-                        <Input
+                        <Textarea
                           name="pod_descricao"
                           type="text"
-                          placeholder="Descrição do Podcast"
+                          placeholder="Descreva o seu podcast em até 600 caracteres!"
                           style={{ minHeight: 200 }}
                           required
                         />
