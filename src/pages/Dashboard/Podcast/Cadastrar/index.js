@@ -28,6 +28,7 @@ export default function Podcast() {
 
     setAllCategorias(response.data); 
   
+  }
 
   useEffect(() => {
     loadCategoria();
@@ -360,4 +361,4 @@ export default function Podcast() {
 		</>
 	  );
   }
-}
+
