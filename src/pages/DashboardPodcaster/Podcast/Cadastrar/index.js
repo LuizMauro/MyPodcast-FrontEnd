@@ -4,6 +4,7 @@ import { Form } from "@unform/web";
 import * as Yup from "yup";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
+import Textarea from "../../../../components/Textarea";
 
 import Input from "../../../../components/Input";
 import FileInput from "../../../../components/FileInput/FileInput";
@@ -66,7 +67,7 @@ export default function Podcast() {
     data.append("pod_criador", pod_criador);
     data.append("pod_anocriacao", pod_anocriacao);
     data.append("pod_duracao", pod_duracao);
-    data.append("pod_permissao", 1);
+    data.append("pod_permissao", 0);
     data.append("list_of_categoria", arrayFinal);
     data.append("end_link1", end_link1);
     data.append("end_link2", end_link2);
@@ -86,7 +87,7 @@ export default function Podcast() {
         end_link1: Yup.string().required("O 1º endereço é obrigatório"),
       });
 
-      const response = await api.post("/adm/criarpodcast", data);
+      const response = await api.post("/podcaster/criarpodcast", data);
 
       if (response.data.podCreated) {
         toast.success("Podcast cadastrado!");
@@ -271,10 +272,10 @@ export default function Podcast() {
                     <Row className="borderBottom">
                       <Col lg="12" xs="12">
                         <h5 style={{ color: "#fff" }}>Descrição</h5>
-                        <Input
+                        <Textarea
                           name="pod_descricao"
                           type="text"
-                          placeholder="Descrição do Podcast"
+                          placeholder="Descreva o do Podcast em até 600 caracteres"
                           style={{ minHeight: 200 }}
                           required
                         />
@@ -287,8 +288,8 @@ export default function Podcast() {
                         <Input
                           name="pod_anocriacao"
                           type="number"
-                          required
                           placeholder="Ano de criação"
+                          required
                         />
                       </Col>
 
@@ -297,13 +298,15 @@ export default function Podcast() {
                         <Input
                           name="pod_criador"
                           type="text"
-                          required
                           placeholder="Nome do criador"
+                          required
                         />
                       </Col>
 
                       <Col lg="4" xs="12">
-                        <h5 style={{ color: "#fff" }}>Média de duração</h5>
+                        <h5 style={{ color: "#fff" }}>
+                          Média de duração (Min)
+                        </h5>
                         <Input
                           name="pod_duracao"
                           type="number"

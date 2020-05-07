@@ -20,7 +20,9 @@ import PodCast from '../pages/Podcast';
 import Profile from '../pages/Profile';
 
 //Podcaster
-import DashboardPodcaster from '../pages/DashboardPodcaster';
+import PodcasterPodcasts from '../pages/DashboardPodcaster/Podcast/Listar/index';
+import PodcasterCadastrarPodcast from '../pages/DashboardPodcaster/Podcast/Cadastrar/index'
+import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/index'
 
 //Moderador
 import DashboardMod from '../pages/DashboardMod';
@@ -57,11 +59,23 @@ export default function Routes() {
 			{/* MOD */}
 			<PrivateRouteMOD path="/mod/dashboard" exact component={DashboardMod} />
 
-			{/* POD  */}
+			{/* PODCASTER  */}
 			<PrivateRoutePOD
-				path="/podcaster/dashboard"
+				path="/podcaster/dashboard/podcasts"
 				exact
-				component={DashboardPodcaster}
+				component={PodcasterPodcasts}
+			/>
+			<PrivateRoutePOD
+				exact
+				path="/podcaster/dashboard/podcasts/cadastrar"
+				exact
+				component={PodcasterCadastrarPodcast}
+			/>
+			<PrivateRoutePOD
+				exact
+				path="/podcaster/dashboard/assinar"
+				exact
+				component={PodcasterAssinarPremium}
 			/>
 
 			{/* ADM */}

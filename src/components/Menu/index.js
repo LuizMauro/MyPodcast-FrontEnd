@@ -98,7 +98,7 @@ export default function Index() {
                   ) : profile.tus_descricao === "Podcaster" ? (
                     <NavLink
                       className="nav-link-icon icone-li"
-                      href="/podcaster/dashboard"
+                      href="/podcaster/dashboard/podcasts"
                     >
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>

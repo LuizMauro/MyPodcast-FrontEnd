@@ -43,6 +43,7 @@ export default function Profile() {
   async function handleSubmit({
     usu_nome,
     usu_email,
+<<<<<<< HEAD
     usu_senha,
     confirmarSenha,
   }) {
@@ -79,6 +80,55 @@ export default function Profile() {
         }
       );
       dispatch(updateProfileRequest(usu_senha, confirmarSenha));
+=======
+    senhaAntiga,
+    usu_senha,
+    confirmaSenha,
+  }) {
+    try {
+      if (senhaAntiga && usu_senha && confirmaSenha) {
+        const schema = Yup.object().shape({
+          /*senhaAntiga: Yup.string().when("senhaAntiga", (senhaAntiga, field) =>
+          senhaAntiga
+            ? field
+                .required("Campo requerido")
+                .oneOf([Yup.ref("senhaAntiga")], "As senhas são diferentes")
+            : field
+        ),*/
+          usu_senha: Yup.string().matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&!@#%])[0-9a-zA-Z$*&!@#%]{6,45}$/,
+            "Senha fraca!"
+            //)
+            //.when("senha", (senha, field) =>
+            //  senha ? field.required("Campo requerido") : field
+          ),
+          confirmaSenha: Yup.string().when("usu_senha", (usu_senha, field) =>
+            usu_senha
+              ? field
+                  .required("Campo requerido")
+                  .oneOf([Yup.ref("usu_senha")], "As senhas são diferentes")
+              : field
+          ),
+        });
+
+        await schema.validate(
+          { usu_senha, confirmaSenha },
+          {
+            abortEarly: false,
+          }
+        );
+      }
+      
+      dispatch(
+        updateProfileRequest(
+          usu_nome,
+          usu_email,
+          senhaAntiga,
+          usu_senha,
+          confirmaSenha
+        )
+      );
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
       formRef.current.setErrors(false);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -168,7 +218,11 @@ export default function Profile() {
                         <h4 style={{ color: "#fff" }}> Alterar senha</h4>
                         <Input
                           className="has-success form-control"
+<<<<<<< HEAD
                           name="senha"
+=======
+                          name="senhaAntiga"
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
                           type="password"
                           placeholder="Senha atual"
                         />
@@ -180,7 +234,11 @@ export default function Profile() {
                         />
                         <Input
                           className="has-success form-control"
+<<<<<<< HEAD
                           name="confirmarSenha"
+=======
+                          name="confirmaSenha"
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
                           type="password"
                           placeholder="Confirmar nova senha"
                         />
@@ -275,6 +333,20 @@ export default function Profile() {
                               {pod.tfb_id === 1 &&
                                 pod.fbk_status === 1 &&
                                 pod.pod_nome}
+<<<<<<< HEAD
+=======
+                              {pod.tfb_id === 1 &&
+                                pod.fbk_status === 1 &&
+                                ` - `}
+                              {pod.tfb_id === 1 &&
+                                pod.fbk_status === 1 &&
+                                !pod.nota &&
+                                `N/A`}
+                              {pod.tfb_id === 1 &&
+                                pod.fbk_status === 1 &&
+                                pod.nota !== 0 &&
+                                pod.nota}
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
                             </li>
                           ))}
                         </ul>
@@ -300,6 +372,20 @@ export default function Profile() {
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
                                 pod.pod_nome}
+<<<<<<< HEAD
+=======
+                              {pod.tfb_id === 2 &&
+                                pod.fbk_status === 1 &&
+                                ` - `}
+                              {pod.tfb_id === 2 &&
+                                pod.fbk_status === 1 &&
+                                !pod.nota &&
+                                `N/A`}
+                              {pod.tfb_id === 2 &&
+                                pod.fbk_status === 1 &&
+                                pod.nota !== 0 &&
+                                pod.nota}
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
                             </li>
                           ))}
                         </ul>
@@ -325,6 +411,20 @@ export default function Profile() {
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
                                 pod.pod_nome}
+<<<<<<< HEAD
+=======
+                              {pod.tfb_id === 2 &&
+                                pod.fbk_status === 2 &&
+                                ` - `}
+                              {pod.tfb_id === 2 &&
+                                pod.fbk_status === 2 &&
+                                !pod.nota &&
+                                `N/A`}
+                              {pod.tfb_id === 2 &&
+                                pod.fbk_status === 2 &&
+                                pod.nota !== 0 &&
+                                pod.nota}
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
                             </li>
                           ))}
                         </ul>

@@ -4,6 +4,7 @@ import Menu from '../../components/Menu';
 import api from '../../services/api';
 import { IoIosSearch } from 'react-icons/io';
 import history from '../../services/history';
+import './index.css'
 
 // reactstrap components
 import { Container, Button, Input, FormGroup } from 'reactstrap';
@@ -76,7 +77,7 @@ export default function Home() {
 							/>
 						</div>
 
-						<div style={{ lex: 1 }}>
+						<div className="button-div" style={{ lex: 1 }}>
 							<Button onClick={handleSubmit} className="button-search-home">
 								<IoIosSearch size={30}></IoIosSearch>
 							</Button>
@@ -91,7 +92,7 @@ export default function Home() {
 					display: 'flex',
 					justifyContent: 'space-around',
 					flexWrap: 'wrap',
-					marginTop: '10%'
+					marginTop: '5%'
 				}}
 			>
 				{podcasts.map(

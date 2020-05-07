@@ -76,10 +76,7 @@ export default function EditarPodcast( ) {
 	}) {
 		const list_of_categoria = ctg_id.split(',');
 
-		if (list_of_categoria.length > 5) {
-			toast.error('O podcast pode ter no máximo 5 categorias');
-			return;
-		}
+	
 
 		const data = new FormData();
 
@@ -112,7 +109,7 @@ export default function EditarPodcast( ) {
 				end_link1: Yup.string().required('O 1º endereço é obrigatório'),
 			});
 
-			const response = await api.put(`/editarpodcast/${pod_id}`, data);
+			const response = await api.put(`adm/editarpodcast/${pod_id}`, data);
 
 			if (response.data.podCreated) {
 				toast.success('Podcast cadastrado!');

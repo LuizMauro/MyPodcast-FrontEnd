@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 export function updateProfileRequest(usu_senha, confirmarSenha) {
   return {
     type: "@user/UPDATE_PROFILE_REQUEST",
     payload: { usu_senha, confirmarSenha },
   };
+=======
+export function updateProfileRequest(usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha) {
+	return {
+		type: '@user/UPDATE_PROFILE_REQUEST',
+		payload: { usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha }
+	};
+>>>>>>> 84478d8dda81b03eab9e5435cab63f0f7790a527
 }
 
 export function updateStatusRequest(usu_id, usu_status) {
