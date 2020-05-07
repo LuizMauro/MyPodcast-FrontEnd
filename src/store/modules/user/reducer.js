@@ -17,6 +17,7 @@ export default function user(state = INITIAL_STATE, action) {
 			}
 			case '@user/UPDATE_TOPODCASTER_SUCCESS': {
 				draft.profile.tus_descricao = action.payload.tus_descricao;
+				draft.profile.tus_id = action.payload.tus_id;
 				break;
 			}
 			case '@auth/SIGN_OUT': {

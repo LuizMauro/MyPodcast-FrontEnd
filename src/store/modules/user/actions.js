@@ -25,10 +25,10 @@ export function updateToPodcasterRequest() {
   };
 }
 
-export function updateToPodcasterSuccess(tus_descricao) {
+export function updateToPodcasterSuccess(tus_descricao, tus_id) {
   return {
     type: "@user/UPDATE_TOPODCASTER_SUCCESS",
-    payload: { tus_descricao },
+    payload: { tus_descricao, tus_id },
   };
 }
 

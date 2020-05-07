@@ -7,6 +7,8 @@ import {
   updateProfileFailure,
   updateToPodcasterSuccess,
 } from "./actions";
+import { RefreshToken } from '../auth/actions';
+
 import { toast } from "react-toastify";
 
 export function* updateProfile({ payload }) {
@@ -59,10 +61,15 @@ export function* updateModerador({ payload }) {
 export function* updatePodcaster() {
   try {
     const response = yield call(api.put, `/virarpodcaster`);
+    const newresponse = yield call(api.put,`/refreshtoken`)
 
-    yield put(updateToPodcasterSuccess(response.data.tus_descricao));
+    const { token, user } = newresponse.data;
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+    
+    yield put(RefreshToken(token, user));
+    yield put(updateToPodcasterSuccess(response.data.tus_descricao,response.data.tus_id));
 
-    history.push("/podcaster/dashboard");
+    history.push("podcaster/dashboard/podcasts");
     toast.success("Agora você tem acesso ao painel de Podcaster");
   } catch (err) {
     toast.error("Erro ao ativar ou desativar usuário");

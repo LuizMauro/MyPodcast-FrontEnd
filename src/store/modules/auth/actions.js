@@ -18,6 +18,13 @@ export function logarFailure(){
     };
 }
 
+export function RefreshToken(token,user){
+    return{
+        type:"@auth/REFRESH_TOKEN",
+        payload:{ token, user}
+    };
+}
+
 
 export function signUpRequest(nome, senha, email, cpf, tus_id){
     return {

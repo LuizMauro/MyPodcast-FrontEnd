@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import api from "../../../../services/api";
+import history from "../../../../services/history";
 import { toast } from "react-toastify";
 import Textarea from "../../../../components/Textarea";
 import Input from "../../../../components/Input";
@@ -98,6 +99,7 @@ export default function Podcast() {
 
       if (response.data.podCreated) {
         toast.success("Podcast cadastrado!");
+        history.push("/adm/dashboard/podcasts")
         console.log(response.data);
       } else if (response.data.nomeExists) {
         toast.error("Nome de Podcast já cadastrado");
