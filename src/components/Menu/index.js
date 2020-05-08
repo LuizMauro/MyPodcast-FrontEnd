@@ -54,7 +54,7 @@ export default function Index() {
             />
           </NavbarBrand>
           <button className="navbar-toggler" id="navbar-default">
-            <span className="navbar-toggler-icon" />
+            <span className="navbar-toggler-icon"/>
           </button>
           <UncontrolledCollapse navbar toggler="#navbar-default">
             <div className="navbar-collapse-header">
