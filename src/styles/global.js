@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import "react-toastify/dist/ReactToastify.css";
 
 export default createGlobalStyle`
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
     *{
         margin:0;
@@ -22,8 +22,15 @@ export default createGlobalStyle`
     margin: 0;
     }
 
+    html,body,input,button, #App{
+      font-family: 'Roboto', sans-serif !important;
+    }
+
+    :root{
+      font-family: 'Roboto', sans-serif !important; 
+    }
+
     #App {
-    font-family: sans-serif;
     height: 100vh;
     }
 

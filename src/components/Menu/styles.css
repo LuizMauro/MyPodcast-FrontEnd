@@ -7,3 +7,12 @@
 .navbar-icon:hover {
   color: #1bfdbe !important;
 }
+
+.home-button,
+.navbar-icon {
+  font-size: 1.2em !important;
+}
+
+.logo-title{
+  color:#1BFDBE
+}
