@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { updateStatusRequest } from '../../store/modules/user/actions'
 //import PodcastList from '../../styles/ItemList';
-import './style.css';
+//import './style.css';
 
 
 
@@ -50,7 +50,22 @@ export default function Dashboard() {
             <section className="section section-shaped section-lg">
                 <Container className="pt-lg-1">
                     <Row style={{ justifyContent: 'center' }}>
-                        <Col lg="12">
+                        <Col lg="6">
+                            <Card className="bg-secondary shadow border-0">
+                                <CardBody
+                                    className="px-lg-5 py-lg-5"
+                                    enctype="multipart/form-data"
+                                >
+                                    <CardTitle>Usuários do Sistema</CardTitle>
+                                    <Row className="mt-1">
+                                        <h1>
+                                            { usuario.length }
+                                        </h1>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="6">
                             <Card className="bg-secondary shadow border-0">
                                 <CardBody
                                     className="px-lg-5 py-lg-5"
