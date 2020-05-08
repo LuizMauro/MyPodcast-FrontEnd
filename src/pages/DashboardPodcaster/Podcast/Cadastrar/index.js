@@ -6,10 +6,9 @@ import api from "../../../../services/api";
 import history from "../../../../services/history";
 import { toast } from "react-toastify";
 import Textarea from "../../../../components/Textarea";
-
 import Input from "../../../../components/Input";
 import FileInput from "../../../../components/FileInput/FileInput";
-
+import { date } from "../../../../utils/Date";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
 import { MdClose } from "react-icons/md";
 
@@ -19,18 +18,47 @@ export default function Podcast() {
   const formRef = useRef(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+
   const [selectCategorias, setSelectCategorias] = useState([]);
-  const [selectIdCategorias, setSelectIdCategorias] = useState([]);
-  const [categorias, setCategorias] = useState([]);
+  const [allCategorias, setAllCategorias] = useState([]);
 
   async function loadCategoria() {
     const response = await api.get("/categoria");
-    setCategorias(response.data);
+
+    setAllCategorias(response.data);
   }
 
   useEffect(() => {
     loadCategoria();
   }, []);
+
+  function removeCategoria(cat) {
+    console.log(cat.ctg_id);
+    //setSelectIdCategorias(selectIdCategorias.filter(item => item !== id))
+    setSelectCategorias([...selectCategorias.filter((obj) => obj !== cat)]);
+  }
+
+  function setCategoria(cat) {
+    if (cat) {
+      if (selectCategorias.length === 5) {
+        toast.error("O podcast pode ter no máximo 5 categorias");
+        return;
+      }
+
+      //setSelectIdCategorias([...selectIdCategorias, i])
+      setSelectCategorias([...selectCategorias, cat]);
+    }
+  }
+
+  function getFile(file) {
+    setPreview(URL.createObjectURL(file));
+    setFile(file);
+  }
+
+  function deletePreview() {
+    setPreview(null);
+    setFile(null);
+  }
 
   async function handleSubmit({
     pod_nome,
@@ -45,14 +73,12 @@ export default function Podcast() {
   }) {
     //	const list_of_categoria = ctg_id.split(',');
 
-    if (selectIdCategorias.length > 5) {
+    if (selectCategorias.length > 5) {
       toast.error("O podcast pode ter no máximo 5 categorias");
       return;
     }
 
-    const aux = categorias.filter(
-      ({ ctg_descricao }) => !selectCategorias.includes(ctg_descricao)
-    );
+    const aux = allCategorias.filter((obj) => !selectCategorias.includes(obj));
     const arrayFinal = [];
 
     aux.map((item) => {
@@ -68,31 +94,41 @@ export default function Podcast() {
     data.append("pod_criador", pod_criador);
     data.append("pod_anocriacao", pod_anocriacao);
     data.append("pod_duracao", pod_duracao);
-    data.append("pod_permissao", 0);
+    data.append("pod_permissao", 1);
     data.append("list_of_categoria", arrayFinal);
     data.append("end_link1", end_link1);
     data.append("end_link2", end_link2);
     data.append("end_link3", end_link3);
     data.append("file", file);
 
+    if (!file) {
+      toast.error("Imagem obrigatória");
+      return;
+    }
+
     try {
       const schema = Yup.object().shape({
-        pod_nome: Yup.string().required("O nome do Podcast obrigatória"),
-        pod_descricao: Yup.string().required(
-          "A descrição do Podcast é obrigatória"
-        ),
-        pod_criador: Yup.string().required("O nome do criador é obrigatório"),
-        pod_anocriacao: Yup.string().required("O ano de criação é obrigatório"),
-        pod_duracao: Yup.string().required("A duração é obrigatório"),
-        //ctg_id: Yup.string().required('As categorias são obrigatórias'),
-        end_link1: Yup.string().required("O 1º endereço é obrigatório"),
+        pod_descricao: Yup.string()
+          .max(600, "Máximo 600 caracteres")
+          .required("A descrição do Podcast é obrigatória"),
+        pod_anocriacao: Yup.number()
+          .required("Campo obrigatório!")
+          .min(1990, "Ano inválido!")
+          .max(date(Date.now()).year, "Ano inválido!"),
       });
+
+      await schema.validate(
+        { pod_descricao, pod_anocriacao, file },
+        {
+          abortEarly: false,
+        }
+      );
 
       const response = await api.post("/podcaster/criarpodcast", data);
 
       if (response.data.podCreated) {
         toast.success("Podcast cadastrado!");
-        history.push("/podcaster/dashboard/podcasts")
+        history.push("/podcaster/dashboard/podcasts");
         console.log(response.data);
       } else if (response.data.nomeExists) {
         toast.error("Nome de Podcast já cadastrado");
@@ -117,41 +153,6 @@ export default function Podcast() {
         formRef.current.setErrors(errorMessages);
       }
     }
-  }
-
-  function removeCategoria(indexToRemove, id) {
-    console.log(id);
-
-    setSelectIdCategorias(selectIdCategorias.filter((item) => item !== id));
-
-    setSelectCategorias([
-      ...selectCategorias.filter((tag) => tag !== indexToRemove),
-    ]);
-  }
-
-  function setCategoria(value, i) {
-    if (value !== "") {
-      if (selectCategorias.length === 5) {
-        toast.error("O podcast pode ter no máximo 5 categorias");
-        return;
-      }
-
-      console.log("OK -> ", i);
-
-      setSelectIdCategorias([...selectIdCategorias, i]);
-      setSelectCategorias([...selectCategorias, value]);
-      value = "";
-    }
-  }
-
-  function getFile(file) {
-    setPreview(URL.createObjectURL(file));
-    setFile(file);
-  }
-
-  function deletePreview() {
-    setPreview(null);
-    setFile(null);
   }
 
   return (
@@ -215,24 +216,19 @@ export default function Podcast() {
 
                         {true && (
                           <ul id="tags" className="borderBottom">
-                            {categorias
-                              .filter(
-                                ({ ctg_descricao }) =>
-                                  !selectCategorias.includes(ctg_descricao)
-                              )
-                              .map((v, i) => {
-                                console.log("CAT ->", selectIdCategorias);
+                            {allCategorias
+                              .filter((obj) => !selectCategorias.includes(obj))
+                              .map((cat) => {
+                                console.log("CAT ->", selectCategorias);
 
                                 return (
-                                  <li key={i} className="tag">
+                                  <li key={cat.ctg_id} className="tag">
                                     <span className="tag-title">
-                                      {v.ctg_descricao}
+                                      {cat.ctg_descricao}
                                     </span>
                                     <span
                                       className="tag-close-icon"
-                                      onClick={() =>
-                                        setCategoria(v.ctg_descricao, v.ctg_id)
-                                      }
+                                      onClick={() => setCategoria(cat)}
                                     >
                                       +
                                     </span>
@@ -245,22 +241,18 @@ export default function Podcast() {
                           Categorias selecionadas
                         </h5>
                         <ul id="tags">
-                          {categorias
-                            .filter(({ ctg_descricao }) =>
-                              selectCategorias.includes(ctg_descricao)
-                            )
-                            .map((v, i) => (
+                          {allCategorias
+                            .filter((obj) => selectCategorias.includes(obj))
+                            .map((cat) => (
                               <>
                                 <br />
-                                <li key={v.id} className="tag">
+                                <li key={cat.id} className="tag">
                                   <span className="tag-title">
-                                    {v.ctg_descricao}
+                                    {cat.ctg_descricao}
                                   </span>
                                   <span
                                     className="tag-close-icon"
-                                    onClick={() =>
-                                      removeCategoria(v.ctg_descricao, v.ctg_id)
-                                    }
+                                    onClick={() => removeCategoria(cat)}
                                   >
                                     x
                                   </span>
@@ -277,7 +269,7 @@ export default function Podcast() {
                         <Textarea
                           name="pod_descricao"
                           type="text"
-                          placeholder="Descreva o do Podcast em até 600 caracteres"
+                          placeholder="Descreva o seu podcast em até 600 caracteres!"
                           style={{ minHeight: 200 }}
                           required
                         />
@@ -290,8 +282,8 @@ export default function Podcast() {
                         <Input
                           name="pod_anocriacao"
                           type="number"
-                          placeholder="Ano de criação"
                           required
+                          placeholder="Ano de criação"
                         />
                       </Col>
 
@@ -300,15 +292,13 @@ export default function Podcast() {
                         <Input
                           name="pod_criador"
                           type="text"
-                          placeholder="Nome do criador"
                           required
+                          placeholder="Nome do criador"
                         />
                       </Col>
 
                       <Col lg="4" xs="12">
-                        <h5 style={{ color: "#fff" }}>
-                          Média de duração (Min)
-                        </h5>
+                        <h5 style={{ color: "#fff" }}>Média de duração</h5>
                         <Input
                           name="pod_duracao"
                           type="number"

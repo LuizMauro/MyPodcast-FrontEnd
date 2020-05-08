@@ -172,7 +172,8 @@ export default function EditarPodcast() {
       const response = await api.put(`adm/editarpodcast/${pod_id}`, data);
 
       if (response.data.podEdited) {
-        toast.success("Podcast editado!");
+		toast.success("Podcast editado!");
+		setUpdate(update ? false : true);
         history.push("/adm/dashboard/podcasts");
         console.log(response.data);
       } else if (response.data.nomeExists) {

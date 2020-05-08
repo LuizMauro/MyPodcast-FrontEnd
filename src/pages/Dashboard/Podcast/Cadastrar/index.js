@@ -128,7 +128,7 @@ export default function Podcast() {
 
       if (response.data.podCreated) {
         toast.success("Podcast cadastrado!");
-        history.push('/adm/dashboard/podcasts')
+        history.push("/adm/dashboard/podcasts");
         console.log(response.data);
       } else if (response.data.nomeExists) {
         toast.error("Nome de Podcast já cadastrado");
