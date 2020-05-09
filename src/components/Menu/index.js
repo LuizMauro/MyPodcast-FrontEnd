@@ -53,6 +53,9 @@ export default function Index() {
               src={require("../../assets/img/brand/Ativo 13@4x.png")}
             />
           </NavbarBrand>
+          <Col>
+            <h1 className="logo-title mb-0">MyPodcast</h1>
+          </Col>
           <button className="navbar-toggler" id="navbar-default">
             <span className="navbar-toggler-icon" />
           </button>
@@ -67,6 +70,7 @@ export default function Index() {
                     />
                   </Link>
                 </Col>
+
                 <Col className="collapse-close" xs="6">
                   <button className="navbar-toggler" id="navbar-default">
                     <span />
@@ -90,7 +94,7 @@ export default function Index() {
                 {profile ? (
                   profile.tus_descricao === "Administrador" ? (
                     <NavLink
-                      className="nav-link-icon icone-li home-button"
+                      className="nav-link-icon  icone-li home-button"
                       href="/adm/dashboard"
                     >
                       <i className="ni ni-favourite-28" /> Painel
@@ -136,7 +140,11 @@ export default function Index() {
                     className="nav-link-icon icone-li home-button"
                     href="/profile"
                   >
-                    <FaUserCircle color={"#FFF"} size={24} className="navbar-icon"/>
+                    <FaUserCircle
+                      color={"#FFF"}
+                      size={24}
+                      className="navbar-icon"
+                    />
                   </NavLink>
                 ) : (
                   <NavLink

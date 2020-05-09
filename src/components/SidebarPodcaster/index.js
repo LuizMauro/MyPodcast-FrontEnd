@@ -8,8 +8,14 @@ import {
   FaHandshake,
   FaAngleLeft,
   FaAngleRight,
+  FaUserCircle,
+  FaSignOutAlt,
 } from "react-icons/fa";
+import { signOut } from "../../store/modules/auth/actions";
+import { useDispatch } from "react-redux";
+import logo from "../../assets/img/brand/Ativo 13@4x.png";
 import { GoMegaphone } from "react-icons/go";
+import { Col, Row, NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
 
 import "./styles.css";
 
@@ -54,6 +60,11 @@ class SidebarPod extends Component {
     });
   }
 
+  handleSignOut() {
+    const dispatch = useDispatch();
+    dispatch(signOut());
+  }
+
   activeitem = (x) => {
     if (this.state.NavItemActive.length > 0) {
       console.log(this.state.NavItemActive);
@@ -75,12 +86,22 @@ class SidebarPod extends Component {
           sidebar={
             <nav>
               <ul>
+                <li style={{textAlign:'center'}}
+                >
+                  <NavbarBrand href="/" className="logo-li">
+                    <img
+                      style={{ width: 70, height: 70 }}
+                      alt="..."
+                      src={require("../../assets/img/brand/Ativo 13@4x.png")}
+                    />
+                  </NavbarBrand>
+                </li>
                 <Navitem
                   className="teste-te"
                   item="Podcasts"
                   tolink="/podcaster/dashboard/podcasts"
                   activec={this.activeitem}
-                  style={{ width: "100%", color:'red' }}
+                  style={{ width: "100%", color: "red" }}
                   icone={
                     <FaMicrophone
                       style={{ width: 70, height: 70 }}
@@ -92,7 +113,7 @@ class SidebarPod extends Component {
                   item="Assinar Premium"
                   tolink="/podcaster/dashboard/assinar"
                   activec={this.activeitem}
-                  style={{ width: "100%"}}
+                  style={{ width: "100%" }}
                   icone={
                     <FaHandshake
                       style={{ width: 70, height: 70 }}
@@ -123,22 +144,83 @@ class SidebarPod extends Component {
             }}
           >
             {this.state.abrir ? (
-              <div>
+              <div style={{display:'flex'}}>
+                <NavbarBrand href="/">
+                    <img
+                      style={{ width: 70, height: 70 }}
+                      alt="..."
+                      src={require("../../assets/img/brand/Ativo 13@4x.png")}
+                    />
+                  </NavbarBrand>
                 <button
                   style={{ background: "none", border: 0 }}
                   onClick={() => this.onSetSidebarOpen()}
                 >
                   <FaAngleRight size={50} color="#1bfdbe"></FaAngleRight>
                 </button>
+                <Col className="col-nav-fechado">
+                    <Nav style={{marginBottom:0, justifyContent:'flex-end'}}>
+                      <NavItem className="dash-li">
+                        <NavLink
+                          className="nav-link-icon icone-li dash-icon"
+                          href="/profile"
+                        >
+                          <FaUserCircle
+                            color={"#FFF"}
+                            style={{ width: 50, height: 50 }}
+                            className="navbar-icon"
+                          />
+                        </NavLink>
+
+                        <NavLink className="nav-link-icon icone-li dash-icon">
+                          <FaSignOutAlt
+                            onClick={this.handleSignOut}
+                            color={"#FFF"}
+                            style={{ width: 50, height: 50, cursor: "pointer" }}
+                            className="navbar-icon"
+                          />
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
+                  </Col>
               </div>
             ) : (
               <div>
-                <button
-                  style={{ background: "none", border: 0 }}
-                  onClick={() => this.onSetSidebarExit()}
-                >
-                  <FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft>
-                </button>
+                <Row>
+                  <Col>
+                    <button
+                      style={{ background: "none", border: 0 }}
+                      onClick={() => this.onSetSidebarExit()}
+                    >
+                      <FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft>
+                    </button>
+                  </Col>
+                  <Col className="col-nav-aberto">
+                    <Nav style={{marginBottom:0}}>
+                      <NavItem className="dash-li">
+                        <NavLink
+                          className="nav-link-icon icone-li dash-icon"
+                          href="/profile"
+                        >
+                          <FaUserCircle
+                            color={"#FFF"}
+                            style={{ width: 50, height: 50 }}
+                            className="navbar-icon"
+                          />
+                        </NavLink>
+
+                        <NavLink className="nav-link-icon icone-li dash-icon">
+                          <FaSignOutAlt
+                            onClick={this.handleSignOut}
+                            color={"#FFF"}
+                            style={{ width: 50, height: 50, cursor: "pointer" }}
+                            className="navbar-icon"
+                          />
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
+                  </Col>
+                </Row>
               </div>
             )}
           </div>

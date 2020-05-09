@@ -48,13 +48,13 @@ export default function Home() {
 							marginTop: '10%'
 						}}
 					>
-						<div style={{ flex: 1 }}>
+						<div>
 							<Input
 								className="select-home"
 								type="select"
 								name="select"
 								id="exampleSelect"
-								p
+								style={{ height:70 }}
 								onChange={(e) => setSelect(e.target.value)}
 							>
 								<option disabled selected>
@@ -73,12 +73,13 @@ export default function Home() {
 								onChange={(e) => setPesquisa(e.target.value)}
 								className="input-search-home"
 								type="text"
+								style={{height:70}}
 								name="pesquisa"
 							/>
 						</div>
 
 						<div className="button-div" style={{ lex: 1 }}>
-							<Button onClick={handleSubmit} className="button-search-home">
+							<Button onClick={handleSubmit} style={{height:70}} className="button-search-home">
 								<IoIosSearch size={30}></IoIosSearch>
 							</Button>
 						</div>
