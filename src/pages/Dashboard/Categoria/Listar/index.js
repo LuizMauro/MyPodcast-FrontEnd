@@ -94,7 +94,7 @@ export default function EditarPodcast() {
                       <Col className="form-group">
                         <input
                           className="has-success form-control"
-                          placeholder="Nome do Podcast"
+                          placeholder="Buscar Categoria"
                           type="text"
                           onChange={(e) => searchCategoria(e)}
                           style={{

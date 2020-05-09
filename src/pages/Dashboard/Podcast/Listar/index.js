@@ -176,7 +176,8 @@ export default function EditarPodcast() {
 
       if (response.data.podEdited) {
         toast.success("Podcast editado!");
-        setUpdate(update ? false : true);
+		setUpdate(update ? false : true);
+		setEditMode(false);
         history.push("/adm/dashboard/podcasts");
         console.log(response.data);
       } else if (response.data.nomeExists) {
@@ -238,7 +239,7 @@ export default function EditarPodcast() {
                       <Col className="form-group">
                         <input
                           className="has-success form-control"
-                          placeholder="Nome do Podcast"
+                          placeholder="Buscar Podcast"
                           type="text"
                           onChange={(e) => searchPodcast(e)}
                           style={{
