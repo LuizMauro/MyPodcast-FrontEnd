@@ -10,6 +10,8 @@ import FileInput from '../../../../components/FileInput/FileInput';
 import PodcastList from '../../../../styles/ItemList';
 import { FaPen, FaTimes, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
+import history from "../../../../services/history";
+import Textarea from "../../../../components/Textarea";
 
 import { Button, Card, CardBody, Container, Row, Col, CardTitle } from 'reactstrap';
 
@@ -165,43 +167,45 @@ export default function EditarPodcast( ) {
 
 		try {
 			const schema = Yup.object().shape({
-				pod_nome: Yup.string().required('O nome do Podcast é obrigatório'),
-				pod_descricao: Yup.string().required(
-					'A descrição do Podcast é obrigatória'
-				),
-				pod_criador: Yup.string().required('O nome do criador é obrigatório'),
-				pod_anocriacao: Yup.string().required('O ano de criação é obrigatório'),
-				pod_duracao: Yup.string().required('A duração é obrigatória'),
-				ctg_id: Yup.string().required('As categorias são obrigatórias'),
-				end_link1: Yup.string().required('O 1º endereço é obrigatório'),
+			  pod_nome: Yup.string().required("O nome do Podcast é obrigatório"),
+			  pod_descricao: Yup.string().required(
+				"A descrição do Podcast é obrigatória"
+			  ),
+			  pod_criador: Yup.string().required("O nome do criador é obrigatório"),
+			  pod_anocriacao: Yup.string().required("O ano de criação é obrigatório"),
+			  pod_duracao: Yup.string().required("A duração é obrigatória"),
+			  ctg_id: Yup.string().required("As categorias são obrigatórias"),
+			  end_link1: Yup.string().required("O 1º endereço é obrigatório"),
 			});
-
+	  
 			const response = await api.put(`adm/editarpodcast/${pod_id}`, data);
-
-			if (response.data.podCreated) {
-				toast.success('Podcast cadastrado!');
-				console.log(response.data);
+	  
+			if (response.data.podEdited) {
+			  toast.success("Podcast editado!");
+			  setUpdate(update ? false : true);
+			  history.push("/adm/dashboard/podcasts");
+			  console.log(response.data);
 			} else if (response.data.nomeExists) {
-				toast.error('Nome de Podcast já cadastrado');
+			  toast.error("Nome de Podcast já cadastrado");
 			} else if (response.data.descricaoExists) {
-				toast.error('Este podcast já foi cadastrado');
+			  toast.error("Descrição é igual a de um podcast já cadastrado");
 			} else if (response.data.linkExists) {
-				toast.error('Link(s) inválido(s)');
+			  toast.error("Link(s) inválido(s)");
 			}
 			console.log(response.data);
-
+	  
 			formRef.current.setErrors(false);
-		} catch (err) {
+		  } catch (err) {
 			if (err instanceof Yup.ValidationError) {
-				const errorMessages = {};
-
-				err.inner.forEach((error) => {
-					errorMessages[error.path] = error.message;
-				});
-
-				console.log(errorMessages);
-
-				formRef.current.setErrors(errorMessages);
+			  const errorMessages = {};
+	  
+			  err.inner.forEach((error) => {
+				errorMessages[error.path] = error.message;
+			  });
+	  
+			  console.log(errorMessages);
+	  
+			  formRef.current.setErrors(errorMessages);
 			}
 		}
 	}
