@@ -25,7 +25,8 @@ export default function Podcast() {
   async function loadCategoria() {
     const response = await api.get("/categoria");
 
-    setAllCategorias(response.data);
+    setAllCategorias(response.data); 
+  
   }
 
   useEffect(() => {
@@ -338,6 +339,7 @@ export default function Podcast() {
                       </Col>
                     </Row>
 
+
                     <div className="text-center">
                       <Button type="submit" className="my-2" color="primary">
                         Cadastrar
@@ -363,3 +365,4 @@ export default function Podcast() {
     </>
   );
 }
+
