@@ -31,7 +31,8 @@ export default function EditarPodcast() {
   const [editarPod, setEditarPod] = useState([]);
   const [update, setUpdate] = useState(false);
   const [preview, setPreview] = useState(null);
-
+  const [searchValue, setSearch] = useState("");
+  const [listSearch, setListSearch] = useState([]);
   const [selectCategorias, setSelectCategorias] = useState([]);
   const [allCategorias, setAllCategorias] = useState([]);
 
@@ -202,6 +203,15 @@ export default function EditarPodcast() {
     }
   }
 
+  function searchPodcast(e) {
+    setSearch(e.target.value);
+
+    setListSearch(
+      podcasts.filter(({ pod_nome }) =>
+        pod_nome.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  }
 
   return (
     <>
@@ -221,9 +231,23 @@ export default function EditarPodcast() {
                         ? { display: "none" }
                         : { display: "flex", justifyContent: "flex-end" }
                     }
+                    className="borderBottom"
                   >
                     <Col lg="6">
-                      <p>Buscar</p>
+                      <Col className="form-group">
+                        <input
+                          className="has-success form-control"
+                          placeholder="Buscar Podcast"
+                          type="text"
+                          onChange={(e) => searchPodcast(e)}
+                          style={{
+                            backgroundColor: "#232659",
+                            border: "none",
+                            color: "#fff",
+                            placeContent: { color: "#fff" },
+                          }}
+                        />
+                      </Col>
                     </Col>
                     <Col lg="6" style={{ textAlign: "end" }}>
                       <Link className="btn btn-primary" to="podcasts/cadastrar">
@@ -231,6 +255,14 @@ export default function EditarPodcast() {
                       </Link>
                     </Col>
                   </Row>
+                  <CardTitle
+                    style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
+                  >
+                    {editMode
+                      ? `Editar Podcast`
+                      : `${podcasts.length} Podcasts Cadastrados`}
+                  </CardTitle>
+
                   <MdClose
                     size={24}
                     color={"#fff"}
@@ -240,54 +272,66 @@ export default function EditarPodcast() {
                     }
                     onClick={() => setEditMode(false)}
                   />
-                  <Row className="mb-3">
-                    <Col lg="6">{podcasts.length} podcasts cadastrados</Col>
-                    <Col lg="6">Status de Cadastro</Col>
-                  </Row>
                   <ul
                     style={
                       editMode ? { display: "none" } : { display: "block" }
                     }
                   >
-                    {podcasts.map((item) => (
-                      <PodcastList>
-                        <div className="item">
-                          {item.pod_permissao === 1 ? (
-                            <Link
-                              to={`../../../podcast/${item.pod_id}`}
-                              className="linktittle"
-                            >
-                              {item.pod_nome}
-                            </Link>
-                          ) : (
-                            <p style={{ fontSize: "21px", margin: 0 }}>
-                              {item.pod_nome}
-                            </p>
-                          )}
-                        </div>
-                        <div className="item">
-                          {item.pod_permissao === 0
-                            ? `Aguardando Aprovação`
-                            : item.pod_permissao === 1
-                            ? `Cadastro Aceito`
-                            : `Cadastrado recusado`}
-                        </div>
-                        <div className="icons">
-                          <button
-                            className="button edit"
-                            onClick={(e) => editarPodcast(item)}
-                          >
-                            <FaPen size={18} />
-                          </button>
-                          <button
-                            className="button delete"
-                            onClick={(e) => deletarPodcast(item)}
-                          >
-                            <FaTimes size={18} />
-                          </button>
-                        </div>
-                      </PodcastList>
-                    ))}
+                    {searchValue === ""
+                      ? podcasts.map((item) => (
+                          <PodcastList>
+                            <div className="item">
+                              <Link
+                                to={`../../../podcast/${item.pod_id}`}
+                                className="linktittle"
+                                style={{ color: "#1bfdbe", fontWeight: "bold" }}
+                              >
+                                {item.pod_nome}
+                              </Link>
+                            </div>
+                            <div className="icons">
+                              <button
+                                className="button edit"
+                                onClick={(e) => editarPodcast(item)}
+                              >
+                                <FaPen size={18} />
+                              </button>
+                              <button
+                                className="button delete"
+                                onClick={(e) => deletarPodcast(item)}
+                              >
+                                <FaTimes size={18} />
+                              </button>
+                            </div>
+                          </PodcastList>
+                        ))
+                      : listSearch.map((item) => (
+                          <PodcastList>
+                            <div className="item">
+                              <Link
+                                to={`../../../podcast/${item.pod_id}`}
+                                className="linktittle"
+                                style={{ color: "#1bfdbe", fontWeight: "bold" }}
+                              >
+                                {item.pod_nome}
+                              </Link>
+                            </div>
+                            <div className="icons">
+                              <button
+                                className="button edit"
+                                onClick={(e) => editarPodcast(item)}
+                              >
+                                <FaPen size={18} />
+                              </button>
+                              <button
+                                className="button delete"
+                                onClick={(e) => deletarPodcast(item)}
+                              >
+                                <FaTimes size={18} />
+                              </button>
+                            </div>
+                          </PodcastList>
+                        ))}
                   </ul>
 
                   <Form
