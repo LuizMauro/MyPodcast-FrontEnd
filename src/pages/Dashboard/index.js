@@ -1,259 +1,90 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { signOut } from "../../store/modules/auth/actions";
-import Menu from "../../components/Menu";
+import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import api from '../../services/api';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { updateStatusRequest } from '../../store/modules/user/actions'
+//import PodcastList from '../../styles/ItemList';
+//import './style.css';
 
-import api from "../../services/api";
 
-// nodejs library that concatenates classes
-//import classNames from "classnames";
-// react plugin used to create charts
-//import { Line, Pie } from "react-chartjs-2";
+
+
 
 // reactstrap components
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Row,
-  Col,
+	Button,
+	Card,
+	CardBody,
+	Container,
+	Row,
+	Col,
+	CardTitle,
 } from "reactstrap";
 
+
 export default function Dashboard() {
-  api.get("adm/users");
+    
+    const [usuario, setUsuario] = useState([]);
+    const [userStatus, setUserStatus] = useState(null);
+    const [edit, setEdit] = useState(false);
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+    useEffect(() => {
+        exibirUsuarios();
+        //console.log(`Teste`)
+    }, []);
 
-  function handleSignOut() {
-    dispatch(signOut());
-  }
 
-  return (
-    <span>
-      <Menu></Menu>
-      <div className="content p-20 m-10">
-        <h1>ADM</h1>
+    
 
-        <Row>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-globe text-warning" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Capacity</p>
-                      <CardTitle tag="p">150GB</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="fas fa-sync-alt" /> Update Now
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-money-coins text-success" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Revenue</p>
-                      <CardTitle tag="p">$ 1,345</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="far fa-calendar" /> Last day
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-vector text-danger" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Errors</p>
-                      <CardTitle tag="p">23</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="far fa-clock" /> In the last hour
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Followers</p>
-                      <CardTitle tag="p">+45K</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="fas fa-sync-alt" /> Update now
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-        </Row>
+    async function exibirUsuarios() {
+        const response = await api.get('/users');
+        setUsuario(response.data);
+        console.log("Teste"+response.data)
+    }
 
-        <Row>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-globe text-warning" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Capacity</p>
-                      <CardTitle tag="p">150GB</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="fas fa-sync-alt" /> Update Now
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-money-coins text-success" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Revenue</p>
-                      <CardTitle tag="p">$ 1,345</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="far fa-calendar" /> Last day
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-vector text-danger" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Errors</p>
-                      <CardTitle tag="p">23</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="far fa-clock" /> In the last hour
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col lg="3" md="6" sm="6">
-            <Card className="card-stats">
-              <CardBody>
-                <Row>
-                  <Col md="4" xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary" />
-                    </div>
-                  </Col>
-                  <Col md="8" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Followers</p>
-                      <CardTitle tag="p">+45K</CardTitle>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="fas fa-sync-alt" /> Update now
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-        </Row>
+    return (
+        <>
+            {console.log(usuario)}
+            <section className="section section-shaped section-lg">
+                <Container className="pt-lg-1">
+                    <Row style={{ justifyContent: 'center' }}>
+                        <Col lg="6">
+                            <Card className="bg-secondary shadow border-0">
+                                <CardBody
+                                    className="px-lg-5 py-lg-5"
+                                    enctype="multipart/form-data"
+                                >
+                                    <CardTitle>Usuários do Sistema</CardTitle>
+                                    <Row className="mt-1">
+                                        <h1>
+                                            { usuario.length }
+                                        </h1>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="6">
+                            <Card className="bg-secondary shadow border-0">
+                                <CardBody
+                                    className="px-lg-5 py-lg-5"
+                                    enctype="multipart/form-data"
+                                >
+                                    <CardTitle>Usuários do Sistema</CardTitle>
+                                    <Row className="mt-1">
+                                        <h1>
+                                            { usuario.length }
+                                        </h1>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+        </>
 
-        <button className="button" type="button" onClick={handleSignOut}>
-          Sair
-        </button>
-      </div>
-    </span>
-  );
+
+    )
 }
