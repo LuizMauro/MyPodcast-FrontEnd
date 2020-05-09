@@ -7,17 +7,21 @@
 	height: auto;
 	width: auto;
 	align-self: start;
-	color: rgb(165, 245, 171);
+	color: rgb(255, 255, 255)!important;
 	cursor: pointer;
 }
 
 .button:hover {
 	transition: 0.3s ease-in;
+	color: rgb(255, 255, 255) !important;
+	cursor: pointer;
 }
 
 .activated,
 .activated:hover {
 	border-bottom: 2px solid rgb(27, 253, 190);
+	color: rgb(255, 255, 255) !important;
 	transition: 0s;
+	
 }
 
