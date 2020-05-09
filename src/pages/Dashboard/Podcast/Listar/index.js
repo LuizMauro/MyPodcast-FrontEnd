@@ -6,12 +6,12 @@ import api from '../../../../services/api';
 import { toast } from 'react-toastify';
 
 import Input from '../../../../components/Input';
+import Textarea from '../../../../components/Textarea';
 import FileInput from '../../../../components/FileInput/FileInput';
 import PodcastList from '../../../../styles/ItemList';
 import { FaPen, FaTimes, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import history from "../../../../services/history";
-import Textarea from "../../../../components/Textarea";
 
 import { Button, Card, CardBody, Container, Row, Col, CardTitle } from 'reactstrap';
 
@@ -382,6 +382,7 @@ export default function EditarPodcast( ) {
 								name="pod_nome"
 								type="text"
 								placeholder="Nome do Podcast"
+								required
 						/>
 
 						<h5 style={{color:"#fff"}}>Escolha até 5 categorias</h5>
@@ -434,11 +435,12 @@ export default function EditarPodcast( ) {
 						<Row  className="borderBottom">
 						<Col lg="12" xs="12">
 						<h5 style={{color: "#fff"}}>Descrição</h5>
-						<Input
+						<Textarea
 												name="pod_descricao"
 												type="text"
-							placeholder="Descrição do Podcast"
+							placeholder="Descreva seu podcast em até 600 caracteres"
 							style={{minHeight:200}}
+							required
 											/>
 						</Col>
 						</Row>
@@ -451,6 +453,7 @@ export default function EditarPodcast( ) {
 							name="pod_anocriacao"
 							type="text"
 							placeholder="Ano de criação"
+							required
 						/>
 						</Col>
 
@@ -460,6 +463,7 @@ export default function EditarPodcast( ) {
 							name="pod_criador"
 							type="text"
 							placeholder="Nome do criador"
+							required
 						/>
 						</Col>
 
@@ -469,6 +473,7 @@ export default function EditarPodcast( ) {
 												name="pod_duracao"
 												type="text"
 												placeholder="Média de duração em minutos"
+												required
 											/>
 						</Col>
 
@@ -483,6 +488,7 @@ export default function EditarPodcast( ) {
 							name="end_link1"
 							type="text"
 							placeholder="Endereço 1 do Podcast"
+							required
 						/>
 						</Col>
 
