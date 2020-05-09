@@ -1,0 +1,12 @@
+.dash-home-title {
+  color: red;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: rgb(27, 253, 190);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.dash-home-value {
+  color: rgb(255, 255, 255);
+}

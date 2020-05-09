@@ -9,34 +9,142 @@ import {
   Col,
   CardTitle,
 } from "reactstrap";
+import "./index.css";
 
 export default function Home() {
-  const [usuario, setUsuario] = useState([]);
+  const [relatorio, setRelatorio] = useState([]);
 
   useEffect(() => {
-    exibirUsuarios();
+    exibirRelatorio();
     //console.log(`Teste`)
   }, []);
 
-  async function exibirUsuarios() {
-    const response = await api.get("/users");
+  async function exibirRelatorio() {
+    const response = await api.get("/dash/home");
     console.log("users", response.data);
-    setUsuario(response.data);
-}
+    setRelatorio(response.data);
+  }
 
   return (
     <section className="section section-shaped section-lg">
-      <Container className="pt-lg-1">
+      <Container>
         <Row style={{ justifyContent: "center" }}>
-          <Col lg="12">
+          <Col lg="3 mt-3">
             <Card className="bg-secondary shadow border-0">
               <CardBody
-                className="px-lg-5 py-lg-5"
+                style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle>Usuários do Sistema</CardTitle>
-                <Row className="mt-1">
-                  <h1>{usuario.length}</h1>
+                <CardTitle className="dash-home-title">
+                  Podcasts Cadastrados
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_podcast}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-3">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Usuários Cadastrados
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_usuario}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-3">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Podcasters Cadastrados
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_podcaster}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-3">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Podcasters Premium
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_premium}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-5">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Moderadores do Sistema
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_moderador}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-5">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Categorias Cadastradas
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_categoria}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-5">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Comentarios Publicados
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">{relatorio.qtd_comentario}</h1>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="3 mt-5">
+            <Card className="bg-secondary shadow border-0">
+              <CardBody
+                style={{ justifyContent: "center" }}
+                enctype="multipart/form-data"
+              >
+                <CardTitle className="dash-home-title">
+                  Publicidades Publicadas
+                </CardTitle>
+                <Row className="mt-1" style={{ justifyContent: "center" }}>
+                  <h1 className="dash-home-value">0</h1>
                 </Row>
               </CardBody>
             </Card>

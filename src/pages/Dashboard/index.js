@@ -40,34 +40,7 @@ export default function Dashboard() {
       {console.log(usuario)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
-          <Row style={{ justifyContent: "center" }}>
-            <Col lg="6">
-              <Card className="bg-secondary shadow border-0">
-                <CardBody
-                  className="px-lg-5 py-lg-5"
-                  enctype="multipart/form-data"
-                >
-                  <CardTitle>Usuários do Sistema</CardTitle>
-                  <Row className="mt-1">
-                    <h1>{usuario.length}</h1>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="6">
-              <Card className="bg-secondary shadow border-0">
-                <CardBody
-                  className="px-lg-5 py-lg-5"
-                  enctype="multipart/form-data"
-                >
-                  <CardTitle>Usuários do Sistema</CardTitle>
-                  <Row className="mt-1">
-                    <h1>{usuario.length}</h1>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+          <Row style={{ justifyContent: "center" }}></Row>
         </Container>
       </section>
     </>

@@ -28,7 +28,7 @@ import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/
 import DashboardMod from '../pages/DashboardMod';
 
 //ADM
-import Dashboard from '../pages/Dashboard';
+import Dashboard from '../pages/Dashboard/Home';
 import PodcastAdmCadastrar from '../pages/Dashboard/Podcast/Cadastrar';
 import PodcastAdm from '../pages/Dashboard/Podcast/Listar';
 import CategoriasAdm from '../pages/Dashboard/Categoria/Listar';
