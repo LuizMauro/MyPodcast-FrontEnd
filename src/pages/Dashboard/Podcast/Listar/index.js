@@ -25,6 +25,8 @@ export default function EditarPodcast( ) {
 	const [selectCategorias, setSelectCategorias] = useState([]);
 	const [allCategorias, setAllCategorias] = useState([]);
 
+	const [searchValue, setSearch] = useState("");
+	const [listSearch, setListSearch] = useState([]);
 
 
 	useEffect(() => {
@@ -204,6 +206,18 @@ export default function EditarPodcast( ) {
 		}
 	}
 
+	function searchPodcast(e){
+	
+		setSearch(e.target.value);
+		
+	
+		setListSearch(podcasts.filter(({pod_nome}) => pod_nome.toLowerCase().includes( e.target.value.toLowerCase())))
+		
+
+	
+	
+	}
+
 
 
 	return (
@@ -224,9 +238,22 @@ export default function EditarPodcast( ) {
 												? { display: 'none' }
 												: { display: 'flex', justifyContent: 'flex-end' }
 										}
+										className="borderBottom"
 									>
 										<Col lg="6">
-											<p>Buscar</p>
+											
+											<Col  className="form-group">
+												<input 
+												className="has-success form-control"
+												placeholder="Nome do Podcast"
+												type="text"
+												onChange={(e) => searchPodcast(e)}
+												style={{backgroundColor: "#232659",border: "none", color:"#fff", 
+												placeContent:{color:"#fff"}}}
+												/>
+
+											</Col>
+
 										</Col>
 										<Col lg="6" style={{ textAlign: 'end' }}>
 											<Link className="btn btn-primary" to="podcasts/cadastrar">
@@ -234,7 +261,7 @@ export default function EditarPodcast( ) {
 											</Link>
 										</Col>
 									</Row>
-									<CardTitle>Podcasts Cadastrados</CardTitle>
+									<CardTitle style={{fontSize: 25, color: "#fff", marginTop:20}}>Podcasts Cadastrados</CardTitle>
 
 									<MdClose
 										size={24}
@@ -250,12 +277,13 @@ export default function EditarPodcast( ) {
 											editMode ? { display: 'none' } : { display: 'block' }
 										}
 									>
-										{podcasts.map((item) => (
+										{ searchValue === "" ? podcasts.map((item) => (
 											<PodcastList>
 												<div className="item">
 													<Link
 														to={`../../../podcast/${item.pod_id}`}
 														className="linktittle"
+														style={{color:"#1bfdbe", fontWeight: "bold"}}
 													>
 														{item.pod_nome}
 													</Link>
@@ -275,7 +303,33 @@ export default function EditarPodcast( ) {
 													</button>
 												</div>
 											</PodcastList>
-										))}
+										)): listSearch.map((item) => (
+											<PodcastList>
+												<div className="item">
+													<Link
+														to={`../../../podcast/${item.pod_id}`}
+														className="linktittle"
+														style={{color:"#1bfdbe", fontWeight: "bold"}}
+													>
+														{item.pod_nome}
+													</Link>
+												</div>
+												<div className="icons">
+													<button
+														className="button edit"
+														onClick={(e) => editarPodcast(item)}
+													>
+														<FaPen size={18} />
+													</button>
+													<button
+														className="button delete"
+														onClick={(e) => deletarPodcast(item)}
+													>
+														<FaTimes size={18} />
+													</button>
+												</div>
+											</PodcastList>
+										))  }
 									</ul>
 
 									<Form

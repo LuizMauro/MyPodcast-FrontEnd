@@ -1,0 +1,9 @@
+.home-button:hover {
+  color: #1bfdbe !important;
+  border-bottom: 2px solid #1bfdbe;
+  padding-bottom: 3px !important;
+}
+
+.navbar-icon:hover {
+  color: #1bfdbe !important;
+}

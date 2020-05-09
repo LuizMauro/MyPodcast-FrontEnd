@@ -6,7 +6,8 @@ import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { updateToPodcasterRequest } from "../../store/modules/user/actions";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../store/modules/auth/actions";
-import '../../styles/global';
+import "../../styles/global";
+import "./styles.css";
 
 // reactstrap components
 import {
@@ -77,7 +78,7 @@ export default function Index() {
             <Nav className="ml-lg-auto" navbar>
               <NavItem>
                 <NavLink
-                  className="nav-link-icon"
+                  className="nav-link-icon home-button"
                   href="#pablo"
                   onClick={(e) => e.preventDefault()}
                 >
@@ -88,22 +89,31 @@ export default function Index() {
               <NavItem>
                 {profile ? (
                   profile.tus_descricao === "Administrador" ? (
-                    <NavLink className="nav-link-icon icone-li" href="/adm/dashboard">
+                    <NavLink
+                      className="nav-link-icon icone-li home-button"
+                      href="/adm/dashboard"
+                    >
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
                   ) : profile.tus_descricao === "Moderador" ? (
-                    <NavLink className="nav-link-icon icone-li" href="/mod/dashboard/">
+                    <NavLink
+                      className="nav-link-icon icone-li home-button"
+                      href="/mod/dashboard/"
+                    >
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
                   ) : profile.tus_descricao === "Podcaster" ? (
                     <NavLink
-                      className="nav-link-icon icone-li"
+                      className="nav-link-icon icone-li home-button"
                       href="/podcaster/dashboard/podcasts"
                     >
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
                   ) : (
-                    <NavLink className="nav-link-icon icone-li" href="#">
+                    <NavLink
+                      className="nav-link-icon icone-li home-button"
+                      href="#"
+                    >
                       <i className="ni ni-favourite-28" />{" "}
                       <a onClick={(e) => virarPodcaster(profile)}>
                         Tenho um Podcast
@@ -111,7 +121,10 @@ export default function Index() {
                     </NavLink>
                   )
                 ) : (
-                  <NavLink className="nav-link-icon icone-li" href="/login">
+                  <NavLink
+                    className="nav-link-icon icone-li home-button"
+                    href="/login"
+                  >
                     <i className="ni ni-favourite-28" /> Entrar
                   </NavLink>
                 )}
@@ -119,11 +132,17 @@ export default function Index() {
 
               <NavItem>
                 {profile ? (
-                  <NavLink className="nav-link-icon icone-li" href="/profile">
-                    <FaUserCircle color={"#FFF"} size={24} />
+                  <NavLink
+                    className="nav-link-icon icone-li home-button"
+                    href="/profile"
+                  >
+                    <FaUserCircle color={"#FFF"} size={24} className="navbar-icon"/>
                   </NavLink>
                 ) : (
-                  <NavLink className="nav-link-icon icone-li" href="/cadastro">
+                  <NavLink
+                    className="nav-link-icon icone-li home-button"
+                    href="/cadastro"
+                  >
                     <i className="ni ni-favourite-28" /> Cadastrar-se
                   </NavLink>
                 )}
@@ -131,45 +150,16 @@ export default function Index() {
 
               <NavItem>
                 {profile && (
-                  <NavLink className="nav-link-icon" href="#">
+                  <NavLink className="nav-link-icon home-button" href="#">
                     <FaSignOutAlt
                       color={"#FFF"}
                       size={24}
                       onClick={handleSignOut}
+                      className="navbar-icon"
                     />
                   </NavLink>
                 )}
               </NavItem>
-
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav className="nav-link-icon">
-                  <i className="ni ni-settings-gear-65" />
-                  <span className="nav-link-inner--text d-lg-none">
-                    Settings
-                  </span>
-                </DropdownToggle>
-                <DropdownMenu aria-labelledby="navbar-default_dropdown_1" right>
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Action
-                  </DropdownItem>
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Another action
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Something else here
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </Nav>
           </UncontrolledCollapse>
         </Container>
