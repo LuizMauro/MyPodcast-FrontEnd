@@ -28,7 +28,7 @@ export default function Pesquisar() {
   }
 
   async function loadPodCastsCategoriaAndNome(select, pesquisa) {
-    const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
+    const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);  
 
     setPodcasts(response.data);
   }
@@ -40,6 +40,7 @@ export default function Pesquisar() {
     if (select === "" && pesquisa === "") {
       loadPodCastsAll();
     } else if (select === "" && pesquisa !== "") {
+      
       loadPodCastsNome(pesquisa);
     } else if (select !== "" && pesquisa === "") {
       loadPodCastsCategoria(select);
@@ -67,7 +68,6 @@ export default function Pesquisar() {
               gridTemplateColumns: "repeat(auto-fit, 13em)",
               margin: 0,
               padding: 0,
-              minHeight: "100vh",
             }}
           >
             {podcasts.map((item) => (
