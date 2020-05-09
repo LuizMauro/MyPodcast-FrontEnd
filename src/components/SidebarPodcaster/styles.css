@@ -1,17 +1,114 @@
-.link-menu:hover{
-    color: #1bfdbe !important;
-  }
-  
-  
-  
-  .active{
-    width: 112%;
-    height: auto;
-    border-right: 5px solid #1bfdbe;
-    box-shadow: 2px 8px 10px 5px  rgba(0,0,0, 0.1);
-    color: #1bfdbe !important;
-  }
+.link-menu:hover {
+  color: #1bfdbe !important;
+}
 
-  .teste-te{
-    margin-top: 30px !important;
+.dash-icon:hover {
+  color: #1bfdbe !important;
+  border-bottom: 2px solid #1bfdbe;
+  padding-bottom: 3px !important;
+}
+
+.dash-li {
+  display: flex !important;
+}
+
+.logo-li {
+  margin-right: 0 !important;
+  margin-bottom: 20px;
+}
+
+.active {
+  width: 112%;
+  height: auto;
+  border-right: 5px solid #1bfdbe;
+  box-shadow: 2px 8px 10px 5px rgba(0, 0, 0, 0.1);
+  color: #1bfdbe !important;
+}
+
+
+@media (min-width: 1060px) {
+  .col-nav-aberto {
+    max-width: 34% !important;
   }
+}
+
+@media (max-width: 1060px) {
+  .col-nav-aberto {
+    max-width: 35% !important;
+  }
+}
+
+@media (max-width: 1010px) {
+  .col-nav-aberto {
+    max-width: 36% !important;
+  }
+}
+
+@media (max-width: 990px) {
+  .col-nav-aberto {
+    max-width: 40% !important;
+  }
+}
+
+
+
+@media (min-width:1295px) {
+  .col-nav-fechado {
+    padding-right: 15% !important;
+  }
+}
+
+@media (max-width: 1295px) {
+  .col-nav-fechado {
+    padding-right: 10% !important;
+  }
+}
+
+@media (max-width: 1285px) {
+  .col-nav-fechado {
+    padding-right: 9% !important;
+  }
+}
+
+@media (max-width: 1236px) {
+  .col-nav-fechado {
+    padding-right: 8% !important;
+  }
+}
+
+@media (max-width: 1138px) {
+  .col-nav-fechado {
+    padding-right: 7% !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .col-nav-fechado {
+    padding-right: 6% !important;
+  }
+}
+
+@media (max-width: 1010px) {
+  .col-nav-fechado {
+    padding-right: 10px;
+  }
+}
+
+
+@media (min-width:550px) and (max-width: 990px) {
+  .col-nav-fechado {
+    padding-right: 4% !important;
+  }
+}
+
+@media (min-width:505px) and (max-width: 550px) {
+  .col-nav-fechado {
+    padding-right: 3% !important;
+  }
+}
+
+@media (max-width: 505px) {
+  .col-nav-fechado {
+    padding-right: 2% !important;
+  }
+}

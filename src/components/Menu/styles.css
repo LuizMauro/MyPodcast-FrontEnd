@@ -16,3 +16,7 @@
 .logo-title{
   color:#1BFDBE
 }
+
+Button{
+  outline: none !important;
+}
