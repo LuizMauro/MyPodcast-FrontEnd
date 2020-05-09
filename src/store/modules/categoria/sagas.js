@@ -8,7 +8,7 @@ export function* createCategoria({ payload }) {
   try {
     const { ctg_descricao } = payload;
 
-    const response = yield call(api.post, "adm/categoria", {
+    const response = yield call(api.post, "/categoria", {
       ctg_descricao,
     });
 
@@ -30,7 +30,7 @@ export function* updateCategoria({ payload }) {
   try {
     const { ctg_descricao, ctg_id } = payload;
 
-    yield call(api.put, `/adm/categoria/${ctg_id}`, {
+    yield call(api.put, `/categoria/${ctg_id}`, {
       ctg_descricao,
     });
     toast.success("Categoria editada");
