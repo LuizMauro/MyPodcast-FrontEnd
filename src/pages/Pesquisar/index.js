@@ -4,7 +4,20 @@ import Menu from "../../components/Menu/index";
 
 import api from "../../services/api";
 
-import { Container } from "reactstrap";
+import {
+  Container,
+  Button,
+	Card,
+	CardBody,
+	Row,
+	Col,
+	CardTitle,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter, CardDeck, CardImg, CardSubtitle, CardText } from "reactstrap";
+
+
 
 export default function Pesquisar() {
   const [podcasts, setPodcasts] = useState([]);
@@ -28,7 +41,7 @@ export default function Pesquisar() {
   }
 
   async function loadPodCastsCategoriaAndNome(select, pesquisa) {
-    const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);  
+    const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
 
     setPodcasts(response.data);
   }
@@ -40,7 +53,7 @@ export default function Pesquisar() {
     if (select === "" && pesquisa === "") {
       loadPodCastsAll();
     } else if (select === "" && pesquisa !== "") {
-      
+
       loadPodCastsNome(pesquisa);
     } else if (select !== "" && pesquisa === "") {
       loadPodCastsCategoria(select);
@@ -57,81 +70,57 @@ export default function Pesquisar() {
           <p className="h2 p mt-3">{podcasts.length} Resultados encontrados</p>
           {!select && <p className="h4 p">Todas as categorias</p>}
 
-          <ul
-            className="py-2"
-            style={{
-              flexWrap: "wrap",
-              boxSizing: "border-box",
-              display: "grid",
-              placeContent: "center",
-              gridGap: ".75em 2.5em",
-              gridTemplateColumns: "repeat(auto-fit, 13em)",
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            {podcasts.map((item) => (
-              <li
-                className="custom-card mb-3 flex-column"
-                style={{ display: "flex", flex: "auto", minWidth: "200px" }}
-                key={item.pod_id}
-              >
-                <Link
-                  to={`podcast/${item.pod_id}`}
-                  style={{
-                    maxWidth: "100px",
-                    alignSelf: "center",
-                    marginTop: 10,
-                  }}
-                >
-                  <img
-                    src={`http://localhost:3333/files/${item.pod_endereco_img}`}
-                    style={{ maxHeight: "100px", maxWidth: "100px" }}
-                    className="img-thumb"
-                    alt={item.pod_nome}
-                  />
-                </Link>
-                <div style={{ flex: 1 }}>
+
+          <CardDeck>
+          {podcasts.map((item) => (
+              <Col lg="6" md="6" xs="12" style={{marginTop:20, padding:0}}>
+              <Card style={{minHeight:200, background:'#151734 '}} >
+                <Row >
+                  <Col lg="6" md="6" xs="12">
                   <Link
                     to={`podcast/${item.pod_id}`}
-                    style={{ textAlign: "center" }}
                   >
-                    <p
-                      style={{
-                        fontSize: "1rem",
-                        marginBottom: 0,
-                        fontFamily: "inherit",
-                        fontWeight: 500,
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      {item.pod_nome}
-                    </p>
+                    <CardImg  width="100%" style={{borderRadius:4}} height="200" src={`http://localhost:3333/files/${item.pod_endereco_img}`} alt={item.pod_nome} />
                   </Link>
-                  <div style={{ display: "none" }}>
-                    {(cate = item.ctg_descricao.split(","))}
-                    {}
-                  </div>
+                  </Col>
+
+                  <Col lg="6" md="6" xs="12">
+                  <CardBody style={{padding:0}}>
+                  <CardTitle style={{fontSize:20, fontWeight:"normal"}} className="text-center">
+                  <Link
+                    to={`podcast/${item.pod_id}`}
+                    style={{ textAlign: "center",color:"#1BFDBE" }}
+                  >
+                    {item.pod_nome}
+                    </Link>
+                  </CardTitle>
+
                   <div
                     style={{
                       flexWrap: "wrap",
-                      display: "grid",
+                      display: "flex",
                       placeContent: "center",
-                      gridGap: ".75em",
-                      gridTemplateColumns: "repeat(2, em)",
                       margin: 0,
                       padding: 0,
                       marginTop: 10,
                     }}
                   >
-                    {cate.map((cat) => (
+                    {item.ctg_descricao.split(",").map((cat) => (
                       <span className="badge bg-green m-2">{cat}</span>
                     ))}
-                  </div>
-                </div>
-              </li>
+                    </div>
+
+                </CardBody>
+                  </Col>
+                </Row>
+              </Card>
+              </Col>
+
             ))}
-          </ul>
+          </CardDeck>
+
+
+
         </Container>
       </section>
     </>

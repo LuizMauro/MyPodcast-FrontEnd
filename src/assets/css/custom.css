@@ -310,3 +310,26 @@ option{
 .custom-toggle input:checked + .custom-toggle-slider {
     border: 1px solid #1BFDBE;
 }
+
+
+.modal-content{
+  background-color: #151734;
+
+}
+
+.modal-header{
+  border-bottom: 0.5px dashed #232659;
+}
+
+
+.close > span:not(.sr-only) {
+  color: #fff;
+}
+
+.modal-body{
+  padding: 20px !important;
+}
+
+.modal-footer{
+  border-bottom: 0.5px dashed #232659;
+}
