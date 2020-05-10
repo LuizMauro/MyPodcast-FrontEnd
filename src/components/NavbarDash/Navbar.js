@@ -276,6 +276,7 @@ class Navbar extends Component {
                             color={"#FFF"}
                             style={{ width: 50, height: 50, cursor: "pointer" }}
                             className="navbar-icon"
+                            onClick={this.props.signOut}
                           />
                         </NavLink>
                       </NavItem>
