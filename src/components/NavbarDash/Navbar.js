@@ -11,10 +11,13 @@ import {
   FaHashtag,
   FaHome,
   FaAngleLeft,
+  FaUserCircle,
+  FaSignOutAlt,
+  
   FaAngleRight,
 } from "react-icons/fa";
 import { GoMegaphone } from "react-icons/go";
-import {NavbarBrand} from 'reactstrap'
+import { Col, Row, NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
 
 import "./styles.css";
 
@@ -80,6 +83,19 @@ class Navbar extends Component {
           sidebar={
             <nav>
               <ul>
+                <li style={{ textAlign: "center" }}>
+                  <NavbarBrand
+                    href="/"
+                    className="logo-li"
+                    style={{ marginBottom: 0 }}
+                  >
+                    <img
+                      style={{ width: 70, height: 70 }}
+                      alt="..."
+                      src={require("../../assets/img/brand/Ativo 13@4x.png")}
+                    />
+                  </NavbarBrand>
+                </li>
                 <Navitem
                   item="Home"
                   tolink="/adm/dashboard/"
@@ -111,7 +127,7 @@ class Navbar extends Component {
                 />
 
                 <Navitem
-                  item="Usuarios"
+                  item="Usuários"
                   tolink="/adm/dashboard/usuarios"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
@@ -155,7 +171,7 @@ class Navbar extends Component {
                 />
 
                 <Navitem
-                  item="Relatorio"
+                  item="Relatório"
                   tolink="/adm/dashboard/solicitacoes"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
@@ -189,7 +205,7 @@ class Navbar extends Component {
             }}
           >
             {this.state.abrir ? (
-              <div>
+              <div style={{ display: "flex" }}>
                 <NavbarBrand href="/">
                   <img
                     style={{ width: 70, height: 70 }}
@@ -203,15 +219,69 @@ class Navbar extends Component {
                 >
                   <FaAngleRight size={50} color="#1bfdbe"></FaAngleRight>
                 </button>
+                <Col className="col-nav-fechado">
+                  <Nav style={{ marginBottom: 0, justifyContent: "flex-end" }}>
+                    <NavItem className="dash-li">
+                      <NavLink
+                        className="nav-link-icon icone-li dash-icon"
+                        href="/profile"
+                      >
+                        <FaUserCircle
+                          color={"#FFF"}
+                          style={{ width: 50, height: 50 }}
+                          className="navbar-icon"
+                        />
+                      </NavLink>
+
+                      <NavLink className="nav-link-icon icone-li dash-icon">
+                        <FaSignOutAlt
+                          onClick={this.handleSignOut}
+                          color={"#FFF"}
+                          style={{ width: 50, height: 50, cursor: "pointer" }}
+                          className="navbar-icon"
+                        />
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </Col>
               </div>
             ) : (
               <div>
-                <button
-                  style={{ background: "none", border: 0 }}
-                  onClick={() => this.onSetSidebarExit()}
-                >
-                  <FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft>
-                </button>
+                <Row>
+                  <Col>
+                    <button
+                      style={{ background: "none", border: 0 }}
+                      onClick={() => this.onSetSidebarExit()}
+                    >
+                      <FaAngleLeft size={50} color="#1bfdbe"></FaAngleLeft>
+                    </button>
+                  </Col>
+                  <Col className="col-nav-aberto">
+                    <Nav style={{marginBottom:0}}>
+                      <NavItem className="dash-li">
+                        <NavLink
+                          className="nav-link-icon icone-li dash-icon"
+                          href="/profile"
+                        >
+                          <FaUserCircle
+                            color={"#FFF"}
+                            style={{ width: 50, height: 50 }}
+                            className="navbar-icon"
+                          />
+                        </NavLink>
+
+                        <NavLink className="nav-link-icon icone-li dash-icon">
+                          <FaSignOutAlt
+                            onClick={this.handleSignOut}
+                            color={"#FFF"}
+                            style={{ width: 50, height: 50, cursor: "pointer" }}
+                            className="navbar-icon"
+                          />
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
+                  </Col>
+                </Row>
               </div>
             )}
           </div>

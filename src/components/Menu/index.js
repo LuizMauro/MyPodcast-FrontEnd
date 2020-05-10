@@ -46,9 +46,9 @@ export default function Index() {
       {/* Navbar default */}
       <Navbar className="navbar-dark bg-default" expand="lg">
         <Container>
-          <NavbarBrand href="/">
+          <NavbarBrand href="/" style={{ cursor: "pointer" }}>
             <img
-              style={{ width: 50, height: 50 }}
+              style={{ width: 50, height: 50, cursor: "pointer" }}
               alt="..."
               src={require("../../assets/img/brand/Ativo 13@4x.png")}
             />
@@ -81,11 +81,7 @@ export default function Index() {
             </div>
             <Nav className="ml-lg-auto" navbar>
               <NavItem>
-                <NavLink
-                  className="nav-link-icon home-button"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
+                <NavLink className="nav-link-icon home-button" href="/">
                   <i className="ni ni-favourite-28" /> Home
                 </NavLink>
               </NavItem>

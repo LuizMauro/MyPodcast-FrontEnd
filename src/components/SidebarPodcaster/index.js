@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa";
 import { signOut } from "../../store/modules/auth/actions";
 import { useDispatch } from "react-redux";
-import logo from "../../assets/img/brand/Ativo 13@4x.png";
 import { GoMegaphone } from "react-icons/go";
 import { Col, Row, NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
 
@@ -86,8 +85,7 @@ class SidebarPod extends Component {
           sidebar={
             <nav>
               <ul>
-                <li style={{textAlign:'center'}}
-                >
+                <li style={{ textAlign: "center" }}>
                   <NavbarBrand href="/" className="logo-li">
                     <img
                       style={{ width: 70, height: 70 }}
@@ -144,14 +142,14 @@ class SidebarPod extends Component {
             }}
           >
             {this.state.abrir ? (
-              <div style={{display:'flex'}}>
+              <div style={{ display: "flex" }}>
                 <NavbarBrand href="/">
-                    <img
-                      style={{ width: 70, height: 70 }}
-                      alt="..."
-                      src={require("../../assets/img/brand/Ativo 13@4x.png")}
-                    />
-                  </NavbarBrand>
+                  <img
+                    style={{ width: 70, height: 70 }}
+                    alt="..."
+                    src={require("../../assets/img/brand/Ativo 13@4x.png")}
+                  />
+                </NavbarBrand>
                 <button
                   style={{ background: "none", border: 0 }}
                   onClick={() => this.onSetSidebarOpen()}
@@ -159,30 +157,30 @@ class SidebarPod extends Component {
                   <FaAngleRight size={50} color="#1bfdbe"></FaAngleRight>
                 </button>
                 <Col className="col-nav-fechado">
-                    <Nav style={{marginBottom:0, justifyContent:'flex-end'}}>
-                      <NavItem className="dash-li">
-                        <NavLink
-                          className="nav-link-icon icone-li dash-icon"
-                          href="/profile"
-                        >
-                          <FaUserCircle
-                            color={"#FFF"}
-                            style={{ width: 50, height: 50 }}
-                            className="navbar-icon"
-                          />
-                        </NavLink>
+                  <Nav style={{ marginBottom: 0, justifyContent: "flex-end" }}>
+                    <NavItem className="dash-li">
+                      <NavLink
+                        className="nav-link-icon icone-li dash-icon"
+                        href="/profile"
+                      >
+                        <FaUserCircle
+                          color={"#FFF"}
+                          style={{ width: 50, height: 50 }}
+                          className="navbar-icon"
+                        />
+                      </NavLink>
 
-                        <NavLink className="nav-link-icon icone-li dash-icon">
-                          <FaSignOutAlt
-                            onClick={this.handleSignOut}
-                            color={"#FFF"}
-                            style={{ width: 50, height: 50, cursor: "pointer" }}
-                            className="navbar-icon"
-                          />
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                  </Col>
+                      <NavLink className="nav-link-icon icone-li dash-icon">
+                        <FaSignOutAlt
+                          onClick={this.handleSignOut}
+                          color={"#FFF"}
+                          style={{ width: 50, height: 50, cursor: "pointer" }}
+                          className="navbar-icon"
+                        />
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </Col>
               </div>
             ) : (
               <div>
@@ -196,7 +194,7 @@ class SidebarPod extends Component {
                     </button>
                   </Col>
                   <Col className="col-nav-aberto">
-                    <Nav style={{marginBottom:0}}>
+                    <Nav style={{ marginBottom: 0 }}>
                       <NavItem className="dash-li">
                         <NavLink
                           className="nav-link-icon icone-li dash-icon"
