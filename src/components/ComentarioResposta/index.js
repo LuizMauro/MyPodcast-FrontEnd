@@ -28,8 +28,9 @@ export default function Resposta({
 }) {
   const dispatch = useDispatch();
   const [cmtEdit, setCmtEdit] = useState([]);
+  const formRef = useRef(null);
 
-  async function handleResposta({ cmt_conteudo, reset }) {
+  async function handleResposta({ cmt_conteudo }) {
     if (profile) {
       dispatch(
         answerComentarioRequest(
@@ -40,6 +41,7 @@ export default function Resposta({
         )
       );
       setUpdate(update ? false : true);
+      formRef.current.reset();
     } else {
       toast.error("Você precisa entrar para realizar esta ação");
       history.push("/cadastro");
@@ -229,7 +231,7 @@ export default function Resposta({
                 color="#fff"
               ></IoMdClose>
             </a>
-            <Form onSubmit={handleResposta}>
+            <Form ref={formRef} onSubmit={handleResposta}>
               <Textarea
                 className="shadow"
                 name="cmt_conteudo"
