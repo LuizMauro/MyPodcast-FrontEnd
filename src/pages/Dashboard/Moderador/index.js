@@ -38,17 +38,17 @@ export default function Moderador() {
 
   async function exibirEspecifico(status) {
     setTusId(status);
+    setUpdate(update ? false : true);
   }
 
   async function mudarTusId(item) {
     try {
       dispatch(updateModeradorRequest(item.usu_id, item.tus_id));
+      setUpdate(update ? false : true);
 
       if (item.tus_id === 3) {
-        setUpdate(update === true ? false : true);
         toast.success("O usuário não é mais moderador");
       } else {
-        setUpdate(update === true ? false : true);
         toast.success("O usuário agora é moderador");
       }
     } catch (err) {

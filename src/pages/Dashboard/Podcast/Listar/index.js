@@ -159,6 +159,17 @@ export default function EditarPodcast() {
 
     const pod_id = editarPod.pod_id;
 
+    if (file) {
+      if (
+        !file.type.includes("png") &&
+        !file.type.includes("jpg") &&
+        !file.type.includes("jpeg")
+      ) {
+        toast.error("Imagem deve ser PNG/JPG/JPEG");
+        return;
+      }
+    }
+
     try {
       const schema = Yup.object().shape({
         pod_nome: Yup.string().required("O nome do Podcast é obrigatório"),
@@ -176,8 +187,8 @@ export default function EditarPodcast() {
 
       if (response.data.podEdited) {
         toast.success("Podcast editado!");
-		setUpdate(update ? false : true);
-		setEditMode(false);
+        setUpdate(update ? false : true);
+        setEditMode(false);
         history.push("/adm/dashboard/podcasts");
         console.log(response.data);
       } else if (response.data.nomeExists) {

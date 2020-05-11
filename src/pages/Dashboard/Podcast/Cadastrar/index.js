@@ -25,8 +25,7 @@ export default function Podcast() {
   async function loadCategoria() {
     const response = await api.get("/categoria");
 
-    setAllCategorias(response.data); 
-  
+    setAllCategorias(response.data);
   }
 
   useEffect(() => {
@@ -105,6 +104,17 @@ export default function Podcast() {
     if (!file) {
       toast.error("Imagem obrigatória");
       return;
+    }
+
+    if (file) {
+      if (
+        !file.type.includes("png") &&
+        !file.type.includes("jpg") &&
+        !file.type.includes("jpeg")
+      ) {
+        toast.error("Imagem deve ser PNG/JPG/JPEG");
+        return;
+      }
     }
 
     try {
@@ -339,7 +349,6 @@ export default function Podcast() {
                       </Col>
                     </Row>
 
-
                     <div className="text-center">
                       <Button type="submit" className="my-2" color="primary">
                         Cadastrar
@@ -365,4 +374,3 @@ export default function Podcast() {
     </>
   );
 }
-

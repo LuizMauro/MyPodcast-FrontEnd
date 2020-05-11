@@ -518,7 +518,7 @@ export default function Podcast() {
                       borderRadius: "50%",
                     }}
                     src={
-                      "https://api.adorable.io/avatars/285/" + profile.usu_email
+                      "https://api.adorable.io/avatars/285/" + profile.usu_nome
                     }
                   />
                 </div>

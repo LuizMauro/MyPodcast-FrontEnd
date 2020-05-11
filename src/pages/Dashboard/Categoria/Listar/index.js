@@ -29,6 +29,7 @@ export default function EditarPodcast() {
   const [editarCat, setEditarCat] = useState([]);
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
+  const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export default function EditarPodcast() {
     try {
       dispatch(updateCategoriaRequest(ctg_descricao, ctgid));
       setEditMode(false);
+      setUpdate(update ? false : true);
     } catch (err) {
       toast.error("Não foi possível editar categoria");
     }

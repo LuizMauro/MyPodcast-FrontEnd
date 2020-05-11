@@ -36,17 +36,17 @@ export default function Usuario() {
 
   async function exibirStatus(status) {
     setUserStatus(status);
+    setUpdate(update ? false : true);
   }
 
   async function mudarStatus(item) {
     try {
       dispatch(updateStatusRequest(item.usu_id, item.usu_status));
+      setUpdate(update ? false : true);
 
       if (item.usu_status) {
-        setUpdate(update ? false : true);
         toast.success("Usuário desativado.");
-	} else {
-        setUpdate(update ? false : true);
+      } else {
         toast.success("Usuário ativado");
       }
     } catch (err) {
@@ -149,12 +149,79 @@ export default function Usuario() {
                     </Col>
                     <Col className="text-right" xs="6"></Col>
                   </Row>
-                  
 
                   <ul>
-                    {!searchValue ? usuario.map((item) =>
-                      userStatus === 1 || userStatus === 0 ? (
-                        userStatus === item.usu_status && (
+                    {!searchValue
+                      ? usuario.map((item) =>
+                          userStatus === 1 || userStatus === 0 ? (
+                            userStatus === item.usu_status && (
+                              <PodcastList>
+                                <div
+                                  className="subitem"
+                                  style={{
+                                    fontSize: "21px",
+                                    color: "rgb(27, 253, 190",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item.usu_nome}
+                                </div>
+                                <div
+                                  className="subitem"
+                                  style={{
+                                    fontSize: "21px",
+                                    color: "rgb(27, 253, 190",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item.tus_descricao}
+                                </div>
+                                <div className="icons">
+                                  <button
+                                    style={{ fontSize: "21px" }}
+                                    className="button"
+                                    onClick={(e) => mudarStatus(item)}
+                                  >
+                                    {item.usu_status ? "Desativar" : "Ativar"}
+                                  </button>
+                                </div>
+                              </PodcastList>
+                            )
+                          ) : (
+                            <PodcastList>
+                              <div
+                                className="subitem"
+                                style={{
+                                  fontSize: "21px",
+                                  color: "rgb(27, 253, 190",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {item.usu_nome}
+                              </div>
+                              <div
+                                className="subitem"
+                                style={{
+                                  fontSize: "21px",
+                                  color: "rgb(27, 253, 190",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {item.tus_descricao}
+                              </div>
+                              <div className="icons">
+                                <button
+                                  className="button"
+                                  onClick={(e) => mudarStatus(item)}
+                                  style={{ fontSize: "21px" }}
+                                >
+                                  {item.usu_status ? "Desativar" : "Ativar"}
+                                </button>
+                              </div>
+                            </PodcastList>
+                          )
+                        )
+                      : listSearch.map((item) => (
                           <PodcastList>
                             <div
                               className="subitem"
@@ -178,82 +245,15 @@ export default function Usuario() {
                             </div>
                             <div className="icons">
                               <button
-                                style={{ fontSize: "21px" }}
                                 className="button"
                                 onClick={(e) => mudarStatus(item)}
+                                style={{ fontSize: "21px" }}
                               >
                                 {item.usu_status ? "Desativar" : "Ativar"}
                               </button>
                             </div>
                           </PodcastList>
-                        )
-                      ) : (
-                        <PodcastList>
-                          <div
-                            className="subitem"
-                            style={{
-                              fontSize: "21px",
-                              color: "rgb(27, 253, 190",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {item.usu_nome}
-                          </div>
-                          <div
-                            className="subitem"
-                            style={{
-                              fontSize: "21px",
-                              color: "rgb(27, 253, 190",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {item.tus_descricao}
-                          </div>
-                          <div className="icons">
-                            <button
-                              className="button"
-                              onClick={(e) => mudarStatus(item)}
-                              style={{ fontSize: "21px" }}
-                            >
-                              {item.usu_status ? "Desativar" : "Ativar"}
-                            </button>
-                          </div>
-                        </PodcastList>
-                      )
-                    ) :
-                      listSearch.map((item) => (
-                        <PodcastList>
-                          <div
-                            className="subitem"
-                            style={{
-                              fontSize: "21px",
-                              color: "rgb(27, 253, 190",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {item.usu_nome}
-                          </div>
-                          <div
-                            className="subitem"
-                            style={{
-                              fontSize: "21px",
-                              color: "rgb(27, 253, 190",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {item.tus_descricao}
-                          </div>
-                          <div className="icons">
-                            <button
-                              className="button"
-                              onClick={(e) => mudarStatus(item)}
-                              style={{ fontSize: "21px" }}
-                            >
-                              {item.usu_status ? "Desativar" : "Ativar"}
-                            </button>
-                          </div>
-                        </PodcastList>
-                      ))}
+                        ))}
                   </ul>
                 </CardBody>
               </Card>

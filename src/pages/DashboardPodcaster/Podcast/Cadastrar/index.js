@@ -94,7 +94,7 @@ export default function Podcast() {
     data.append("pod_criador", pod_criador);
     data.append("pod_anocriacao", pod_anocriacao);
     data.append("pod_duracao", pod_duracao);
-    data.append("pod_permissao", 1);
+    data.append("pod_permissao", 0);
     data.append("list_of_categoria", arrayFinal);
     data.append("end_link1", end_link1);
     data.append("end_link2", end_link2);
@@ -104,6 +104,17 @@ export default function Podcast() {
     if (!file) {
       toast.error("Imagem obrigatória");
       return;
+    }
+
+    if (file) {
+      if (
+        !file.type.includes("png") &&
+        !file.type.includes("jpg") &&
+        !file.type.includes("jpeg")
+      ) {
+        toast.error("Imagem deve ser PNG/JPG/JPEG");
+        return;
+      }
     }
 
     try {

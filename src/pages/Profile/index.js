@@ -252,13 +252,10 @@ export default function Profile() {
                           }}
                         >
                           <h4 style={{ margin: 15, color: "#fff" }}>
-                            <strong>Nome:</strong> {profile.usu_nome}
+                            <strong>Usuário:</strong> {profile.usu_nome}
                           </h4>
                           <h4 style={{ margin: 15, color: "#fff" }}>
                             <strong>E-mail:</strong> {profile.usu_email}
-                          </h4>
-                          <h4 style={{ margin: 15, color: "#fff" }}>
-                            <strong>CPF:</strong> {profile.usu_cpf}
                           </h4>
                         </div>
                       </div>
@@ -292,7 +289,7 @@ export default function Profile() {
                               {pod.tfb_id === 1 &&
                                 pod.fbk_status === 1 &&
                                 !pod.nota &&
-                                `N/A`}
+                                ``}
                               {pod.tfb_id === 1 &&
                                 pod.fbk_status === 1 &&
                                 pod.nota !== 0 &&
@@ -328,7 +325,7 @@ export default function Profile() {
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
                                 !pod.nota &&
-                                `N/A`}
+                                ``}
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 1 &&
                                 pod.nota !== 0 &&
@@ -364,7 +361,7 @@ export default function Profile() {
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
                                 !pod.nota &&
-                                `N/A`}
+                                ``}
                               {pod.tfb_id === 2 &&
                                 pod.fbk_status === 2 &&
                                 pod.nota !== 0 &&

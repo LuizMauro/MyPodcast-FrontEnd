@@ -148,7 +148,7 @@ export default function EditarPodcast() {
     data.append("pod_anocriacao", pod_anocriacao);
     data.append("pod_duracao", pod_duracao);
     data.append("pod_status", 1);
-    data.append("pod_permissao", 1);
+    data.append("pod_permissao", 0);
     data.append("pod_destaque", 0);
     data.append("list_of_categoria", arrayFinal);
     data.append("end_link1", end_link1);
@@ -157,6 +157,17 @@ export default function EditarPodcast() {
     data.append("file", file);
 
     const pod_id = editarPod.pod_id;
+
+    if (file) {
+      if (
+        !file.type.includes("png") &&
+        !file.type.includes("jpg") &&
+        !file.type.includes("jpeg")
+      ) {
+        toast.error("Imagem deve ser PNG/JPG/JPEG");
+        return;
+      }
+    }
 
     try {
       const schema = Yup.object().shape({
@@ -175,6 +186,7 @@ export default function EditarPodcast() {
 
       if (response.data.podEdited) {
         toast.success("Podcast editado!");
+        setEditMode(false);
         setUpdate(update ? false : true);
         history.push("/podcaster/dashboard/podcasts");
         console.log(response.data);
@@ -281,13 +293,39 @@ export default function EditarPodcast() {
                       ? podcasts.map((item) => (
                           <PodcastList>
                             <div className="item">
-                              <Link
-                                to={`../../../podcast/${item.pod_id}`}
-                                className="linktittle"
+                              {item.pod_permissao === 1 ? (
+                                <Link
+                                  to={`../../../podcast/${item.pod_id}`}
+                                  className="linktittle"
+                                  style={{
+                                    color: "#1bfdbe",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item.pod_nome}
+                                </Link>
+                              ) : (
+                                <p
+                                  style={{
+                                    color: "#1bfdbe",
+                                    fontWeight: "bold",
+                                    fontSize: 21,
+                                  }}
+                                >
+                                  {item.pod_nome}
+                                </p>
+                              )}
+                            </div>
+                            <div className="item">
+                              <p
                                 style={{ color: "#1bfdbe", fontWeight: "bold" }}
                               >
-                                {item.pod_nome}
-                              </Link>
+                                {item.pod_permissao === 0
+                                  ? `Aguardando`
+                                  : item.pod_permissao === 1
+                                  ? `Cadastro Permitido`
+                                  : `Cadastro Negado`}
+                              </p>
                             </div>
                             <div className="icons">
                               <button

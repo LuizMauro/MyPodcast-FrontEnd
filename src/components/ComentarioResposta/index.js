@@ -150,7 +150,7 @@ export default function Resposta({
                         borderRadius: "50%",
                       }}
                       src={
-                        "https://api.adorable.io/avatars/285/" + answer.usu_id
+                        "https://api.adorable.io/avatars/285/" + answer.usu_nome
                       }
                     />
                   </div>
