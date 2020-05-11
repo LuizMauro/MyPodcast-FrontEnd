@@ -3,7 +3,7 @@ import api from '../../../services/api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { updateSolicitacaoRequest } from '../../../store/modules/podcast/actions'
-
+import { FaSpotify, FaInternetExplorer, FaYoutube } from "react-icons/fa";
 import PodcastCard from '../../../styles/ItemCard';
 
 import {
@@ -78,32 +78,39 @@ export default function Solicitacao() {
 									className="px-lg-5 py-lg-5"
 									enctype="multipart/form-data"
 								>
-									<CardTitle>Solicitações de Cadastro</CardTitle>
+									<CardTitle style={{fontSize:25, color:"#fff", marginTop:20}}>Solicitações de Cadastro</CardTitle>
 									{solicitacao.length > 0 ? (
-										<PodcastCard className="solicitacoes">
-											{solicitacao.map((item) => (
-												<li>
-													<div className="card_content">
-														<p>{item.pod_nome}</p>
-													</div>
-													<div className="card_info">
-														<div className="description">
-															<p>Usuário</p>
-															<p>{item.usu_nome}</p>
-														</div>
-														<button
-															className="button"
-															style={{ color: '#151734' }}
-															onClick={(e) => toggle(item)}
-														>
-															Detalhes
-														</button>
-													</div>
-												</li>
-											))}
-										</PodcastCard>
+                  <div style={{display: "flex", flexDirection:"row", flexWrap: "wrap",padding:20, justifyContent:"space-around" }}>
+
+                {solicitacao.map((item) => (
+
+                      <div className="shadow" style={{display:"flex", flexDirection:"column", minHeight:200, maxHeight:200, margin:5, marginBottom:20, minWidth:400, maxWidth:500, borderRadius:10, background:"#151734"  }}>
+
+                          <h3 className="text-center" style={{ marginTop:30 ,color: "rgb(27, 253, 190)",fontWeight:"bold"}}>{item.pod_nome}</h3>
+
+                          <div style={{display:"flex", flex:1, padding:20}}>
+                          <button
+
+                            style={{ color: '#151734',
+                              width:"100%",
+                              height:50,
+                              borderRadius:4,
+                              background:"#1bfdbe",
+                              borderColor:"#1bfdbe",
+                              fontWeight:"bold"
+
+                            }}
+                            onClick={(e) => toggle(item)}
+                            >Ver detalhes</button>
+                          </div>
+
+                      </div>
+
+                ))}
+                </div>
+
 									) : (
-										<h2 style={{ textAlign: 'center' }}>
+										<h2 style={{ textAlign: 'center', fontSize:25, color:"#fff" }}>
 											Nenhuma solicitação de cadastro no momento.
 										</h2>
 									)}
@@ -115,135 +122,187 @@ export default function Solicitacao() {
 
 				<div style={!modal ? { display: 'none' } : { display: 'block' }}>
 					>
-					<Modal isOpen={modal} toggle={toggle}>
-						<ModalHeader toggle={toggle}>Solicitação de Cadastro</ModalHeader>
-						<ModalBody>
-							<div
-								className="bg-secondary shadow"
-								style={{
-									marginTop: '5%',
-									display: 'flex',
-									flexWrap: 'wrap',
-									marginBottom: 50,
-								}}
-							>
-								<div
-									style={{
-										height: 'auto',
-										minWidth: 300,
-										display: 'flex',
-										flexDirection: 'column',
-									}}
-								>
-									<div
-										style={{ height: 350, width: 400, padding: 20 }}
-										className="borderBottom"
-									>
-										<img
-											className="shadow"
-											width="100%"
-											height="100%"
-											style={{ borderRadius: 10 }}
-											src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
-										/>
-									</div>
+					<Modal isOpen={modal} style={{minWidth:"80%"}} toggle={toggle}>
+						<ModalHeader toggle={toggle} >
+              <h3 style={{fontSize:25, color:"#fff"}}>Solicitação de Cadastro</h3>
+              </ModalHeader>
 
-									<div
-										style={{
-											padding: 2,
-											display: 'flex',
-											flexDirection: 'column',
-										}}
-									></div>
-								</div>
-								<div
-									style={{
-										minWidth: 300,
-										flex: 1,
-										display: 'flex',
-										flexDirection: 'column',
-									}}
-								>
-									<div style={{ flex: 1 }} className="px-3">
-										<h2 style={{ color: '#fff', marginTop: 20 }}>
-											{podcast.pod_nome}
-										</h2>
-									</div>
+            <ModalBody style={{paddingTop:"0 !important"}} >
+            <div
+          className="bg-secondary shadow"
+          style={{
+            marginTop: "0",
+            display: "flex",
+            flexWrap: "wrap",
+            marginBottom: 50,
+            borderRadius: 10,
+          }}
+        >
+          <div
+            style={{
+              height: "auto",
+              minWidth: 300,
+              display: "flex",
+              flexDirection: "column",
+              margin:'0 auto'
+            }}
+          >
+            <div className="img" style={{ padding: 20 }}>
+              <img
+                className="shadow podcast-image"
+                src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
+              />
+            </div>
 
-									<div
-										style={{ height: 'auto', flex: 1 }}
-										className="borderBottom p-3"
-									>
-										<h5 style={{ color: '#fff' }}>Categorias</h5>
-										<div style={{ display: 'flex', flexDirection: 'row' }}>
-											{categoria.map((cat) => (
-												<div
-													style={{
-														padding: 5,
-														margin: 5,
-														backgroundColor: '#212454',
-														borderRadius: 5,
-														color: '#fff',
-													}}
-												>
-													{cat}
-												</div>
-											))}
-										</div>
-									</div>
 
-									<div style={{ flex: 1 }} className="borderBottom p-3">
-										<p style={{ color: '#fff', textAlign: 'justify' }}>
-											{podcast.pod_descricao}
-										</p>
-									</div>
 
-									<div style={{ flex: 1 }} className="borderBottom">
-										<div
-											style={{
-												margin: 20,
-												borderRadius: 5,
-												color: '#fff',
-											}}
-										>
-											<h5 style={{ color: '#fff' }}>Ano de criação</h5>
-											<p>{podcast.pod_anocriacao}</p>
-										</div>
-										<div
-											style={{
-												margin: 20,
-												borderRadius: 5,
-												color: '#fff',
-											}}
-										>
-											<h5 style={{ color: '#fff' }}>Podcaster</h5>
-											<p>{podcast.pod_criador}</p>
-										</div>
-										<div
-											style={{
-												margin: 20,
-												borderRadius: 5,
-												color: '#fff',
-											}}
-										>
-											<h5 style={{ color: '#fff' }}>Média de Duração</h5>
-											<p>{podcast.pod_duracao}min</p>
-										</div>
-									</div>
 
-									<div className="p-3" style={{ height: 'auto', flex: 1 }}>
-										<h5 style={{ color: '#fff' }}>Disponivel em</h5>
-										<div style={{ display: 'grid' }}>
-											{endereco.map((endereco) => (
-												<a href={endereco} target="_blank">
-													{endereco}
-												</a>
-											))}
-										</div>
-									</div>
-								</div>
-							</div>
-						</ModalBody>
+
+            <div
+              style={{ padding: 2, display: "flex", flexDirection: "column" }}
+            >
+
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10,
+                }}
+              >
+
+                <h4 style={{ width: 250, color: "#fff" }}>
+                  Pretendo acompanhar
+                </h4>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10,
+                }}
+              >
+
+                <h4 style={{ width: 250, color: "#fff" }}>Não acompanhar</h4>
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              minWidth: 300,
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ flex: 1 }} className="borderBottom p-3">
+              <h2 style={{ color: "#fff", marginTop: 20 }}>
+                <strong>{podcast.pod_nome}</strong>
+              </h2>
+            </div>
+
+            <div
+              style={{ height: "auto", flex: 1 }}
+              className="borderBottom p-3"
+            >
+              <h5 style={{ color: "#fff" }}>
+                <strong>Categorias</strong>
+              </h5>
+              <div className="categorias-wrapper" style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+                {categoria.map((cat) => (
+                  <div
+                    style={{
+                      padding: 5,
+                      margin: 5,
+                      backgroundColor: "#212454",
+                      borderRadius: 5,
+                      color: "#fff",
+                    }}
+                  >
+                    {cat}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ flex: 1 }} className="borderBottom p-3">
+              <p style={{ color: "#fff", textAlign: "justify" }}>
+                {podcast.pod_descricao}
+              </p>
+            </div>
+
+            <div style={{ flex: 1, display: "flex" }} className="borderBottom info-podcast">
+              <div
+                style={{
+                  margin: 20,
+                  borderRadius: 5,
+                  color: "#fff",
+                }}
+              >
+                <h5 style={{ color: "#fff" }}>
+                  <strong>Ano de criação</strong>
+                </h5>
+                <p>{podcast.pod_anocriacao}</p>
+              </div>
+              <div
+                style={{
+                  margin: 20,
+                  borderRadius: 5,
+                  color: "#fff",
+                }}
+              >
+                <h5 style={{ color: "#fff" }}>
+                  <strong>Podcaster</strong>
+                </h5>
+                <p>{podcast.pod_criador}</p>
+              </div>
+              <div
+                style={{
+                  margin: 20,
+                  borderRadius: 5,
+                  color: "#fff",
+                }}
+              >
+                <h5 style={{ color: "#fff" }}>
+                  <strong>Média de Duração</strong>
+                </h5>
+                <p>{podcast.pod_duracao}min</p>
+              </div>
+            </div>
+
+            <div className="p-3" style={{ height: "auto", flex: 1 }}>
+              <h5 style={{ color: "#fff" }}>Disponivel em</h5>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {endereco.map(
+                  (item) =>
+                    item.includes(".com") && (
+                      <div style={{ padding: 5, margin: 5 }}>
+                        <a target="_blank" href={item}>
+                          {item.includes("spotify.com") ? (
+                            <FaSpotify style={{ color: "#1DB954	" }} size={50} />
+                          ) : item.includes("youtube.com") ? (
+                            <FaYoutube style={{ color: "ff0000" }} size={50} />
+                          ) : (
+                            <FaInternetExplorer
+                              style={{ color: "#0f7aca" }}
+                              size={50}
+                            />
+                          )}
+                        </a>
+                      </div>
+                    )
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+            </ModalBody>
+
 						<ModalFooter>
 							<Button
 								color="primary"
