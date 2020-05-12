@@ -391,7 +391,7 @@ export default function Podcast() {
               <h5 style={{ color: "#fff" }}>
                 <strong>Categorias</strong>
               </h5>
-              <div className="categorias-wrapper" style={{ display: "flex", flexDirection: "row" }}>
+              <div className="categorias-wrapper" style={{ display: "flex", flexDirection: "row", flexWrap:"wrap" }}>
                 {categoria.map((cat) => (
                   <div
                     style={{

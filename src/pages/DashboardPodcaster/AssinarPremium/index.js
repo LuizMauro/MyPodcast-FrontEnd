@@ -66,10 +66,10 @@ export default function EditarPodcast() {
 
         />
 
-        <form className="form">
+        <form className="form" style={{width:"100%", display:"flex", justifyContent:"center"}} >
 
-          <div className="divInputs">
-          <InputMask className="inputs"
+          <div className="divInputs" style={{display:"flex", flexDirection:"column", alignContent:"center", justifyContent:"center", width:400}}>
+          <InputMask className="inputs shadow"
               type="tel"
               name ="number"
               placeholder="Numero do cartão"
@@ -77,9 +77,10 @@ export default function EditarPodcast() {
               onFocus={(e) => handleInputFocus(e)}
               mask="9999 9999 9999 9999999"
               maskChar=" "
-              required={true}
+              required={true} 
+              style={{marginTop:20, background:" rgb(35, 38, 89)", border:0, color: "rgb(255, 255, 255)", padding:10}}
             />
-
+ 
 
             <InputMask className="inputs"
               type="tel"
@@ -88,11 +89,12 @@ export default function EditarPodcast() {
               onChange={(e) => setName(e.target.value)}
               onFocus={(e) => handleInputFocus(e)}
               required={true}
+              style={{marginTop:20, background:" rgb(35, 38, 89)", border:0, color: "rgb(255, 255, 255)",  padding:10}}
             />
-          </div>
+         
 
 
-          <div className="inputsRow">
+         
           <InputMask className="inputs inputdivide"
               type="tel"
               name ="expiry"
@@ -103,6 +105,7 @@ export default function EditarPodcast() {
               maskChar=" "
               mask="99/99"
               required={true}
+              style={{marginTop:20, background:" rgb(35, 38, 89)", border:0, color: "rgb(255, 255, 255)", padding:10}}
             />
 
 
@@ -114,6 +117,7 @@ export default function EditarPodcast() {
               onFocus={(e) => handleInputFocus(e)}
               maxLength={4}
               required={true}
+              style={{marginTop:20, background:" rgb(35, 38, 89)", border:0, color: "rgb(255, 255, 255)",  padding:10}}
             />
           </div>
         </form>

@@ -198,7 +198,7 @@ export default function Comentario({
                     ? {
                         display: "block",
                         width: "100%",
-                        background: "#232659",
+                        background: "#151734",
                         minHeight: 80,
                         maxHeight: "auto",
                         borderRadius: 4,
@@ -280,7 +280,7 @@ export default function Comentario({
                   </S.IconWrapper>
                 )}
 
-                <p style={profile && { margin: "15px 0" }}>
+                <p  style={profile && { margin: "15px 0", background:"#151734", padding:15 }}>
                   {item.cmt_conteudo}{" "}
                 </p>
                 <div

@@ -78,7 +78,7 @@ export default function Resposta({
                     ? {
                         display: "block",
                         width: "100%",
-                        background: "#232659",
+                        background: "#151734",
                         minHeight: 80,
                         maxHeight: "auto",
                         borderRadius: 4,
@@ -142,12 +142,13 @@ export default function Resposta({
                     marginTop: 20,
                   }}
                 >
-                  <div style={{ width: 30, height: 30 }}>
+                  <div style={{ width: 30, height: 30,   }}>
                     <img
                       style={{
                         width: "100%",
                         height: "100%",
                         borderRadius: "50%",
+                       
                       }}
                       src={
                         "https://api.adorable.io/avatars/285/" + answer.usu_nome
@@ -169,6 +170,7 @@ export default function Resposta({
                         color: "#fff",
                         fontWeight: "bold",
                         fontSize: 20,
+                       
                       }}
                     >
                       {answer.usu_nome}
@@ -195,12 +197,13 @@ export default function Resposta({
                   className="shadow"
                   style={{
                     width: "100%",
-                    background: "#232659",
+                    background: "#151734",
                     minHeight: 80,
                     maxHeight: "auto",
                     borderRadius: 4,
                     padding: 10,
                     color: "#fff",
+                    marginTop:10
                   }}
                 >
                   {answer.cmt_conteudo}

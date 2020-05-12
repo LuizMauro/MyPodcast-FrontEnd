@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
@@ -9,11 +9,21 @@ import { Button, Card, CardBody, Container, Row, Col } from 'reactstrap';
 import { logarRequest } from '../../store/modules/auth/actions';
 import Input from '../../components/Input';
 
+import ReCAPTCHA from "react-google-recaptcha";
+
 export default function Login() {
 	const formRef = useRef(null);
 	const dispatch = useDispatch();
+	const [isVerified, setIsVerifed] = useState(false);
+
+	
 
 	async function handleSubmit({ email, senha }) {
+		if(!isVerified){
+			return alert("teste")
+		}
+
+
 		try {
 			const schema = Yup.object().shape({
 				email: Yup.string()
@@ -48,6 +58,16 @@ export default function Login() {
 		console.log(email, senha);
 	}
 
+	
+
+	async function recaptchaVerify(v){
+		if(v){
+			setIsVerifed(true)
+		}
+	
+	}
+
+
 	return (
 		<>
 			<section className="section section-shaped section-lg">
@@ -75,6 +95,15 @@ export default function Login() {
 												Entrar
 											</Button>
 										</div>
+
+									
+										<ReCAPTCHA
+											sitekey="6LeY6fUUAAAAAMaL1WdfSI7l0O0PjgBKdSXX7-dM"
+											onChange={(v) => recaptchaVerify(v)}
+										/>
+
+										
+
 									</Form>
 									<Row className="mt-3">
 										<Col xs="6">
