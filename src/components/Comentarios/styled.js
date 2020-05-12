@@ -6,13 +6,25 @@ export const IconWrapper = styled.div`
   button.edit {
     position: absolute;
     right: 35px;
-    top: 0;
+    top: 13px;
   }
 
   button.delete {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 13px;
+  }
+
+  button.edit-comment {
+    position: absolute;
+    right: 45px;
+    top: 17px;
+  }
+
+  button.delete-comment {
+    position: absolute;
+    right: 13px;
+    top: 17px;
   }
 
   .edit-answer {

@@ -266,13 +266,13 @@ export default function Comentario({
                 {profile && profile.usu_id === item.usu_id && (
                   <S.IconWrapper>
                     <button
-                      className="button edit"
+                      className="button edit-comment"
                       onClick={(e) => editarComentario(item)}
                     >
                       <FaPen size={18} />
                     </button>
                     <button
-                      className="button delete"
+                      className="button delete-comment"
                       onClick={(e) => deletarComentario(item)}
                     >
                       <FaTimes size={18} />
