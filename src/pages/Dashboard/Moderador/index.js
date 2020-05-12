@@ -28,7 +28,7 @@ export default function Moderador() {
 
   useEffect(() => {
     exibirUsuarios();
-  }, [update]);
+  }, [usuario]);
 
   async function exibirUsuarios() {
     const response = await api.get("adm/modusers");

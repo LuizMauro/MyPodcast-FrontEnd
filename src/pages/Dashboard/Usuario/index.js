@@ -27,7 +27,7 @@ export default function Usuario() {
 
   useEffect(() => {
     exibirUsuarios();
-  }, [update]);
+  }, [usuario]);
 
   async function exibirUsuarios() {
     const response = await api.get("/users");

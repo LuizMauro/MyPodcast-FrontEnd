@@ -30,7 +30,7 @@ export default function Solicitacao() {
 
   useEffect(() => {
     exibirSolicitacoes();
-  }, [modal]);
+  }, [solicitacao]);
 
   async function toggle(item) {
     setPodcast(item);
@@ -135,7 +135,7 @@ export default function Solicitacao() {
                             <h6
                               style={{
                                 paddingLeft: 10,
-                                paddingTop:1,
+                                paddingTop: 1,
                                 marginBottom: 0,
                                 color: "rgb(27, 253, 190)",
                                 fontSize: "1rem",
