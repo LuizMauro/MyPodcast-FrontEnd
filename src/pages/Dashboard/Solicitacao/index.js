@@ -113,13 +113,38 @@ export default function Solicitacao() {
                             className="text-center"
                             style={{
                               marginTop: 30,
+                              marginBottom: 0,
                               color: "rgb(27, 253, 190)",
                               fontWeight: "bold",
                             }}
                           >
                             {item.pod_nome}
                           </h3>
-
+                          <div style={{ display: "flex" }}>
+                            <p
+                              style={{
+                                paddingLeft: 20,
+                                marginBottom: 0,
+                                color: "rgb(255, 255, 255)",
+                                fontSize: "1rem",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Usuário:{" "}
+                            </p>
+                            <h6
+                              style={{
+                                paddingLeft: 10,
+                                paddingTop:1,
+                                marginBottom: 0,
+                                color: "rgb(27, 253, 190)",
+                                fontSize: "1rem",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {item.usu_nome}
+                            </h6>
+                          </div>
                           <div
                             style={{ display: "flex", flex: 1, padding: 20 }}
                           >
@@ -300,7 +325,14 @@ export default function Solicitacao() {
                       {endereco.map(
                         (item) =>
                           item.includes(".com") && (
-                            <a href={item} target="_blank" style={{ color: "rgb(255, 255, 255)", marginBottom:5 }}>
+                            <a
+                              href={item}
+                              target="_blank"
+                              style={{
+                                color: "rgb(255, 255, 255)",
+                                marginBottom: 5,
+                              }}
+                            >
                               {item}
                             </a>
                           )
