@@ -120,7 +120,7 @@ class SidebarPremium extends Component {
 
                 <Navitem
                   item="Assinatura"
-                  tolink="/podcaster/premium/dashboard/status"
+                  tolink="/podcaster/premium/dashboard/assinatura"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={

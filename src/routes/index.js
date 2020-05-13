@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import PrivateRouteADM from './PrivateRouteADM';
 import PrivateRouteMOD from './PrivateRouteMOD';
 import PrivateRoutePOD from './PrivateRoutePod';
+import PrivateRoutePremium from './PrivateRoutePremium';
 import PrivateRoute from './PrivateRoute';
 
 //PAGES
@@ -23,6 +24,12 @@ import Profile from '../pages/Profile';
 import PodcasterPodcasts from '../pages/DashboardPodcaster/Podcast/Listar/index';
 import PodcasterCadastrarPodcast from '../pages/DashboardPodcaster/Podcast/Cadastrar/index'
 import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/index'
+
+//Podcater Premium
+import PremiumPodcasts from '../pages/DashboardPremium/Podcast/Listar';
+import PremiumCadastrarPodcast from '../pages/DashboardPremium/Podcast/Cadastrar';
+import PremiumDesempenho from '../pages/DashboardPremium/Desempenho';
+import PremiumAssinatura from '../pages/DashboardPremium/Assinatura';
 
 //Moderador
 import DashboardMod from '../pages/DashboardMod/Podcast';
@@ -76,6 +83,29 @@ export default function Routes() {
 				path="/podcaster/dashboard/assinar"
 				exact
 				component={PodcasterAssinarPremium}
+			/>
+
+			{/* Podcaster Premium */}
+			<PrivateRoutePremium
+				path="/podcaster/premium/dashboard/podcasts"
+				exact
+				component={PremiumPodcasts}
+			/>
+			<PrivateRoutePremium
+				exact
+				path="/podcaster/premium/dashboard/podcasts/cadastrar"
+				exact
+				component={PremiumCadastrarPodcast}
+			/>
+			<PrivateRoutePremium
+				path="/podcaster/premium/dashboard/desempenho"
+				exact
+				component={PremiumDesempenho}
+			/>
+			<PrivateRoutePremium
+				path="/podcaster/premium/dashboard/assinatura"
+				exact
+				component={PremiumAssinatura}
 			/>
 
 			{/* ADM */}
