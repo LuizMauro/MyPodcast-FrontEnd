@@ -1,0 +1,18 @@
+.button,
+.button:hover {
+	border: 0;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	height: auto;
+	width: auto;
+	align-self: start;
+	color: rgb(165, 245, 171);
+	cursor: pointer;
+}
+
+.button:hover {
+	color: rgb(146, 145, 145) !important;
+	transition: 0.3s ease-in;
+}
+

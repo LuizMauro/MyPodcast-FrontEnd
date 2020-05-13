@@ -32,7 +32,11 @@ import PremiumDesempenho from '../pages/DashboardPremium/Desempenho';
 import PremiumAssinatura from '../pages/DashboardPremium/Assinatura';
 
 //Moderador
-import DashboardMod from '../pages/DashboardMod/Podcast';
+import ModPodcast from '../pages/DashboardMod/Podcast';
+import ModCategoria from '../pages/DashboardMod/Categoria/Listar';
+import ModCadastrarCategoria from '../pages/DashboardMod/Categoria/Cadastrar';
+import ModSolicitacao from '../pages/DashboardMod/Solicitacao';
+import ModUsuario from '../pages/DashboardMod/Usuario';
 
 //ADM
 import Dashboard from '../pages/Dashboard/Home';
@@ -64,7 +68,11 @@ export default function Routes() {
 			<PrivateRoute path="/Profile" component={Profile} />
 
 			{/* MOD */}
-			<PrivateRouteMOD path="/mod/dashboard" exact component={DashboardMod} />
+			<PrivateRouteMOD path="/mod/dashboard" exact component={ModPodcast} />
+			<PrivateRouteMOD path="/mod/dashboard/categorias" exact component={ModCategoria} />
+			<PrivateRouteMOD path="/mod/dashboard/categorias/cadastrar" exact component={ModCadastrarCategoria} />
+			<PrivateRouteMOD path="/mod/dashboard/usuarios" exact component={ModUsuario} />
+			<PrivateRouteMOD path="/mod/dashboard/solicitacoes" exact component={ModSolicitacao} />
 
 			{/* PODCASTER  */}
 			<PrivateRoutePOD

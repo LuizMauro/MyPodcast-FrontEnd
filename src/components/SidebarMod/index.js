@@ -10,7 +10,7 @@ import {
   FaAngleRight,
   FaUserCircle,
   FaSignOutAlt,
-  FaRegIdCard
+  FaRegIdCard,
 } from "react-icons/fa";
 import { signOut } from "../../store/modules/auth/actions";
 import { useDispatch } from "react-redux";
@@ -98,7 +98,7 @@ class SidebarMod extends Component {
                 <Navitem
                   className="teste-te"
                   item="Podcasts"
-                  tolink="/moderador/dashboard/podcasts"
+                  tolink="/mod/dashboard"
                   activec={this.activeitem}
                   style={{ width: "100%", color: "red" }}
                   icone={
@@ -110,8 +110,7 @@ class SidebarMod extends Component {
 
                 <Navitem
                   item="Categorias"
-                  tolink="/moderador
-                  /dashboard/categorias"
+                  tolink="/mod/dashboard/categorias"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
@@ -120,7 +119,7 @@ class SidebarMod extends Component {
                 />
                 <Navitem
                   item="Usuários"
-                  tolink="/moderador/dashboard/usuarios"
+                  tolink="/mod/dashboard/usuarios"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
@@ -129,7 +128,7 @@ class SidebarMod extends Component {
                 />
                 <Navitem
                   item="Publicidade"
-                  tolink="/moderador/dashboard/publicidade"
+                  tolink="/mod/dashboard/publicidade"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
@@ -140,7 +139,7 @@ class SidebarMod extends Component {
                 />
                 <Navitem
                   item="Solicitações"
-                  tolink="/moderador/dashboard/solicitacoes"
+                  tolink="/mod/dashboard/solicitacoes"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
@@ -149,7 +148,6 @@ class SidebarMod extends Component {
                     ></FaRegIdCard>
                   }
                 />
-                
               </ul>
             </nav>
           }
