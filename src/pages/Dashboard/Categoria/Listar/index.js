@@ -75,6 +75,7 @@ export default function EditarPodcast() {
 
   return (
     <>
+    {console.log(categorias)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>

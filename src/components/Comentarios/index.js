@@ -12,6 +12,7 @@ import {
   updateComentarioRequest,
 } from "../../store/modules/comentario/actions";
 import * as S from "./styled";
+import { parseISO, format, formatRelative, formatDistance } from "date-fns";
 
 import Lottie from "react-lottie";
 import * as animationData from "../../assets/animations/like.json";
@@ -195,7 +196,10 @@ export default function Comentario({
                     {item.usu_nome}
                   </p>
                   <p style={{ color: "#fff", fontSize: 12, marginTop: -10 }}>
-                    {item.cmt_datacriacao}
+                    {format(
+                      parseISO(item.cmt_datacriacao),
+                      "'Dia' dd 'de' MMMM', às ' HH:mm'h'"
+                    )}
                   </p>
                 </div>
               </div>
