@@ -3,14 +3,14 @@ import Navitem from "../NavItemDash/Navitem";
 import Sidebar from "react-sidebar";
 import {
   FaMicrophone,
-  FaUserAlt,
+
   FaListUl,
-  FaHandshake,
   FaAngleLeft,
   FaAngleRight,
   FaUserCircle,
   FaSignOutAlt,
-  FaRegIdCard
+  FaChartBar,
+  FaFileContract
 } from "react-icons/fa";
 import { signOut } from "../../store/modules/auth/actions";
 import { useDispatch } from "react-redux";
@@ -98,7 +98,7 @@ class SidebarPremium extends Component {
                 <Navitem
                   className="teste-te"
                   item="Podcasts"
-                  tolink="/moderador/dashboard/podcasts"
+                  tolink="/podcaster/premium/dashboard/podcasts"
                   activec={this.activeitem}
                   style={{ width: "100%", color: "red" }}
                   icone={
@@ -109,47 +109,24 @@ class SidebarPremium extends Component {
                 />
 
                 <Navitem
-                  item="Categorias"
-                  tolink="/moderador
-                  /dashboard/categorias"
+                  item="Desempenho"
+                  tolink="/podcaster/premium/dashboard/desempenho"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
-                    <FaListUl style={{ width: 25, height: 25 }}></FaListUl>
+                    <FaChartBar style={{ width: 25, height: 25 }}></FaChartBar>
                   }
                 />
+
                 <Navitem
-                  item="Usuários"
-                  tolink="/moderador/dashboard/usuarios"
+                  item="Assinatura"
+                  tolink="/podcaster/premium/dashboard/status"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
-                    <FaUserAlt style={{ width: 25, height: 25 }}></FaUserAlt>
+                    <FaFileContract style={{ width: 25, height: 25 }}></FaFileContract>
                   }
                 />
-                <Navitem
-                  item="Publicidade"
-                  tolink="/moderador/dashboard/publicidade"
-                  activec={this.activeitem}
-                  style={{ width: "100%" }}
-                  icone={
-                    <GoMegaphone
-                      style={{ width: 25, height: 25 }}
-                    ></GoMegaphone>
-                  }
-                />
-                <Navitem
-                  item="Solicitações"
-                  tolink="/moderador/dashboard/solicitacoes"
-                  activec={this.activeitem}
-                  style={{ width: "100%" }}
-                  icone={
-                    <FaRegIdCard
-                      style={{ width: 25, height: 25 }}
-                    ></FaRegIdCard>
-                  }
-                />
-                
               </ul>
             </nav>
           }
