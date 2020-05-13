@@ -142,13 +142,12 @@ export default function Resposta({
                     marginTop: 20,
                   }}
                 >
-                  <div style={{ width: 30, height: 30,   }}>
+                  <div style={{ width: 30, height: 30 }}>
                     <img
                       style={{
                         width: "100%",
                         height: "100%",
                         borderRadius: "50%",
-                       
                       }}
                       src={
                         "https://api.adorable.io/avatars/285/" + answer.usu_nome
@@ -160,7 +159,7 @@ export default function Resposta({
                     style={{
                       width: "50%",
                       height: 40,
-                      display: "flex",
+                      display: "grid",
                       alignItems: "center",
                       marginLeft: 20,
                     }}
@@ -170,10 +169,14 @@ export default function Resposta({
                         color: "#fff",
                         fontWeight: "bold",
                         fontSize: 20,
-                       
+                        marginTop: -8,
+                        marginBottom: 0,
                       }}
                     >
                       {answer.usu_nome}
+                    </p>
+                    <p style={{ color: "#fff", fontSize: 12, marginTop: -10 }}>
+                      {answer.cmt_datacriacao}
                     </p>
                   </div>
                 </div>
@@ -203,7 +206,7 @@ export default function Resposta({
                     borderRadius: 4,
                     padding: 10,
                     color: "#fff",
-                    marginTop:10
+                    marginTop: 10,
                   }}
                 >
                   {answer.cmt_conteudo}
@@ -220,7 +223,7 @@ export default function Resposta({
               display: "flex",
               flexDirection: "column",
               marginLeft: "5%",
-              marginTop: 10,
+              marginTop: 15,
             }}
           >
             <a

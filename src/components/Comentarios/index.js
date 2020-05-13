@@ -179,15 +179,23 @@ export default function Comentario({
                   style={{
                     width: "40%",
                     height: 60,
-                    display: "flex",
+                    display: "grid",
                     alignItems: "center",
                     marginLeft: 20,
                   }}
                 >
                   <p
-                    style={{ color: "#fff", fontWeight: "bold", fontSize: 20 }}
+                    style={{
+                      color: "#fff",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                      marginBottom: 0,
+                    }}
                   >
                     {item.usu_nome}
+                  </p>
+                  <p style={{ color: "#fff", fontSize: 12, marginTop: -10 }}>
+                    {item.cmt_datacriacao}
                   </p>
                 </div>
               </div>
@@ -280,7 +288,15 @@ export default function Comentario({
                   </S.IconWrapper>
                 )}
 
-                <p  style={profile && { margin: "15px 0", background:"#151734", padding:15 }}>
+                <p
+                  style={
+                    profile && {
+                      margin: "15px 0",
+                      background: "#151734",
+                      padding: 15,
+                    }
+                  }
+                >
                   {item.cmt_conteudo}{" "}
                 </p>
                 <div
