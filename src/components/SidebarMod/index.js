@@ -5,17 +5,15 @@ import {
   FaMicrophone,
   FaUserAlt,
   FaListUl,
-  FaUsersCog,
-  FaRegIdCard,
-  FaFileContract,
-  FaHashtag,
-  FaHome,
+  FaHandshake,
   FaAngleLeft,
+  FaAngleRight,
   FaUserCircle,
   FaSignOutAlt,
-  
-  FaAngleRight,
+  FaRegIdCard
 } from "react-icons/fa";
+import { signOut } from "../../store/modules/auth/actions";
+import { useDispatch } from "react-redux";
 import { GoMegaphone } from "react-icons/go";
 import { Col, Row, NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
 
@@ -23,7 +21,7 @@ import "./styles.css";
 
 const mql = window.matchMedia(`(min-width: 900px)`);
 
-class Navbar extends Component {
+class SidebarMod extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,6 +60,11 @@ class Navbar extends Component {
     });
   }
 
+  handleSignOut() {
+    const dispatch = useDispatch();
+    dispatch(signOut());
+  }
+
   activeitem = (x) => {
     if (this.state.NavItemActive.length > 0) {
       console.log(this.state.NavItemActive);
@@ -84,11 +87,7 @@ class Navbar extends Component {
             <nav>
               <ul>
                 <li style={{ textAlign: "center" }}>
-                  <NavbarBrand
-                    href="/"
-                    className="logo-li"
-                    style={{ marginBottom: 0 }}
-                  >
+                  <NavbarBrand href="/" className="logo-li">
                     <img
                       style={{ width: 70, height: 70 }}
                       alt="..."
@@ -97,70 +96,40 @@ class Navbar extends Component {
                   </NavbarBrand>
                 </li>
                 <Navitem
-                  item="Home"
-                  tolink="/adm/dashboard/"
-                  activec={this.activeitem}
-                  style={{ width: "100%" }}
-                  icone={<FaHome style={{ width: 25, height: 25 }}></FaHome>}
-                />
-
-                <Navitem
+                  className="teste-te"
                   item="Podcasts"
-                  tolink="/adm/dashboard/podcasts"
+                  tolink="/moderador/dashboard/podcasts"
                   activec={this.activeitem}
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", color: "red" }}
                   icone={
                     <FaMicrophone
-                      style={{ width: 25, height: 25 }}
+                      style={{ width: 70, height: 70 }}
                     ></FaMicrophone>
                   }
                 />
 
                 <Navitem
                   item="Categorias"
-                  tolink="/adm/dashboard/categorias"
+                  tolink="/moderador
+                  /dashboard/categorias"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
                     <FaListUl style={{ width: 25, height: 25 }}></FaListUl>
                   }
                 />
-
                 <Navitem
                   item="Usuários"
-                  tolink="/adm/dashboard/usuarios"
+                  tolink="/moderador/dashboard/usuarios"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
                     <FaUserAlt style={{ width: 25, height: 25 }}></FaUserAlt>
                   }
                 />
-
-                <Navitem
-                  item="Moderadores"
-                  tolink="/adm/dashboard/moderadores"
-                  activec={this.activeitem}
-                  style={{ width: "100%" }}
-                  icone={
-                    <FaUsersCog style={{ width: 25, height: 25 }}></FaUsersCog>
-                  }
-                />
-
-                <Navitem
-                  item="Solicitações"
-                  tolink="/adm/dashboard/solicitacoes"
-                  activec={this.activeitem}
-                  style={{ width: "100%" }}
-                  icone={
-                    <FaRegIdCard
-                      style={{ width: 25, height: 25 }}
-                    ></FaRegIdCard>
-                  }
-                />
-
                 <Navitem
                   item="Publicidade"
-                  tolink="/adm/dashboard/publicidade"
+                  tolink="/moderador/dashboard/publicidade"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
@@ -169,18 +138,18 @@ class Navbar extends Component {
                     ></GoMegaphone>
                   }
                 />
-
                 <Navitem
-                  item="Relatório"
-                  tolink="/adm/dashboard/relatorio"
+                  item="Solicitações"
+                  tolink="/moderador/dashboard/solicitacoes"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
-                    <FaFileContract
+                    <FaRegIdCard
                       style={{ width: 25, height: 25 }}
-                    ></FaFileContract>
+                    ></FaRegIdCard>
                   }
                 />
+                
               </ul>
             </nav>
           }
@@ -257,7 +226,7 @@ class Navbar extends Component {
                     </button>
                   </Col>
                   <Col className="col-nav-aberto">
-                    <Nav style={{marginBottom:0}}>
+                    <Nav style={{ marginBottom: 0 }}>
                       <NavItem className="dash-li">
                         <NavLink
                           className="nav-link-icon icone-li dash-icon"
@@ -294,4 +263,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default SidebarMod;

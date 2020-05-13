@@ -25,7 +25,7 @@ import PodcasterCadastrarPodcast from '../pages/DashboardPodcaster/Podcast/Cadas
 import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/index'
 
 //Moderador
-import DashboardMod from '../pages/DashboardMod';
+import DashboardMod from '../pages/DashboardMod/Podcast';
 
 //ADM
 import Dashboard from '../pages/Dashboard/Home';
@@ -35,7 +35,7 @@ import CategoriasAdm from '../pages/Dashboard/Categoria/Listar';
 import CategoriasAdmCadastrar from '../pages/Dashboard/Categoria/Cadastrar';
 import SolicitacoesAdm from '../pages/Dashboard/Solicitacao';
 import UsuariosAdm from '../pages/Dashboard/Usuario';
-import ModeradoresAdm from '../pages/Dashboard/Moderador';
+import ModeradoresAdm from '../pages/DashboardMod/Podcast';
 import HomeAdm from '../pages/Dashboard/Home'
 import PublicidadeAdm from '../pages/Dashboard/contents/Publicidade';
 import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
