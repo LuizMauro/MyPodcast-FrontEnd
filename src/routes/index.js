@@ -48,7 +48,8 @@ import SolicitacoesAdm from '../pages/Dashboard/Solicitacao';
 import UsuariosAdm from '../pages/Dashboard/Usuario';
 import ModeradoresAdm from '../pages/DashboardMod/Podcast';
 import HomeAdm from '../pages/Dashboard/Home'
-import PublicidadeAdm from '../pages/Dashboard/contents/Publicidade';
+import PublicidadeAdm from '../pages/Dashboard/Publicidade/Listar';
+import PublicidadeAdmCadastrar from '../pages/Dashboard/Publicidade/Cadastrar';
 import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
 
 //Imports CSS
@@ -113,7 +114,7 @@ export default function Routes() {
 			<PrivateRoutePremium
 				path="/podcaster/premium/dashboard/assinatura"
 				exact
-				component={PremiumAssinatura}
+				component={PremiumAssinatura}	
 			/>
 
 			{/* ADM */}
@@ -167,10 +168,17 @@ export default function Routes() {
 			/>
 			<PrivateRouteADM
 				exact
+				path="/adm/dashboard/publicidade"
+				exact
+				component={PublicidadeAdmCadastrar}
+			/>
+			<PrivateRouteADM
+				exact
 				path="/adm/dashboard/relatorio"
 				exact
 				component={RelatorioAdm}
 			/>
+			
 
 			<Route path="/" component={NotFound404} />
 			<Route path="/error" exact component={NotFound404} />
