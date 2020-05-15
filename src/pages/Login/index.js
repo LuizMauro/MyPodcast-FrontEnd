@@ -97,11 +97,7 @@ export default function Login() {
                   </Form>
                   <Row className="mt-3">
                     <Col xs="6">
-                      <a
-                        className="text-light"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
+                      <a className="text-light" href="/forgot_password">
                         <small>Esqueci a senha</small>
                       </a>
                     </Col>

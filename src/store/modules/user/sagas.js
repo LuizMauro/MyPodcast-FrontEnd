@@ -7,7 +7,7 @@ import {
   updateProfileFailure,
   updateToPodcasterSuccess,
 } from "./actions";
-import { RefreshToken } from '../auth/actions';
+import { RefreshToken } from "../auth/actions";
 
 import { toast } from "react-toastify";
 
@@ -61,13 +61,18 @@ export function* updateModerador({ payload }) {
 export function* updatePodcaster() {
   try {
     const response = yield call(api.put, `/virarpodcaster`);
-    const newresponse = yield call(api.put,`/refreshtoken`)
+    const newresponse = yield call(api.put, `/refreshtoken`);
 
     const { token, user } = newresponse.data;
-    api.defaults.headers['Authorization'] = `Bearer ${token}`;
-    
+    api.defaults.headers["Authorization"] = `Bearer ${token}`;
+
     yield put(RefreshToken(token, user));
-    yield put(updateToPodcasterSuccess(response.data.tus_descricao,response.data.tus_id));
+    yield put(
+      updateToPodcasterSuccess(
+        response.data.tus_descricao,
+        response.data.tus_id
+      )
+    );
 
     history.push("podcaster/dashboard/podcasts");
     toast.success("Agora você tem acesso ao painel de Podcaster");
@@ -77,9 +82,27 @@ export function* updatePodcaster() {
   }
 }
 
+export function* forgotPassword({ payload }) {
+  const usu_email = payload;
+
+  try {
+    const response = yield call(api.post, "/forgot_password", usu_email);
+
+    if (response.data.userExists) {
+      toast.error("Usuário não encontrado");
+    }
+    if (response.data.enviado) {
+      toast.success("Código enviado ao seu e-mail");
+    }
+  } catch (err) {
+    toast.error("Erro ao recuperar senha. Tente novamente");
+  }
+}
+
 export default all([
   takeLatest("@user/UPDATE_PROFILE_REQUEST", updateProfile),
   takeLatest("@user/UPDATE_STATUS_REQUEST", updateStatus),
   takeLatest("@user/UPDATE_MODERADOR_REQUEST", updateModerador),
   takeLatest("@user/UPDATE_TOPODCASTER_REQUEST", updatePodcaster),
+  takeLatest("@user/FORGOT_PASSWORD_REQUEST", forgotPassword),
 ]);

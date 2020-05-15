@@ -44,3 +44,10 @@ export function updateProfileFailure() {
     type: "@user/UPDATE_PROFILE_FAILURE",
   };
 }
+
+export function forgotPasswordRequest(usu_email){
+  return {
+    type: "@user/FORGOT_PASSWORD_REQUEST",
+    payload: {usu_email}
+  }
+}

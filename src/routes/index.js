@@ -16,6 +16,7 @@ import Login from '../pages/Login';
 import Pesquisar from '../pages/Pesquisar';
 import NotFound404 from '../pages/NotFound';
 import PodCast from '../pages/Podcast';
+import ForgotPassword from '../pages/ForgotPassword';
 
 //Usuario
 import Profile from '../pages/Profile';
@@ -62,6 +63,8 @@ export default function Routes() {
 			<Route path="/" exact component={Home} />
 			<Route path="/Cadastro" component={Cadastro} />
 			<Route path="/Login" component={Login} />
+			<Route path="/Cadastro" component={Cadastro} />
+			<Route path="/forgot_password" component={ForgotPassword} />
 			<Route path="/Pesquisar/" component={Pesquisar} />
 			<Route path="/Podcast/:pod_id" component={PodCast} />
 
