@@ -1,20 +1,19 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
-import { IoMdMicrophone, IoMdHeadset } from "react-icons/io";
-import { forgotPasswordRequest } from "../../store/modules/user/actions";
+import { resetPasswordRequest } from "../../store/modules/auth/actions";
 import Input from "../../components/Input";
-
-import { cpfMask } from "../../utils/Mask";
+import { toast } from "react-toastify";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
+import api from "../../services/api";
 
 export default function Cadastro() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
   const [errorProvider, setErrorProvider] = useState("");
   const [resetMode, setResetMode] = useState(false);
+  const [email, setEmail] = useState([]);
 
   async function handleEmail({ usu_email }) {
     try {
@@ -30,7 +29,17 @@ export default function Cadastro() {
         }
       );
 
-      dispatch(forgotPasswordRequest(usu_email));
+      const response = await api.post("/forgot_password", {usu_email});
+
+      if (response.data.userDoesNotExists) {
+        toast.error("Usuário não encontrado");
+      }
+      if (response.data.enviado) {
+        toast.success("Código enviado ao seu e-mail");
+        setResetMode(true);
+        const mail = {usu_email: usu_email};
+        setEmail(mail);
+      }
 
       formRef.current.setErrors(false);
     } catch (err) {
@@ -58,7 +67,7 @@ export default function Cadastro() {
           .email("Digite um email valido")
           .required("O email é obrigatorio"),
         usu_senha: Yup.string()
-          .required("A senha é obrigatorio")
+          .required("A senha é obrigatoria")
           .matches(
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&!@#%])[0-9a-zA-Z$*&!@#%]{6,45}$/,
             "Senha fraca!"
@@ -76,13 +85,13 @@ export default function Cadastro() {
       });
 
       await schema.validate(
-        { usu_email },
+        { usu_email, usu_senha, confirmaSenha, usu_reset_token },
         {
           abortEarly: false,
         }
       );
 
-      setResetMode(true);
+      dispatch(resetPasswordRequest(usu_email, usu_reset_token, usu_senha))
 
       formRef.current.setErrors(false);
     } catch (err) {
@@ -128,7 +137,6 @@ export default function Cadastro() {
                     {resetMode ? `Nova senha` : `Recuperar Senha`}
                   </h1>
                   <Form
-                    
                     onSubmit={handleEmail}
                     style={
                       resetMode ? { display: "none" } : { display: "block" }
@@ -147,12 +155,14 @@ export default function Cadastro() {
                     </div>
                   </Form>
                   <Form
-                    
                     onSubmit={resetarSenha}
+                    ref={formRef}
+                    initialData={email}
                     style={
                       !resetMode ? { display: "none" } : { display: "block" }
                     }
                   >
+                    {console.log('teste aq',email)}
                     <Input
                       name="usu_email"
                       type="email"

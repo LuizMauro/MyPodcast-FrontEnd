@@ -82,27 +82,9 @@ export function* updatePodcaster() {
   }
 }
 
-export function* forgotPassword({ payload }) {
-  const usu_email = payload;
-
-  try {
-    const response = yield call(api.post, "/forgot_password", usu_email);
-
-    if (response.data.userExists) {
-      toast.error("Usuário não encontrado");
-    }
-    if (response.data.enviado) {
-      toast.success("Código enviado ao seu e-mail");
-    }
-  } catch (err) {
-    toast.error("Erro ao recuperar senha. Tente novamente");
-  }
-}
-
 export default all([
   takeLatest("@user/UPDATE_PROFILE_REQUEST", updateProfile),
   takeLatest("@user/UPDATE_STATUS_REQUEST", updateStatus),
   takeLatest("@user/UPDATE_MODERADOR_REQUEST", updateModerador),
   takeLatest("@user/UPDATE_TOPODCASTER_REQUEST", updatePodcaster),
-  takeLatest("@user/FORGOT_PASSWORD_REQUEST", forgotPassword),
 ]);

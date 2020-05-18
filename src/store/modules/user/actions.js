@@ -1,8 +1,14 @@
-export function updateProfileRequest(usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha) {
-	return {
-		type: '@user/UPDATE_PROFILE_REQUEST',
-		payload: { usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha }
-	};
+export function updateProfileRequest(
+  usu_nome,
+  usu_email,
+  senhaAntiga,
+  usu_senha,
+  confirmaSenha
+) {
+  return {
+    type: "@user/UPDATE_PROFILE_REQUEST",
+    payload: { usu_nome, usu_email, senhaAntiga, usu_senha, confirmaSenha },
+  };
 }
 
 export function updateStatusRequest(usu_id, usu_status) {
@@ -45,9 +51,4 @@ export function updateProfileFailure() {
   };
 }
 
-export function forgotPasswordRequest(usu_email){
-  return {
-    type: "@user/FORGOT_PASSWORD_REQUEST",
-    payload: {usu_email}
-  }
-}
+
