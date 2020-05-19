@@ -11,7 +11,8 @@ import Textarea from "../../components/Textarea";
 import * as animationData from "../../assets/animations/like.json";
 import { toast } from "react-toastify";
 import history from "../../services/history";
-import './style.css'
+import publicIp from "react-public-ip";
+import "./style.css";
 
 import { useSelector } from "react-redux";
 import Comentario from "../../components/Comentarios";
@@ -71,6 +72,18 @@ export default function Podcast() {
     }
 
     loadPodcast();
+
+    async function view() {
+      const ipv4 = (await publicIp.v4()) || "";
+      const ipv6 = (await publicIp.v6()) || "";
+
+      if (profile) {
+        await api.post(`/view/${pod_id}`);
+      } else {
+        await api.post(`/view/${pod_id}/${ipv4 ? ipv4 : ipv6}`);
+      }
+    }
+    view();
   }, [update]);
 
   async function setaCheckBox() {
@@ -194,7 +207,7 @@ export default function Podcast() {
     }
   }
 
-  async function handleComentario({ cmt_conteudo}) {
+  async function handleComentario({ cmt_conteudo }) {
     if (profile) {
       setUpdate(update ? false : true);
       dispatch(createComentarioRequest(cmt_conteudo, podcast.pod_id, 1));
@@ -234,7 +247,7 @@ export default function Podcast() {
               minWidth: 300,
               display: "flex",
               flexDirection: "column",
-              margin:'0 auto'
+              margin: "0 auto",
             }}
           >
             <div className="img" style={{ padding: 20 }}>
@@ -391,7 +404,14 @@ export default function Podcast() {
               <h5 style={{ color: "#fff" }}>
                 <strong>Categorias</strong>
               </h5>
-              <div className="categorias-wrapper" style={{ display: "flex", flexDirection: "row", flexWrap:"wrap" }}>
+              <div
+                className="categorias-wrapper"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
                 {categoria.map((cat) => (
                   <div
                     style={{
@@ -414,7 +434,10 @@ export default function Podcast() {
               </p>
             </div>
 
-            <div style={{ flex: 1, display: "flex" }} className="borderBottom info-podcast">
+            <div
+              style={{ flex: 1, display: "flex" }}
+              className="borderBottom info-podcast"
+            >
               <div
                 style={{
                   margin: 20,
