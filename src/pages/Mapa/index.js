@@ -8,7 +8,6 @@ import { updateToPodcasterRequest } from "../../store/modules/user/actions";
 import { useDispatch } from "react-redux";
 import { signOut } from "../../store/modules/auth/actions";
 
-
 import {
   Button,
   Card,
@@ -23,19 +22,13 @@ import "./index.css";
 
 export default function Mapa() {
   const profile = useSelector((state) => state.user.profile);
-
-  const dispatch = useDispatch();
-
-
-  function handleSignOut() {
-    dispatch(signOut());
-  }
-
-  async function virarPodcaster(profile) {
-    dispatch(updateToPodcasterRequest());
-  }
-
-
+  //const dispatch = useDispatch();
+  //function handleSignOut() {
+  //  dispatch(signOut());
+  //}
+ // async function virarPodcaster(profile) {
+ //   dispatch(updateToPodcasterRequest());
+ // }
   return (
     <section className="section section-shaped section-lg">
       <Container>
@@ -121,9 +114,6 @@ export default function Mapa() {
               </CardBody>
             </Card>
           </Col>
-
-
-
         </Row>
       </Container>
     </section>
