@@ -4,8 +4,9 @@ import { Form } from "@unform/web";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import api from "../../../services/api";
-import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
-import { MdClose } from "react-icons/md";
+import { FaHeart, FaHeadphones } from "react-icons/fa";
+import { MdGrade } from "react-icons/md";
+import { AiFillSchedule } from "react-icons/ai";
 
 import {
   Button,
@@ -20,6 +21,7 @@ import {
 export default function EditarPodcast() {
   const [podcasts, setPodcasts] = useState([]);
   const [dados, setDados] = useState([]);
+  const [topWeek, setTopWeek] = useState([]);
 
   useEffect(() => {
     let podinicial = null;
@@ -36,6 +38,7 @@ export default function EditarPodcast() {
     async function loadEstatistica() {
       const response = await api.get(`/estatisticaspremium/${podinicial}`);
       setDados(response.data);
+      setTopWeek(response.data.topweek[0]);
     }
 
     exibirPodcasts();
@@ -48,6 +51,7 @@ export default function EditarPodcast() {
     <>
       {console.log("dados", dados)}
       {console.log("pods", podcasts)}
+      {console.log("top", topWeek)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>
@@ -63,12 +67,18 @@ export default function EditarPodcast() {
                     Desempenho
                   </CardTitle>
                   <Row>
-                    <Col lg="6">
+                    <Col sm="12" md="2">
                       <select
                         className="select-home shadow"
                         onChange={SelecionarPodcast}
                         value={podcasts}
-                        style={{ color: "#fff", width: "100%" }}
+                        style={{
+                          color: "#fff",
+                          width: "100%",
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          width: 160,
+                        }}
                         type="select"
                         name="select"
                         id="exampleSelect"
@@ -80,14 +90,209 @@ export default function EditarPodcast() {
                     </Col>
                   </Row>
                   <Row className="mt-3">
-                    <Col lg="3" sm="6">ABC</Col>
-                    <Col lg="3" sm="6">DEF</Col>
-                    <Col lg="3" sm="6">GHI</Col>
-                    <Col lg="3" sm="6">JKL</Col>
+                    <Col lg="3" sm="6">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minHeight: 100,
+                          maxHeight: 100,
+                          minWidth: 160,
+                          maxWidth: 160,
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        <h3
+                          className="text-center"
+                          style={{
+                            marginTop: 30,
+                            marginBottom: 0,
+                            color: "rgb(27, 253, 190)",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <MdGrade
+                            color="rgb(27, 253, 190)"
+                            style={{ marginRight: 5 }}
+                            title="Nota média do Podcast na comunidade"
+                          />
+                          {dados.media
+                            ? parseInt(dados.media).toFixed(2)
+                            : "N/A"}
+                        </h3>
+                      </div>
+                    </Col>
+                    <Col lg="3" sm="6">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minHeight: 100,
+                          maxHeight: 100,
+                          minWidth: 160,
+                          maxWidth: 160,
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        <h3
+                          className="text-center"
+                          style={{
+                            marginTop: 30,
+                            marginBottom: 0,
+                            color: "rgb(27, 253, 190)",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <FaHeart
+                            color="rgb(27, 253, 190)"
+                            style={{ marginRight: 5 }}
+                            title="Quantidade de favoritos"
+                          />
+                          {dados.qtd_fav}
+                        </h3>
+                      </div>
+                    </Col>
+                    <Col lg="3" sm="6">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minHeight: 100,
+                          maxHeight: 100,
+                          minWidth: 160,
+                          maxWidth: 160,
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        <h3
+                          className="text-center"
+                          style={{
+                            marginTop: 30,
+                            marginBottom: 0,
+                            color: "rgb(27, 253, 190)",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <AiFillSchedule
+                            size={32}
+                            color="rgb(27, 253, 190)"
+                            style={{ marginRight: 5 }}
+                            title="Usuários que marcaram como Acompanhando"
+                          />
+                          {dados.qtd_acompanhando}
+                        </h3>
+                      </div>
+                    </Col>
+                    <Col lg="3" sm="6">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minHeight: 100,
+                          maxHeight: 100,
+                          minWidth: 160,
+                          maxWidth: 160,
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        <h3
+                          className="text-center"
+                          style={{
+                            marginTop: 30,
+                            marginBottom: 0,
+                            color: "rgb(27, 253, 190)",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <FaHeadphones
+                            color="rgb(27, 253, 190)"
+                            style={{ marginRight: 5 }}
+                            title="Usuários que marcaram como Pretendo Acompanhar"
+                          />
+                          {dados.qtd_acompanhar}
+                        </h3>
+                      </div>
+                    </Col>
                   </Row>
                   <Row className="mt-3">
-                    <Col lg="6" md="12">ABC</Col>
-                    <Col lg="6" md="12">ABC</Col>
+                    <Col lg="6" md="12">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minHeight: 400,
+                          maxHeight: 400,
+                          minWidth: 400,
+                          maxWidth: 400,
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        <p style={{ color: "rgb(27, 253, 190)" }}>
+                          Visitas Totais
+                          {dados.totalview}
+                        </p>
+                        <p style={{ color: "rgb(27, 253, 190)" }}>
+                          Visitas último mês
+                          {dados.totalmonth}
+                        </p>
+                        <p style={{ color: "rgb(27, 253, 190)" }}>
+                          Visitas última semana
+                          {dados.totalweek}
+                        </p>
+                      </div>
+                    </Col>
+                    <Col lg="6" md="12">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minHeight: 400,
+                          maxHeight: 400,
+                          minWidth: 400,
+                          maxWidth: 400,
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        <h4
+                          style={{ fontSize: 25, color: "rgb(27, 253, 190)" }}
+                        >
+                          Podcasts mais visualizados da última semana
+                        </h4>
+                        {topWeek.map((item) => (
+                          <p style={{ color: "rgb(27, 253, 190)" }}>
+                            <Link
+                              to={`../../../podcast/${item.id}`}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                color: "rgb(27, 253, 190)",
+                              }}
+                            >
+                              {item.pod_nome}{" "}
+                            </Link>
+                            {item.qtd_viewtotal}
+                          </p>
+                        ))}
+                      </div>
+                    </Col>
                   </Row>
                   <Row className="mt-3">
                     <Col lg="12">123</Col>
