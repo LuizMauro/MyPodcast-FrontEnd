@@ -7,7 +7,7 @@ import api from "../../../services/api";
 import { FaHeart, FaHeadphones } from "react-icons/fa";
 import { MdGrade } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
-import Comentario from '../../../components/Comentarios'
+import Comentario from "../../../components/Comentarios";
 
 import {
   Button,
@@ -252,23 +252,49 @@ export default function EditarPodcast() {
                           flexDirection: "column",
                           minHeight: 400,
                           maxHeight: 400,
-                          minWidth: 400,
-                          maxWidth: 400,
                           borderRadius: 10,
                           marginBottom: 10,
                           background: "#151734",
+                          padding: 20,
                         }}
                       >
-                        <p style={{ color: "rgb(27, 253, 190)" }}>
-                          Visitas Totais
+                        <h4
+                          style={{
+                            fontSize: 18,
+                            textAlign: "center",
+                            color: "rgb(27, 253, 190)",
+                          }}
+                        >
+                          Visualizações
+                        </h4>
+                        <p
+                          style={{
+                            color: "rgb(27, 253, 190)",
+                            marginTop: 50,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Visitas Totais {" - "}
                           {dados.totalview}
                         </p>
-                        <p style={{ color: "rgb(27, 253, 190)" }}>
-                          Visitas último mês
+                        <p
+                          style={{
+                            color: "rgb(27, 253, 190)",
+                            marginTop: 50,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Visitas último mês {" - "}
                           {dados.totalmonth}
                         </p>
-                        <p style={{ color: "rgb(27, 253, 190)" }}>
-                          Visitas última semana
+                        <p
+                          style={{
+                            color: "rgb(27, 253, 190)",
+                            marginTop: 50,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Visitas última semana {" - "}
                           {dados.totalweek}
                         </p>
                       </div>
@@ -281,26 +307,35 @@ export default function EditarPodcast() {
                           flexDirection: "column",
                           minHeight: 400,
                           maxHeight: 400,
-                          minWidth: 400,
-                          maxWidth: 400,
                           borderRadius: 10,
                           marginBottom: 10,
                           background: "#151734",
+                          padding: 20,
                         }}
                       >
                         <h4
-                          style={{ fontSize: 25, color: "rgb(27, 253, 190)" }}
+                          style={{
+                            fontSize: 18,
+                            textAlign: "center",
+                            color: "rgb(27, 253, 190)",
+                          }}
                         >
                           Podcasts mais visualizados da última semana
                         </h4>
                         {topWeek.map((item) => (
-                          <p style={{ color: "rgb(27, 253, 190)" }}>
+                          <p
+                            style={{
+                              color: "rgb(27, 253, 190)",
+                              marginTop: 20,
+                            }}
+                          >
                             <Link
                               to={`../../../podcast/${item.id}`}
                               style={{
                                 width: "100%",
                                 height: "100%",
                                 color: "rgb(27, 253, 190)",
+                                fontWeight: "bold",
                               }}
                             >
                               {item.pod_nome}{" "}
@@ -326,7 +361,10 @@ export default function EditarPodcast() {
                         }}
                       >
                         {comentario.length ? (
-                          <Comentario data={comentario.map((item) => item)} dash={true} />
+                          <Comentario
+                            data={comentario.map((item) => item)}
+                            dash={true}
+                          />
                         ) : (
                           <div
                             className="d-flex pt-5 pb-5"
