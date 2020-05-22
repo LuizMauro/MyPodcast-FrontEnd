@@ -22,7 +22,11 @@ export default createGlobalStyle`
     margin: 0;
     }
 
-    html,body,input,button, #App{
+    select{
+      color:rgba(255, 255, 255, 0.95) !important;
+    }
+
+    html,body,input,button, select, #App{
       font-family: 'Roboto', sans-serif !important;
     }
 

@@ -68,7 +68,7 @@ export default function Routes() {
 			<Route path="/forgot_password" component={ForgotPassword} />
 			<Route path="/Pesquisar/" component={Pesquisar} />
 			<Route path="/Podcast/:pod_id" component={PodCast} />
-			<Route path="/Mapa" component={Mapa} />
+			<Route path="/Sitemap" component={Mapa} />
 
 			{/* Usuario */}
 			<PrivateRoute path="/Profile" component={Profile} />
