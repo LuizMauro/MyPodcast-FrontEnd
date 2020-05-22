@@ -7,6 +7,7 @@ import api from "../../../services/api";
 import { FaHeart, FaHeadphones } from "react-icons/fa";
 import { MdGrade } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
+import Comentario from '../../../components/Comentarios'
 
 import {
   Button,
@@ -22,17 +23,24 @@ export default function EditarPodcast() {
   const [podcasts, setPodcasts] = useState([]);
   const [dados, setDados] = useState([]);
   const [topWeek, setTopWeek] = useState([]);
+  const [comentario, setComentario] = useState([]);
 
   useEffect(() => {
     let podinicial = null;
 
     async function exibirPodcasts() {
-      const response = await api.get("/userpodcasts");
+      const response = await api.get("/userpodcastsAllow");
       setPodcasts(response.data);
       if (response.data.length > 0) {
         podinicial = response.data[0].pod_id;
         loadEstatistica();
+        loadComments();
       }
+    }
+
+    async function loadComments() {
+      const response = await api.get(`allcomentarios/${podinicial}`);
+      setComentario(response.data);
     }
 
     async function loadEstatistica() {
@@ -45,13 +53,21 @@ export default function EditarPodcast() {
     loadEstatistica();
   }, []);
 
-  async function SelecionarPodcast() {}
+  async function SelecionarPodcast(e) {
+    const id = e.target.value;
+    console.log("seleção", e.target.value);
+    const response = await api.get(`/estatisticaspremium/${id}`);
+    setDados(response.data);
+
+    const comments = await api.get(`allcomentarios/${id}`);
+    setComentario(comments.data);
+  }
 
   return (
     <>
       {console.log("dados", dados)}
       {console.log("pods", podcasts)}
-      {console.log("top", topWeek)}
+      {console.log("comments", comentario)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>
@@ -83,6 +99,7 @@ export default function EditarPodcast() {
                         name="select"
                         id="exampleSelect"
                       >
+                        <option value="0">Podcast</option>
                         {podcasts.map((item) => (
                           <option value={item.pod_id}>{item.pod_nome}</option>
                         ))}
@@ -295,7 +312,39 @@ export default function EditarPodcast() {
                     </Col>
                   </Row>
                   <Row className="mt-3">
-                    <Col lg="12">123</Col>
+                    <Col lg="12">
+                      <div
+                        className="shadow"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          minWidth: "100%",
+                          maxWidth: "100%",
+                          borderRadius: 10,
+                          marginBottom: 10,
+                          background: "#151734",
+                        }}
+                      >
+                        {comentario.length ? (
+                          <Comentario data={comentario.map((item) => item)} dash={true} />
+                        ) : (
+                          <div
+                            className="d-flex pt-5 pb-5"
+                            style={{ margin: "0 auto" }}
+                          >
+                            <p
+                              className="text-center mb-0"
+                              style={{
+                                color: "rgb(27, 253, 190)",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Seu podcast ainda não tem comentários.
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>

@@ -23,6 +23,7 @@ export default function Comentario({
   podcast,
   setUpdate,
   update,
+  dash,
   //  resposta
 }) {
   const [responder, setResponder] = useState(0);
@@ -294,11 +295,18 @@ export default function Comentario({
 
                 <p
                   style={
-                    profile && {
-                      margin: "15px 0",
-                      background: "#151734",
-                      padding: 15,
-                    }
+                    profile && !dash
+                      ? {
+                          margin: "15px 0",
+                          background: "#151734",
+                          padding: 15,
+                        }
+                      : {
+                          margin: 0,
+                          marginBottom: 0,
+                          background: "#151734",
+                          padding: 15,
+                        }
                   }
                 >
                   {item.cmt_conteudo}{" "}
@@ -311,12 +319,21 @@ export default function Comentario({
                   }}
                 >
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      flexDirection: "row",
-                      margin: "10px 0",
-                    }}
+                    style={
+                      dash
+                        ? {
+                            display: "none",
+                            alignItems: "center",
+                            flexDirection: "row",
+                            margin: "10px 0",
+                          }
+                        : {
+                            display: "flex",
+                            alignItems: "center",
+                            flexDirection: "row",
+                            margin: "10px 0",
+                          }
+                    }
                   >
                     <a
                       onClick={(e) => {
@@ -356,11 +373,20 @@ export default function Comentario({
                       onClick={() => {
                         habilitarResposta(item.comment_id);
                       }}
-                      style={{
-                        alignItems: "center",
-                        cursor: "pointer",
-                        color: "#1bfdbe",
-                      }}
+                      style={
+                        dash
+                          ? {
+                              alignItems: "center",
+                              cursor: "pointer",
+                              color: "#1bfdbe",
+                              display: "none",
+                            }
+                          : {
+                              alignItems: "center",
+                              cursor: "pointer",
+                              color: "#1bfdbe",
+                            }
+                      }
                     >
                       Responder
                     </a>
