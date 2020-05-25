@@ -5,6 +5,7 @@ import api from "../../services/api";
 import { IoIosSearch } from "react-icons/io";
 import history from "../../services/history";
 import "./index.css";
+import publicIp from "react-public-ip";
 
 // reactstrap components
 import { Container, Button, Input, FormGroup } from "reactstrap";
@@ -20,9 +21,17 @@ export default function Home() {
   }
 
   useEffect(() => {
-    async function loadPodCasters() {
+    async function loadPodCasts() {
       const response = await api.get("/podcasts");
       setPodcasts(response.data);
+
+      async function view() {
+        const ipv4 = (await publicIp.v4()) || "";
+        const ipv6 = (await publicIp.v6()) || "";
+
+        await api.post(`/view/${ipv4 ? ipv4 : ipv6}`);
+      }
+      view();
     }
 
     async function loadCategoria() {
@@ -30,7 +39,7 @@ export default function Home() {
       setCategorias(response.data);
     }
 
-    loadPodCasters();
+    loadPodCasts();
     loadCategoria();
   }, []);
 

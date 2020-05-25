@@ -78,9 +78,9 @@ export default function Podcast() {
       const ipv6 = (await publicIp.v6()) || "";
 
       if (profile) {
-        await api.post(`/view/${pod_id}`);
+        await api.post(`/podview/${pod_id}`);
       } else {
-        await api.post(`/view/${pod_id}/${ipv4 ? ipv4 : ipv6}`);
+        await api.post(`/podview/${pod_id}/${ipv4 ? ipv4 : ipv6}`);
       }
     }
     view();
