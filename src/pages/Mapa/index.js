@@ -26,9 +26,9 @@ export default function Mapa() {
   //function handleSignOut() {
   //  dispatch(signOut());
   //}
- // async function virarPodcaster(profile) {
- //   dispatch(updateToPodcasterRequest());
- // }
+  // async function virarPodcaster(profile) {
+  //   dispatch(updateToPodcasterRequest());
+  // }
   return (
     <section className="section section-shaped section-lg">
       <Container>
@@ -45,38 +45,37 @@ export default function Mapa() {
 
                 {profile ? (profile.tus_descricao === "Administrador" ? (
                   <>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Row>
+                    <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
+                    <Link to="/adm/dashboard/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Link>
+                    <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
+                    <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
                   </>
                 ) : profile.tus_descricao === "Moderador" ? (
                   <>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Row>
+                    <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
+                    <Link to="/mod/dashboard/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Link>
+                    <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
+                    <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
                   </>
                 ) : profile.tus_descricao === "Podcaster" ? (
                   <>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Row>
-                    <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Row>
+                    <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
+                    <Link to="/podcaster/dashboard/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Link>
+                    <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
+                    <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
                   </>
                 ) : (
                         <>
-                          <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Row>
-                          <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Row>
-                          <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Row>
-                          <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Row>
+                          <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
+                          <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
+                          <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
                         </>
                       ))
                   : (
                     <>
-                      <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Entrar</Row>
-                      <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Cadastrar</Row>
-                      <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Pagina Inicial</Row>
+                      <Link to="/Login" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Entrar</Link>
+                      <Link to="/Cadastro" className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Cadastrar</Link>
+                      <Link to="/" className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Pagina Inicial</Link>
                     </>
                   )}
 
@@ -93,9 +92,9 @@ export default function Mapa() {
                 <CardTitle className="dash-home-title border">
                   Termo de uso
                 </CardTitle>
-                <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>
+                <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>
                   Regras
-                </Row>
+                </Link>
               </CardBody>
             </Card>
           </Col>
@@ -108,9 +107,9 @@ export default function Mapa() {
                 <CardTitle className="dash-home-title border">
                   Mapa do site
                 </CardTitle>
-                <Row className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>
+                <Link to="/Sitemap" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>
                   Estrutura
-                </Row>
+                </Link>
               </CardBody>
             </Card>
           </Col>
