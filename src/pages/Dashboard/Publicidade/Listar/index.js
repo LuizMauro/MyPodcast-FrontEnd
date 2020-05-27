@@ -9,19 +9,18 @@ import {
   updatePublicidadeRequest,
   deletePublicidadeRequest,
 } from "../../../../store/modules/publicidade/actions";
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import history from "../../../../services/history";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 import Input from "../../../../components/Input";
 import PodcastList from "../../../../styles/ItemList";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import DatePicker from "react-datepicker";
-import * as locales from 'react-date-range/dist/locale';
-import  pt  from 'date-fns/locale/pt'
+import * as locales from "react-date-range/dist/locale";
+import pt from "date-fns/locale/pt";
 import subDays from "date-fns/subDays";
-import { DateRange, Calendar } from 'react-date-range'
-import { parseISO }  from 'date-fns'
-
+import { DateRange, Calendar } from "react-date-range";
+import { parseISO } from "date-fns";
 
 import {
   Button,
@@ -32,8 +31,6 @@ import {
   Col,
   CardTitle,
 } from "reactstrap";
-
-
 
 export default function EditarPodcast() {
   const [editMode, setEditMode] = useState(false);
@@ -47,19 +44,18 @@ export default function EditarPodcast() {
   const [file, setFile] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const dispatch = useDispatch();
-  
 
   const [state, setState] = useState([
     {
       startDate: new Date(),
-      endDate: '',
-      key: 'selection'
-    }
+      endDate: "",
+      key: "selection",
+    },
   ]);
 
   useEffect(() => {
     exibirPublicidades();
-  }, [editMode]);
+  }, [publicidades, editMode]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
@@ -83,25 +79,67 @@ export default function EditarPodcast() {
     setEditarPub(publicidade);
   }
 
-  async function handleSubmit({ pub_descricao, pub_link}) {
-    const ctgid = editarPub.pub_id;
-
+  async function handleSubmit({ pub_descricao, pub_link }) {
+    const pubid = editarPub.pub_id
     const dateTime = state[0].endDate.toISOString();
-  
+    const adata = dateTime.replace(
+      /^(\d{4})-(\d{2})-(\d{2})\T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
+      "$1-$2-$3 $4:$5:$6"
+    );
 
-    console.log('dados da pub',pub_descricao,pub_link,startDate);
-/*
-    const data = new FormData();
+    if(!preview){
+      toast.error("Imagem obrigatória")
+    }
 
-    data.append("pub_descricao", pub_descricao);
+    if (file) {
+      if (
+        !file.type.includes("png") &&
+        !file.type.includes("jpg") &&
+        !file.type.includes("jpeg")
+      ) {
+        toast.error("Imagem deve ser PNG/JPG/JPEG");
+        return;
+      }
+    }
 
     try {
-      dispatch(updatePublicidadeRequest(pub_descricao, ctgid));
-      setEditMode(false);
-      setUpdate(update ? false : true);
+      const schema = Yup.object().shape({
+        pub_descricao: Yup.string().required("A descrição é obrigatória"),
+        pub_link: Yup.string().required("O link é obrigatório"),
+      });
+
+      await schema.validate(
+        { pub_descricao, pub_link },
+        {
+          abortEarly: false,
+        }
+      );
+
+      const data = new FormData();
+      data.append("pub_descricao", pub_descricao);
+      data.append("pub_data_fim", adata);
+      data.append("pub_link", pub_link);
+      data.append("file", file);
+
+      api.put(`/publicidade/${pubid}`, data);
+      toast.success("Publicidade editada!");
+     setEditMode(false);
+
+      formRef.current.setErrors(false);
     } catch (err) {
-      toast.error("Não foi possível editar publicidade");
-    } */
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach((error) => {
+          errorMessages[error.path] = error.message;
+        });
+
+        toast.error("Erro ao editar publicidade");
+        console.log(errorMessages);
+
+        formRef.current.setErrors(errorMessages);
+      }
+    }
   }
 
   async function deletarPublicidade(publicidade) {}
@@ -157,7 +195,7 @@ export default function EditarPodcast() {
                         className="btn btn-primary"
                         to="publicidade/cadastrar"
                       >
-                        <FaPlus size={18} /> Categoria
+                        <FaPlus size={18} /> Publicidade
                       </Link>
                     </Col>
                   </Row>
@@ -289,31 +327,24 @@ export default function EditarPodcast() {
                           className="mt-5"
                         />
 
-                        
-                           { console.log(state) }
-                        
+                        {console.log(state)}
 
                         <DateRange
                           className="shadow"
                           editableDateInputs={true}
-                          onChange={item => setState([item.selection])}
+                          onChange={(item) => setState([item.selection])}
                           moveRangeOnFirstSelection={false}
                           ranges={state}
                           minDate={new Date()}
-                          startDate={new Date()} 
+                          startDate={new Date()}
                           locale={pt}
                           color="#fff"
-                          theme={{color:"#fff"}}
+                          theme={{ color: "#fff" }}
                           rangeColors="#69deac"
                         />
-
-
-                   
                       </Col>
                     </Row>
 
-
-                    
                     <div className="text-center mt-5">
                       <Button type="submit" className="my-2" color="primary">
                         Salvar Alterações

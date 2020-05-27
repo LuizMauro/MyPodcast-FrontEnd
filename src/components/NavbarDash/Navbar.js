@@ -13,7 +13,7 @@ import {
   FaAngleLeft,
   FaUserCircle,
   FaSignOutAlt,
-  
+  FaFileInvoiceDollar,
   FaAngleRight,
 } from "react-icons/fa";
 import { GoMegaphone } from "react-icons/go";
@@ -167,6 +167,17 @@ class Navbar extends Component {
                     <GoMegaphone
                       style={{ width: 25, height: 25 }}
                     ></GoMegaphone>
+                  }
+                />
+                <Navitem
+                  item="Planos"
+                  tolink="/adm/dashboard/plano"
+                  activec={this.activeitem}
+                  style={{ width: "100%" }}
+                  icone={
+                    <FaFileInvoiceDollar
+                      style={{ width: 25, height: 25 }}
+                    ></FaFileInvoiceDollar>
                   }
                 />
 

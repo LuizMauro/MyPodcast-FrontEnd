@@ -53,6 +53,7 @@ import HomeAdm from '../pages/Dashboard/Home'
 import PublicidadeAdm from '../pages/Dashboard/Publicidade/Listar';
 import PublicidadeAdmCadastrar from '../pages/Dashboard/Publicidade/Cadastrar';
 import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
+import PlanoAdm from '../pages/Dashboard/Planos';
 
 //Imports CSS
 import '../assets/css/argon-design-system-react.css';
@@ -173,9 +174,15 @@ export default function Routes() {
 			/>
 			<PrivateRouteADM
 				exact
-				path="/adm/dashboard/publicidade"
+				path="/adm/dashboard/publicidade/cadastrar"
 				exact
 				component={PublicidadeAdmCadastrar}
+			/>
+			<PrivateRouteADM
+				exact
+				path="/adm/dashboard/plano"
+				exact
+				component={PlanoAdm}
 			/>
 			<PrivateRouteADM
 				exact
