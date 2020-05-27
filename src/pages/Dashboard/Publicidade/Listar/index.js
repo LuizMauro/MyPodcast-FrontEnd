@@ -80,6 +80,11 @@ export default function EditarPodcast() {
   }
 
   async function handleSubmit({ pub_descricao, pub_link }) {
+    if(!state[0].endDate){
+      toast.error("Escolha uma data");
+      return;
+    }
+    
     const pubid = editarPub.pub_id
     const dateTime = state[0].endDate.toISOString();
     const adata = dateTime.replace(
@@ -90,6 +95,7 @@ export default function EditarPodcast() {
     if(!preview){
       toast.error("Imagem obrigatória")
     }
+    console.log('o file',file);
 
     if (file) {
       if (

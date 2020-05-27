@@ -5,8 +5,6 @@ import * as Yup from "yup";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { updateCategoriaRequest } from "../../../store/modules/categoria/actions";
-
 import Input from "../../../components/Input";
 import PodcastList from "../../../styles/ItemList";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
@@ -34,6 +32,8 @@ export default function Planos() {
 
   useEffect(() => {
     exibirPlanos();
+
+    
   }, [editMode]);
 
   async function exibirPlanos() {
@@ -48,18 +48,15 @@ export default function Planos() {
   }
 
   async function handleSubmit({ pln_preco }) {
-    const planoid = editarPlano.pln_id;
-
-    const data = new FormData();
-
-    data.append("pln_preco", pln_preco);
+    const planoid = editPlano.pln_id;
 
     try {
-      dispatch(updateCategoriaRequest(pln_preco, planoid));
+      api.put(`plano/${planoid}`, { pln_preco });
+      toast.success("Plano editado.");
       setEditMode(false);
       setUpdate(update ? false : true);
     } catch (err) {
-      toast.error("Não foi possível editar categoria");
+      toast.error("Não foi possível editar o plano.");
     }
   }
 
@@ -82,16 +79,7 @@ export default function Planos() {
                         : { display: "flex", justifyContent: "flex-end" }
                     }
                     className="borderBottom"
-                  >
-                    <Col lg="6" style={{ textAlign: "end" }}>
-                      <Link
-                        className="btn btn-primary"
-                        to="categorias/cadastrar"
-                      >
-                        <FaPlus size={18} /> Categoria
-                      </Link>
-                    </Col>
-                  </Row>
+                  ></Row>
                   <CardTitle
                     style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
                   >
@@ -119,7 +107,11 @@ export default function Planos() {
                             className="linktittle"
                             style={{ color: "#1bfdbe", fontWeight: "bold" }}
                           >
-                            {item.pln_descricao} {" - "} {item.pln_preco}
+                            {item.pln_descricao} {" - "}
+                            {Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(item.pln_preco)}
                           </Link>
                         </div>
                         <div className="icons">
@@ -144,8 +136,8 @@ export default function Planos() {
                   >
                     <Input
                       name="pln_preco"
-                      type="text"
-                      placeholder="Descrição da Categoria"
+                      type="value"
+                      placeholder="valor do plano"
                     />
 
                     <div className="text-center">

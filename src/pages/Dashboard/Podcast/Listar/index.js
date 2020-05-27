@@ -159,8 +159,8 @@ export default function EditarPodcast() {
 
     const pod_id = editarPod.pod_id;
 
-    if(!preview){
-      toast.error("Imagem obrigatória")
+    if (!preview) {
+      toast.error("Imagem obrigatória");
     }
 
     if (file) {

@@ -11,7 +11,7 @@ import { parseISO } from "date-fns";
 import Input from "../../../../components/Input";
 import { MdClose } from "react-icons/md";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
-import api from "../../../../services/api"
+import api from "../../../../services/api";
 import history from "../../../../services/history";
 import { toast } from "react-toastify";
 
@@ -40,9 +40,16 @@ export default function Categoria() {
   }
 
   async function handleSubmit({ pub_descricao, pub_link }) {
+    if (!state[0].endDate) {
+      toast.error("Escolha uma data");
+      return;
+    }
+
     const dateTime = state[0].endDate.toISOString();
-    const adata = dateTime.replace(/^(\d{4})-(\d{2})-(\d{2})\T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/, "$1-$2-$3 $4:$5:$6")
-  
+    const adata = dateTime.replace(
+      /^(\d{4})-(\d{2})-(\d{2})\T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
+      "$1-$2-$3 $4:$5:$6"
+    );
 
     if (!file) {
       toast.error("Imagem obrigatória");
@@ -79,7 +86,7 @@ export default function Categoria() {
       data.append("pub_link", pub_link);
       data.append("file", file);
 
-      api.post('/publicidade',data)
+      api.post("/publicidade", data);
       toast.success("Publicidade cadastrada!");
       history.push("/adm/dashboard/publicidade");
 
