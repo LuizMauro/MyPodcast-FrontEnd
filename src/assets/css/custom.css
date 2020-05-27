@@ -333,3 +333,50 @@ option{
 .modal-footer{
   border-bottom: 0.5px dashed #232659;
 }
+
+.rdrMonthAndYearPickers select {
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 10px 30px 10px 10px;
+    border-radius: 4px;
+    outline: 0;
+	color: #fff !important;
+}
+
+
+.rdrDateDisplayWrapper {
+    background-color: #151734 !important;
+}
+
+
+.rdrCalendarWrapper {
+    color: #000000;
+    font-size: 12px;
+    background: #151734;
+}
+
+.rdrDayDisabled .rdrDayNumber span {
+    color: #1d2429;
+}
+
+.rdrDayDisabled {
+    background-color: #151734;
+}
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+    background: currentColor;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+	background: #69deac;
+	color:red;
+}
+
+
+.rdrDayNumber span {
+    color: #fff;
+}

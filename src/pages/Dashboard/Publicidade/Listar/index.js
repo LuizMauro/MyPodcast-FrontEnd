@@ -9,13 +9,19 @@ import {
   updatePublicidadeRequest,
   deletePublicidadeRequest,
 } from "../../../../store/modules/publicidade/actions";
-
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 import Input from "../../../../components/Input";
 import PodcastList from "../../../../styles/ItemList";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import DatePicker from "react-datepicker";
+import * as locales from 'react-date-range/dist/locale';
+import  pt  from 'date-fns/locale/pt'
 import subDays from "date-fns/subDays";
+import { DateRange, Calendar } from 'react-date-range'
+import { parseISO }  from 'date-fns'
+
 
 import {
   Button,
@@ -26,6 +32,8 @@ import {
   Col,
   CardTitle,
 } from "reactstrap";
+
+
 
 export default function EditarPodcast() {
   const [editMode, setEditMode] = useState(false);
@@ -39,6 +47,15 @@ export default function EditarPodcast() {
   const [file, setFile] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const dispatch = useDispatch();
+  
+
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: '',
+      key: 'selection'
+    }
+  ]);
 
   useEffect(() => {
     exibirPublicidades();
@@ -68,6 +85,9 @@ export default function EditarPodcast() {
 
   async function handleSubmit({ pub_descricao, pub_link}) {
     const ctgid = editarPub.pub_id;
+
+    const dateTime = state[0].endDate.toISOString();
+  
 
     console.log('dados da pub',pub_descricao,pub_link,startDate);
 /*
@@ -261,23 +281,39 @@ export default function EditarPodcast() {
                           type="text"
                           placeholder="Descrição da Publicidade"
                         />
+
                         <Input
                           name="pub_link"
                           type="text"
                           placeholder="Site da publicidade"
                           className="mt-5"
                         />
-                        <DatePicker
-                          selected={startDate}
-                          dateFormat="dd/MM/yyyy"
-                          onChange={(date) => setStartDate(date)}
-                          minDate={subDays(new Date(), 5)}
-                          placeholderText="Select a date after 5 days ago"
-                          name="pub_data_fim"
+
+                        
+                           { console.log(state) }
+                        
+
+                        <DateRange
+                          className="shadow"
+                          editableDateInputs={true}
+                          onChange={item => setState([item.selection])}
+                          moveRangeOnFirstSelection={false}
+                          ranges={state}
+                          minDate={new Date()}
+                          startDate={new Date()} 
+                          locale={pt}
+                          color="#fff"
+                          theme={{color:"#fff"}}
+                          rangeColors="#69deac"
                         />
+
+
+                   
                       </Col>
                     </Row>
 
+
+                    
                     <div className="text-center mt-5">
                       <Button type="submit" className="my-2" color="primary">
                         Salvar Alterações
