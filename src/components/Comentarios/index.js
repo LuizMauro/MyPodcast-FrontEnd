@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { Container, Button, Row, Col } from "reactstrap";
+import React, { useState } from "react";
+import { Button, Row, Col } from "reactstrap";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 import { Form } from "@unform/web";
 import Textarea from "../Textarea";
@@ -12,11 +12,8 @@ import {
   updateComentarioRequest,
 } from "../../store/modules/comentario/actions";
 import * as S from "./styled";
-import { parseISO, format, formatRelative, formatDistance } from "date-fns";
-import pt from 'date-fns/locale/pt'
-
-import Lottie from "react-lottie";
-import * as animationData from "../../assets/animations/like.json";
+import { parseISO, formatRelative } from "date-fns";
+import pt from "date-fns/locale/pt";
 
 export default function Comentario({
   data,
@@ -31,18 +28,8 @@ export default function Comentario({
   const [editMode, setEditMode] = useState(false);
   const [cmtEdit, setCmtEdit] = useState([]);
   const comentario = data;
-  const [resposta, setResposta] = useState([]);
 
   const dispatch = useDispatch();
-
-  const defaultOptions = {
-    loop: false,
-    autoplay: true,
-    animationData: animationData.default,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
 
   async function handleLike(item) {
     if (profile) {
@@ -51,7 +38,7 @@ export default function Comentario({
 
       if (!verifica.data[0]) {
         //se caiu aqui nao deu like ainda
-        const likar = await api.post(`/like/${item.comment_id}`);
+        await api.post(`/like/${item.comment_id}`);
         console.log("dando like");
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
@@ -69,12 +56,12 @@ export default function Comentario({
         if (verifica.data[0].lik_tipo === 1) {
           // Já tem like e tá clicando de novo no like pra tirar o like
           console.log("tirando like");
-          const tirar = await api.put(
+          await api.put(
             `/likestatus/${verifica.data[0].lik_id}/0`
           );
         } else {
           console.log("mudando para dislike");
-          const dislikar = await api.put(
+           await api.put(
             `/mudarlike/${verifica.data[0].lik_id}/1`
           );
         }
@@ -91,7 +78,7 @@ export default function Comentario({
       if (!verifica.data[0]) {
         //se caiu aqui nao deu dislike ainda
         console.log("dando dislike");
-        const likar = await api.post(`/dislike/${item.comment_id}`);
+         await api.post(`/dislike/${item.comment_id}`);
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("dislike de novo");
@@ -108,12 +95,12 @@ export default function Comentario({
         if (verifica.data[0].lik_tipo === 0) {
           // Já tem like e tá clicando de novo no like pra tirar o like
           console.log("tirando dislike");
-          const tirar = await api.put(
+            await api.put(
             `/likestatus/${verifica.data[0].lik_id}/0`
           );
         } else {
           console.log("mudando para like");
-          const dislikar = await api.put(
+            await api.put(
             `/mudarlike/${verifica.data[0].lik_id}/0`
           );
         }
@@ -170,6 +157,7 @@ export default function Comentario({
               >
                 <div style={{ width: 50, height: 50 }}>
                   <img
+                  alt="avatar"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -198,11 +186,14 @@ export default function Comentario({
                     {item.usu_nome}
                   </p>
                   <p style={{ color: "#fff", fontSize: 12, marginTop: -10 }}>
-                    {formatRelative(parseISO(item.cmt_datacriacao), new Date(), {
-        locale: pt,
-        addSuffix: true
-      })
-                    }
+                    {formatRelative(
+                      parseISO(item.cmt_datacriacao),
+                      new Date(),
+                      {
+                        locale: pt,
+                        addSuffix: true,
+                      }
+                    )}
                   </p>
                 </div>
               </div>
@@ -337,7 +328,7 @@ export default function Comentario({
                           }
                     }
                   >
-                    <a
+                    <i
                       onClick={(e) => {
                         handleLike(item);
                       }}
@@ -348,9 +339,9 @@ export default function Comentario({
                         style={profile && { cursor: "pointer" }}
                       />
                       {item.qtd_likes}
-                    </a>
+                    </i>
 
-                    <a
+                    <i
                       onClick={(e) => {
                         handleDislike(item);
                       }}
@@ -360,7 +351,7 @@ export default function Comentario({
                         style={profile && { cursor: "pointer" }}
                       />
                       {item.qtd_dislikes}
-                    </a>
+                    </i>
                   </div>
 
                   <div
@@ -371,7 +362,7 @@ export default function Comentario({
                       flexDirection: "row",
                     }}
                   >
-                    <a
+                    <i
                       onClick={() => {
                         habilitarResposta(item.comment_id);
                       }}
@@ -391,7 +382,7 @@ export default function Comentario({
                       }
                     >
                       Responder
-                    </a>
+                    </i>
                   </div>
                 </div>
 
@@ -403,7 +394,6 @@ export default function Comentario({
                   setUpdate={setUpdate}
                   item={item}
                   comentario={comentario}
-                  setUpdate={setUpdate}
                   update={update}
                   setEditMode={setEditMode}
                   editMode={editMode}

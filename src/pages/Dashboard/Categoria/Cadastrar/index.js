@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef} from "react";
 import { useDispatch } from "react-redux";
 import { createCategoriaRequest } from "../../../../store/modules/categoria/actions";
 import { Form } from "@unform/web";
@@ -64,16 +64,6 @@ export default function Categoria() {
                       </Button>
                     </div>
                   </Form>
-                  <Row className="mt-1">
-                    <Col xs="6">
-                      <a
-                        className="text-light"
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                      ></a>
-                    </Col>
-                    <Col className="text-right" xs="6"></Col>
-                  </Row>
                 </CardBody>
               </Card>
             </Col>

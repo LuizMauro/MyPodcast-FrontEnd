@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Menu from "../../components/Menu";
 import api from "../../services/api";
 import { FaSpotify, FaInternetExplorer, FaYoutube } from "react-icons/fa";
@@ -17,24 +17,21 @@ import "./style.css";
 import { useSelector } from "react-redux";
 import Comentario from "../../components/Comentarios";
 // reactstrap components
-import { Container, Button, CardImg } from "reactstrap";
+import { Container, Button } from "reactstrap";
 
 export default function Podcast() {
   const { pod_id } = useParams();
   const [podcast, setPodcast] = useState("");
   const [categoria, setCategoria] = useState([]);
   const [endereco, setEndereco] = useState([]);
-  const [opcao, setOpcao] = useState("");
   const [acompnhamento, setAcompanhamento] = useState([]);
   const [favorito, setFavoritar] = useState([]);
   const [nota, setNota] = useState(null);
   const [media, setMedia] = useState(0);
   const [comentarios, setComentarios] = useState([]);
-  const [likes, setLikes] = useState([]);
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const [update, setUpdate] = useState(true);
-  const [resposta, setResposta] = useState([]);
 
   const profile = useSelector((state) => state.user.profile);
 
@@ -84,7 +81,7 @@ export default function Podcast() {
       }
     }
     view();
-  }, [update]);
+  }, [update,pod_id,profile]);
 
   async function setaCheckBox() {
     const acompanhandoResp = await api.get(`acompanhando/${pod_id}`);
@@ -154,7 +151,7 @@ export default function Podcast() {
       }
 
       setaCheckBox();
-      setOpcao(e);
+
       console.log(e);
     } else {
       toast.error("Você precisa logar para fazer essa ação");
@@ -190,7 +187,7 @@ export default function Podcast() {
         }
       }
 
-      if (valor == 0) {
+      if (valor === 0) {
         const valor_media = await api.get(`${pod_id}/medianota`);
         setMedia(valor_media.data);
         toast.success(`Você removeu sua nota`);
@@ -252,6 +249,7 @@ export default function Podcast() {
           >
             <div className="img" style={{ padding: 20 }}>
               <img
+                alt="avatar"
                 className="shadow podcast-image"
                 src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
               />
@@ -272,7 +270,7 @@ export default function Podcast() {
 
             <div style={{ display: "flex" }}>
               {favorito.fbk_status !== 1 ? (
-                <a onClick={() => favoritar()}>
+                <i onClick={() => favoritar()}>
                   <Lottie
                     style={{ marginTop: -25, marginBottom: -20 }}
                     options={defaultOptions}
@@ -281,16 +279,16 @@ export default function Podcast() {
                     speed={2}
                     direction={-3}
                   />
-                </a>
+                </i>
               ) : (
-                <a onClick={() => favoritar()}>
+                <i onClick={() => favoritar()}>
                   <Lottie
                     style={{ marginTop: -25, marginBottom: -20 }}
                     options={defaultOptions}
                     height={100}
                     width={100}
                   />
-                </a>
+                </i>
               )}
 
               <select
@@ -483,7 +481,11 @@ export default function Podcast() {
                   (item) =>
                     item.includes(".com") && (
                       <div style={{ padding: 5, margin: 5 }}>
-                        <a target="_blank" href={item}>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={item}
+                        >
                           {item.includes("spotify.com") ? (
                             <FaSpotify style={{ color: "#1DB954	" }} size={50} />
                           ) : item.includes("youtube.com") ? (
@@ -535,6 +537,7 @@ export default function Podcast() {
               {profile && (
                 <div style={{ width: 50, height: 50 }}>
                   <img
+                    alt="avatar"
                     style={{
                       width: "100%",
                       height: "100%",

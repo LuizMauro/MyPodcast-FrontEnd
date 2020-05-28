@@ -1,29 +1,19 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Form } from "@unform/web";
-import * as Yup from "yup";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css'
 import InputMask from 'react-input-mask';
 
 import {
-  Button,
+
   Card,
   CardBody,
   Container,
   Row,
   Col,
-  CardTitle,
+
 } from "reactstrap";
 
-export default function EditarPodcast() {
-  const [editMode, setEditMode] = useState(false);
-  const formRef = useRef(null);
-  const [file, setFile] = useState(null);
-  const [podcasts, setPodcasts] = useState([]);
-  const [editarPod, setEditarPod] = useState([]);
-  const [update, setUpdate] = useState(false);
+export default function AssinarPremium() {
 
   const [cvc, setCvc] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -41,7 +31,6 @@ export default function EditarPodcast() {
 
   return (
     <>
-      {console.log(podcasts)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>

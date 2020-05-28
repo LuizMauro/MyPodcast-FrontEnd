@@ -5,11 +5,6 @@ import * as Yup from "yup";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import {
-  updatePublicidadeRequest,
-  deletePublicidadeRequest,
-} from "../../../../store/modules/publicidade/actions";
-import history from "../../../../services/history";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import Input from "../../../../components/Input";
@@ -80,22 +75,23 @@ export default function EditarPodcast() {
   }
 
   async function handleSubmit({ pub_descricao, pub_link }) {
-    if(!state[0].endDate){
+    if (!state[0].endDate) {
       toast.error("Escolha uma data");
+
       return;
     }
-    
-    const pubid = editarPub.pub_id
+
+    const pubid = editarPub.pub_id;
     const dateTime = state[0].endDate.toISOString();
     const adata = dateTime.replace(
       /^(\d{4})-(\d{2})-(\d{2})\T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
       "$1-$2-$3 $4:$5:$6"
     );
 
-    if(!preview){
-      toast.error("Imagem obrigatória")
+    if (!preview) {
+      toast.error("Imagem obrigatória");
     }
-    console.log('o file',file);
+    console.log("o file", file);
 
     if (file) {
       if (
@@ -129,7 +125,7 @@ export default function EditarPodcast() {
 
       api.put(`/publicidade/${pubid}`, data);
       toast.success("Publicidade editada!");
-     setEditMode(false);
+      setEditMode(false);
 
       formRef.current.setErrors(false);
     } catch (err) {

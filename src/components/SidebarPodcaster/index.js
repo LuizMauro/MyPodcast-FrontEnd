@@ -3,8 +3,6 @@ import Navitem from "../NavItemDash/Navitem";
 import Sidebar from "react-sidebar";
 import {
   FaMicrophone,
-  FaUserAlt,
-  FaListUl,
   FaHandshake,
   FaAngleLeft,
   FaAngleRight,
@@ -13,7 +11,6 @@ import {
 } from "react-icons/fa";
 import { signOut } from "../../store/modules/auth/actions";
 import { useDispatch } from "react-redux";
-import { GoMegaphone } from "react-icons/go";
 import { Col, Row, NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
 
 import "./styles.css";
@@ -209,11 +206,10 @@ class SidebarPod extends Component {
 
                         <NavLink className="nav-link-icon icone-li dash-icon">
                           <FaSignOutAlt
-                            onClick={this.handleSignOut}
+                            onClick={this.props.signOut}
                             color={"#FFF"}
                             style={{ width: 50, height: 50, cursor: "pointer" }}
                             className="navbar-icon"
-                            onClick={this.props.signOut}
                           />
                         </NavLink>
                       </NavItem>

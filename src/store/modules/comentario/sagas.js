@@ -1,14 +1,13 @@
-import { takeLatest, call, put, all } from "redux-saga/effects";
+import { takeLatest, call, all } from "redux-saga/effects";
 
 import api from "../../../services/api";
-import history from "../../../services/history";
 import { toast } from "react-toastify";
 
 export function* createComentario({ payload }) {
   try {
     const { cmt_conteudo, pod_id, tag_id } = payload;
 
-    const response = yield call(api.post, `comentar/${pod_id}/${tag_id}`, {
+    yield call(api.post, `comentar/${pod_id}/${tag_id}`, {
       cmt_conteudo,
     });
     toast.success("Comentário publicado");

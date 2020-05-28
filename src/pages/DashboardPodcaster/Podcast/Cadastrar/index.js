@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import api from "../../../../services/api";
@@ -7,7 +6,6 @@ import history from "../../../../services/history";
 import { toast } from "react-toastify";
 import Textarea from "../../../../components/Textarea";
 import Input from "../../../../components/Input";
-import FileInput from "../../../../components/FileInput/FileInput";
 import { date } from "../../../../utils/Date";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
 import { MdClose } from "react-icons/md";
@@ -189,6 +187,7 @@ export default function Podcast() {
                               onClick={() => deletePreview()}
                             />
                             <img
+                            alt="avatar"
                               style={{
                                 maxHeight: 400,
                                 height: "100%",
@@ -203,7 +202,6 @@ export default function Podcast() {
                             type="file"
                             style={{ minHeight: 400 }}
                             name="pod_endereco_img"
-                            type="file"
                             id="pod_endereco_img"
                             accept="image/*"
                             data-file={file}
@@ -355,16 +353,6 @@ export default function Podcast() {
                       </Button>
                     </div>
                   </Form>
-                  <Row className="mt-1">
-                    <Col xs="6">
-                      <a
-                        className="text-light"
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                      ></a>
-                    </Col>
-                    <Col className="text-right" xs="6"></Col>
-                  </Row>
                 </CardBody>
               </Card>
             </Col>

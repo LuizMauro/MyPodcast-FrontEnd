@@ -1,13 +1,8 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { createPublicidadeRequest } from "../../../../store/modules/publicidade/actions";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
-import * as locales from "react-date-range/dist/locale";
 import pt from "date-fns/locale/pt";
-import subDays from "date-fns/subDays";
-import { DateRange, Calendar } from "react-date-range";
-import { parseISO } from "date-fns";
+import { DateRange} from "react-date-range";
 import Input from "../../../../components/Input";
 import { MdClose } from "react-icons/md";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
@@ -17,7 +12,6 @@ import { toast } from "react-toastify";
 
 export default function Categoria() {
   const formRef = useRef(null);
-  const dispatch = useDispatch();
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
 
@@ -47,7 +41,7 @@ export default function Categoria() {
 
     const dateTime = state[0].endDate.toISOString();
     const adata = dateTime.replace(
-      /^(\d{4})-(\d{2})-(\d{2})\T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
+      /^(\d{4})-(\d{2})-(\d{2})(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
       "$1-$2-$3 $4:$5:$6"
     );
 
@@ -127,6 +121,7 @@ export default function Categoria() {
                               onClick={() => deletePreview()}
                             />
                             <img
+                            alt="img-preview"
                               style={{
                                 maxHeight: 400,
                                 height: "100%",

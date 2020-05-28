@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import { IoMdMicrophone, IoMdHeadset } from "react-icons/io";
@@ -51,7 +50,7 @@ export default function Cadastro() {
         }
       );
 
-      if (tusId != "") {
+      if (tusId !== "") {
         dispatch(signUpRequest(nome, senha, email, cpf, tusId));
       } else {
         setErrorProvider("Selecione entre Ouvinte ou Podcaster!");

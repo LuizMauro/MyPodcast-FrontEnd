@@ -1,18 +1,13 @@
-import { takeLatest, call, put, all } from "redux-saga/effects";
+import { takeLatest, call, all } from "redux-saga/effects";
 
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 
 export function* createPublicidade({ payload }) {
-  const {
-    pub_descricao,
-    pub_data_fim,
-    file,
-    pub_link,
-  } = payload;
+  const { pub_descricao, pub_data_fim, file, pub_link } = payload;
 
   try {
-    const response = yield call(api.post, "/publicidade", {
+    yield call(api.post, "/publicidade", {
       pub_descricao,
       pub_data_fim,
       file,
