@@ -49,10 +49,10 @@ import CategoriasAdmCadastrar from '../pages/Dashboard/Categoria/Cadastrar';
 import SolicitacoesAdm from '../pages/Dashboard/Solicitacao';
 import UsuariosAdm from '../pages/Dashboard/Usuario';
 import ModeradoresAdm from '../pages/DashboardMod/Podcast';
-import HomeAdm from '../pages/Dashboard/Home'
 import PublicidadeAdm from '../pages/Dashboard/Publicidade/Listar';
 import PublicidadeAdmCadastrar from '../pages/Dashboard/Publicidade/Cadastrar';
 import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
+import PlanoAdm from '../pages/Dashboard/Planos';
 
 //Imports CSS
 import '../assets/css/argon-design-system-react.css';
@@ -87,13 +87,11 @@ export default function Routes() {
 				component={PodcasterPodcasts}
 			/>
 			<PrivateRoutePOD
-				exact
 				path="/podcaster/dashboard/podcasts/cadastrar"
 				exact
 				component={PodcasterCadastrarPodcast}
 			/>
 			<PrivateRoutePOD
-				exact
 				path="/podcaster/dashboard/assinar"
 				exact
 				component={PodcasterAssinarPremium}
@@ -106,7 +104,6 @@ export default function Routes() {
 				component={PremiumPodcasts}
 			/>
 			<PrivateRoutePremium
-				exact
 				path="/podcaster/premium/dashboard/podcasts/cadastrar"
 				exact
 				component={PremiumCadastrarPodcast}
@@ -136,54 +133,50 @@ export default function Routes() {
 			<PrivateRouteADM exact path="/adm/dashboard" exact component={Dashboard} />
 			
 			<PrivateRouteADM
-				exact
 				path="/adm/dashboard/usuarios"
 				exact
 				component={UsuariosAdm}
 			/>
 			<PrivateRouteADM
-				exact
 				path="/adm/dashboard/podcasts/cadastrar"
 				exact
 				component={PodcastAdmCadastrar}
 			/>
 			<PrivateRouteADM
-				exact
 				path="/adm/dashboard/podcasts/"
 				exact
 				component={PodcastAdm}
 			/>
 			<PrivateRouteADM
-				exact
 				path="/adm/dashboard/solicitacoes"
 				exact
 				component={SolicitacoesAdm}
 			/>
 			<PrivateRouteADM
-				exact
 				path="/adm/dashboard/moderadores"
 				exact
 				component={ModeradoresAdm}
 			/>
 			<PrivateRouteADM
-				exact
 				path="/adm/dashboard/publicidade"
 				exact
 				component={PublicidadeAdm}
 			/>
 			<PrivateRouteADM
-				exact
-				path="/adm/dashboard/publicidade"
+				path="/adm/dashboard/publicidade/cadastrar"
 				exact
 				component={PublicidadeAdmCadastrar}
 			/>
 			<PrivateRouteADM
+				path="/adm/dashboard/plano"
 				exact
+				component={PlanoAdm}
+			/>
+			<PrivateRouteADM
 				path="/adm/dashboard/relatorio"
 				exact
 				component={RelatorioAdm}
 			/>
-			
 
 			<Route path="/" component={NotFound404} />
 			<Route path="/error" exact component={NotFound404} />

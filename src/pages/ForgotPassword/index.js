@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import { resetPasswordRequest } from "../../store/modules/auth/actions";

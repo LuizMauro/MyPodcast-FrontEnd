@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 //import api from "../../../services/api";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
-import { updateToPodcasterRequest } from "../../store/modules/user/actions";
-import { useDispatch } from "react-redux";
-import { signOut } from "../../store/modules/auth/actions";
 
 import {
-  Button,
   Card,
   CardBody,
-  CardLink,
   Container,
   Row,
   Col,
@@ -39,47 +33,148 @@ export default function Mapa() {
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title border">
-                  Acesso
-                </CardTitle>
+                <CardTitle className="dash-home-title border">Acesso</CardTitle>
 
-                {profile ? (profile.tus_descricao === "Administrador" ? (
-                  <>
-                    <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
-                    <Link to="/adm/dashboard/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Link>
-                    <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
-                    <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
-                  </>
-                ) : profile.tus_descricao === "Moderador" ? (
-                  <>
-                    <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
-                    <Link to="/mod/dashboard/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Link>
-                    <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
-                    <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
-                  </>
-                ) : profile.tus_descricao === "Podcaster" ? (
-                  <>
-                    <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
-                    <Link to="/podcaster/dashboard/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Painel</Link>
-                    <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
-                    <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
-                  </>
-                ) : (
-                        <>
-                          <Link to="/" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Home</Link>
-                          <Link to="/profile" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Perfil</Link>
-                          <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Sair</Link>
-                        </>
-                      ))
-                  : (
+                {profile ? (
+                  profile.tus_descricao === "Administrador" ? (
                     <>
-                      <Link to="/Login" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Entrar</Link>
-                      <Link to="/Cadastro" className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Cadastrar</Link>
-                      <Link to="/" className="mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>Pagina Inicial</Link>
+                      <Link
+                        to="/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Home
+                      </Link>
+                      <Link
+                        to="/adm/dashboard/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Painel
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Perfil
+                      </Link>
+                      <Link
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Sair
+                      </Link>
                     </>
-                  )}
-
-
+                  ) : profile.tus_descricao === "Moderador" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Home
+                      </Link>
+                      <Link
+                        to="/mod/dashboard/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Painel
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Perfil
+                      </Link>
+                      <Link
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Sair
+                      </Link>
+                    </>
+                  ) : profile.tus_descricao === "Podcaster" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Home
+                      </Link>
+                      <Link
+                        to="/podcaster/dashboard/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Painel
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Perfil
+                      </Link>
+                      <Link
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Sair
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Home
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Perfil
+                      </Link>
+                      <Link
+                        className="d-flex mt-2 border-top border-bottom"
+                        style={{ justifyContent: "center" }}
+                      >
+                        Sair
+                      </Link>
+                    </>
+                  )
+                ) : (
+                  <>
+                    <Link
+                      to="/Login"
+                      className="d-flex mt-2 border-top border-bottom"
+                      style={{ justifyContent: "center" }}
+                    >
+                      Entrar
+                    </Link>
+                    <Link
+                      to="/Cadastro"
+                      className="mt-2 border-top border-bottom"
+                      style={{ justifyContent: "center" }}
+                    >
+                      Cadastrar
+                    </Link>
+                    <Link
+                      to="/"
+                      className="mt-2 border-top border-bottom"
+                      style={{ justifyContent: "center" }}
+                    >
+                      Pagina Inicial
+                    </Link>
+                  </>
+                )}
               </CardBody>
             </Card>
           </Col>
@@ -92,7 +187,10 @@ export default function Mapa() {
                 <CardTitle className="dash-home-title border">
                   Termo de uso
                 </CardTitle>
-                <Link className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>
+                <Link
+                  className="d-flex mt-2 border-top border-bottom"
+                  style={{ justifyContent: "center" }}
+                >
                   Regras
                 </Link>
               </CardBody>
@@ -107,7 +205,11 @@ export default function Mapa() {
                 <CardTitle className="dash-home-title border">
                   Mapa do site
                 </CardTitle>
-                <Link to="/Sitemap" className="d-flex mt-2 border-top border-bottom" style={{ justifyContent: "center" }}>
+                <Link
+                  to="/Sitemap"
+                  className="d-flex mt-2 border-top border-bottom"
+                  style={{ justifyContent: "center" }}
+                >
                   Estrutura
                 </Link>
               </CardBody>

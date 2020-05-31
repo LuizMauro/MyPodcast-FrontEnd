@@ -3,18 +3,15 @@ import Navitem from "../NavItemDash/Navitem";
 import Sidebar from "react-sidebar";
 import {
   FaMicrophone,
-
-  FaListUl,
   FaAngleLeft,
   FaAngleRight,
   FaUserCircle,
   FaSignOutAlt,
   FaChartBar,
-  FaFileContract
+  FaFileContract,
 } from "react-icons/fa";
 import { signOut } from "../../store/modules/auth/actions";
 import { useDispatch } from "react-redux";
-import { GoMegaphone } from "react-icons/go";
 import { Col, Row, NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
 
 import "./styles.css";
@@ -124,7 +121,9 @@ class SidebarPremium extends Component {
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={
-                    <FaFileContract style={{ width: 25, height: 25 }}></FaFileContract>
+                    <FaFileContract
+                      style={{ width: 25, height: 25 }}
+                    ></FaFileContract>
                   }
                 />
               </ul>
@@ -222,7 +221,6 @@ class SidebarPremium extends Component {
                             color={"#FFF"}
                             style={{ width: 50, height: 50, cursor: "pointer" }}
                             className="navbar-icon"
-                            onClick={this.props.signOut}
                           />
                         </NavLink>
                       </NavItem>

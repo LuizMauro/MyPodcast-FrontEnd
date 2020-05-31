@@ -1,8 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {  useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form } from "@unform/web";
-import * as Yup from "yup";
-import { toast } from "react-toastify";
 import api from "../../../services/api";
 import { FaHeart, FaHeadphones } from "react-icons/fa";
 import { MdGrade } from "react-icons/md";
@@ -10,7 +7,6 @@ import { AiFillSchedule } from "react-icons/ai";
 import Comentario from "../../../components/Comentarios";
 
 import {
-  Button,
   Card,
   CardBody,
   Container,
@@ -90,7 +86,6 @@ export default function EditarPodcast() {
                         value={podcasts}
                         style={{
                           color: "#fff",
-                          width: "100%",
                           paddingLeft: 10,
                           paddingRight: 10,
                           width: 160,

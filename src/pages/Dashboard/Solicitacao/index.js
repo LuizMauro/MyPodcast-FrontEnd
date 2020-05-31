@@ -1,10 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { updateSolicitacaoRequest } from "../../../store/modules/podcast/actions";
-import { FaSpotify, FaInternetExplorer, FaYoutube } from "react-icons/fa";
-import PodcastCard from "../../../styles/ItemCard";
 
 import {
   Button,
@@ -213,6 +211,7 @@ export default function Solicitacao() {
                 >
                   <div className="img" style={{ padding: 20 }}>
                     <img
+                      alt="podcast cover"
                       className="shadow podcast-image"
                       src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
                     />
@@ -328,6 +327,7 @@ export default function Solicitacao() {
                             <a
                               href={item}
                               target="_blank"
+                              rel="noopener noreferrer"
                               style={{
                                 color: "rgb(255, 255, 255)",
                                 marginBottom: 5,

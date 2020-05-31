@@ -1,4 +1,4 @@
-export function creaetePublicidadeRequest(
+export function createPublicidadeRequest(
   pub_descricao,
   pub_data_fim,
   file,

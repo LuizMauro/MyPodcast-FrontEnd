@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -8,7 +7,6 @@ import PodcastList from "../../../styles/ItemList";
 import "./style.css";
 
 import {
-  Button,
   Card,
   CardBody,
   Container,

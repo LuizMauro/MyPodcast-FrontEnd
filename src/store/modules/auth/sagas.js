@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all } from "redux-saga/effects";
 import { toast } from "react-toastify";
 
-import { logarSuccess, logarFailure, forgotPasswordSuccess } from "./actions";
+import { logarSuccess, logarFailure } from "./actions";
 
 import api from "../../../services/api";
 import history from "../../../services/history";

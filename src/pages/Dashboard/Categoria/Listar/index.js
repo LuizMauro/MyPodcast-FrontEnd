@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form } from "@unform/web";
-import * as Yup from "yup";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -9,7 +8,7 @@ import { updateCategoriaRequest } from "../../../../store/modules/categoria/acti
 
 import Input from "../../../../components/Input";
 import PodcastList from "../../../../styles/ItemList";
-import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
+import { FaPen, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
 import {
