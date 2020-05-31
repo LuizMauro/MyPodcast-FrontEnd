@@ -25,7 +25,7 @@ import Profile from '../pages/Profile';
 //Podcaster
 import PodcasterPodcasts from '../pages/DashboardPodcaster/Podcast/Listar/index';
 import PodcasterCadastrarPodcast from '../pages/DashboardPodcaster/Podcast/Cadastrar/index'
-import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/index'
+import PodcasterAssinarPremium from '../pages/DashboardPodcaster/AssinarPremium/'
 
 //Podcater Premium
 import PremiumPodcasts from '../pages/DashboardPremium/Podcast/Listar';
