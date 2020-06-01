@@ -105,7 +105,7 @@ export default function CheckoutForm() {
         },
       },
       return_url: "http://localhost:3000/",
-      receipt_email: "luizm1997@hotmail.com"
+      receipt_email: profile.usu_email
     });
     console.log("TESTE - > ", payload);
     if (payload.error) {
