@@ -1,0 +1,17 @@
+.ass-title {
+  color: rgb(27, 253, 190);
+  font-weight: bolder;
+}
+
+.ass-text {
+  color: rgb(255, 255, 255);
+  font-weight: 400;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  left:0 !important;
+  transform: none !important;
+}

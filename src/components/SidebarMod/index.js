@@ -201,7 +201,7 @@ class SidebarMod extends Component {
 
                       <NavLink className="nav-link-icon icone-li dash-icon">
                         <FaSignOutAlt
-                          onClick={this.handleSignOut}
+                          onClick={this.props.signOut}
                           color={"#FFF"}
                           style={{ width: 50, height: 50, cursor: "pointer" }}
                           className="navbar-icon"
