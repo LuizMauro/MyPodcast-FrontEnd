@@ -22,7 +22,7 @@ import {
   import * as errorCard from '../../../assets/animations/error_credit_card.json'
   import Lottie from 'react-lottie'
 
-  
+  import { useSelector } from "react-redux";
    
 
 export default function CheckoutForm() {
@@ -34,6 +34,13 @@ export default function CheckoutForm() {
   const [plano, setPlano] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
+  const [respClientSecret, SetrespClientSecret] = useState(null);
+
+  const [buttonPodCaster, setButtonPodCaster] = useState("");
+  const [buttonOuvinte, setButtonOuvinte] = useState("");
+  const [errorProvider, setErrorProvider] = useState("");
+
+  const profile = useSelector((state) => state.user.profile);
 
    useEffect( async() => {
     // Create PaymentIntent as soon as the page loads
@@ -41,12 +48,16 @@ export default function CheckoutForm() {
   }, []);
 
   async function createIntent(item){
+
+    SetrespClientSecret(false);
+
     const response = await axios.post("http://localhost:3333/create-payment-intent",{
       items:item
   })
 
   console.log(response)
   setClientSecret(response.data.clientSecret);
+  SetrespClientSecret(true);
 
   }
 
@@ -71,6 +82,7 @@ export default function CheckoutForm() {
   const handleChange = async (event) => {
     // Listen for changes in the CardElement
     // and display any errors as the customer types their card details
+    console.log(profile);
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };
@@ -88,8 +100,8 @@ export default function CheckoutForm() {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          email: "luizm1997@hotmail.com",
-          name: "Luiz Mauro"
+          email: profile.usu_email,
+          name:  profile.usu_nome
         },
       },
       return_url: "http://localhost:3000/",
@@ -136,6 +148,20 @@ export default function CheckoutForm() {
     }
   };
 
+  function Plano(id) {
+    if (id === 1) {
+      createIntent({id:"Mensal", price: 2000})
+      setButtonPodCaster("");
+      setButtonOuvinte("buttonActive");
+    } else {
+      createIntent({id:"Anual", price: 20000})
+      setButtonOuvinte("");
+      setButtonPodCaster("buttonActive");
+    }
+    setErrorProvider("");
+  
+  }
+
 
   return (
     <section className="section section-shaped section-lg">
@@ -147,69 +173,122 @@ export default function CheckoutForm() {
               className="px-lg-5 py-lg-5"
               enctype="multipart/form-data"
             >
-              <button onClick={() => createIntent({id:"Plano 1", price: 3000})}>Plano 1</button>
-              <button onClick={() => createIntent({id:"Plano 2", price: 5000})}>Plano 2</button>
-                  <form id="payment-form" onSubmit={handleSubmit} style={{margin:0}}>
-                      <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
-                      <button
-                      className="buttonPagar"
-                        disabled={processing || disabled || succeeded}
-                        id="submit"
-                      >
-                        <span id="button-text">
-                          {processing ? (
-                          <ClipLoader size={30} color={"#fff"} />
-                          ) : (
-                            "Comprar"
-                          )}
-                        </span>
-                      </button>
-                      {/* Show any error that happens when processing the payment */}
-                      
-                      {/* Show a success message upon completion */}
-                    
-                    <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
-                    {processing && (
-                        <Lottie style={{margin:30}} options={proccesOptions}
-                      
-                        height={200}
-                        width={320}
-                       />
-                      )}
+             
+             
 
-                      {succeeded && (
-                        <Lottie style={{margin:30}} options={successOptions}
-                        height={120}
-                        width={120}
-                       />
-                      )}
-
-                      {succeeded && (
-                       <h3 style={{color:"#00c885", fontWeight:"bold"}}>
-                         Pagamento realizado com sucesso!
-                       </h3>
-                      )}
-
-                      {error && (
-                       <Lottie style={{margin:30}} options={errorOptions}
-                       height={120}
-                       width={120}
-                      />
-                      )}
-
-                      {error && (
-                        <div className="card-error" role="alert">
-                          {error}
-                        </div>
-                      )}
+              <Row lg="12" className="mb-3">
+                      <Col xs="6">
+                        <Button
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            background: "#232659",
+                            border: "none",
+                            padding: "10px 0 10px 0",
+                            color: "#1BFDBE",
+                          }}
+                          className={buttonOuvinte}
+                          onClick={(e) => Plano(1)}
+                        >
+                         
+                          <p className="mt-2">Mensal</p>
+                        </Button>
+                      </Col>
+                      <Col xs="6">
+                        <Button
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            background: "#232659",
+                            border: "none",
+                            padding: "10px 0 10px 0",
+                            color: "#1BFDBE",
+                          }}
+                          className={buttonPodCaster}
+                          onClick={(e) => Plano(2)}
+                        >
+                         
+                          <p className={"mt-2"}>Anual</p>
+                        </Button>
+                      </Col>
+                      <Col xs="12 mt-2">
+                        <p className="text-center" style={{ color: "red" }}>
+                          {errorProvider !== "" ? errorProvider : " "}
+                        </p>
+                      </Col>
+                    </Row>
+                  
+                  { respClientSecret === false && (
+                    <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                      <ClipLoader size={50} color={"#fff"} />
                     </div>
-                      
+                  ) }
 
-                      {/* <p className={succeeded ? "result-message" : "result-message hidden"}>
-                      Pagamento feito com sucesso!
-                      </p> */}
-                    </form>
+                  { respClientSecret && !succeeded && (
+                    <form id="payment-form" onSubmit={handleSubmit} style={{margin:0}}>
+                    <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
+                    <button
+                    className="buttonPagar"
+                      disabled={processing || disabled || succeeded}
+                      id="submit"
+                    >
+                      <span id="button-text">
+                        {processing ? (
+                        <ClipLoader size={30} color={"#fff"} />
+                        ) : (
+                          "Comprar"
+                        )}
+                      </span>
+                    </button>
+                    {/* Show any error that happens when processing the payment */}
+                    
+                   
+                    
 
+                    {/* <p className={succeeded ? "result-message" : "result-message hidden"}>
+                    Pagamento feito com sucesso!
+                    </p> */}
+                  </form>
+
+                  )}
+                   {/* Show a success message upon completion */}
+                  
+                   <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+                  {processing && (
+                      <Lottie style={{margin:30}} options={proccesOptions}
+                    
+                      height={200}
+                      width={320}
+                     />
+                    )}
+
+                    {succeeded && (
+                      <Lottie style={{margin:30}} options={successOptions}
+                      height={120}
+                      width={120}
+                     />
+                    )}
+
+                    {succeeded && (
+                     <h3 style={{color:"#00c885", fontWeight:"bold"}}>
+                       Pagamento realizado com sucesso!
+                     </h3>
+                    )}
+
+                    {error && (
+                     <Lottie style={{margin:30}} options={errorOptions}
+                     height={120}
+                     width={120}
+                    />
+                    )}
+
+                    {error && (
+                      <div className="card-error" role="alert">
+                        {error}
+                      </div>
+                    )}
+                  </div>
+                  
             </CardBody>
             </Card>
             </Col>
