@@ -51,7 +51,7 @@ import UsuariosAdm from '../pages/Dashboard/Usuario';
 import ModeradoresAdm from '../pages/DashboardMod/Podcast';
 import PublicidadeAdm from '../pages/Dashboard/Publicidade/Listar';
 import PublicidadeAdmCadastrar from '../pages/Dashboard/Publicidade/Cadastrar';
-import RelatorioAdm from '../pages/Dashboard/contents/Relatorio';
+import RelatorioAdm from '../pages/Dashboard/Relatorio';
 import PlanoAdm from '../pages/Dashboard/Planos';
 
 //Imports CSS

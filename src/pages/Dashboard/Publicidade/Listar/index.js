@@ -4,18 +4,14 @@ import { Form } from "@unform/web";
 import * as Yup from "yup";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import Input from "../../../../components/Input";
 import PodcastList from "../../../../styles/ItemList";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import * as locales from "react-date-range/dist/locale";
 import pt from "date-fns/locale/pt";
-import subDays from "date-fns/subDays";
-import { DateRange, Calendar } from "react-date-range";
-import { parseISO } from "date-fns";
+import { DateRange} from "react-date-range";
 
 import {
   Button,
@@ -34,12 +30,8 @@ export default function EditarPodcast() {
   const [editarPub, setEditarPub] = useState([]);
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
-  const [update, setUpdate] = useState(false);
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const dispatch = useDispatch();
-
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -300,6 +292,7 @@ export default function EditarPodcast() {
                                 borderRadius: 15,
                               }}
                               src={preview}
+                              alt="avatar"
                             />
                           </div>
                         ) : (

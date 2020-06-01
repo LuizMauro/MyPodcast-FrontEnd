@@ -152,6 +152,7 @@ export default function Resposta({
                       src={
                         "https://api.adorable.io/avatars/285/" + answer.usu_nome
                       }
+                      alt="avatar"
                     />
                   </div>
 
@@ -216,7 +217,7 @@ export default function Resposta({
           )
       )}
 
-      {responder == item.comment_id && (
+      {responder === item.comment_id && (
         <>
           <div
             style={{

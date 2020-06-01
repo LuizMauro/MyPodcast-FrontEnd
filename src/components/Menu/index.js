@@ -12,10 +12,6 @@ import "./styles.css";
 // reactstrap components
 import {
   UncontrolledCollapse,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
   NavbarBrand,
   Navbar,
   NavItem,
