@@ -203,6 +203,12 @@ export default function CheckoutForm() {
                 className="px-lg-5 py-lg-5"
                 enctype="multipart/form-data"
               >
+                 <CardTitle
+                    style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
+                  >
+                    Escolha um Plano
+                  </CardTitle>
+
                 <Row lg="12" className="mb-3">
                   <Col xs="6">
                     <Button
@@ -217,7 +223,7 @@ export default function CheckoutForm() {
                       className={buttonOuvinte}
                       onClick={(e) => Plano(1)}
                     >
-                      <p className="mt-2">Mensal</p>
+                      <p className="mb-0 font-weight-bold">Mensal R$ 20,00 </p>
                     </Button>
                   </Col>
                   <Col xs="6">
@@ -233,7 +239,7 @@ export default function CheckoutForm() {
                       className={buttonPodCaster}
                       onClick={(e) => Plano(2)}
                     >
-                      <p className={"mt-2"}>Anual</p>
+                      <p className="mb-0 font-weight-bold">Anual R$ 200,00 </p>
                     </Button>
                   </Col>
                   <Col xs="12 mt-2">

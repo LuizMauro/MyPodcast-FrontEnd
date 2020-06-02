@@ -90,6 +90,7 @@ export default function Login() {
                     </div>
 
                     <ReCAPTCHA
+                    style={{marginLeft:-40}}
                       sitekey="6LeY6fUUAAAAAMaL1WdfSI7l0O0PjgBKdSXX7-dM"
                       onChange={(v) => recaptchaVerify(v)}
                     />
