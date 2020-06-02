@@ -21,8 +21,10 @@ import * as success from "../../../assets/animations/success_credit_card.json";
 import * as procces from "../../../assets/animations/procces_credit_card.json";
 import * as errorCard from "../../../assets/animations/error_credit_card.json";
 import Lottie from "react-lottie";
-
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { updatePremiumRequest } from "../../../store/modules/user/actions";
+import { useDispatch } from "react-redux";
 
 export default function CheckoutForm() {
   const [succeeded, setSucceeded] = useState(false);
@@ -34,6 +36,7 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const [respClientSecret, SetrespClientSecret] = useState(null);
+  const dispatch = useDispatch();
 
   const [buttonPodCaster, setButtonPodCaster] = useState("");
   const [buttonOuvinte, setButtonOuvinte] = useState("");
@@ -43,7 +46,7 @@ export default function CheckoutForm() {
   const usu_email = profile.usu_email;
   const usu_nome = profile.usu_nome;
 
-  useEffect(async () => {
+  useEffect(() => {
     // Create PaymentIntent as soon as the page loads
   }, []);
 
@@ -141,8 +144,14 @@ export default function CheckoutForm() {
         payload.paymentIntent.description,
         payload.paymentIntent.payment_method_types
       );
+      toast.success("Aguarde. Você será redirecionado");
+      setTimeout(activePremium, 5000);
     }
   };
+
+  async function activePremium() {
+    dispatch(updatePremiumRequest());
+  }
 
   const successOptions = {
     loop: false,

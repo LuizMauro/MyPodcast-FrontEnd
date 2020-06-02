@@ -6,6 +6,7 @@ import {
   updateProfileSuccess,
   updateProfileFailure,
   updateToPodcasterSuccess,
+  updatePremiumSuccess
 } from "./actions";
 import { RefreshToken } from "../auth/actions";
 
@@ -82,9 +83,33 @@ export function* updatePodcaster() {
   }
 }
 
+export function* updatePremium() {
+  try {
+    const response = yield call(api.put, `/virarpremium`);
+    const newresponse = yield call(api.put, `/refreshtoken`);
+
+    const { token, user } = newresponse.data;
+    api.defaults.headers["Authorization"] = `Bearer ${token}`;
+
+    yield put(RefreshToken(token, user));
+    yield put(
+      updatePremiumSuccess(
+        response.data.usu_premium
+      )
+    );
+
+    history.push("../../podcaster/premium/dashboard/podcasts");
+    toast.success("Bem-vindo ao painel Premium");
+  } catch (err) {
+    toast.error("Erro ao ativar ou desativar usuário");
+    console.tron.log("o erro é", err);
+  }
+}
+
 export default all([
   takeLatest("@user/UPDATE_PROFILE_REQUEST", updateProfile),
   takeLatest("@user/UPDATE_STATUS_REQUEST", updateStatus),
   takeLatest("@user/UPDATE_MODERADOR_REQUEST", updateModerador),
   takeLatest("@user/UPDATE_TOPODCASTER_REQUEST", updatePodcaster),
+  takeLatest("@user/UPDATE_PREMIUM_REQUEST", updatePremium),
 ]);

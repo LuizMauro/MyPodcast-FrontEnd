@@ -15,7 +15,7 @@ export default function PrivateRoute({ component: Component, path, ...rest }) {
 					store.getState().auth ? (
 						<Component {...props} />
 					) : (
-						<h1>Area restrita </h1>
+						<h1>Área restrita </h1>
 					)
 				}
 			/>

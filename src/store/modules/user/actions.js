@@ -38,6 +38,19 @@ export function updateToPodcasterSuccess(tus_descricao, tus_id) {
   };
 }
 
+export function updatePremiumRequest() {
+  return {
+    type: "@user/UPDATE_PREMIUM_REQUEST",
+  };
+}
+
+export function updatePremiumSuccess(usu_premium) {
+  return {
+    type: "@user/UPDATE_PREMIUM_SUCCESS",
+    payload: { usu_premium },
+  };
+}
+
 export function updateProfileSuccess(profile) {
   return {
     type: "@user/UPDATE_PROFILE_SUCCESS",

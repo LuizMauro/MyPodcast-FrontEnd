@@ -20,6 +20,10 @@ export default function user(state = INITIAL_STATE, action) {
         draft.profile.tus_id = action.payload.tus_id;
         break;
       }
+      case "@user/UPDATE_PREMIUM_SUCCESS": {
+        draft.profile.usu_premium = action.payload.usu_premium;
+        break;
+      }
       case "@auth/SIGN_OUT": {
         draft.profile = null;
         break;

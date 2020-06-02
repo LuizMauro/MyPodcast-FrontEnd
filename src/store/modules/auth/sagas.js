@@ -25,8 +25,12 @@ export function* logar({ payload }) {
       history.push("/");
     }
 
-    if (user.tus_id === 2) {
+    if (user.tus_id === 2 && user.usu_premium === 0) {
       history.push("/podcaster/dashboard/podcasts");
+    }
+
+    if (user.tus_id === 2 && user.usu_premium === 1) {
+      history.push("/podcaster/premium/dashboard/podcasts");
     }
 
     if (user.tus_id === 3) {
