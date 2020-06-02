@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./checkoutform.js";	
 import "./style.css"
 
-const promise = loadStripe("pk_test_azCrKTmhQ2ph9NJeCHRCAPxH006ldhL02m");
+const promise = loadStripe("pk_test_wih1P39k7lCPP4sAW1afmh08005Ux0NVvw");
 
 export default function index() {
 

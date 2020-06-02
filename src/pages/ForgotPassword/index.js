@@ -167,6 +167,7 @@ export default function Cadastro() {
                       name="usu_email"
                       type="email"
                       placeholder="E-mail cadastrado"
+                      disabled={true}
                     />
                     <Input
                       name="usu_reset_token"
