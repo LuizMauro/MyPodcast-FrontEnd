@@ -59,12 +59,29 @@ export default function CheckoutForm() {
     SetrespClientSecret(true);
   }
 
-  async function sendMail(plano) {
+  async function sendData(plano, metodo_pagamento) {
+    console.log("metodo pagamento", metodo_pagamento[0]);
+
+    let fpg_id = 2;
     let price = 200;
+    let pln_id = 2;
+
+    if (metodo_pagamento[0] === "card") {
+      fpg_id = 1;
+    }
+
     if (plano === "Mensal") {
       price = 20;
+      pln_id = 1;
     }
-    await api.post("/sendmail", { usu_email, usu_nome, price, plano });
+
+    console.log("forma é ", fpg_id);
+    await api.post(`/assinar/${pln_id}/${fpg_id}`, {
+      usu_email,
+      usu_nome,
+      price,
+      plano,
+    });
   }
 
   const cardStyle = {
@@ -120,7 +137,10 @@ export default function CheckoutForm() {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
-      sendMail(payload.paymentIntent.description);
+      sendData(
+        payload.paymentIntent.description,
+        payload.paymentIntent.payment_method_types
+      );
     }
   };
 
