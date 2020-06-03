@@ -140,6 +140,7 @@ export default function CheckoutForm() {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      console.log('vem CA NENEM')
       sendData(
         payload.paymentIntent.description,
         payload.paymentIntent.payment_method_types
