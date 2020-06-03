@@ -6,6 +6,7 @@ import { resetPasswordRequest } from "../../store/modules/auth/actions";
 import Input from "../../components/Input";
 import { toast } from "react-toastify";
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
+import { AiFillQuestionCircle } from "react-icons/ai";
 import api from "../../services/api";
 
 export default function Cadastro() {
@@ -179,6 +180,14 @@ export default function Cadastro() {
                       type="password"
                       placeholder="Cadastre uma nova senha"
                     />
+                    <div className="d-flex">
+                      <AiFillQuestionCircle
+                        size={32}
+                        color="rgb(27, 253, 190)"
+                        style={{position:'absolute',bottom:313,right:50 }}
+                        title="A senha deve conter no mínimo 6 caracteres entre: letra miníscula e maiúscula, números e caracteres especiais"
+                      />
+                    </div>
                     <Input
                       name="confirmaSenha"
                       type="password"
