@@ -10,19 +10,32 @@ import {
   Button,
 } from "reactstrap";
 import api from "../../../services/api";
+import pt from "date-fns/locale/pt";
 
 export default function Assinatura() {
   const [renovar, setRenovar] = useState(false);
   const [dados, setDados] = useState([]);
-  const [data,setData] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function loadAssinatura() {
       const response = await api.get("/assinatura");
       setDados(response.data);
-      const datafim = response.data.ass_datafim.replace(/^(\d{4})-(\d{2})-(\d{2})(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,"$1-$2-$3 $4:$5:$6")
-      setData(datafim)
+      const datafim = response.data.ass_datafim.replace(
+        /^(\d{4})-(\d{2})-(\d{2})(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
+        "$1-$2-$3 $4:$5:$6"
+      );
+      console.log('data',datafim)
+      setData(datafim);
     }
+
+    /* <Col sm="12" md="6" className="mb-3">
+                      <h4 className="ass-title">
+                        Assinatura expira em:{" "}
+                        <span className="ass-text">{data}</span>
+                      </h4>
+                    </Col>
+                    */
 
     loadAssinatura();
   }, []);
@@ -54,14 +67,8 @@ export default function Assinatura() {
                       <h4 className="ass-title">
                         Status da Assinatura:
                         <span className="ass-text">
-                          {dados.ass_id ? ` Válida` : ` Expirada`}
+                          {dados.ass_id ? ` Ativa` : ` Expirada`}
                         </span>
-                      </h4>
-                    </Col>
-                    <Col sm="12" md="6" className="mb-3">
-                      <h4 className="ass-title">
-                        Assinatura expira em:{" "}
-                        <span className="ass-text">{data}</span>
                       </h4>
                     </Col>
                     <Col sm="12" md="6" className="mb-3">
@@ -79,6 +86,12 @@ export default function Assinatura() {
                       <h4 className="ass-title">
                         Forma de Pagamento:{" "}
                         <span className="ass-text">{dados.fpg_descricao}</span>
+                      </h4>
+                    </Col>
+                    <Col sm="12" md="6" className="mb-3">
+                      <h4 className="ass-title">
+                        Assinatura expira em:{" "}
+                        <span className="ass-text">{data}</span>
                       </h4>
                     </Col>
                     {renovar && (

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import { IoMdMicrophone, IoMdHeadset } from "react-icons/io";
+import { AiFillQuestionCircle } from "react-icons/ai";
 import { signUpRequest } from "../../store/modules/auth/actions";
 import Input from "../../components/Input";
 
@@ -92,9 +93,9 @@ export default function Cadastro() {
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>
-            <Col lg="5">
+            <Col lg="7">
               <Card className="bg-secondary shadow border-0">
-                <CardBody className="px-lg-5 py-lg-5">
+                <CardBody className="px-lg-5 py-lg-5" style={{position:'relative'}}>
                   <Form ref={formRef} onSubmit={handleSubmit}>
                     <Row lg="12" className="mb-3">
                       <Col xs="6">
@@ -149,6 +150,15 @@ export default function Cadastro() {
                       type="password"
                       placeholder="Sua senha "
                     />
+                    <div className="d-flex">
+                      <AiFillQuestionCircle
+                        size={32}
+                        color="rgb(27, 253, 190)"
+                        style={{position:'absolute',bottom:313,right:50 }}
+                        title="A senha deve conter no mínimo 6 caracteres entre: letra miníscula e maiúscula, números e caracteres especiais"
+                      />
+                    </div>
+
                     <Input
                       name="confirmarSenha"
                       type="password"
@@ -169,7 +179,7 @@ export default function Cadastro() {
                       </Button>
                     </div>
                   </Form>
-                  <Row className="mt-1">
+                  <Row>
                     <Col xs="6">
                       <a
                         className="text-light"
