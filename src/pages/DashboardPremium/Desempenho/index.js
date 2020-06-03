@@ -33,6 +33,7 @@ export default function EditarPodcast() {
         loadComments();
       }
     }
+    
 
     async function loadComments() {
       const response = await api.get(`allcomentarios/${podinicial}`);
@@ -51,7 +52,8 @@ export default function EditarPodcast() {
 
   async function SelecionarPodcast(e) {
     const id = e.target.value;
-    console.log("seleção", e.target.value);
+    
+    console.log("TESTE ->" , id);
     const response = await api.get(`/estatisticaspremium/${id}`);
     setDados(response.data);
 
@@ -76,27 +78,27 @@ export default function EditarPodcast() {
                   <CardTitle
                     style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
                   >
-                    Desempenho
+                    Desempenho 
+                  
                   </CardTitle>
                   <Row>
                     <Col sm="12" md="2">
                       <select
                         className="select-home shadow"
                         onChange={SelecionarPodcast}
-                        value={podcasts}
                         style={{
                           color: "#fff",
                           paddingLeft: 10,
                           paddingRight: 10,
                           width: 160,
                         }}
-                        type="select"
                         name="select"
                         id="exampleSelect"
                       >
-                        <option value="0">Podcast</option>
+
+                        <option  value="0">Podcast</option>
                         {podcasts.map((item) => (
-                          <option value={item.pod_id}>{item.pod_nome}</option>
+                            <option key={item.pod_id} value={item.pod_id}>{item.pod_nome}</option>
                         ))}
                       </select>
                     </Col>
