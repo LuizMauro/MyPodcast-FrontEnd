@@ -100,8 +100,9 @@ export function* forgotPassword({ payload }) {
 
 
 export function* resetPassword({ payload }) {
-  const {usu_email, usu_token, usu_senha} = payload;
-  const data = {usu_email, usu_token, usu_senha}
+  const {usu_email, usu_reset_token, usu_senha} = payload;
+  console.log('dados',usu_email,usu_reset_token,usu_senha)
+  const data = {usu_email, usu_reset_token, usu_senha}
 
   try {
     const response = yield call(api.post, "/reset_password", data);

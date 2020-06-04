@@ -62,6 +62,7 @@ export default function Cadastro() {
     usu_senha,
     confirmaSenha,
   }) {
+    console.log('token',usu_reset_token);
     try {
       const schema = Yup.object().shape({
         usu_email: Yup.string()

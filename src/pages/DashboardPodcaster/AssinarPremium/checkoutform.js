@@ -140,7 +140,6 @@ export default function CheckoutForm() {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
-      console.log('vem CA NENEM')
       sendData(
         payload.paymentIntent.description,
         payload.paymentIntent.payment_method_types
@@ -204,45 +203,107 @@ export default function CheckoutForm() {
                 className="px-lg-5 py-lg-5"
                 enctype="multipart/form-data"
               >
-                 <CardTitle
-                    style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
-                  >
-                    Escolha um Plano
-                  </CardTitle>
+                <CardTitle
+                  style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
+                >
+                  Escolha um Plano
+                </CardTitle>
+
+                <Row className="mt-3">
+                  <Col lg="6" md="12">
+                    <div
+                      className="shadow"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        minHeight: 400,
+                        maxHeight: 400,
+                        borderRadius: 10,
+                        marginBottom: 10,
+                        background: "#151734",
+                        padding: 20,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Col lg="12" className="asr-title">
+                        <span className="color-primary">Mensal</span>
+                      </Col>
+                      <Col lg="12" className="asr-title">
+                        <span className="color-primary">R$ 20,00</span>
+                      </Col>
+                      <Col lg="12" className="asr-title grid">
+                        <hr className="asr-border" />
+                        <span className="asr-desc">
+                          Desempenho do Podcast
+                        </span>
+                        <hr className="asr-border" />
+                        <span className="asr-desc">
+                          Destaque do Podcast no sistema
+                        </span>
+                        <hr className="asr-border" />
+                      </Col>
+                      <Button
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          background: "#232659",
+                          border: "none",
+                          padding: "10px 0 10px 0",
+                          color: "#1BFDBE",
+                        }}
+                        className={buttonOuvinte}
+                        onClick={(e) => Plano(1)}
+                      >
+                        <p className="mb-0 font-weight-bold">Assinar</p>
+                      </Button>
+                    </div>
+                  </Col>
+                  <Col lg="6" md="12">
+                    <div
+                      className="shadow"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        minHeight: 400,
+                        maxHeight: 400,
+                        borderRadius: 10,
+                        marginBottom: 10,
+                        background: "#151734",
+                        padding: 20,
+                      }}
+                    >
+                      <Col lg="12" className="asr-title">
+                        <span className="color-primary">Anual</span>
+                      </Col>
+                      <Col lg="12" className="asr-title">
+                        <span className="color-primary">R$ 200,00</span>
+                      </Col>
+                      <Col lg="12" className="asr-title grid">
+                        <hr className="asr-border" />
+                        <span className="asr-desc">Mensal +</span>
+                        <hr className="asr-border" />
+                        <span className="asr-desc">2 meses gratuitos</span>
+                        <hr className="asr-border" />
+                      </Col>
+                      <Button
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          background: "#232659",
+                          border: "none",
+                          padding: "10px 0 10px 0",
+                          color: "#1BFDBE",
+                        }}
+                        className={buttonPodCaster}
+                        onClick={(e) => Plano(2)}
+                      >
+                        <p className="mb-0 font-weight-bold">Assinar</p>
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
 
                 <Row lg="12" className="mb-3">
-                  <Col xs="6">
-                    <Button
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        background: "#232659",
-                        border: "none",
-                        padding: "10px 0 10px 0",
-                        color: "#1BFDBE",
-                      }}
-                      className={buttonOuvinte}
-                      onClick={(e) => Plano(1)}
-                    >
-                      <p className="mb-0 font-weight-bold">Mensal R$ 20,00 </p>
-                    </Button>
-                  </Col>
-                  <Col xs="6">
-                    <Button
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        background: "#232659",
-                        border: "none",
-                        padding: "10px 0 10px 0",
-                        color: "#1BFDBE",
-                      }}
-                      className={buttonPodCaster}
-                      onClick={(e) => Plano(2)}
-                    >
-                      <p className="mb-0 font-weight-bold">Anual R$ 200,00 </p>
-                    </Button>
-                  </Col>
                   <Col xs="12 mt-2">
                     <p className="text-center" style={{ color: "red" }}>
                       {errorProvider !== "" ? errorProvider : " "}
@@ -263,6 +324,12 @@ export default function CheckoutForm() {
                 )}
 
                 {respClientSecret && !succeeded && (
+                  <>
+                  <CardTitle
+                  style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
+                >
+                  Entre com seus dados
+                </CardTitle>
                   <form
                     id="payment-form"
                     onSubmit={handleSubmit}
@@ -292,6 +359,7 @@ export default function CheckoutForm() {
                     Pagamento feito com sucesso!
                     </p> */}
                   </form>
+                  </>
                 )}
                 {/* Show a success message upon completion */}
 
