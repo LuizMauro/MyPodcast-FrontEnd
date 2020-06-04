@@ -175,34 +175,83 @@ export default function Relatorio() {
                   <Col sm="12" md="12" className="mb-3">
                     <h4 className="ass-title title">
                       Total de Assinantes Premium:{" "}
-                      <span className="ass-text">{relatorio.ass_total}</span>
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_total_total}
+                      </span>
                     </h4>
                   </Col>
                   <Col sm="12" md="12" className="mb-3">
                     <h6 className="ass-title title white">
                       Assinantes do Plano Mensal:{" "}
-                      <span className="ass-text">{relatorio.ass_mensal}</span>
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_total_mensal}
+                      </span>
                     </h6>
                   </Col>
                   <Col sm="12" md="12" className="mb-3">
                     <h6 className="ass-title title white">
                       Assinantes do Plano Anual:{" "}
-                      <span className="ass-text">{relatorio.ass_anual}</span>
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_total_anual}
+                      </span>
                     </h6>
                   </Col>
                   <Col sm="12" md="12" className="mb-3">
                     <h4 className="ass-title title">
-                      Estimativa de Ganho - Total:{" "}
+                      Total de Assinantes Premium no último Mês:{" "}
                       <span className="ass-text">
-                        {relatorio.ass_valor_total
-                          ? Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(relatorio.ass_valor_total)
-                          : Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(0)}
+                        {relatorio.ass_qtd_mensal_total}
+                      </span>
+                    </h4>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Assinantes do Plano Mensal no último Mês:{" "}
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_mensal_mensal}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Assinantes do Plano Anual no último Mês:{" "}
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_mensal_anual}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h4 className="ass-title title">
+                      Total de Assinantes Premium no último Ano:{" "}
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_anual_total}
+                      </span>
+                    </h4>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Assinantes do Plano Mensal no último Ano:{" "}
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_anual_mensal}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Assinantes do Plano Anual no último Ano:{" "}
+                      <span className="ass-text">
+                        {relatorio.ass_qtd_anual_anual}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h4 className="ass-title title">
+                      Ganhos - Total:{" "}
+                      <span className="ass-text">
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_total_total)}
                       </span>
                     </h4>
                   </Col>
@@ -210,15 +259,10 @@ export default function Relatorio() {
                     <h6 className="ass-title title white">
                       Com assinaturas mensais:{" "}
                       <span className="ass-text">
-                        {relatorio.ass_valor_mensal
-                          ? Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(relatorio.ass_valor_mensal)
-                          : Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(0)}
+                      {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_total_mensal)}
                       </span>
                     </h6>
                   </Col>
@@ -226,15 +270,76 @@ export default function Relatorio() {
                     <h6 className="ass-title title white">
                       Com assinaturas anuais:{" "}
                       <span className="ass-text">
-                        {relatorio.ass_valor_anual
-                          ? Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(relatorio.ass_valor_anual)
-                          : Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(0)}
+                      {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_total_anual)}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h4 className="ass-title title">
+                      Ganhos Totais no Último Mês:{" "}
+                      <span className="ass-text">
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_mensal_total)}
+                      </span>
+                    </h4>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Com assinaturas mensais:{" "}
+                      <span className="ass-text">
+                      {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_mensal_mensal)}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Com assinaturas anuais:{" "}
+                      <span className="ass-text">
+                      {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_mensal_anual)}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h4 className="ass-title title">
+                      Ganhos Totais no Último Ano:{" "}
+                      <span className="ass-text">
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_anual_total)}
+                      </span>
+                    </h4>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Com assinaturas mensais:{" "}
+                      <span className="ass-text">
+                      {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_anual_mensal)}
+                      </span>
+                    </h6>
+                  </Col>
+                  <Col sm="12" md="12" className="mb-3">
+                    <h6 className="ass-title title white">
+                      Com assinaturas anuais:{" "}
+                      <span className="ass-text">
+                      {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(relatorio.ass_valor_anual_anual)}
                       </span>
                     </h6>
                   </Col>
