@@ -3,8 +3,25 @@ import api from "../../../services/api";
 import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 import "./index.css";
 
+import Podcasts from "../../../components/Relatorio/Podcasts";
+import Usuarios from "../../../components/Relatorio/Usuarios";
+import Visualizacoes from "../../../components/Relatorio/Visualizacoes";
+import Assinaturas from "../../../components/Relatorio/Assinaturas";
+import Ganhos from "../../../components/Relatorio/Ganhos";
+import Outros from "../../../components/Relatorio/Outros";
+import {
+  FaMicrophone,
+  FaUserAlt,
+  FaFileInvoiceDollar,
+  FaFileAlt,
+  FaFileContract
+} from "react-icons/fa";
+
+import {GoGraph} from "react-icons/go"
+
 export default function Relatorio() {
   const [relatorio, setRelatorio] = useState([]);
+  const [choice, setChoice] = useState(0);
 
   useEffect(() => {
     exibirRelatorio();
@@ -15,6 +32,10 @@ export default function Relatorio() {
     const response = await api.get("/relatorio");
     console.log("users", response.data);
     setRelatorio(response.data);
+  }
+
+  async function selectRelatorio(choice) {
+    setChoice(choice);
   }
 
   return (
@@ -29,364 +50,112 @@ export default function Relatorio() {
         </Row>
         <Row style={{ justifyContent: "center" }} className="bg-secondary pb-3">
           <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0">
+            <Card
+              className={choice === 1 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              onClick={() => selectRelatorio(1)}
+            >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title">Podcasts</CardTitle>
+                <CardTitle className={choice === 1 ? 'relatorio-selected' : 'dash-home-title'}>Podcasts</CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">ICON</h1>
+                  <h1 className={choice === 1 ? 'relatorio-selected' : 'dash-home-value'}><FaMicrophone size={48}/></h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0">
+          <Card
+              className={choice === 2 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              onClick={() => selectRelatorio(2)}
+            >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title">Usuários</CardTitle>
+                <CardTitle className={choice === 2 ? 'relatorio-selected' : 'dash-home-title'}>Usuários</CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">ICON</h1>
+                  <h1 className={choice === 2 ? 'relatorio-selected' : 'dash-home-value'}><FaUserAlt size={48}/></h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0">
+          <Card
+              className={choice === 3 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              onClick={() => selectRelatorio(3)}
+            >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title">Visualização</CardTitle>
+                <CardTitle className={choice === 3 ? 'relatorio-selected' : 'dash-home-title'}>Visualizaçõess</CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">ICON</h1>
+                  <h1 className={choice === 3 ? 'relatorio-selected' : 'dash-home-value'}><GoGraph size={48}/></h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0">
+          <Card
+              className={choice === 4 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              onClick={() => selectRelatorio(4)}
+            >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title">Assinaturas</CardTitle>
+                <CardTitle className={choice === 4 ? 'relatorio-selected' : 'dash-home-title'}>Assinaturas</CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">ICON</h1>
+                  <h1 className={choice === 4 ? 'relatorio-selected' : 'dash-home-value'}><FaFileContract size={48}/></h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0">
+          <Card
+              className={choice === 5 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              onClick={() => selectRelatorio(5)}
+            >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title">Ganhos</CardTitle>
+                <CardTitle className={choice === 5 ? 'relatorio-selected' : 'dash-home-title'}>Ganhos</CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">ICON</h1>
+                  <h1 className={choice === 5 ? 'relatorio-selected' : 'dash-home-value'}><FaFileInvoiceDollar size={48}/></h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0">
+          <Card
+              className={choice === 6 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              onClick={() => selectRelatorio(6)}
+            >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className="dash-home-title">Outros</CardTitle>
+                <CardTitle className={choice === 6 ? 'relatorio-selected' : 'dash-home-title'}>Outros</CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">ICON</h1>
+                  <h1 className={choice === 6 ? 'relatorio-selected' : 'dash-home-value'}><FaFileAlt size={48}/></h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
         </Row>
-        <Row className="bg-secondary mt-3">
-          <Col lg="6 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Podcasts Cadastrados
-                </CardTitle>
-                <Row className="mt-1 pt-3" style={{ justifyContent: "center" }}>
-                  <span className="relatorio-span white">{relatorio.qtd_podcast}</span>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="6 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double pt-0">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title mt-0">
-                  Solicitações de Cadastro
-                </CardTitle>
-                <Row className="mt-1 pt-3" style={{ justifyContent: "center" }}>
-                  <span className="relatorio-span white">{relatorio.qtd_solicitacao}</span>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Usuários cadastrados
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Moderadores do Sistema: <span className="green"> {relatorio.qtd_moderador} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Podcasters: <span className="green"> {relatorio.qtd_podcaster} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Podcasters Premium: <span className="green"> {relatorio.qtd_premium} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-5">
-                    <span className="relatorio-span white">{relatorio.qtd_usuario}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Visualizações no Sistema
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Na última semana: <span className="green"> {relatorio.viewweek} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                    No último mês: <span className="green"> {relatorio.viewmonth} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.totalview}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Total de Assinaturas Premium
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Assinantes do Plano Mensal: <span className="green"> {relatorio.ass_qtd_total_mensal} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Assinantes do Plano Anual: <span className="green"> {relatorio.ass_qtd_total_anual} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.ass_qtd_total_total}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Assinaturas Premium do último mês
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Plano Mensal: <span className="green"> {relatorio.ass_qtd_mensal_mensal} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Plano Anual: <span className="green"> {relatorio.ass_qtd_mensal_anual} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.ass_qtd_mensal_total}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Assinaturas Premium do último ano
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Plano Mensal: <span className="green"> {relatorio.ass_qtd_anual_mensal} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Plano Anual: <span className="green"> {relatorio.ass_qtd_anual_anual} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.ass_qtd_anual_total}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Ganho total
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Com assinantes mensais: <span className="green"> {relatorio.ass_valor_total_mensal} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Com assinantes anuais: <span className="green"> {relatorio.ass_valor_total_anual} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.ass_valor_total_total}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Ganho total no último mês
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Com assinantes mensais: <span className="green"> {relatorio.ass_valor_mensal_mensal} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Com assinantes anuais: <span className="green"> {relatorio.ass_valor_mensal_anual} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.ass_valor_mensal_total}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="12 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Ganho total no último ano
-                </CardTitle>
-                <Row className="mt-1 pt-0" style={{ justifyContent: "center" }}>
-                  <Col lg="6" className="center grid">
-                    <span className="group-info-3 white">
-                      Com assinantes mensais: <span className="green"> {relatorio.ass_valor_anual_mensal} </span>
-                    </span>
-                    <span  className="group-info-3 white">
-                      Com assinantes anuais: <span className="green"> {relatorio.ass_valor_anual_anual} </span>
-                    </span>
-                  </Col>
-                  <Col lg="6" className="center pt-4">
-                    <span className="relatorio-span white">{relatorio.ass_valor_anual_total}</span>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Categorias Cadastradas
-                </CardTitle>
-                <Row className="mt-1 pt-3" style={{ justifyContent: "center" }}>
-                  <span className="relatorio-span white">{relatorio.qtd_categoria}</span>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Comentários Publicados
-                </CardTitle>
-                <Row className="mt-1 pt-3" style={{ justifyContent: "center" }}>
-                  <span className="relatorio-span white">{relatorio.qtd_comentario}</span>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4 mt-3">
-            <Card className="bg-secondary shadow border-0 relatorio-info-double">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
-                  Publicidades Cadastradas
-                </CardTitle>
-                <Row className="mt-1 pt-3" style={{ justifyContent: "center" }}>
-                  <span className="relatorio-span white">{relatorio.qtd_publicidade}</span>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+        {choice > 0 && (
+          <Row className="bg-secondary mt-3 pb-3">
+            {choice === 1 && <Podcasts relatorio={relatorio} />}
+            {choice === 2 && <Usuarios relatorio={relatorio} />}
+            {choice === 3 && <Visualizacoes relatorio={relatorio} />}
+            {choice === 4 && <Assinaturas relatorio={relatorio} />}
+            {choice === 5 && <Ganhos relatorio={relatorio} />}
+            {choice === 6 && <Outros relatorio={relatorio} />}
+          </Row>
+        )}
       </Container>
     </section>
   );

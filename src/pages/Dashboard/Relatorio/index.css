@@ -1,5 +1,4 @@
 .dash-home-title {
-  color: red;
   font-weight: bold;
   letter-spacing: 3px;
   color: rgb(27, 253, 190);
@@ -44,4 +43,17 @@
 
 .green{
   color: rgb(27, 253, 190);
+}
+
+.relatorio-selected{
+  background-color: rgb(27, 253, 190) !important;
+  color: rgb(35, 38, 89) !important;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.pointer{
+  cursor:pointer;
 }
