@@ -65,7 +65,7 @@ export function* signUp({ payload }) {
     } else if (response.data.emailExists) {
       toast.error("Email já cadastrado");
     } else {
-      toast.error("Cadastro realizado!")
+      toast.success("Cadastro realizado!")
       history.push("/Login");
     }
   } catch (err) {
