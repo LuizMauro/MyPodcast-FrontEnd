@@ -22,6 +22,7 @@ import { GoGraph } from "react-icons/go";
 export default function Relatorio() {
   const [relatorio, setRelatorio] = useState([]);
   const [grafico, setGrafico] = useState([]);
+  const [graphview, setGraphview] = useState([])
   const [choice, setChoice] = useState(0);
 
   useEffect(() => {
@@ -36,6 +37,9 @@ export default function Relatorio() {
 
     const data = await api.get("/grafico");
     setGrafico(data.data);
+
+    const graphview = await api.get("/graficoview");
+    setGraphview(graphview.data);
   }
 
   async function selectRelatorio(choice) {
@@ -250,7 +254,7 @@ export default function Relatorio() {
           <Row className="bg-secondary mt-3 pb-3">
             {choice === 1 && <Podcasts relatorio={relatorio} />}
             {choice === 2 && <Usuarios relatorio={relatorio} />}
-            {choice === 3 && <Visualizacoes relatorio={relatorio} />}
+            {choice === 3 && <Visualizacoes relatorio={relatorio} graphview={graphview} />}
             {choice === 4 && <Assinaturas relatorio={relatorio} grafico={grafico} />}
             {choice === 5 && <Ganhos relatorio={relatorio} grafico={grafico} />}
             {choice === 6 && <Outros relatorio={relatorio} />}
