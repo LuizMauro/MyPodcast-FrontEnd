@@ -127,7 +127,7 @@ class SidebarMod extends Component {
                 />
                 <Navitem
                   item="Publicidade"
-                  tolink="/mod/dashboard/publicidade"
+                  tolink="/mod/dashboard/publicidades"
                   activec={this.activeitem}
                   style={{ width: "100%" }}
                   icone={

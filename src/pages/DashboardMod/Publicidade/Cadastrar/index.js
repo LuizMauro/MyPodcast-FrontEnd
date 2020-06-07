@@ -82,7 +82,7 @@ export default function Categoria() {
 
       api.post("/publicidade", data);
       toast.success("Publicidade cadastrada!");
-      history.push("/adm/dashboard/publicidade");
+      history.push("/mod/dashboard/publicidades");
 
       formRef.current.setErrors(false);
     } catch (err) {
