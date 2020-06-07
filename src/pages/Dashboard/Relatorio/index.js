@@ -252,8 +252,8 @@ export default function Relatorio() {
             {choice === 2 && <Usuarios relatorio={relatorio} />}
             {choice === 3 && <Visualizacoes relatorio={relatorio} />}
             {choice === 4 && <Assinaturas relatorio={relatorio} grafico={grafico} />}
-            {choice === 5 && <Ganhos relatorio={relatorio} />}
-            {choice === 6 && <Outros relatorio={relatorio} grafico={grafico} />}
+            {choice === 5 && <Ganhos relatorio={relatorio} grafico={grafico} />}
+            {choice === 6 && <Outros relatorio={relatorio} />}
           </Row>
         )}
       </Container>

@@ -1,14 +1,10 @@
 import React from "react";
 import { Card, CardBody, Row, Col, CardTitle } from "reactstrap";
 
-export default function Outros({ relatorio, grafico }) {
+export default function Outros({ relatorio }) {
   // const totalJaneiro = grafico.Janeiro[grafico.Janeiro.length - 1].valor_total;
   return (
     <>
-      {console.log(
-        "teste de dados",
-        grafico.Janeiro[grafico.Janeiro.length - 1].valor_total
-      )}
       <Col lg="4 mt-3">
         <Card className="bg-secondary shadow border-0 relatorio-info-double">
           <CardBody
