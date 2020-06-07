@@ -15,11 +15,91 @@ import {
   CardTitle,
 } from "reactstrap";
 
+import { Line, Bar } from 'react-chartjs-2';
+
+
+const data = {
+   labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+  'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+  datasets: [
+    {
+      label: 'My First dataset',
+      fill: false,
+      lineTension: 0.3,
+      backgroundColor: 'rgba(75,192,192,0.4)',
+      borderColor: 'rgba(75,192,192,1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: '#1bfdbe',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 5,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: '#1bfdbe',
+      pointHoverBorderColor: '#1bfdbe',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: [65, 59, 80, 81, 56, 55, 40]
+    },
+    {
+      label: 'My First dataset 2',
+      fill: false,
+      lineTension: 0.3,
+      backgroundColor: '#ff6384',
+      borderColor: '#ff6384',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: '#ff6384',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 5,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: '#ff6384',
+      pointHoverBorderColor: '#ff6384',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: [20, 3, 30, 2, 100, 15, 20]
+    }
+  ],
+  
+};
+
+const data2 = {
+  labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+  'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+  datasets: [
+    {
+      label: 'My First dataset',
+      backgroundColor: '#1bfdbe',
+      borderColor: '#1bfdbe',
+      borderWidth: 1,
+      hoverBackgroundColor: '#1bfdbe',
+      hoverBorderColor: '#1bfdbe',
+      data: [65, 59, 80]
+    },
+    {
+      label: 'My First dataset 2',
+      backgroundColor: '#ff6384',
+      borderColor: '#ff6384',
+      borderWidth: 1,
+      hoverBackgroundColor: '#ff6384',
+      hoverBorderColor: '#ff6384',
+      data: [30, 100, 80]
+    }
+  ]
+};
+
+
 export default function EditarPodcast() {
   const [podcasts, setPodcasts] = useState([]);
   const [dados, setDados] = useState([]);
   const [topWeek, setTopWeek] = useState([]);
   const [comentario, setComentario] = useState([]);
+  const [teste, setTeste] = useState({});
 
   useEffect(() => {
     let podinicial = null;
@@ -43,9 +123,40 @@ export default function EditarPodcast() {
     async function loadEstatistica() {
       const response = await api.get(`/estatisticaspremium/${podinicial}`);
       setDados(response.data);
+      console.log("TESTE ", response.data.topweek[0]);
       setTopWeek(response.data.topweek[0]);
-    }
 
+      const topWeeks = response.data.topweek[0];
+      const labels = [];
+      const datasets = [];
+
+      topWeeks.map((week, i) => {
+        datasets.push({
+          label: "High Low",
+          backgroundColor: '#ff6384',
+          borderColor: '#ff6384',
+          borderWidth: 1,
+          hoverBackgroundColor: '#ff6384',
+          hoverBorderColor: '#ff6384',
+          data:[1 , 2]
+        })
+      })
+
+      console.log("SLA",datasets);
+
+      topWeeks.map((item) =>{
+        labels.push(item.pod_nome)
+      })
+
+      const graficoData = {
+        labels: ["teste", "High Low"],
+        datasets
+       
+    }
+    setTeste(graficoData);
+  }
+
+   
     exibirPodcasts();
     loadEstatistica();
   }, []);
@@ -83,6 +194,9 @@ export default function EditarPodcast() {
                   </CardTitle>
                   <Row>
                     <Col sm="12" md="2">
+
+                   
+
                       <select
                         className="select-home shadow"
                         onChange={SelecionarPodcast}
@@ -103,6 +217,25 @@ export default function EditarPodcast() {
                       </select>
                     </Col>
                   </Row>
+                  
+                  <Row>
+                    <Col lg="12" sm="12" >
+                      <h1>Teste 1</h1>
+                        <Line data={data} width={100} height={"50%"} options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}  color={"#1bfdbe"}  />
+                      </Col>
+
+                      <Col lg="12" sm="12" >
+                      <h1>Teste 4</h1>
+                        <Bar data={teste} width={100} height={"50%"} options={{
+                            responsive: true,
+                            maintainAspectRatio: true,
+                          }}   />
+                      </Col>
+                  </Row>
+
                   <Row className="mt-3">
                     <Col lg="3" sm="6">
                       <div

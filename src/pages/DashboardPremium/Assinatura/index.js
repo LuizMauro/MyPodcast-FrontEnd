@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./index.css";
 import {
   Card,
@@ -11,6 +11,11 @@ import {
 } from "reactstrap";
 import api from "../../../services/api";
 import pt from "date-fns/locale/pt";
+import { differenceInDays, differenceInMonths, time, lastDayOfMonth, 
+getDaysInMonth, differenceInCalendarDays, differenceInCalendarMonths,
+parseISO, formatRelative,  } from 'date-fns';
+
+import { date } from "yup";
 
 export default function Assinatura() {
   const [renovar, setRenovar] = useState(false);
@@ -20,22 +25,24 @@ export default function Assinatura() {
   useEffect(() => {
     async function loadAssinatura() {
       const response = await api.get("/assinatura");
-      setDados(response.data);
-      const datafim = response.data.ass_datafim.replace(
-        /^(\d{4})-(\d{2})-(\d{2})(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/,
-        "$1-$2-$3 $4:$5:$6"
-      );
-      console.log('data',datafim)
-      setData(datafim);
-    }
 
-    /* <Col sm="12" md="6" className="mb-3">
-                      <h4 className="ass-title">
-                        Assinatura expira em:{" "}
-                        <span className="ass-text">{data}</span>
-                      </h4>
-                    </Col>
-                    */
+      setDados(response.data);    
+
+     
+
+      const lastdayofmonth = lastDayOfMonth(Date.now());
+
+      console.log("TESTE -> ", differenceInCalendarMonths(new Date(), Date.now()));
+      console.log("TESTE2 -> ", differenceInCalendarDays(new Date(response.data.ass_datafim), Date.now()));
+
+      if(differenceInCalendarDays(new Date(response.data.ass_datafim), Date.now()) > getDaysInMonth(lastdayofmonth) ){
+        setData(`${differenceInCalendarMonths( new Date(response.data.ass_datafim), Date.now())} meses`);
+      }else{
+        setData(`${differenceInDays(new Date(response.data.ass_datafim),  Date.now())} dias`);
+      }
+
+    
+    }
 
     loadAssinatura();
   }, []);
