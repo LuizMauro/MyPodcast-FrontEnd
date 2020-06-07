@@ -42,13 +42,26 @@ export default function Relatorio() {
     setChoice(choice);
   }
 
+  async function gerarPDF(){
+    console.log("teste");
+    const {data} = await api.get("/pdf");
+    const urlPDF = `http://localhost:3333${data}`;
+    setTimeout(() => {  window.open(urlPDF); }, 2000);
+   
+  }
+
   return (
     <section className="section section-shaped section-lg">
       <Container>
-        <Row className="bg-secondary mb-0">
-          <Col lg="12">
+        <Row className="bg-secondary mb-0 mt-3">
+          <Col lg="8">
             <CardTitle style={{ fontSize: 25, color: "#fff", marginTop: 20 }}>
               Relatório do Sistema
+            </CardTitle>
+          </Col>
+          <Col lg="4">
+            <CardTitle style={{ fontSize: 25, color: "#fff", marginTop: 20 }}>
+              <button className="btn btn-primary" onClick={() => gerarPDF()} >Gerar pdf</button>
             </CardTitle>
           </Col>
         </Row>
