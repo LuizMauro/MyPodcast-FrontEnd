@@ -26,6 +26,10 @@ export default createGlobalStyle`
       color:rgba(255, 255, 255, 0.95) !important;
     }
 
+    text{
+      fill:rgba(255, 255, 255, 0.95) !important;
+    }
+
     html,body,input,button, select, #App{
       font-family: 'Roboto', sans-serif !important;
     }
@@ -118,6 +122,9 @@ export default createGlobalStyle`
   color:red !important;
 }
 
+.m-auto{
+  margin:0 auto;
+}
 
 }
 `;

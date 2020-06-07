@@ -14,13 +14,14 @@ import {
   FaUserAlt,
   FaFileInvoiceDollar,
   FaFileAlt,
-  FaFileContract
+  FaFileContract,
 } from "react-icons/fa";
 
-import {GoGraph} from "react-icons/go"
+import { GoGraph } from "react-icons/go";
 
 export default function Relatorio() {
   const [relatorio, setRelatorio] = useState([]);
+  const [grafico, setGrafico] = useState([]);
   const [choice, setChoice] = useState(0);
 
   useEffect(() => {
@@ -30,8 +31,11 @@ export default function Relatorio() {
 
   async function exibirRelatorio() {
     const response = await api.get("/relatorio");
-    console.log("users", response.data);
+    console.log("dados", response.data);
     setRelatorio(response.data);
+
+    const data = await api.get("/grafico");
+    setGrafico(data.data);
   }
 
   async function selectRelatorio(choice) {
@@ -51,96 +55,192 @@ export default function Relatorio() {
         <Row style={{ justifyContent: "center" }} className="bg-secondary pb-3">
           <Col lg="4 mt-3">
             <Card
-              className={choice === 1 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+              className={
+                choice === 1
+                  ? "shadow border-0 pointer relatorio-selected"
+                  : "bg-secondary shadow border-0 pointer"
+              }
               onClick={() => selectRelatorio(1)}
             >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className={choice === 1 ? 'relatorio-selected' : 'dash-home-title'}>Podcasts</CardTitle>
+                <CardTitle
+                  className={
+                    choice === 1 ? "relatorio-selected" : "dash-home-title"
+                  }
+                >
+                  Podcasts
+                </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className={choice === 1 ? 'relatorio-selected' : 'dash-home-value'}><FaMicrophone size={48}/></h1>
+                  <h1
+                    className={
+                      choice === 1 ? "relatorio-selected" : "dash-home-value"
+                    }
+                  >
+                    <FaMicrophone size={48} />
+                  </h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-          <Card
-              className={choice === 2 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+            <Card
+              className={
+                choice === 2
+                  ? "shadow border-0 pointer relatorio-selected"
+                  : "bg-secondary shadow border-0 pointer"
+              }
               onClick={() => selectRelatorio(2)}
             >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className={choice === 2 ? 'relatorio-selected' : 'dash-home-title'}>Usuários</CardTitle>
+                <CardTitle
+                  className={
+                    choice === 2 ? "relatorio-selected" : "dash-home-title"
+                  }
+                >
+                  Usuários
+                </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className={choice === 2 ? 'relatorio-selected' : 'dash-home-value'}><FaUserAlt size={48}/></h1>
+                  <h1
+                    className={
+                      choice === 2 ? "relatorio-selected" : "dash-home-value"
+                    }
+                  >
+                    <FaUserAlt size={48} />
+                  </h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-          <Card
-              className={choice === 3 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+            <Card
+              className={
+                choice === 3
+                  ? "shadow border-0 pointer relatorio-selected"
+                  : "bg-secondary shadow border-0 pointer"
+              }
               onClick={() => selectRelatorio(3)}
             >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className={choice === 3 ? 'relatorio-selected' : 'dash-home-title'}>Visualizaçõess</CardTitle>
+                <CardTitle
+                  className={
+                    choice === 3 ? "relatorio-selected" : "dash-home-title"
+                  }
+                >
+                  Visualizaçõess
+                </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className={choice === 3 ? 'relatorio-selected' : 'dash-home-value'}><GoGraph size={48}/></h1>
+                  <h1
+                    className={
+                      choice === 3 ? "relatorio-selected" : "dash-home-value"
+                    }
+                  >
+                    <GoGraph size={48} />
+                  </h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-          <Card
-              className={choice === 4 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+            <Card
+              className={
+                choice === 4
+                  ? "shadow border-0 pointer relatorio-selected"
+                  : "bg-secondary shadow border-0 pointer"
+              }
               onClick={() => selectRelatorio(4)}
             >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className={choice === 4 ? 'relatorio-selected' : 'dash-home-title'}>Assinaturas</CardTitle>
+                <CardTitle
+                  className={
+                    choice === 4 ? "relatorio-selected" : "dash-home-title"
+                  }
+                >
+                  Assinaturas
+                </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className={choice === 4 ? 'relatorio-selected' : 'dash-home-value'}><FaFileContract size={48}/></h1>
+                  <h1
+                    className={
+                      choice === 4 ? "relatorio-selected" : "dash-home-value"
+                    }
+                  >
+                    <FaFileContract size={48} />
+                  </h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-          <Card
-              className={choice === 5 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+            <Card
+              className={
+                choice === 5
+                  ? "shadow border-0 pointer relatorio-selected"
+                  : "bg-secondary shadow border-0 pointer"
+              }
               onClick={() => selectRelatorio(5)}
             >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className={choice === 5 ? 'relatorio-selected' : 'dash-home-title'}>Ganhos</CardTitle>
+                <CardTitle
+                  className={
+                    choice === 5 ? "relatorio-selected" : "dash-home-title"
+                  }
+                >
+                  Ganhos
+                </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className={choice === 5 ? 'relatorio-selected' : 'dash-home-value'}><FaFileInvoiceDollar size={48}/></h1>
+                  <h1
+                    className={
+                      choice === 5 ? "relatorio-selected" : "dash-home-value"
+                    }
+                  >
+                    <FaFileInvoiceDollar size={48} />
+                  </h1>
                 </Row>
               </CardBody>
             </Card>
           </Col>
           <Col lg="4 mt-3">
-          <Card
-              className={choice === 6 ? 'shadow border-0 pointer relatorio-selected' : 'bg-secondary shadow border-0 pointer'}
+            <Card
+              className={
+                choice === 6
+                  ? "shadow border-0 pointer relatorio-selected"
+                  : "bg-secondary shadow border-0 pointer"
+              }
               onClick={() => selectRelatorio(6)}
             >
               <CardBody
                 style={{ justifyContent: "center" }}
                 enctype="multipart/form-data"
               >
-                <CardTitle className={choice === 6 ? 'relatorio-selected' : 'dash-home-title'}>Outros</CardTitle>
+                <CardTitle
+                  className={
+                    choice === 6 ? "relatorio-selected" : "dash-home-title"
+                  }
+                >
+                  Outros
+                </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className={choice === 6 ? 'relatorio-selected' : 'dash-home-value'}><FaFileAlt size={48}/></h1>
+                  <h1
+                    className={
+                      choice === 6 ? "relatorio-selected" : "dash-home-value"
+                    }
+                  >
+                    <FaFileAlt size={48} />
+                  </h1>
                 </Row>
               </CardBody>
             </Card>
@@ -151,9 +251,9 @@ export default function Relatorio() {
             {choice === 1 && <Podcasts relatorio={relatorio} />}
             {choice === 2 && <Usuarios relatorio={relatorio} />}
             {choice === 3 && <Visualizacoes relatorio={relatorio} />}
-            {choice === 4 && <Assinaturas relatorio={relatorio} />}
+            {choice === 4 && <Assinaturas relatorio={relatorio} grafico={grafico} />}
             {choice === 5 && <Ganhos relatorio={relatorio} />}
-            {choice === 6 && <Outros relatorio={relatorio} />}
+            {choice === 6 && <Outros relatorio={relatorio} grafico={grafico} />}
           </Row>
         )}
       </Container>
