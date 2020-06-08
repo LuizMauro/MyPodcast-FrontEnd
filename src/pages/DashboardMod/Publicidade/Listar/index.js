@@ -32,6 +32,7 @@ export default function EditarPodcast() {
   const [listSearch, setListSearch] = useState([]);
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
+  const [update, setUpdate] = useState(false);
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -42,7 +43,7 @@ export default function EditarPodcast() {
 
   useEffect(() => {
     exibirPublicidades();
-  }, [publicidades, editMode]);
+  }, [update, editMode]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
@@ -134,9 +135,19 @@ export default function EditarPodcast() {
         formRef.current.setErrors(errorMessages);
       }
     }
+    setUpdate(update ? false : true);
   }
 
-  async function deletarPublicidade(publicidade) {}
+  async function deletarPublicidade(publicidade) {
+    const pub_id = publicidade.pub_id;
+    try {
+      api.put(`/removerpublicidade/${pub_id}`);
+      toast.success("Publicidade removida");
+    } catch (err) {
+      toast.error("Erro ao remover Publicidade");
+    }
+    setUpdate(update ? false : true);
+  }
 
   function searchPublicidade(e) {
     setSearch(e.target.value);
@@ -219,13 +230,12 @@ export default function EditarPodcast() {
                       ? publicidades.map((item) => (
                           <PodcastList>
                             <div className="item">
-                              <Link
-                                to={`../../../podcast/${item.ctg_id}`}
+                              <p
                                 className="linktittle"
                                 style={{ color: "#1bfdbe", fontWeight: "bold" }}
                               >
                                 {item.pub_descricao}
-                              </Link>
+                              </p>
                             </div>
                             <div className="icons">
                               <button
@@ -246,13 +256,12 @@ export default function EditarPodcast() {
                       : listSearch.map((item) => (
                           <PodcastList>
                             <div className="item">
-                              <Link
-                                to={`../../../podcast/${item.ctg_id}`}
+                              <p
                                 className="linktittle"
                                 style={{ color: "#1bfdbe", fontWeight: "bold" }}
                               >
-                                {item.ctg_descricao}
-                              </Link>
+                                {item.pub_descricao}
+                              </p>
                             </div>
                             <div className="icons">
                               <button
