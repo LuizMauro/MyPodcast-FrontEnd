@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
-import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
+import { Card, CardBody, Container, Row, Col, CardTitle , Spinner} from "reactstrap";
 import "./index.css";
 
 import Podcasts from "../../../components/Relatorio/Podcasts";
@@ -19,11 +19,13 @@ import {
 
 import { GoGraph } from "react-icons/go";
 
+
 export default function Relatorio() {
   const [relatorio, setRelatorio] = useState([]);
   const [grafico, setGrafico] = useState([]);
   const [graphview, setGraphview] = useState([])
   const [choice, setChoice] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     exibirRelatorio();
@@ -47,10 +49,10 @@ export default function Relatorio() {
   }
 
   async function gerarPDF(){
-    console.log("teste");
+    setLoading(true);
     const {data} = await api.get("/pdf");
     const urlPDF = `http://localhost:3333${data}`;
-    setTimeout(() => {  window.open(urlPDF); }, 2000);
+    setTimeout(() => {  window.open(urlPDF); setLoading(false) }, 3000);
    
   }
 
@@ -65,7 +67,16 @@ export default function Relatorio() {
           </Col>
           <Col lg="4">
             <CardTitle style={{ fontSize: 25, color: "#fff", marginTop: 20 }}>
-              <button className="btn btn-primary" onClick={() => gerarPDF()} >Gerar pdf</button>
+              {loading ? (
+                 <button className="btn btn-primary" onClick={() => {}}>
+                  <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                 </button>
+              ):(
+                <button className="btn btn-primary" onClick={() => gerarPDF()}>Gerar pdf</button>
+              )}
+              
             </CardTitle>
           </Col>
         </Row>
