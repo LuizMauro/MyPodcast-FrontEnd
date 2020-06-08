@@ -39,6 +39,8 @@ import ModCategoria from '../pages/DashboardMod/Categoria/Listar';
 import ModCadastrarCategoria from '../pages/DashboardMod/Categoria/Cadastrar';
 import ModSolicitacao from '../pages/DashboardMod/Solicitacao';
 import ModUsuario from '../pages/DashboardMod/Usuario';
+import ModPublicidadeCadastrar from '../pages/DashboardMod/Publicidade/Cadastrar';
+import ModPublicidade from '../pages/DashboardMod/Publicidade/Listar';
 
 //ADM
 import Dashboard from '../pages/Dashboard/Home';
@@ -79,6 +81,8 @@ export default function Routes() {
 			<PrivateRouteMOD path="/mod/dashboard/categorias/cadastrar" exact component={ModCadastrarCategoria} />
 			<PrivateRouteMOD path="/mod/dashboard/usuarios" exact component={ModUsuario} />
 			<PrivateRouteMOD path="/mod/dashboard/solicitacoes" exact component={ModSolicitacao} />
+			<PrivateRouteMOD path="/mod/dashboard/publicidades" exact component={ModPublicidade} />
+			<PrivateRouteMOD path="/mod/dashboard/publicidades/cadastrar" exact component={ModPublicidadeCadastrar} />
 
 			{/* PODCASTER  */}
 			<PrivateRoutePOD

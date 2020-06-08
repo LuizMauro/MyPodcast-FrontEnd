@@ -64,6 +64,8 @@ export function* signUp({ payload }) {
       toast.error("Nome de usuário já cadastrado");
     } else if (response.data.emailExists) {
       toast.error("Email já cadastrado");
+    } else if (response.data.cpfExists) {
+      toast.error("CPF já cadastrado");
     } else {
       toast.success("Cadastro realizado!")
       history.push("/Login");

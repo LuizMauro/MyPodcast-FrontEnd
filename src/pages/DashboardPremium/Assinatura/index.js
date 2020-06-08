@@ -18,7 +18,6 @@ parseISO, formatRelative,  } from 'date-fns';
 import { date } from "yup";
 
 export default function Assinatura() {
-  const [renovar, setRenovar] = useState(false);
   const [dados, setDados] = useState([]);
   const [data, setData] = useState(null);
 
@@ -45,7 +44,11 @@ export default function Assinatura() {
     }
 
     loadAssinatura();
-  }, []);
+  }, [dados]);
+
+  async function handleCancelar(){
+    api.put('/assinatura');
+  }
 
   return (
     <>
@@ -74,7 +77,7 @@ export default function Assinatura() {
                       <h4 className="ass-title">
                         Status da Assinatura:
                         <span className="ass-text">
-                          {dados.ass_id ? ` Ativa` : ` Expirada`}
+                          {dados.ass_status ? ` Ativa` : ` Cancelada`}
                         </span>
                       </h4>
                     </Col>
@@ -90,7 +93,7 @@ export default function Assinatura() {
                       </h4>
                     </Col>
                     <Col sm="12" md="6" className="mb-3">
-                      <h4 className="ass-title">
+                      <h4 className="ass-title" title="Renovação Automática">
                         Forma de Pagamento:{" "}
                         <span className="ass-text">{dados.fpg_descricao}</span>
                       </h4>
@@ -101,16 +104,17 @@ export default function Assinatura() {
                         <span className="ass-text">{data}</span>
                       </h4>
                     </Col>
-                    {renovar && (
+                  
                       <Col sm="12" md="6" className="mb-3 center">
                         <Button
                           className="btn-primary"
                           style={{ width: "80%" }}
+                          onClick={handleCancelar}
                         >
-                          Renovar
+                          Cancelar Assinatura
                         </Button>
                       </Col>
-                    )}
+                   
                   </Row>
                 </CardBody>
               </Card>

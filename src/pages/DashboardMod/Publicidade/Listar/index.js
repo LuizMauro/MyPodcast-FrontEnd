@@ -11,7 +11,7 @@ import PodcastList from "../../../../styles/ItemList";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import pt from "date-fns/locale/pt";
-import { DateRange } from "react-date-range";
+import { DateRange} from "react-date-range";
 
 import {
   Button,
@@ -23,7 +23,7 @@ import {
   CardTitle,
 } from "reactstrap";
 
-export default function EditarPublicidade() {
+export default function EditarPodcast() {
   const [editMode, setEditMode] = useState(false);
   const formRef = useRef(null);
   const [publicidades, setPublicidades] = useState([]);
@@ -198,7 +198,7 @@ export default function EditarPublicidade() {
                     <Col lg="6" style={{ textAlign: "end" }}>
                       <Link
                         className="btn btn-primary"
-                        to="publicidade/cadastrar"
+                        to="publicidades/cadastrar"
                       >
                         <FaPlus size={18} /> Publicidade
                       </Link>

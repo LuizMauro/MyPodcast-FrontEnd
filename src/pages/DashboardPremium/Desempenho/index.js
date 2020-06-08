@@ -1,105 +1,19 @@
-import React, {  useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../../services/api";
 import { FaHeart, FaHeadphones } from "react-icons/fa";
 import { MdGrade } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
 import Comentario from "../../../components/Comentarios";
-
-import {
-  Card,
-  CardBody,
-  Container,
-  Row,
-  Col,
-  CardTitle,
-} from "reactstrap";
-
-import { Line, Bar } from 'react-chartjs-2';
-
-
-const data = {
-   labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
-  'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
-  datasets: [
-    {
-      label: 'My First dataset',
-      fill: false,
-      lineTension: 0.3,
-      backgroundColor: 'rgba(75,192,192,0.4)',
-      borderColor: 'rgba(75,192,192,1)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: '#1bfdbe',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHoverBackgroundColor: '#1bfdbe',
-      pointHoverBorderColor: '#1bfdbe',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40]
-    },
-    {
-      label: 'My First dataset 2',
-      fill: false,
-      lineTension: 0.3,
-      backgroundColor: '#ff6384',
-      borderColor: '#ff6384',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: '#ff6384',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHoverBackgroundColor: '#ff6384',
-      pointHoverBorderColor: '#ff6384',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [20, 3, 30, 2, 100, 15, 20]
-    }
-  ],
-  
-};
-
-const data2 = {
-  labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
-  'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
-  datasets: [
-    {
-      label: 'My First dataset',
-      backgroundColor: '#1bfdbe',
-      borderColor: '#1bfdbe',
-      borderWidth: 1,
-      hoverBackgroundColor: '#1bfdbe',
-      hoverBorderColor: '#1bfdbe',
-      data: [65, 59, 80]
-    },
-    {
-      label: 'My First dataset 2',
-      backgroundColor: '#ff6384',
-      borderColor: '#ff6384',
-      borderWidth: 1,
-      hoverBackgroundColor: '#ff6384',
-      hoverBorderColor: '#ff6384',
-      data: [30, 100, 80]
-    }
-  ]
-};
-
+import Chart from "react-google-charts";
+import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 
 export default function EditarPodcast() {
   const [podcasts, setPodcasts] = useState([]);
   const [dados, setDados] = useState([]);
   const [topWeek, setTopWeek] = useState([]);
   const [comentario, setComentario] = useState([]);
-  const [teste, setTeste] = useState({});
+  const [graphview, setGraphview] = useState([]);
 
   useEffect(() => {
     let podinicial = null;
@@ -111,13 +25,18 @@ export default function EditarPodcast() {
         podinicial = response.data[0].pod_id;
         loadEstatistica();
         loadComments();
+        loadGraph();
       }
     }
-    
 
     async function loadComments() {
       const response = await api.get(`allcomentarios/${podinicial}`);
       setComentario(response.data);
+    }
+
+    async function loadGraph() {
+      const graphiview = await api.get(`premiumgrafico/${podinicial}`);
+      setGraphview(graphiview.data);
     }
 
     async function loadEstatistica() {
@@ -130,46 +49,29 @@ export default function EditarPodcast() {
       const labels = [];
       const datasets = [];
 
-      topWeeks.map((week, i) => {
-        datasets.push({
-          label: "High Low",
-          backgroundColor: '#ff6384',
-          borderColor: '#ff6384',
-          borderWidth: 1,
-          hoverBackgroundColor: '#ff6384',
-          hoverBorderColor: '#ff6384',
-          data:[1 , 2]
-        })
-      })
+      console.log("SLA", datasets);
 
-      console.log("SLA",datasets);
-
-      topWeeks.map((item) =>{
-        labels.push(item.pod_nome)
-      })
-
-      const graficoData = {
-        labels: ["teste", "High Low"],
-        datasets
-       
+      topWeeks.map((item) => {
+        labels.push(item.pod_nome);
+      });
     }
-    setTeste(graficoData);
-  }
 
-   
     exibirPodcasts();
     loadEstatistica();
   }, []);
 
   async function SelecionarPodcast(e) {
     const id = e.target.value;
-    
-    console.log("TESTE ->" , id);
+
+    console.log("TESTE ->", id);
     const response = await api.get(`/estatisticaspremium/${id}`);
     setDados(response.data);
 
     const comments = await api.get(`allcomentarios/${id}`);
     setComentario(comments.data);
+
+    const graphiview = await api.get(`premiumgrafico/${id}`);
+    setGraphview(graphiview.data);
   }
 
   return (
@@ -189,14 +91,10 @@ export default function EditarPodcast() {
                   <CardTitle
                     style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
                   >
-                    Desempenho 
-                  
+                    Desempenho
                   </CardTitle>
                   <Row>
                     <Col sm="12" md="2">
-
-                   
-
                       <select
                         className="select-home shadow"
                         onChange={SelecionarPodcast}
@@ -209,31 +107,14 @@ export default function EditarPodcast() {
                         name="select"
                         id="exampleSelect"
                       >
-
-                        <option  value="0">Podcast</option>
+                        <option value="0">Podcast</option>
                         {podcasts.map((item) => (
-                            <option key={item.pod_id} value={item.pod_id}>{item.pod_nome}</option>
+                          <option key={item.pod_id} value={item.pod_id}>
+                            {item.pod_nome}
+                          </option>
                         ))}
                       </select>
                     </Col>
-                  </Row>
-                  
-                  <Row>
-                    <Col lg="12" sm="12" >
-                      <h1>Teste 1</h1>
-                        <Line data={data} width={100} height={"50%"} options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}  color={"#1bfdbe"}  />
-                      </Col>
-
-                      <Col lg="12" sm="12" >
-                      <h1>Teste 4</h1>
-                        <Bar data={teste} width={100} height={"50%"} options={{
-                            responsive: true,
-                            maintainAspectRatio: true,
-                          }}   />
-                      </Col>
                   </Row>
 
                   <Row className="mt-3">
@@ -400,8 +281,9 @@ export default function EditarPodcast() {
                         <p
                           style={{
                             color: "rgb(27, 253, 190)",
-                            marginTop: 50,
+                            marginTop: 30,
                             fontWeight: "bold",
+                            fontSize:'1.6rem'
                           }}
                         >
                           Visitas Totais {" - "}
@@ -412,6 +294,7 @@ export default function EditarPodcast() {
                             color: "rgb(27, 253, 190)",
                             marginTop: 50,
                             fontWeight: "bold",
+                            fontSize:'1.6rem'
                           }}
                         >
                           Visitas último mês {" - "}
@@ -422,6 +305,7 @@ export default function EditarPodcast() {
                             color: "rgb(27, 253, 190)",
                             marginTop: 50,
                             fontWeight: "bold",
+                            fontSize:'1.6rem'
                           }}
                         >
                           Visitas última semana {" - "}
@@ -457,6 +341,7 @@ export default function EditarPodcast() {
                             style={{
                               color: "rgb(27, 253, 190)",
                               marginTop: 20,
+                              fontSize:'1.2rem'
                             }}
                           >
                             <Link
@@ -474,6 +359,58 @@ export default function EditarPodcast() {
                           </p>
                         ))}
                       </div>
+                    </Col>
+                  </Row>
+                  <Row className="mt-3">
+                    <Col lg="12">
+                      {graphview.Janeiro && (
+                        <Col
+                          lg="12"
+                          className="mt-1 pt-3"
+                          style={{ justifyContent: "center" }}
+                        >
+                          <Chart
+                            width={950}
+                            height={400}
+                            chartType="ColumnChart"
+                            loader={<div>Loading Chart</div>}
+                            data={[
+                              ["Meses do Ano", "Visualizações no Sistema"],
+                              ["Jan", graphview.Janeiro.length],
+                              ["Fev", graphview.Fevereiro.length],
+                              ["Mar", graphview.Marco.length],
+                              ["Abr", graphview.Abril.length],
+                              ["Mai", graphview.Maio.length],
+                              ["Jun", graphview.Junho.length],
+                            ]}
+                            options={{
+                              title:
+                                "Visualizações do sistema nos últimos meses",
+                              fontColor: "#FFF",
+                              backgroundColor: "#151734",
+                              legendTextStyle: { color: "#FFF" },
+                              titleTextStyle: { color: "#FFF" },
+                              colors: ["rgb(27, 253, 190)", "#232659"],
+                              chartArea: { width: "30%" },
+                              hAxis: {
+                                color: "#FFF",
+                                legendTextStyle: { color: "#FFF" },
+                                titleTextStyle: { color: "#FFF" },
+                                title: "Meses do Ano",
+                                minValue: 0,
+                              },
+                              vAxis: {
+                                title: "Visualizações",
+                                color: "#FFF",
+                                legendTextStyle: { color: "#FFF" },
+                                titleTextStyle: { color: "#FFF" },
+                                minValue: 0,
+                              },
+                            }}
+                            legendToggle
+                          />
+                        </Col>
+                      )}
                     </Col>
                   </Row>
                   <Row className="mt-3">
