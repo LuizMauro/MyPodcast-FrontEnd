@@ -139,7 +139,7 @@ export default function Relatorio() {
                     choice === 3 ? "relatorio-selected" : "dash-home-title"
                   }
                 >
-                  Visualizaçõess
+                  Visualizações
                 </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
                   <h1

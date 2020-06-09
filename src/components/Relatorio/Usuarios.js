@@ -20,6 +20,10 @@ export default function Relatorio({relatorio}) {
                 <span className="green"> {relatorio.qtd_moderador} </span>
               </span>
               <span className="group-info-3 white">
+                Ouvintes:{" "}
+                <span className="green"> {relatorio.qtd_ouvinte} </span>
+              </span>
+              <span className="group-info-3 white">
                 Podcasters:{" "}
                 <span className="green"> {relatorio.qtd_podcaster} </span>
               </span>
@@ -28,7 +32,7 @@ export default function Relatorio({relatorio}) {
                 <span className="green"> {relatorio.qtd_premium} </span>
               </span>
             </Col>
-            <Col lg="6" className="center pt-5">
+            <Col lg="6" className="center" style={{paddingTop:60}}>
               <span className="relatorio-span white">
                 {relatorio.qtd_usuario}
               </span>
