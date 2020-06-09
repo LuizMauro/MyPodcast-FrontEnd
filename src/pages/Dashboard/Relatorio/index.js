@@ -51,7 +51,7 @@ export default function Relatorio() {
 
   async function gerarPDF(){
     setLoading(true);
-    const {data} = await api.get("/pdf");
+    const {data} = await api.post("/pdf",relatorio);
     const urlPDF = `http://localhost:3333${data}`;
     setTimeout(() => {  window.open(urlPDF); setLoading(false) }, 3000);
    
