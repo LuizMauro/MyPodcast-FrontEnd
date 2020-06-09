@@ -16,6 +16,7 @@ import {
   FaFileAlt,
   FaFileContract,
 } from "react-icons/fa";
+import {MdPictureAsPdf} from 'react-icons/md'
 
 import { GoGraph } from "react-icons/go";
 
@@ -65,7 +66,7 @@ export default function Relatorio() {
               Relatório do Sistema
             </CardTitle>
           </Col>
-          <Col lg="4">
+          <Col lg="4" style={{textAlign:'end'}}>
             <CardTitle style={{ fontSize: 25, color: "#fff", marginTop: 20 }}>
               {loading ? (
                  <button className="btn btn-primary" onClick={() => {}}>
@@ -74,7 +75,7 @@ export default function Relatorio() {
                   </Spinner>
                  </button>
               ):(
-                <button className="btn btn-primary" onClick={() => gerarPDF()}>Gerar pdf</button>
+                <button className="btn btn-primary" onClick={() => gerarPDF()}><MdPictureAsPdf size={32}/></button>
               )}
               
             </CardTitle>
