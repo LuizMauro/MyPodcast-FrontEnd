@@ -43,7 +43,7 @@ export default function EditarPublicidade() {
 
   useEffect(() => {
     exibirPublicidades();
-  }, [update, editMode]);
+  }, [publicidades, editMode]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
