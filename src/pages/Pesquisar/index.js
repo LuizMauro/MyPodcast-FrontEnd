@@ -13,6 +13,7 @@ import {
   CardTitle,
   CardDeck,
   CardImg,
+  Button,
 } from "reactstrap";
 
 export default function Pesquisar() {
@@ -20,33 +21,17 @@ export default function Pesquisar() {
   let query = new URLSearchParams(useLocation().search);
   const select = query.get("select");
 
-  async function loadPodCastsAll() {
-    const response = await api.get("/allpodcasts");
-    setPodcasts(response.data);
-  }
-
-  async function loadPodCastsCategoria(select) {
-    const response = await api.get(`/pesquisar/${select}`);
-    setPodcasts(response.data);
-  }
-
-  async function loadPodCastsNome(pesquisa) {
-    const response = await api.get(`/pesquisarnome/${pesquisa}`);
-    setPodcasts(response.data);
-  }
-
-  async function loadPodCastsCategoriaAndNome(select, pesquisa) {
-    const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
-
-    setPodcasts(response.data);
-  }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  const [podPage, setPodPage] = useState([]);
+  let limit = 10;
 
   useEffect(() => {
     const select = query.get("select");
     const pesquisa = query.get("pesquisa");
 
     if (select === "" && pesquisa === "") {
-      loadPodCastsAll();
+      loadPodCastsAll({});
     } else if (select === "" && pesquisa !== "") {
       loadPodCastsNome(pesquisa);
     } else if (select !== "" && pesquisa === "") {
@@ -54,7 +39,62 @@ export default function Pesquisar() {
     } else if (select !== "" && pesquisa !== "") {
       loadPodCastsCategoriaAndNome(select, pesquisa);
     }
-  }, []);
+  }, [podcasts]);
+
+  async function loadPodCastsAll() {
+    const response = await api.get("/allpodcasts");
+    setPodPage(response.data);
+
+    verifyLoad()
+  }
+
+  async function loadPodCastsCategoria(select) {
+    const response = await api.get(`/pesquisar/${select}`);
+    setPodPage(response.data);
+
+    verifyLoad()
+  }
+
+  async function loadPodCastsNome(pesquisa) {
+    const response = await api.get(`/pesquisarnome/${pesquisa}`);
+    setPodPage(response.data);
+
+    verifyLoad()
+  }
+
+  async function loadPodCastsCategoriaAndNome(select, pesquisa) {
+    const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
+
+    setPodPage(response.data);
+
+    verifyLoad()
+  }
+
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+      loadPodcasts();
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+      loadPodcasts();
+    }
+  }
+
+  async function verifyLoad(){
+    if(podPage.length <= limit){
+      setLoadMore(0);
+    }else if (podcasts.length < podPage.length){
+      setLoadMore(1)
+    }else{
+      setLoadMore(2);
+    }
+
+    loadPodcasts();
+  }
+
+  async function loadPodcasts() {
+    setPodcasts(podPage.slice(0, limit * currentPage));
+  }
 
   return (
     <>
@@ -116,6 +156,18 @@ export default function Pesquisar() {
               </Col>
             ))}
           </CardDeck>
+          <Col
+            lg="12"
+            sm="12"
+            style={
+              loadMore === 0 ? { display: "none" } : { textAlign: "center" }
+            }
+            className="mt-3"
+          >
+            <Button className="btn-primary" onClick={load}>
+              {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+            </Button>
+          </Col>
         </Container>
       </section>
     </>
