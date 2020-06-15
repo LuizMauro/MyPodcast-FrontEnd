@@ -50,7 +50,7 @@ import CategoriasAdm from '../pages/Dashboard/Categoria/Listar';
 import CategoriasAdmCadastrar from '../pages/Dashboard/Categoria/Cadastrar';
 import SolicitacoesAdm from '../pages/Dashboard/Solicitacao';
 import UsuariosAdm from '../pages/Dashboard/Usuario';
-import ModeradoresAdm from '../pages/DashboardMod/Podcast';
+import ModeradoresAdm from '../pages/Dashboard/Moderador';
 import PublicidadeAdm from '../pages/Dashboard/Publicidade/Listar';
 import PublicidadeAdmCadastrar from '../pages/Dashboard/Publicidade/Cadastrar';
 import RelatorioAdm from '../pages/Dashboard/Relatorio';
