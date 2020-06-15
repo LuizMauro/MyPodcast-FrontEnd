@@ -44,7 +44,7 @@ export default function Usuario() {
       setLoadMore(2);
     }
 
-    setUsuario(userPage.slice(0, limit * currentPage));
+    loadUsuarios();
   }
 
   async function load() {

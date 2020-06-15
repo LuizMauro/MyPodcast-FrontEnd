@@ -17,7 +17,7 @@ import "./style.css";
 import { useSelector } from "react-redux";
 import Comentario from "../../components/Comentarios";
 // reactstrap components
-import { Container, Button } from "reactstrap";
+import { Container, Col, Button } from "reactstrap";
 
 export default function Podcast() {
   const { pod_id } = useParams();
@@ -34,6 +34,11 @@ export default function Podcast() {
   const [update, setUpdate] = useState(true);
 
   const profile = useSelector((state) => state.user.profile);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  const [commentPage, setCommentPage] = useState([]);
+  let limit = 5;
 
   useEffect(() => {
     async function loadPodcast() {
@@ -62,7 +67,17 @@ export default function Podcast() {
       }
 
       const comments = await api.get(`allcomentarios/${pod_id}`);
-      setComentarios(comments.data);
+      setCommentPage(comments.data);
+     
+      if(commentPage.length <= limit){
+        setLoadMore(0);
+      }else if (comentarios.length < commentPage.length){
+        setLoadMore(1)
+      }else{
+        setLoadMore(2);
+      }
+
+      loadComentarios();
 
       setaCheckBox();
       setaFavoritar();
@@ -81,7 +96,26 @@ export default function Podcast() {
       }
     }
     view();
-  }, [update,pod_id,profile]);
+  }, [update, pod_id, profile, comentarios]);
+
+
+  //PAGINACAO DE COMENTARIOS
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+      loadComentarios();
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+      loadComentarios();
+    }
+  }
+
+  async function loadComentarios(){
+      setComentarios(commentPage.slice(0, limit * currentPage));
+    
+  }
+
+  //FIM PAGINACAO DE COMENTARIOS
 
   async function setaCheckBox() {
     const acompanhandoResp = await api.get(`acompanhando/${pod_id}`);
@@ -246,6 +280,7 @@ export default function Podcast() {
               flexDirection: "column",
               margin: "0 auto",
             }}
+            
           >
             <div className="img" style={{ padding: 20 }}>
               <img
@@ -522,6 +557,7 @@ export default function Podcast() {
               flexDirection: "column",
               flex: 1,
               padding: 20,
+              paddingBottom:0
             }}
           >
             <div
@@ -587,6 +623,18 @@ export default function Podcast() {
             setUpdate={setUpdate}
             update={update}
           />
+          <Col
+            lg="12"
+            sm="12"
+            className="mb-3 mt-3"
+            style={
+              loadMore === 0 ? { display: "none" } : { textAlign: "center" }
+            }
+          >
+            <Button className="btn-primary" onClick={load}>
+              {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+            </Button>
+          </Col>
         </div>
       </Container>
     </>
