@@ -24,7 +24,11 @@ export default function Moderador() {
   const [update, setUpdate] = useState(false);
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  const [moderadorPage, setModeradorPage] = useState([]);
   const dispatch = useDispatch();
+  let limit = 10;
 
   useEffect(() => {
     exibirUsuarios();
@@ -32,8 +36,31 @@ export default function Moderador() {
 
   async function exibirUsuarios() {
     const response = await api.get("adm/modusers");
-    console.log(response.data);
-    setUsuario(response.data);
+    setModeradorPage(response.data);
+
+    if (moderadorPage.length <= limit) {
+      setLoadMore(0);
+    } else if (usuario.length < moderadorPage.length) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
+
+    loadModerador();
+  }
+
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+      loadModerador();
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+      loadModerador();
+    }
+  }
+
+  async function loadModerador() {
+    setUsuario(moderadorPage.slice(0, limit * currentPage));
   }
 
   async function exibirEspecifico(status) {
@@ -195,6 +222,19 @@ export default function Moderador() {
                           </PodcastList>
                         ))}
                   </ul>
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>

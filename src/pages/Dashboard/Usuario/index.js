@@ -36,15 +36,15 @@ export default function Usuario() {
     const response = await api.get("/users");
     setUserPage(response.data);
 
-    if(userPage <=10){
+    if (userPage.length <= limit) {
       setLoadMore(0);
-    }else if (usuario < userPage){
-      setLoadMore(1)
-    }else{
+    } else if (usuario.length < userPage.length) {
+      setLoadMore(1);
+    } else {
       setLoadMore(2);
     }
 
-    setUsuario(userPage.slice(0, limit * currentPage));
+    loadUsuarios();
   }
 
   async function load() {
