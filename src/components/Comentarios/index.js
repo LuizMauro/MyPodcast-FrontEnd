@@ -214,7 +214,7 @@ export default function Comentario({
                     : { display: "none" }
                 }
               >
-                <Form initialData={cmtEdit} onSubmit={handleEdit}>
+                <Form initialData={cmtEdit} onSubmit={handleEdit} style={{paddingBottom:0}}>
                   <Textarea
                     name="cmt_conteudo"
                     placeholder="Digite um comentário"
