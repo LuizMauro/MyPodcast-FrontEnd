@@ -44,7 +44,7 @@ export default function Assinatura() {
     }
 
     loadAssinatura();
-  }, [dados]);
+  }, []);
 
   async function handleCancelar(){
     api.put('/assinatura');

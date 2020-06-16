@@ -19,7 +19,10 @@ import Comentario from "../../components/Comentarios";
 // reactstrap components
 import { Container, Col, Button } from "reactstrap";
 
+import firebase from '../../config/firebaseConfig'
+
 export default function Podcast() {
+  const database = firebase.database();
   const { pod_id } = useParams();
   const [podcast, setPodcast] = useState("");
   const [categoria, setCategoria] = useState([]);
@@ -43,6 +46,7 @@ export default function Podcast() {
   useEffect(() => {
     async function loadPodcast() {
       const response = await api.get(`/podcast/${pod_id}`);
+      console.log(response.data);
       if (!response.data) {
         history.push("/error");
       } else {
@@ -134,9 +138,11 @@ export default function Podcast() {
 
       if (verifica.data.fbk_status === 1) {
         await api.put(`profile/favoritar/${pod_id}`);
+        
         toast.success(`Você desfavoritou ${podcast.pod_nome}`);
       } else {
         await api.post(`${pod_id}/favoritar`);
+        createNotification();
         toast.success(`Você favoritou ${podcast.pod_nome}`);
       }
     } else {
@@ -257,6 +263,20 @@ export default function Podcast() {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+
+
+  function createNotification(){
+    
+    database.ref(`notifications/` + podcast.usu_id ).push({
+      title: `${profile.usu_nome} favoritou seu podcast ${podcast.pod_nome}`,
+      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+      viewed: 0
+    });
+
+  }
+
+
+
 
   return (
     <>

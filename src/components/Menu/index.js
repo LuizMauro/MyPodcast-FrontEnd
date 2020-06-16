@@ -54,7 +54,6 @@ export default function Index() {
           <Col>
             <h1 className="logo-title mb-0">MyPodcast</h1>
           </Col>
-          <Notifications></Notifications>
           <button className="navbar-toggler" id="navbar-default">
             <span className="navbar-toggler-icon" />
           </button>
@@ -88,12 +87,15 @@ export default function Index() {
               <NavItem>
                 {profile ? (
                   profile.tus_descricao === "Administrador" ? (
+                    <>
                     <NavLink
                       className="nav-link-icon  icone-li home-button"
                       href="/adm/dashboard"
                     >
                       <i className="ni ni-favourite-28" /> Painel
                     </NavLink>
+                    
+                    </>
                   ) : profile.tus_descricao === "Moderador" ? (
                     <NavLink
                       className="nav-link-icon icone-li home-button"
@@ -131,16 +133,18 @@ export default function Index() {
 
               <NavItem>
                 {profile ? (
+                  <>
                   <NavLink
                     className="nav-link-icon icone-li home-button"
                     href="/profile"
                   >
                     <FaUserCircle
                       color={"#FFF"}
-                      size={24}
+                      size={25}
                       className="navbar-icon"
                     />
                   </NavLink>
+                  </>
                 ) : (
                   <NavLink
                     className="nav-link-icon icone-li home-button"
@@ -150,6 +154,15 @@ export default function Index() {
                   </NavLink>
                 )}
               </NavItem>
+              
+              {profile && (
+                <NavItem>
+                  <NavLink>
+                    <Notifications></Notifications>
+                  </NavLink>
+                </NavItem>
+              )}
+              
 
               <NavItem>
                 {profile && (

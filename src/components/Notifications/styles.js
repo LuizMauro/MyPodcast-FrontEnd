@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
+
 import { lighten } from 'polished';
 
 export const Container = styled.div`
@@ -10,7 +11,7 @@ export const Container = styled.div`
 export const Badge = styled.button`
   background: none;
   border: 0;
-  position: relative;
+ 
 
   ${props => 
     props.hasUnread && css`
@@ -18,10 +19,10 @@ export const Badge = styled.button`
         position: absolute;
         right: 0;
         top: 0;
-        width: 8px;
-        height: 8px;
-        background: #ff892e;
-        content: '';
+        width: 10px;
+        height: 10px;
+        background: #1BFDBE;
+        content: '';1BFDBE
         border-radius: 50%;
     }
   `}
@@ -33,14 +34,14 @@ export const NotificationsList = styled.div`
   width: 260px;
   left: calc(50% - 130px);
   top: calc(100% + 30px);
-  background: rgba(0, 0, 0, 0.9);
-  border radius: 4px;
+  background: #30346df5;
+  border-radius: 4px;
   padding: 20px;
   z-index: 1;
   display: ${props => (props.visible ? 'block' : 'none')};
 
   &::before {
-    content '';
+    content: '';
     position: absolute;
     left: calc(50% - 20px);
     top: -20px;
@@ -48,7 +49,7 @@ export const NotificationsList = styled.div`
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
-    border-botton: 20px solid rgba(0, 0, 0, 0.6);
+    border-bottom: 20px solid #30346df5;
   }
 `;
 
@@ -62,7 +63,7 @@ export const Notification = styled.div`
   & + div {
     margin-top:  15px;
     padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid #ccc;
   }
 
 
@@ -83,7 +84,7 @@ export const Notification = styled.div`
     color: ${lighten(0.2, '#7159c1')};
     padding: 0 5px;
     margin: 0 5px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid #30346ded;
   }
 
   ${props => 
@@ -91,9 +92,9 @@ export const Notification = styled.div`
       &::after {
         content: '';
         display: inline-block;
-        width: 8px;
-        height: 8px;
-        background: #ff892e;
+        width: 10px;
+        height: 10px;
+        background: #1BFDBE;
         border-radius: 50%;
     }
   `}
