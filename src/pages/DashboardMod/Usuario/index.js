@@ -13,6 +13,7 @@ import {
   Row,
   Col,
   CardTitle,
+  Button,
 } from "reactstrap";
 
 export default function Usuario() {
@@ -21,7 +22,11 @@ export default function Usuario() {
   const [update, setUpdate] = useState(false);
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  const [userPage, setUserPage] = useState([]);
   const dispatch = useDispatch();
+  let limit = 10;
 
   useEffect(() => {
     exibirUsuarios();
@@ -29,9 +34,32 @@ export default function Usuario() {
 
   async function exibirUsuarios() {
     const response = await api.get("/users");
-    setUsuario(response.data);
+    setUserPage(response.data);
+
+    if (userPage.length <= limit) {
+      setLoadMore(0);
+    } else if (usuario.length < userPage.length) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
+
+    loadUsuarios();
   }
 
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+      loadUsuarios();
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+      loadUsuarios();
+    }
+  }
+
+  async function loadUsuarios() {
+    setUsuario(userPage.slice(0, limit * currentPage));
+  }
   async function exibirStatus(status) {
     setUserStatus(status);
     setUpdate(update ? false : true);
@@ -97,7 +125,7 @@ export default function Usuario() {
                   <CardTitle
                     style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
                   >
-                    {usuario.length} Usuários no sistema
+                    {userPage.length} Usuários no sistema
                   </CardTitle>
                   <Row className="mt-1">
                     <Col md="2" xs="4">
@@ -253,6 +281,19 @@ export default function Usuario() {
                           </PodcastList>
                         ))}
                   </ul>
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>

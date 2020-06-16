@@ -8,7 +8,7 @@ import { updateCategoriaRequest } from "../../../../store/modules/categoria/acti
 
 import Input from "../../../../components/Input";
 import PodcastList from "../../../../styles/ItemList";
-import { FaPen,  FaPlus } from "react-icons/fa";
+import { FaPen, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
 import {
@@ -29,16 +29,42 @@ export default function EditarPodcast() {
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  const [categoriaPage, setCategoriaPage] = useState([]);
   const dispatch = useDispatch();
+  let limit = 10;
 
   useEffect(() => {
     exibirCategorias();
-  }, [editMode]);
+  }, [editMode, categorias]);
 
   async function exibirCategorias() {
     const response = await api.get("/categoria");
-    console.log(response.data);
-    setCategorias(response.data);
+    setCategoriaPage(response.data);
+
+    if (categoriaPage.length <= limit) {
+      setLoadMore(0);
+    } else if (categorias.length < categoriaPage.length) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
+
+    loadCategorias();
+  }
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+      loadCategorias();
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+      loadCategorias();
+    }
+  }
+
+  async function loadCategorias() {
+    setCategorias(categoriaPage.slice(0, limit * currentPage));
   }
 
   async function editarCategoria(categoria) {
@@ -108,7 +134,10 @@ export default function EditarPodcast() {
                       </Col>
                     </Col>
                     <Col lg="6" style={{ textAlign: "end" }}>
-                      <Link className="btn btn-primary" to="categorias/cadastrar">
+                      <Link
+                        className="btn btn-primary"
+                        to="categorias/cadastrar"
+                      >
                         <FaPlus size={18} /> Categoria
                       </Link>
                     </Col>
@@ -118,7 +147,7 @@ export default function EditarPodcast() {
                   >
                     {editMode
                       ? `Editar Categoria`
-                      : `${categorias.length} Categorias cadastradas`}
+                      : `${categoriaPage.length} Categorias cadastradas`}
                   </CardTitle>
 
                   <MdClose
@@ -200,6 +229,19 @@ export default function EditarPodcast() {
                       </Button>
                     </div>
                   </Form>
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>
