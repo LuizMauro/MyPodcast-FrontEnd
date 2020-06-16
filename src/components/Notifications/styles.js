@@ -28,13 +28,15 @@ export const Badge = styled.button`
 `;
 
 export const NotificationsList = styled.div`
-  postion: absolute;
+  
+  position: absolute;
   width: 260px;
   left: calc(50% - 130px);
   top: calc(100% + 30px);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.9);
   border radius: 4px;
   padding: 20px;
+  z-index: 1;
 
   &::before {
     content '';
