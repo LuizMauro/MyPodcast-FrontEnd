@@ -32,20 +32,48 @@ export default function EditarPodcast() {
   const [update, setUpdate] = useState(false);
   const [preview, setPreview] = useState(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  const [podcastPage, setPodcastPage] = useState([]);
+
   const [selectCategorias, setSelectCategorias] = useState([]);
   const [allCategorias, setAllCategorias] = useState([]);
 
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
 
+  let limit = 10;
+
   useEffect(() => {
     exibirPodcasts();
-  }, [update]);
+  }, [update, podcasts]);
 
   async function exibirPodcasts() {
     const response = await api.get("/allpodcasts");
-    console.log(response.data);
-    setPodcasts(response.data);
+    setPodcastPage(response.data);
+
+    if (podcastPage.length <= limit) {
+      setLoadMore(0);
+    } else if (podcasts.length < podcastPage.length) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
+
+    loadPodcasts();
+  }
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+      loadPodcasts();
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+      loadPodcasts();
+    }
+  }
+
+  async function loadPodcasts() {
+    setPodcasts(podcastPage.slice(0, limit * currentPage));
   }
 
   async function deletarPodcast(podcast) {
@@ -268,7 +296,7 @@ export default function EditarPodcast() {
                   >
                     {editMode
                       ? `Editar Podcast`
-                      : `${podcasts.length} Podcasts Cadastrados`}
+                      : `${podcastPage.length} Podcasts Cadastrados`}
                   </CardTitle>
 
                   <MdClose
@@ -527,6 +555,19 @@ export default function EditarPodcast() {
                       </Button>
                     </div>
                   </Form>
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>
