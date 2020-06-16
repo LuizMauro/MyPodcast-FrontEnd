@@ -1,5 +1,7 @@
 import React from "react";
 
+import Notifications from '../Notifications'
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
@@ -52,6 +54,7 @@ export default function Index() {
           <Col>
             <h1 className="logo-title mb-0">MyPodcast</h1>
           </Col>
+          <Notifications></Notifications>
           <button className="navbar-toggler" id="navbar-default">
             <span className="navbar-toggler-icon" />
           </button>
