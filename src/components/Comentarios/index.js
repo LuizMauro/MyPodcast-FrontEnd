@@ -14,7 +14,7 @@ import {
 import * as S from "./styled";
 import { parseISO, formatRelative } from "date-fns";
 import pt from "date-fns/locale/pt";
-import firebase from '../../config/firebaseConfig'
+import firebase from "../../config/firebaseConfig";
 
 export default function Comentario({
   data,
@@ -35,37 +35,38 @@ export default function Comentario({
 
   const dispatch = useDispatch();
 
-  function createNotification(comentario,userId){
-    
-    database.ref(`notifications/` + comentario.usu_id ).push({
-      title: `${userId} deu like no seu comentário em ${podcast.pod_nome}`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  //item, userComment
+  function createNotification(comentario, userId) {
+    if (userId !== comentario.usu_id) {
+      database.ref(`notifications/` + comentario.usu_id).push({
+        title: `${userId} deu like no seu comentário em ${podcast.pod_nome}`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
   }
 
-  function createNotificationDislike(comentario,userId){
-    
-    database.ref(`notifications/` + comentario.usu_id ).push({
-      title: `${userId} deu dislike no seu comentário em ${podcast.pod_nome}`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  function createNotificationDislike(comentario, userId) {
+    if (userId !== comentario.usu_id) {
+      database.ref(`notifications/` + comentario.usu_id).push({
+        title: `${userId} deu dislike no seu comentário em ${podcast.pod_nome}`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
   }
 
   async function handleLike(item) {
     if (profile) {
       const verifica = await api.get(`/likeuser/${item.comment_id}`);
       console.log("tipo", verifica.data);
+      userComment = profile.usu_nome;
 
       if (!verifica.data[0]) {
         //se caiu aqui nao deu like ainda
         await api.post(`/like/${item.comment_id}`);
         console.log("dando like");
-        userComment = profile.usu_nome;
-        createNotification(item,userComment)
+        createNotification(item, userComment);
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("like de novo");
@@ -82,15 +83,11 @@ export default function Comentario({
         if (verifica.data[0].lik_tipo === 1) {
           // Já tem like e tá clicando de novo no like pra tirar o like
           console.log("tirando like");
-          await api.put(
-            `/likestatus/${verifica.data[0].lik_id}/0`
-          );
+          await api.put(`/likestatus/${verifica.data[0].lik_id}/0`);
         } else {
           console.log("mudando para dislike");
-           await api.put(
-            `/mudarlike/${verifica.data[0].lik_id}/1`
-          );
-          createNotificationDislike(item,userComment)
+          await api.put(`/mudarlike/${verifica.data[0].lik_id}/1`);
+          createNotification(item, userComment);
         }
       }
       setUpdate(update ? false : true);
@@ -101,13 +98,13 @@ export default function Comentario({
     if (profile) {
       const verifica = await api.get(`/likeuser/${item.comment_id}`);
       console.log("tipo", verifica.data);
+      userComment = profile.usu_nome;
 
       if (!verifica.data[0]) {
         //se caiu aqui nao deu dislike ainda
         console.log("dando dislike");
-         await api.post(`/dislike/${item.comment_id}`);
-         userComment = profile.usu_nome;
-         createNotificationDislike(item,userComment)
+        await api.post(`/dislike/${item.comment_id}`);
+        createNotificationDislike(item, userComment);
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("dislike de novo");
@@ -124,15 +121,11 @@ export default function Comentario({
         if (verifica.data[0].lik_tipo === 0) {
           // Já tem like e tá clicando de novo no like pra tirar o like
           console.log("tirando dislike");
-            await api.put(
-            `/likestatus/${verifica.data[0].lik_id}/0`
-          );
+          await api.put(`/likestatus/${verifica.data[0].lik_id}/0`);
         } else {
           console.log("mudando para like");
-            await api.put(
-            `/mudarlike/${verifica.data[0].lik_id}/0`
-          );
-          createNotification(item,userComment)
+          await api.put(`/mudarlike/${verifica.data[0].lik_id}/0`);
+          createNotificationDislike(item, userComment);
         }
       }
       setUpdate(update ? false : true);
@@ -187,7 +180,7 @@ export default function Comentario({
               >
                 <div style={{ width: 50, height: 50 }}>
                   <img
-                  alt="avatar"
+                    alt="avatar"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -244,7 +237,11 @@ export default function Comentario({
                     : { display: "none" }
                 }
               >
-                <Form initialData={cmtEdit} onSubmit={handleEdit} style={{paddingBottom:0}}>
+                <Form
+                  initialData={cmtEdit}
+                  onSubmit={handleEdit}
+                  style={{ paddingBottom: 0 }}
+                >
                   <Textarea
                     name="cmt_conteudo"
                     placeholder="Digite um comentário"

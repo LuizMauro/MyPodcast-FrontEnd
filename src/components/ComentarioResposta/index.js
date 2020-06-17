@@ -13,7 +13,7 @@ import {
 } from "../../store/modules/comentario/actions";
 import { FaPen, FaTimes } from "react-icons/fa";
 import * as S from "../Comentarios/styled";
-import firebase from '../../config/firebaseConfig'
+import firebase from "../../config/firebaseConfig";
 
 export default function Resposta({
   podcast,
@@ -44,7 +44,7 @@ export default function Resposta({
         )
       );
       userComment = profile.usu_nome;
-      createNotification(item.usu_id,userComment);
+      createNotification(item.usu_id, userComment);
       setUpdate(update ? false : true);
       formRef.current.reset();
     } else {
@@ -53,14 +53,15 @@ export default function Resposta({
     }
   }
 
-  function createNotification(idAlvo, userId){
-    
-    database.ref(`notifications/` + idAlvo ).push({
-      title: `${userId} respondeu seu comentário em ${podcast.pod_nome}`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  function createNotification(idAlvo, userId) {
+    if (idAlvo !== userId) {
+      database.ref(`notifications/` + idAlvo).push({
+        title: `${userId} respondeu seu comentário em ${podcast.pod_nome}`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
+    return;
   }
 
   async function editarComentario(item) {

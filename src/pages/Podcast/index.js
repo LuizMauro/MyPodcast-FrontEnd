@@ -19,7 +19,7 @@ import Comentario from "../../components/Comentarios";
 // reactstrap components
 import { Container, Col, Button } from "reactstrap";
 
-import firebase from '../../config/firebaseConfig'
+import firebase from "../../config/firebaseConfig";
 
 export default function Podcast() {
   const database = firebase.database();
@@ -47,7 +47,7 @@ export default function Podcast() {
     loadPodcast({});
     loadComentarios({});
     view({});
-  }, [update, pod_id, profile, comentarios]);
+  }, [update, pod_id, profile]);
 
   async function loadPodcast() {
     const response = await api.get(`/podcast/${pod_id}`);
@@ -100,10 +100,9 @@ export default function Podcast() {
     }
   }
 
-  async function loadComentarios(){
+  async function loadComentarios() {
     const comments = await api.get(`allcomentarios/${pod_id}`);
     setComentarios(comments.data);
-    
   }
 
   //FIM PAGINACAO DE COMENTARIOS
@@ -125,7 +124,7 @@ export default function Podcast() {
 
       if (verifica.data.fbk_status === 1) {
         await api.put(`profile/favoritar/${pod_id}`);
-        
+
         toast.success(`Você desfavoritou ${podcast.pod_nome}`);
       } else {
         await api.post(`${pod_id}/favoritar`);
@@ -151,22 +150,22 @@ export default function Podcast() {
       } else if (verifica.data.fbk_status === 1) {
         //Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
         await api.put(`acompanhando/${pod_id}/${e}`);
-        createNotificationAcompanhando()
+        createNotificationAcompanhando();
       } else if (verifica.data.fbk_status === 2) {
         //Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
         await api.put(`acompanhando/${pod_id}/${e}`);
-        createNotificationMarcarPretendoAcompanhar()
+        createNotificationMarcarPretendoAcompanhar();
       } else if (!verifica.data.fbk_status) {
         //Se não marcou ainda, marca podcast por aqui pelo status vindo do botao
 
         if (e === 1) {
           // Marcar como acompanhando
           await api.post(`${pod_id}/acompanhando`);
-          createNotificationAcompanhando()
+          createNotificationAcompanhando();
         } else if (e === 2) {
           // Marcar como pretendo acompanhar
           await api.post(`${pod_id}/acompanhar`);
-          createNotificationMarcarPretendoAcompanhar()
+          createNotificationMarcarPretendoAcompanhar();
         } else {
           toast.error("Você não pode escolher essa opção");
           console.log("nao tem como marcar como nao marcado");
@@ -176,9 +175,9 @@ export default function Podcast() {
       if (e === 0) {
         toast.success(`Você parou de acompanhar ${podcast.pod_nome}`);
       } else if (e === 1) {
-        toast.success(`Você começou a acompanhar ${podcast.pod_nome}`);
+        toast.success(`Você marcou ${podcast.pod_nome} como "Acompanhando"`);
       } else {
-        toast.success(`Você pretende acompanhar ${podcast.pod_nome}`);
+        toast.success(`Você marcou ${podcast.pod_nome} como "Pretendo Acompanhar"`);
       }
 
       setaCheckBox();
@@ -238,7 +237,7 @@ export default function Podcast() {
   async function handleComentario({ cmt_conteudo }) {
     if (profile) {
       setUpdate(update ? false : true);
-      createNotificationComment()
+      createNotificationComment();
       dispatch(createComentarioRequest(cmt_conteudo, podcast.pod_id, 1));
       formRef.current.reset();
     } else {
@@ -256,44 +255,43 @@ export default function Podcast() {
     },
   };
 
-
-  function createNotification(){
-    
-    database.ref(`notifications/` + podcast.usu_id ).push({
-      title: `${profile.usu_nome} favoritou seu podcast ${podcast.pod_nome}`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  function createNotification() {
+    if (podcast.usu_id !== profile.usu_id) {
+      database.ref(`notifications/` + podcast.usu_id).push({
+        title: `${profile.usu_nome} favoritou seu podcast ${podcast.pod_nome}`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
   }
 
-  function createNotificationComment(){
-    
-    database.ref(`notifications/` + podcast.usu_id ).push({
-      title: `${profile.usu_nome} comentou no seu podcast ${podcast.pod_nome}`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  function createNotificationComment() {
+    if (podcast.usu_id !== profile.usu_id) {
+      database.ref(`notifications/` + podcast.usu_id).push({
+        title: `${profile.usu_nome} comentou no seu podcast ${podcast.pod_nome}`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
   }
 
-  function createNotificationAcompanhando(){
-    
-    database.ref(`notifications/` + podcast.usu_id ).push({
-      title: `${profile.usu_nome} marcou ${podcast.pod_nome} como "Acompanhando"`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  function createNotificationAcompanhando() {
+    if (podcast.usu_id !== profile.usu_id) {
+      database.ref(`notifications/` + podcast.usu_id).push({
+        title: `${profile.usu_nome} marcou ${podcast.pod_nome} como "Acompanhando"`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
   }
-  function createNotificationMarcarPretendoAcompanhar(){
-    
-    database.ref(`notifications/` + podcast.usu_id ).push({
-      title: `${profile.usu_nome} marcou ${podcast.pod_nome}  como "Pretendo Acompanhar"`,
-      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
-      viewed: 0
-    });
-
+  function createNotificationMarcarPretendoAcompanhar() {
+    if (podcast.usu_id !== profile.usu_id) {
+      database.ref(`notifications/` + podcast.usu_id).push({
+        title: `${profile.usu_nome} marcou ${podcast.pod_nome}  como "Pretendo Acompanhar"`,
+        url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        viewed: 0,
+      });
+    }
   }
 
   return (
@@ -318,7 +316,6 @@ export default function Podcast() {
               flexDirection: "column",
               margin: "0 auto",
             }}
-            
           >
             <div className="img" style={{ padding: 20 }}>
               <img
@@ -595,7 +592,7 @@ export default function Podcast() {
               flexDirection: "column",
               flex: 1,
               padding: 20,
-              paddingBottom:0
+              paddingBottom: 0,
             }}
           >
             <div
