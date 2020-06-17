@@ -32,6 +32,7 @@ export default function Resposta({
   const formRef = useRef(null);
   const database = firebase.database();
   let userComment = null;
+  let userCommentId = null;
 
   async function handleResposta({ cmt_conteudo }) {
     if (profile) {
@@ -44,7 +45,8 @@ export default function Resposta({
         )
       );
       userComment = profile.usu_nome;
-      createNotification(item.usu_id, userComment);
+      userCommentId = profile.usu_id
+      createNotification(item.usu_id, userComment, userCommentId);
       setUpdate(update ? false : true);
       formRef.current.reset();
     } else {
@@ -53,8 +55,9 @@ export default function Resposta({
     }
   }
 
-  function createNotification(idAlvo, userId) {
-    if (idAlvo !== userId) {
+  function createNotification(idAlvo, userId, userCommentId) {
+    console.log('testar aqui agr',idAlvo,userCommentId)
+    if (idAlvo !== userCommentId) {
       database.ref(`notifications/` + idAlvo).push({
         title: `${userId} respondeu seu comentário em ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,

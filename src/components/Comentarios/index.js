@@ -32,12 +32,13 @@ export default function Comentario({
   const database = firebase.database();
 
   let userComment = null;
+  let userCommentId = null;
 
   const dispatch = useDispatch();
 
   //item, userComment
-  function createNotification(comentario, userId) {
-    if (userId !== comentario.usu_id) {
+  function createNotification(comentario, userId, userCommentId) {
+    if (userCommentId !== comentario.usu_id) {
       database.ref(`notifications/` + comentario.usu_id).push({
         title: `${userId} deu like no seu comentário em ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
@@ -46,8 +47,8 @@ export default function Comentario({
     }
   }
 
-  function createNotificationDislike(comentario, userId) {
-    if (userId !== comentario.usu_id) {
+  function createNotificationDislike(comentario, userId, userCommentId) {
+    if (userCommentId !== comentario.usu_id) {
       database.ref(`notifications/` + comentario.usu_id).push({
         title: `${userId} deu dislike no seu comentário em ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
@@ -61,12 +62,13 @@ export default function Comentario({
       const verifica = await api.get(`/likeuser/${item.comment_id}`);
       console.log("tipo", verifica.data);
       userComment = profile.usu_nome;
+      userCommentId = profile.usu_id;
 
       if (!verifica.data[0]) {
         //se caiu aqui nao deu like ainda
         await api.post(`/like/${item.comment_id}`);
         console.log("dando like");
-        createNotification(item, userComment);
+        createNotification(item, userComment, userCommentId);
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("like de novo");
@@ -87,7 +89,7 @@ export default function Comentario({
         } else {
           console.log("mudando para dislike");
           await api.put(`/mudarlike/${verifica.data[0].lik_id}/1`);
-          createNotification(item, userComment);
+          createNotification(item, userComment, userCommentId);
         }
       }
       setUpdate(update ? false : true);
@@ -99,12 +101,13 @@ export default function Comentario({
       const verifica = await api.get(`/likeuser/${item.comment_id}`);
       console.log("tipo", verifica.data);
       userComment = profile.usu_nome;
+      userCommentId = profile.usu_id;
 
       if (!verifica.data[0]) {
         //se caiu aqui nao deu dislike ainda
         console.log("dando dislike");
         await api.post(`/dislike/${item.comment_id}`);
-        createNotificationDislike(item, userComment);
+        createNotificationDislike(item, userComment, userCommentId);
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("dislike de novo");
@@ -125,7 +128,7 @@ export default function Comentario({
         } else {
           console.log("mudando para like");
           await api.put(`/mudarlike/${verifica.data[0].lik_id}/0`);
-          createNotificationDislike(item, userComment);
+          createNotificationDislike(item, userComment, userCommentId);
         }
       }
       setUpdate(update ? false : true);
