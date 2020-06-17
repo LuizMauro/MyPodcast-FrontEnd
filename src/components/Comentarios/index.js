@@ -14,6 +14,7 @@ import {
 import * as S from "./styled";
 import { parseISO, formatRelative } from "date-fns";
 import pt from "date-fns/locale/pt";
+import firebase from '../../config/firebaseConfig'
 
 export default function Comentario({
   data,
@@ -28,8 +29,31 @@ export default function Comentario({
   const [editMode, setEditMode] = useState(false);
   const [cmtEdit, setCmtEdit] = useState([]);
   const comentario = data;
+  const database = firebase.database();
+
+  let userComment = null;
 
   const dispatch = useDispatch();
+
+  function createNotification(comentario,userId){
+    
+    database.ref(`notifications/` + comentario.usu_id ).push({
+      title: `${userId} deu like no seu comentário em ${podcast.pod_nome}`,
+      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+      viewed: 0
+    });
+
+  }
+
+  function createNotificationDislike(comentario,userId){
+    
+    database.ref(`notifications/` + comentario.usu_id ).push({
+      title: `${userId} deu dislike no seu comentário em ${podcast.pod_nome}`,
+      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+      viewed: 0
+    });
+
+  }
 
   async function handleLike(item) {
     if (profile) {
@@ -40,6 +64,8 @@ export default function Comentario({
         //se caiu aqui nao deu like ainda
         await api.post(`/like/${item.comment_id}`);
         console.log("dando like");
+        userComment = profile.usu_nome;
+        createNotification(item,userComment)
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("like de novo");
@@ -64,6 +90,7 @@ export default function Comentario({
            await api.put(
             `/mudarlike/${verifica.data[0].lik_id}/1`
           );
+          createNotificationDislike(item,userComment)
         }
       }
       setUpdate(update ? false : true);
@@ -79,6 +106,8 @@ export default function Comentario({
         //se caiu aqui nao deu dislike ainda
         console.log("dando dislike");
          await api.post(`/dislike/${item.comment_id}`);
+         userComment = profile.usu_nome;
+         createNotificationDislike(item,userComment)
       } else if (verifica.data[0].lik_status === 0) {
         //Aqui dá like novamente se tirou o like antes
         console.log("dislike de novo");
@@ -103,6 +132,7 @@ export default function Comentario({
             await api.put(
             `/mudarlike/${verifica.data[0].lik_id}/0`
           );
+          createNotification(item,userComment)
         }
       }
       setUpdate(update ? false : true);

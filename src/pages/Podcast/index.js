@@ -44,64 +44,50 @@ export default function Podcast() {
   let limit = 5;
 
   useEffect(() => {
-    async function loadPodcast() {
-      const response = await api.get(`/podcast/${pod_id}`);
-      console.log(response.data);
-      if (!response.data) {
-        history.push("/error");
-      } else {
-        setPodcast(response.data);
-
-        //Busca média do podcast
-        const valor_media = await api.get(`${pod_id}/medianota`);
-        setMedia(valor_media.data);
-
-        //Busca nota que usuário já deu (Se ele deu)
-        if (profile) {
-          const verifica = await api.get(`${pod_id}/avaliar`);
-          if (verifica.data.fbk_status === 1) {
-            //se caiu aqui ele já deu uma nota e vai exibir
-            setNota(verifica.data.fbk_valor);
-          }
-        }
-
-        const { ctg_descricao, end_link } = response.data;
-        setCategoria(ctg_descricao.split(","));
-        setEndereco(end_link.split(","));
-      }
-
-      const comments = await api.get(`allcomentarios/${pod_id}`);
-      setCommentPage(comments.data);
-     
-      if(commentPage.length <= limit){
-        setLoadMore(0);
-      }else if (comentarios.length < commentPage.length){
-        setLoadMore(1)
-      }else{
-        setLoadMore(2);
-      }
-
-      loadComentarios();
-
-      setaCheckBox();
-      setaFavoritar();
-    }
-
-    loadPodcast();
-
-    async function view() {
-      const ipv4 = (await publicIp.v4()) || "";
-      const ipv6 = (await publicIp.v6()) || "";
-
-      if (profile) {
-        await api.post(`/podview/${pod_id}`);
-      } else {
-        await api.post(`/podview/${pod_id}/${ipv4 ? ipv4 : ipv6}`);
-      }
-    }
-    view();
+    loadPodcast({});
+    loadComentarios({});
+    view({});
   }, [update, pod_id, profile, comentarios]);
 
+  async function loadPodcast() {
+    const response = await api.get(`/podcast/${pod_id}`);
+    console.log(response.data);
+    if (!response.data) {
+      history.push("/error");
+    } else {
+      setPodcast(response.data);
+
+      //Busca média do podcast
+      const valor_media = await api.get(`${pod_id}/medianota`);
+      setMedia(valor_media.data);
+
+      //Busca nota que usuário já deu (Se ele deu)
+      if (profile) {
+        const verifica = await api.get(`${pod_id}/avaliar`);
+        if (verifica.data.fbk_status === 1) {
+          //se caiu aqui ele já deu uma nota e vai exibir
+          setNota(verifica.data.fbk_valor);
+        }
+      }
+
+      const { ctg_descricao, end_link } = response.data;
+      setCategoria(ctg_descricao.split(","));
+      setEndereco(end_link.split(","));
+    }
+    setaCheckBox();
+    setaFavoritar();
+  }
+
+  async function view() {
+    const ipv4 = (await publicIp.v4()) || "";
+    const ipv6 = (await publicIp.v6()) || "";
+
+    if (profile) {
+      await api.post(`/podview/${pod_id}`);
+    } else {
+      await api.post(`/podview/${pod_id}/${ipv4 ? ipv4 : ipv6}`);
+    }
+  }
 
   //PAGINACAO DE COMENTARIOS
   async function load() {
@@ -115,7 +101,8 @@ export default function Podcast() {
   }
 
   async function loadComentarios(){
-      setComentarios(commentPage.slice(0, limit * currentPage));
+    const comments = await api.get(`allcomentarios/${pod_id}`);
+    setComentarios(comments.data);
     
   }
 
@@ -164,18 +151,22 @@ export default function Podcast() {
       } else if (verifica.data.fbk_status === 1) {
         //Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
         await api.put(`acompanhando/${pod_id}/${e}`);
+        createNotificationAcompanhando()
       } else if (verifica.data.fbk_status === 2) {
         //Se caiu aqui é porque ja marcou e tá mudando a opção (Botao com outro status)
         await api.put(`acompanhando/${pod_id}/${e}`);
+        createNotificationMarcarPretendoAcompanhar()
       } else if (!verifica.data.fbk_status) {
         //Se não marcou ainda, marca podcast por aqui pelo status vindo do botao
 
         if (e === 1) {
           // Marcar como acompanhando
           await api.post(`${pod_id}/acompanhando`);
+          createNotificationAcompanhando()
         } else if (e === 2) {
           // Marcar como pretendo acompanhar
           await api.post(`${pod_id}/acompanhar`);
+          createNotificationMarcarPretendoAcompanhar()
         } else {
           toast.error("Você não pode escolher essa opção");
           console.log("nao tem como marcar como nao marcado");
@@ -247,6 +238,7 @@ export default function Podcast() {
   async function handleComentario({ cmt_conteudo }) {
     if (profile) {
       setUpdate(update ? false : true);
+      createNotificationComment()
       dispatch(createComentarioRequest(cmt_conteudo, podcast.pod_id, 1));
       formRef.current.reset();
     } else {
@@ -275,8 +267,34 @@ export default function Podcast() {
 
   }
 
+  function createNotificationComment(){
+    
+    database.ref(`notifications/` + podcast.usu_id ).push({
+      title: `${profile.usu_nome} comentou no seu podcast ${podcast.pod_nome}`,
+      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+      viewed: 0
+    });
 
+  }
 
+  function createNotificationAcompanhando(){
+    
+    database.ref(`notifications/` + podcast.usu_id ).push({
+      title: `${profile.usu_nome} marcou ${podcast.pod_nome} como "Acompanhando"`,
+      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+      viewed: 0
+    });
+
+  }
+  function createNotificationMarcarPretendoAcompanhar(){
+    
+    database.ref(`notifications/` + podcast.usu_id ).push({
+      title: `${profile.usu_nome} marcou ${podcast.pod_nome}  como "Pretendo Acompanhar"`,
+      url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+      viewed: 0
+    });
+
+  }
 
   return (
     <>

@@ -22,7 +22,7 @@ export const Badge = styled.button`
         width: 10px;
         height: 10px;
         background: #1BFDBE;
-        content: '';1BFDBE
+        content: '';
         border-radius: 50%;
     }
   `}
