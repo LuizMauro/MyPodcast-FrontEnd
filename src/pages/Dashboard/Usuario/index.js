@@ -18,7 +18,7 @@ import {
 
 export default function Usuario() {
   const [usuario, setUsuario] = useState([]);
-  const [userStatus, setUserStatus] = useState(null);
+  const [userStatus, setUserStatus] = useState(3);
   const [update, setUpdate] = useState(false);
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
@@ -29,14 +29,17 @@ export default function Usuario() {
   let limit = 10;
 
   useEffect(() => {
-    exibirUsuarios({});
-  }, [usuario]);
+    if (!update) {
+      exibirUsuarios();
+      setUpdate(true);
+    }
+  }, [update]);
 
   async function exibirUsuarios() {
     const response = await api.get("/users");
-    setUserPage(response.data);
-
-    if (userPage.length <= limit) {
+    setUsuario(response.data);
+/*
+     if (userPage.length <= limit) {
       setLoadMore(0);
     } else if (usuario.length < userPage.length) {
       setLoadMore(1);
@@ -44,7 +47,7 @@ export default function Usuario() {
       setLoadMore(2);
     }
 
-    loadUsuarios();
+    loadUsuarios(); */
   }
 
   async function load() {
@@ -62,20 +65,24 @@ export default function Usuario() {
   }
 
   async function exibirStatus(status) {
+    setUpdate(false);
     setUserStatus(status);
-    setUpdate(update ? false : true);
+    //setUpdate(item);
   }
 
-  async function mudarStatus(item) {
+  function mudarStatus(item) {
     try {
-      dispatch(updateStatusRequest(item.usu_id, item.usu_status));
-      setUpdate(update ? false : true);
+      const teste = dispatch(updateStatusRequest(item.usu_id, item.usu_status));
+      console.log('update',update)
+      setUpdate(false);
+      //console.log("teste", teste);
 
       if (item.usu_status) {
         toast.success("Usuário desativado.");
       } else {
         toast.success("Usuário ativado");
       }
+      //  exibirUsuarios();
     } catch (err) {
       toast.error("Não foi possível ativar/desativar usuário");
     }
@@ -132,7 +139,7 @@ export default function Usuario() {
                     <Col md="2" xs="4">
                       <button
                         className="button"
-                        onClick={(e) => exibirStatus(null)}
+                        onClick={(e) => exibirStatus(3)}
                         style={{
                           color: "rgb(27, 253, 190)",
                           fontWeight: "bold",
@@ -207,14 +214,14 @@ export default function Usuario() {
                                   <button
                                     style={{ fontSize: "21px" }}
                                     className="button"
-                                    onClick={(e) => mudarStatus(item)}
+                                    onClick={(e) => mudarStatus(e)}
                                   >
                                     {item.usu_status ? "Desativar" : "Ativar"}
                                   </button>
                                 </div>
                               </PodcastList>
                             )
-                          ) : (
+                          ) : userStatus === 3 && (  
                             <PodcastList>
                               <div
                                 className="subitem"
