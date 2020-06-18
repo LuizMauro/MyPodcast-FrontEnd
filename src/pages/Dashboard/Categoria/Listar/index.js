@@ -28,47 +28,40 @@ export default function EditarPodcast() {
   const [editarCat, setEditarCat] = useState([]);
   const [searchValue, setSearch] = useState("");
   const [listSearch, setListSearch] = useState([]);
-  const [update, setUpdate] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [categoriaPage, setCategoriaPage] = useState([]);
   const dispatch = useDispatch();
+  const [exibir,setExibir] = useState(false);
   let limit = 10;
 
   useEffect(() => {
-    exibirCategorias({});
-  }, [editMode, categorias]);
+      exibirCategorias();
+  }, [editMode, currentPage]);
 
   async function exibirCategorias() {
     const response = await api.get("/categoria");
-    setCategoriaPage(response.data);
-
-    if (categoriaPage.length <= limit) {
+    setCategorias(response.data);
+    
+    console.log('alou',categorias.length);
+    if (response.data.length <= limit) {
       setLoadMore(0);
-    } else if (categorias.length < categoriaPage.length) {
+    } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
     } else {
       setLoadMore(2);
-    }
-
-    loadCategorias();
+    } 
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-      loadCategorias();
     } else if (loadMore === 2) {
       setCurrentPage(currentPage - 1);
-      loadCategorias();
     }
   }
 
-  async function loadCategorias() {
-    setCategorias(categoriaPage.slice(0, limit * currentPage));
-  }
-
   async function editarCategoria(categoria) {
+    setLoadMore(0);
     setEditMode(true);
     setEditarCat(categoria);
   }
@@ -83,7 +76,6 @@ export default function EditarPodcast() {
     try {
       dispatch(updateCategoriaRequest(ctg_descricao, ctgid));
       setEditMode(false);
-      setUpdate(update ? false : true);
     } catch (err) {
       toast.error("Não foi possível editar categoria");
     }
@@ -91,17 +83,20 @@ export default function EditarPodcast() {
 
   function searchCategoria(e) {
     setSearch(e.target.value);
+    setLoadMore(0)
 
     setListSearch(
       categorias.filter(({ ctg_descricao }) =>
         ctg_descricao.toLowerCase().includes(e.target.value.toLowerCase())
       )
+
+      
     );
   }
 
   return (
     <>
-      {console.log(categorias)}
+      {console.log('teste',categorias)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>
@@ -149,7 +144,7 @@ export default function EditarPodcast() {
                   >
                     {editMode
                       ? `Editar Categoria`
-                      : `${categoriaPage.length} Categorias cadastradas`}
+                      : `${categorias.length} Categorias cadastradas`}
                   </CardTitle>
 
                   <MdClose
@@ -167,7 +162,7 @@ export default function EditarPodcast() {
                     }
                   >
                     {searchValue === ""
-                      ? categorias.map((item) => (
+                      ? categorias.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <Link
@@ -188,7 +183,7 @@ export default function EditarPodcast() {
                             </div>
                           </PodcastList>
                         ))
-                      : listSearch.map((item) => (
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <Link
