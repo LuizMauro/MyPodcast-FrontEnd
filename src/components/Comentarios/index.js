@@ -23,7 +23,8 @@ export default function Comentario({
   setUpdate,
   update,
   dash,
-  //  resposta
+  limit,
+  currentPage
 }) {
   const [responder, setResponder] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -161,9 +162,9 @@ export default function Comentario({
 
   return (
     <>
-      {comentario.map(
+      {comentario.filter(item => !item.id_comentario_pai).slice(0, limit * currentPage).map(
         (item) =>
-          !item.id_comentario_pai && (
+        
             <div
               key={item.comment_id}
               style={{
@@ -432,7 +433,7 @@ export default function Comentario({
                 />
               </S.CommentWrapper>
             </div>
-          )
+          
       )}
     </>
   );

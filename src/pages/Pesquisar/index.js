@@ -23,7 +23,6 @@ export default function Pesquisar() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [podPage, setPodPage] = useState([]);
   let limit = 10;
 
   useEffect(() => {
@@ -39,61 +38,67 @@ export default function Pesquisar() {
     } else if (select !== "" && pesquisa !== "") {
       loadPodCastsCategoriaAndNome(select, pesquisa);
     }
-  }, [podcasts]);
+  }, [currentPage]);
 
   async function loadPodCastsAll() {
     const response = await api.get("/allpodcasts");
-    setPodPage(response.data);
+    setPodcasts(response.data);
 
-    verifyLoad()
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
   }
 
   async function loadPodCastsCategoria(select) {
     const response = await api.get(`/pesquisar/${select}`);
-    setPodPage(response.data);
+    setPodcasts(response.data);
 
-    verifyLoad()
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
   }
 
   async function loadPodCastsNome(pesquisa) {
     const response = await api.get(`/pesquisarnome/${pesquisa}`);
-    setPodPage(response.data);
+    setPodcasts(response.data);
 
-    verifyLoad()
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
   }
 
   async function loadPodCastsCategoriaAndNome(select, pesquisa) {
     const response = await api.get(`/pesquisar/nome/${select}/${pesquisa}`);
 
-    setPodPage(response.data);
+    setPodcasts(response.data);
 
-    verifyLoad()
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-      loadPodcasts();
     } else if (loadMore === 2) {
       setCurrentPage(currentPage - 1);
-      loadPodcasts();
     }
-  }
-
-  async function verifyLoad(){
-    if(podPage.length <= limit){
-      setLoadMore(0);
-    }else if (podcasts.length < podPage.length){
-      setLoadMore(1)
-    }else{
-      setLoadMore(2);
-    }
-
-    loadPodcasts();
-  }
-
-  async function loadPodcasts() {
-    setPodcasts(podPage.slice(0, limit * currentPage));
   }
 
   return (
@@ -105,7 +110,7 @@ export default function Pesquisar() {
           {!select && <p className="h4 p">Todas as categorias</p>}
 
           <CardDeck>
-            {podcasts.map((item) => (
+            {podcasts.slice(0, limit * currentPage).map((item) => (
               <Col lg="6" md="6" xs="12" style={{ marginTop: 20, padding: 0 }}>
                 <Card style={{ minHeight: 200, background: "#151734 " }}>
                   <Row>

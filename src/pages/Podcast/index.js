@@ -21,7 +21,6 @@ import { Container, Col, Button } from "reactstrap";
 
 import firebase from "../../config/firebaseConfig";
 
-
 export default function Podcast() {
   const database = firebase.database();
   const { pod_id } = useParams();
@@ -41,14 +40,13 @@ export default function Podcast() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [commentPage, setCommentPage] = useState([]);
   let limit = 5;
 
   useEffect(() => {
     loadPodcast({});
     loadComentarios({});
     view({});
-  }, [update, pod_id, profile]);
+  }, [update, pod_id, profile, currentPage]);
 
   async function loadPodcast() {
     const response = await api.get(`/podcast/${pod_id}`);
@@ -91,21 +89,28 @@ export default function Podcast() {
   }
 
   //PAGINACAO DE COMENTARIOS
-  async function load() {
-    if (loadMore === 1) {
-      setCurrentPage(currentPage + 1);
-      loadComentarios();
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
-      loadComentarios();
+  async function loadComentarios() {
+    const response = await api.get(`allcomentarios/${pod_id}`);
+    setComentarios(response.data);
+
+    const comments = response.data.filter(item => !item.id_comentario_pai);
+
+    if (comments.length <= limit) {
+      setLoadMore(0);
+    } else if (comments.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
     }
   }
 
-  async function loadComentarios() {
-    const comments = await api.get(`allcomentarios/${pod_id}`);
-    setComentarios(comments.data);
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+    }
   }
-
   //FIM PAGINACAO DE COMENTARIOS
 
   async function setaCheckBox() {
@@ -292,6 +297,7 @@ export default function Podcast() {
       });
     }
   }
+
   function createNotificationMarcarPretendoAcompanhar() {
     if (podcast.usu_id !== profile.usu_id) {
       database.ref(`notifications/` + podcast.usu_id).push({
@@ -585,7 +591,7 @@ export default function Podcast() {
           </div>
         </div>
 
-        <h2 style={{ color: "#fff", fontWeight: "bold" }}>Comentários</h2>
+        <h2 style={{ color: "#fff", fontWeight: "bold" }}>{comentarios.length} Comentários</h2>
         <div
           className="bg-secondary shadow"
           style={{
@@ -667,6 +673,8 @@ export default function Podcast() {
             podcast={podcast}
             setUpdate={setUpdate}
             update={update}
+            limit={limit}
+            currentPage={currentPage}
           />
           <Col
             lg="12"

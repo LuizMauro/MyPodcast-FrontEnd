@@ -6,7 +6,7 @@ import { MdGrade } from "react-icons/md";
 import { AiFillSchedule } from "react-icons/ai";
 import Comentario from "../../../components/Comentarios";
 import Chart from "react-google-charts";
-import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
+import { Card, Button, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 
 export default function EditarPodcast() {
   const [podcasts, setPodcasts] = useState([]);
@@ -14,6 +14,9 @@ export default function EditarPodcast() {
   const [topWeek, setTopWeek] = useState([]);
   const [comentario, setComentario] = useState([]);
   const [graphview, setGraphview] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  let limit = 5;
 
   useEffect(() => {
     let podinicial = null;
@@ -29,10 +32,20 @@ export default function EditarPodcast() {
       }
     }
 
+    /* Comentários e Paginação */
     async function loadComments() {
       const response = await api.get(`allcomentarios/${podinicial}`);
       setComentario(response.data);
+
+      if (response.data.length <= limit) {
+        setLoadMore(0);
+      } else if (response.data.length > limit * currentPage) {
+        setLoadMore(1);
+      } else {
+        setLoadMore(2);
+      }
     }
+    /* FIM Comentários e Paginação */
 
     async function loadGraph() {
       const graphiview = await api.get(`premiumgrafico/${podinicial}`);
@@ -58,7 +71,15 @@ export default function EditarPodcast() {
 
     exibirPodcasts();
     loadEstatistica();
-  }, []);
+  }, [currentPage]);
+
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+    }
+  }
 
   async function SelecionarPodcast(e) {
     const id = e.target.value;
@@ -283,7 +304,7 @@ export default function EditarPodcast() {
                             color: "rgb(27, 253, 190)",
                             marginTop: 30,
                             fontWeight: "bold",
-                            fontSize:'1.6rem'
+                            fontSize: "1.6rem",
                           }}
                         >
                           Visitas Totais {" - "}
@@ -294,7 +315,7 @@ export default function EditarPodcast() {
                             color: "rgb(27, 253, 190)",
                             marginTop: 50,
                             fontWeight: "bold",
-                            fontSize:'1.6rem'
+                            fontSize: "1.6rem",
                           }}
                         >
                           Visitas último mês {" - "}
@@ -305,7 +326,7 @@ export default function EditarPodcast() {
                             color: "rgb(27, 253, 190)",
                             marginTop: 50,
                             fontWeight: "bold",
-                            fontSize:'1.6rem'
+                            fontSize: "1.6rem",
                           }}
                         >
                           Visitas última semana {" - "}
@@ -341,7 +362,7 @@ export default function EditarPodcast() {
                             style={{
                               color: "rgb(27, 253, 190)",
                               marginTop: 20,
-                              fontSize:'1.2rem'
+                              fontSize: "1.2rem",
                             }}
                           >
                             <Link
@@ -427,10 +448,19 @@ export default function EditarPodcast() {
                           background: "#151734",
                         }}
                       >
+                        <h2 style={{
+                            fontSize: 24,
+                            textAlign: "center",
+                            fontWeight:'bold',
+                            color: "rgb(27, 253, 190)",
+                            marginTop:5
+                        }}>{comentario.length} Comentários</h2>
                         {comentario.length ? (
                           <Comentario
                             data={comentario.map((item) => item)}
                             dash={true}
+                            currentPage={currentPage}
+                            limit={limit}
                           />
                         ) : (
                           <div
@@ -448,6 +478,20 @@ export default function EditarPodcast() {
                             </p>
                           </div>
                         )}
+                        <Col
+                          lg="12"
+                          sm="12"
+                          className="mb-3 mt-3"
+                          style={
+                            loadMore === 0
+                              ? { display: "none" }
+                              : { textAlign: "center" }
+                          }
+                        >
+                          <Button className="btn-primary" onClick={load}>
+                            {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                          </Button>
+                        </Col>
                       </div>
                     </Col>
                   </Row>
