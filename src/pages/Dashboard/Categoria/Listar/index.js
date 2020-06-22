@@ -31,7 +31,6 @@ export default function EditarPodcast() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
   const dispatch = useDispatch();
-  const [exibir,setExibir] = useState(false);
   let limit = 10;
 
   useEffect(() => {

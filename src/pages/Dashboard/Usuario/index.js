@@ -83,7 +83,8 @@ export default function Usuario() {
 
   function searchUsuario(e) {
     setSearch(e.target.value);
-
+    setLoadMore(0)
+    
     setListSearch(
       usuario.filter(({ usu_nome }) =>
         usu_nome.toLowerCase().includes(e.target.value.toLowerCase())

@@ -33,6 +33,10 @@ export default function EditarPublicidade() {
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
   const [update, setUpdate] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  let limit = 10;
+
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -43,7 +47,7 @@ export default function EditarPublicidade() {
 
   useEffect(() => {
     exibirPublicidades();
-  }, [publicidades, editMode]);
+  }, [editMode, currentPage]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
@@ -59,9 +63,26 @@ export default function EditarPublicidade() {
     const response = await api.get("/publicidades");
     console.log(response.data);
     setPublicidades(response.data);
+  
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    } 
+  }
+
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+    }
   }
 
   async function editarPublicidade(publicidade) {
+    setLoadMore(0);
     setPreview(`http://localhost:3333/files/${publicidade.pub_endereco_img}`);
     setEditMode(true);
     setEditarPub(publicidade);
@@ -151,6 +172,7 @@ export default function EditarPublicidade() {
 
   function searchPublicidade(e) {
     setSearch(e.target.value);
+    setLoadMore(0)
 
     setListSearch(
       publicidades.filter(({ pub_descricao }) =>
@@ -227,7 +249,7 @@ export default function EditarPublicidade() {
                     }
                   >
                     {searchValue === ""
-                      ? publicidades.map((item) => (
+                      ? publicidades.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <p
@@ -253,7 +275,7 @@ export default function EditarPublicidade() {
                             </div>
                           </PodcastList>
                         ))
-                      : listSearch.map((item) => (
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <p
@@ -355,6 +377,19 @@ export default function EditarPublicidade() {
                       </Button>
                     </div>
                   </Form>
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>

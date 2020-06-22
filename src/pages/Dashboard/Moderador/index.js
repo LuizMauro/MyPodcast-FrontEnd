@@ -26,52 +26,48 @@ export default function Moderador() {
   const [listSearch, setListSearch] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [moderadorPage, setModeradorPage] = useState([]);
   const dispatch = useDispatch();
   let limit = 10;
 
   useEffect(() => {
-    exibirUsuarios();
-  }, [usuario]);
+    if (!update) {
+      exibirUsuarios();
+      setUpdate(true);
+    }
+  }, [update,currentPage]);
 
   async function exibirUsuarios() {
     const response = await api.get("adm/modusers");
-    setModeradorPage(response.data);
+    setUsuario(response.data);
 
-    if (moderadorPage.length <= limit) {
+    if (response.data.length <= limit) {
       setLoadMore(0);
-    } else if (usuario.length < moderadorPage.length) {
+    } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
     } else {
       setLoadMore(2);
     }
 
-    loadModerador();
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-      loadModerador();
     } else if (loadMore === 2) {
       setCurrentPage(currentPage - 1);
-      loadModerador();
     }
-  }
-
-  async function loadModerador() {
-    setUsuario(moderadorPage.slice(0, limit * currentPage));
+    setUpdate(false);
   }
 
   async function exibirEspecifico(status) {
     setTusId(status);
-    setUpdate(update ? false : true);
+    setUpdate(false);
   }
 
   async function mudarTusId(item) {
     try {
       dispatch(updateModeradorRequest(item.usu_id, item.tus_id));
-      setUpdate(update ? false : true);
+      setUpdate(false);
 
       if (item.tus_id === 3) {
         toast.success("O usuário não é mais moderador");
@@ -85,6 +81,7 @@ export default function Moderador() {
 
   function searchUsuario(e) {
     setSearch(e.target.value);
+    setLoadMore(0)
 
     setListSearch(
       usuario.filter(({ usu_nome }) =>
@@ -164,7 +161,7 @@ export default function Moderador() {
 
                   <ul className="my-3">
                     {!searchValue
-                      ? usuario.map(
+                      ? usuario.slice(0, limit * currentPage).map(
                           (item) =>
                             tusId === item.tus_id && (
                               <PodcastList>
@@ -194,7 +191,7 @@ export default function Moderador() {
                               </PodcastList>
                             )
                         )
-                      : listSearch.map((item) => (
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div
                               className="item"

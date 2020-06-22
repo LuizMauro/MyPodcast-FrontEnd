@@ -34,7 +34,6 @@ export default function EditarPodcast() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [podcastPage, setPodcastPage] = useState([]);
 
   const [selectCategorias, setSelectCategorias] = useState([]);
   const [allCategorias, setAllCategorias] = useState([]);
@@ -46,35 +45,30 @@ export default function EditarPodcast() {
 
   useEffect(() => {
     exibirPodcasts();
-  }, [update, podcasts]);
+  }, [update, ]);
 
   async function exibirPodcasts() {
     const response = await api.get("/allpodcasts");
-    setPodcastPage(response.data);
+    setPodcasts(response.data);
 
-    if (podcastPage.length <= limit) {
+    if (response.data.length <= limit) {
       setLoadMore(0);
-    } else if (podcasts.length < podcastPage.length) {
+    } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
     } else {
       setLoadMore(2);
-    }
-
-    loadPodcasts();
+    } 
   }
+  
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-      loadPodcasts();
     } else if (loadMore === 2) {
       setCurrentPage(currentPage - 1);
-      loadPodcasts();
     }
   }
 
-  async function loadPodcasts() {
-    setPodcasts(podcastPage.slice(0, limit * currentPage));
-  }
+
 
   async function deletarPodcast(podcast) {
     try {
@@ -250,6 +244,7 @@ export default function EditarPodcast() {
 
   function searchPodcast(e) {
     setSearch(e.target.value);
+    setLoadMore(0)
 
     setListSearch(
       podcasts.filter(({ pod_nome }) =>
@@ -305,7 +300,7 @@ export default function EditarPodcast() {
                   >
                     {editMode
                       ? `Editar Podcast`
-                      : `${podcastPage.length} Podcasts Cadastrados`}
+                      : `${podcasts.length} Podcasts Cadastrados`}
                   </CardTitle>
 
                   <MdClose
@@ -323,7 +318,7 @@ export default function EditarPodcast() {
                     }
                   >
                     {searchValue === ""
-                      ? podcasts.map((item) => (
+                      ? podcasts.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <Link
@@ -350,7 +345,7 @@ export default function EditarPodcast() {
                             </div>
                           </PodcastList>
                         ))
-                      : listSearch.map((item) => (
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <Link

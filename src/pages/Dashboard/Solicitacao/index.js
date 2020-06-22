@@ -25,10 +25,13 @@ export default function Solicitacao() {
   const [endereco, setEndereco] = useState([]);
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  let limit = 10;
 
   useEffect(() => {
     exibirSolicitacoes();
-  }, [solicitacao]);
+  }, [modal, currentPage]);
 
   async function toggle(item) {
     setPodcast(item);
@@ -44,6 +47,22 @@ export default function Solicitacao() {
     const response = await api.get("/podcasts/solicitacao");
     console.log(response.data);
     setSolicitacao(response.data);
+
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else {
+      setLoadMore(2);
+    }
+  }
+
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (loadMore === 2) {
+      setCurrentPage(currentPage - 1);
+    }
   }
 
   async function permitir(pod_id, pod_permissao) {
@@ -91,7 +110,7 @@ export default function Solicitacao() {
                         justifyContent: "space-around",
                       }}
                     >
-                      {solicitacao.map((item) => (
+                      {solicitacao.slice(0, limit * currentPage).map((item) => (
                         <div
                           className="shadow"
                           style={{
@@ -175,6 +194,19 @@ export default function Solicitacao() {
                       Nenhuma solicitação de cadastro no momento.
                     </h2>
                   )}
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>
@@ -182,7 +214,6 @@ export default function Solicitacao() {
         </Container>
 
         <div style={!modal ? { display: "none" } : { display: "block" }}>
-          >
           <Modal isOpen={modal} style={{ minWidth: "80%" }} toggle={toggle}>
             <ModalHeader toggle={toggle}>
               <h3 style={{ fontSize: 25, color: "#fff" }}>
