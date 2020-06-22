@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Menu from "../../components/Menu";
 import api from "../../services/api";
@@ -20,6 +20,7 @@ import Comentario from "../../components/Comentarios";
 import { Container, Col, Button } from "reactstrap";
 
 import firebase from "../../config/firebaseConfig";
+
 
 export default function Podcast() {
   const database = firebase.database();
@@ -255,11 +256,15 @@ export default function Podcast() {
     },
   };
 
+
   function createNotification() {
+      
+    
     if (podcast.usu_id !== profile.usu_id) {
       database.ref(`notifications/` + podcast.usu_id).push({
         title: `${profile.usu_nome} favoritou seu podcast ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
       });
     }
@@ -270,7 +275,9 @@ export default function Podcast() {
       database.ref(`notifications/` + podcast.usu_id).push({
         title: `${profile.usu_nome} comentou no seu podcast ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
+        
       });
     }
   }
@@ -280,6 +287,7 @@ export default function Podcast() {
       database.ref(`notifications/` + podcast.usu_id).push({
         title: `${profile.usu_nome} marcou ${podcast.pod_nome} como "Acompanhando"`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
       });
     }
@@ -289,7 +297,9 @@ export default function Podcast() {
       database.ref(`notifications/` + podcast.usu_id).push({
         title: `${profile.usu_nome} marcou ${podcast.pod_nome}  como "Pretendo Acompanhar"`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
+       
       });
     }
   }

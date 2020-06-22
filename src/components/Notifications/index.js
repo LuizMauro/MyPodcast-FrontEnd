@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 
 import { Container, Badge, NotificationsList, Scroll, Notification } from './styles';
 
+import { parseISO, formatRelative } from 'date-fns'
+import pt from 'date-fns/locale/pt'
 
 export default function Notifications() {
   const profile = useSelector((state) => state.user.profile);
@@ -19,6 +21,15 @@ export default function Notifications() {
 
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  function formatDate(datetime){
+    const dateParsed = formatRelative(datetime, new Date(), {
+      locale: pt,
+      addSuffix: true
+    });
+
+    return dateParsed;
   }
 
   useEffect( () => {
@@ -67,9 +78,9 @@ export default function Notifications() {
         {notifications.map((item) => (
           <Notification key={item.key}  unread={item.viewed ? false : true} >
 
-            <span  onClick={() => goToLink(item.key, item.url)}>
+            <span  onClick={() => goToLink(item.key, item.url)} style={{cursor:'pointer'}}>
               <p style={{color: "#fff"}}>{item.title}</p>
-              
+              <span> {formatDate(item.datetime)} </span>
             </span>
 
             <button onClick={() => visualizar(item.key, item.url)} style={{color:"#1BFDBE"}}>Marcar como lida</button>

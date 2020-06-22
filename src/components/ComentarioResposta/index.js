@@ -61,6 +61,7 @@ export default function Resposta({
       database.ref(`notifications/` + idAlvo).push({
         title: `${userId} respondeu seu comentário em ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
       });
     }

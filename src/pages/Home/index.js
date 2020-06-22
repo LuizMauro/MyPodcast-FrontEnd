@@ -20,25 +20,26 @@ export default function Home() {
     history.push(`/pesquisar?select=${select}&pesquisa=${pesquisa}`);
   }
 
+  async function loadPodCasts() {
+    const response = await api.get("/podcasts");
+    setPodcasts(response.data);
+
+    async function view() {
+      const ipv4 = (await publicIp.v4()) || "";
+      const ipv6 = (await publicIp.v6()) || "";
+
+      await api.post(`/view/${ipv4 ? ipv4 : ipv6}`);
+    }
+    view();
+  }
+
+  async function loadCategoria() {
+    const response = await api.get("/categoria");
+    setCategorias(response.data);
+  }
+
+
   useEffect(() => {
-    async function loadPodCasts() {
-      const response = await api.get("/podcasts");
-      setPodcasts(response.data);
-
-      async function view() {
-        const ipv4 = (await publicIp.v4()) || "";
-        const ipv6 = (await publicIp.v6()) || "";
-
-        await api.post(`/view/${ipv4 ? ipv4 : ipv6}`);
-      }
-      view();
-    }
-
-    async function loadCategoria() {
-      const response = await api.get("/categoria");
-      setCategorias(response.data);
-    }
-
     loadPodCasts();
     loadCategoria();
   }, []);

@@ -42,6 +42,7 @@ export default function Comentario({
       database.ref(`notifications/` + comentario.usu_id).push({
         title: `${userId} deu like no seu comentário em ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
       });
     }
@@ -52,6 +53,7 @@ export default function Comentario({
       database.ref(`notifications/` + comentario.usu_id).push({
         title: `${userId} deu dislike no seu comentário em ${podcast.pod_nome}`,
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
+        datetime: Date.now(),
         viewed: 0,
       });
     }
