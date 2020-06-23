@@ -47,7 +47,7 @@ export default function Resposta({
       userComment = profile.usu_nome;
       userCommentId = profile.usu_id
       createNotification(item.usu_id, userComment, userCommentId);
-      setUpdate(update ? false : true);
+      setUpdate(false);
       formRef.current.reset();
     } else {
       toast.error("Você precisa entrar para realizar esta ação");
@@ -76,14 +76,14 @@ export default function Resposta({
   async function handleEdit({ cmt_conteudo }) {
     const cmtid = cmtEdit.comment_id;
     dispatch(updateComentarioRequest(podcast.pod_id, cmtid, cmt_conteudo));
-    setUpdate(update ? false : true);
+    setUpdate(false);
     setEditMode(false);
   }
 
   async function deletarComentario(comentario) {
     console.log("ids", comentario.pod_id, comentario.comment_id);
     dispatch(deleteComentarioRequest(comentario.pod_id, comentario.comment_id));
-    setUpdate(update ? false : true);
+    setUpdate(false);
   }
 
   return (

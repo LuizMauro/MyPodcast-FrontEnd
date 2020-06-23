@@ -95,7 +95,7 @@ export default function Comentario({
           createNotification(item, userComment, userCommentId);
         }
       }
-      setUpdate(update ? false : true);
+      setUpdate(false);
     }
   }
 
@@ -134,7 +134,7 @@ export default function Comentario({
           createNotificationDislike(item, userComment, userCommentId);
         }
       }
-      setUpdate(update ? false : true);
+      setUpdate(false);
     }
   }
 
@@ -150,14 +150,14 @@ export default function Comentario({
   async function handleEdit({ cmt_conteudo }) {
     const cmtid = cmtEdit.comment_id;
     dispatch(updateComentarioRequest(podcast.pod_id, cmtid, cmt_conteudo));
-    setUpdate(update ? false : true);
+    setUpdate(false);
     setEditMode(false);
   }
 
   async function deletarComentario(comentario) {
     console.log("ids", comentario.pod_id, comentario.comment_id);
     dispatch(deleteComentarioRequest(comentario.pod_id, comentario.comment_id));
-    setUpdate(update ? false : true);
+    setUpdate(false);
   }
 
   return (

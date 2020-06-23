@@ -34,7 +34,7 @@ export default function Podcast() {
   const [comentarios, setComentarios] = useState([]);
   const dispatch = useDispatch();
   const formRef = useRef(null);
-  const [update, setUpdate] = useState(true);
+  const [update, setUpdate] = useState(false);
 
   const profile = useSelector((state) => state.user.profile);
 
@@ -44,7 +44,11 @@ export default function Podcast() {
 
   useEffect(() => {
     loadPodcast({});
-    loadComentarios({});
+
+    if (!update) {
+      loadComentarios({});
+      setUpdate(true);
+    }
     view({});
   }, [update, pod_id, profile, currentPage]);
 
@@ -93,14 +97,14 @@ export default function Podcast() {
     const response = await api.get(`allcomentarios/${pod_id}`);
     setComentarios(response.data);
 
-    const comments = response.data.filter(item => !item.id_comentario_pai);
+    const comments = response.data.filter((item) => !item.id_comentario_pai);
 
     if (comments.length <= limit) {
       setLoadMore(0);
     } else if (comments.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (comments.length === limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
@@ -183,7 +187,9 @@ export default function Podcast() {
       } else if (e === 1) {
         toast.success(`Você marcou ${podcast.pod_nome} como "Acompanhando"`);
       } else {
-        toast.success(`Você marcou ${podcast.pod_nome} como "Pretendo Acompanhar"`);
+        toast.success(
+          `Você marcou ${podcast.pod_nome} como "Pretendo Acompanhar"`
+        );
       }
 
       setaCheckBox();
@@ -242,7 +248,7 @@ export default function Podcast() {
 
   async function handleComentario({ cmt_conteudo }) {
     if (profile) {
-      setUpdate(update ? false : true);
+      setUpdate(false);
       createNotificationComment();
       dispatch(createComentarioRequest(cmt_conteudo, podcast.pod_id, 1));
       formRef.current.reset();
@@ -261,10 +267,7 @@ export default function Podcast() {
     },
   };
 
-
   function createNotification() {
-      
-    
     if (podcast.usu_id !== profile.usu_id) {
       database.ref(`notifications/` + podcast.usu_id).push({
         title: `${profile.usu_nome} favoritou seu podcast ${podcast.pod_nome}`,
@@ -282,7 +285,6 @@ export default function Podcast() {
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
         datetime: Date.now(),
         viewed: 0,
-        
       });
     }
   }
@@ -305,7 +307,6 @@ export default function Podcast() {
         url: `http://localhost:3000/podcast/${podcast.pod_id}`,
         datetime: Date.now(),
         viewed: 0,
-       
       });
     }
   }
@@ -591,7 +592,9 @@ export default function Podcast() {
           </div>
         </div>
 
-        <h2 style={{ color: "#fff", fontWeight: "bold" }}>{comentarios.length} Comentários</h2>
+        <h2 style={{ color: "#fff", fontWeight: "bold" }}>
+          {comentarios.length} Comentários
+        </h2>
         <div
           className="bg-secondary shadow"
           style={{
@@ -685,7 +688,7 @@ export default function Podcast() {
             }
           >
             <Button className="btn-primary" onClick={load}>
-              {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+              {loadMore === 1 && `Mostrar Mais`}
             </Button>
           </Col>
         </div>
