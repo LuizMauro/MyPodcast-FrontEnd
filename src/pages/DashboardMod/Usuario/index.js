@@ -24,42 +24,32 @@ export default function Usuario() {
   const [listSearch, setListSearch] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [userPage, setUserPage] = useState([]);
   const dispatch = useDispatch();
   let limit = 10;
 
   useEffect(() => {
     exibirUsuarios();
-  }, [usuario]);
+  }, [currentPage]);
 
   async function exibirUsuarios() {
     const response = await api.get("/users");
-    setUserPage(response.data);
+    setUsuario(response.data);
 
-    if (userPage.length <= limit) {
+    if (response.data.length <= limit) {
       setLoadMore(0);
-    } else if (usuario.length < userPage.length) {
+    } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
-
-    loadUsuarios();
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-      loadUsuarios();
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
-      loadUsuarios();
     }
   }
 
-  async function loadUsuarios() {
-    setUsuario(userPage.slice(0, limit * currentPage));
-  }
   async function exibirStatus(status) {
     setUserStatus(status);
     setUpdate(update ? false : true);
@@ -125,7 +115,7 @@ export default function Usuario() {
                   <CardTitle
                     style={{ fontSize: 25, color: "#fff", marginTop: 20 }}
                   >
-                    {userPage.length} Usuários no sistema
+                    {usuario.length} Usuários no sistema
                   </CardTitle>
                   <Row className="mt-1">
                     <Col md="2" xs="4">
@@ -178,7 +168,7 @@ export default function Usuario() {
 
                   <ul>
                     {!searchValue
-                      ? usuario.map((item) =>
+                      ? usuario.slice(0, limit * currentPage).map((item) =>
                           userStatus === 1 || userStatus === 0 ? (
                             userStatus === item.usu_status && (
                               <PodcastList>
@@ -247,7 +237,7 @@ export default function Usuario() {
                             </PodcastList>
                           )
                         )
-                      : listSearch.map((item) => (
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div
                               className="subitem"
@@ -291,7 +281,7 @@ export default function Usuario() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

@@ -45,7 +45,7 @@ export default function EditarPodcast() {
 
   useEffect(() => {
     exibirPodcasts();
-  }, [update, ]);
+  }, [update, currentPage]);
 
   async function exibirPodcasts() {
     const response = await api.get("/allpodcasts");
@@ -55,20 +55,17 @@ export default function EditarPodcast() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
-    } 
-  }
-  
-  async function load() {
-    if (loadMore === 1) {
-      setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
-
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    }
+    setUpdate(false);
+  }
 
   async function deletarPodcast(podcast) {
     try {
@@ -244,7 +241,7 @@ export default function EditarPodcast() {
 
   function searchPodcast(e) {
     setSearch(e.target.value);
-    setLoadMore(0)
+    setLoadMore(0);
 
     setListSearch(
       podcasts.filter(({ pod_nome }) =>
@@ -569,7 +566,7 @@ export default function EditarPodcast() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

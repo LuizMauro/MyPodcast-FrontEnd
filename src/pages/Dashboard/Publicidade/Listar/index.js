@@ -63,21 +63,19 @@ export default function EditarPublicidade() {
     const response = await api.get("/publicidades");
     console.log(response.data);
     setPublicidades(response.data);
-  
+
     if (response.data.length <= limit) {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
-    } 
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
+    }
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
   }
 
@@ -172,7 +170,7 @@ export default function EditarPublicidade() {
 
   function searchPublicidade(e) {
     setSearch(e.target.value);
-    setLoadMore(0)
+    setLoadMore(0);
 
     setListSearch(
       publicidades.filter(({ pub_descricao }) =>
@@ -249,32 +247,37 @@ export default function EditarPublicidade() {
                     }
                   >
                     {searchValue === ""
-                      ? publicidades.slice(0, limit * currentPage).map((item) => (
-                          <PodcastList>
-                            <div className="item">
-                              <p
-                                className="linktittle"
-                                style={{ color: "#1bfdbe", fontWeight: "bold" }}
-                              >
-                                {item.pub_descricao}
-                              </p>
-                            </div>
-                            <div className="icons">
-                              <button
-                                className="button edit"
-                                onClick={(e) => editarPublicidade(item)}
-                              >
-                                <FaPen size={18} />
-                              </button>
-                              <button
-                                className="button delete"
-                                onClick={(e) => deletarPublicidade(item)}
-                              >
-                                <FaTimes size={18} />
-                              </button>
-                            </div>
-                          </PodcastList>
-                        ))
+                      ? publicidades
+                          .slice(0, limit * currentPage)
+                          .map((item) => (
+                            <PodcastList>
+                              <div className="item">
+                                <p
+                                  className="linktittle"
+                                  style={{
+                                    color: "#1bfdbe",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item.pub_descricao}
+                                </p>
+                              </div>
+                              <div className="icons">
+                                <button
+                                  className="button edit"
+                                  onClick={(e) => editarPublicidade(item)}
+                                >
+                                  <FaPen size={18} />
+                                </button>
+                                <button
+                                  className="button delete"
+                                  onClick={(e) => deletarPublicidade(item)}
+                                >
+                                  <FaTimes size={18} />
+                                </button>
+                              </div>
+                            </PodcastList>
+                          ))
                       : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
@@ -387,7 +390,7 @@ export default function EditarPublicidade() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

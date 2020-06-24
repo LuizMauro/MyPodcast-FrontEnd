@@ -34,28 +34,26 @@ export default function EditarPodcast() {
   let limit = 10;
 
   useEffect(() => {
-      exibirCategorias();
+    exibirCategorias();
   }, [editMode, currentPage]);
 
   async function exibirCategorias() {
     const response = await api.get("/categoria");
     setCategorias(response.data);
-    
-    console.log('alou',categorias.length);
+
+    console.log("alou", categorias.length);
     if (response.data.length <= limit) {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
-    } 
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
+    }
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
   }
 
@@ -82,20 +80,18 @@ export default function EditarPodcast() {
 
   function searchCategoria(e) {
     setSearch(e.target.value);
-    setLoadMore(0)
+    setLoadMore(0);
 
     setListSearch(
       categorias.filter(({ ctg_descricao }) =>
         ctg_descricao.toLowerCase().includes(e.target.value.toLowerCase())
       )
-
-      
     );
   }
 
   return (
     <>
-      {console.log('teste',categorias)}
+      {console.log("teste", categorias)}
       <section className="section section-shaped section-lg">
         <Container className="pt-lg-1">
           <Row style={{ justifyContent: "center" }}>
@@ -235,7 +231,7 @@ export default function EditarPodcast() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

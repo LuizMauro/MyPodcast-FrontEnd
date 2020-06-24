@@ -11,7 +11,7 @@ import PodcastList from "../../../../styles/ItemList";
 import { FaPen, FaTimes, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import pt from "date-fns/locale/pt";
-import { DateRange} from "react-date-range";
+import { DateRange } from "react-date-range";
 
 import {
   Button,
@@ -32,6 +32,9 @@ export default function EditarPodcast() {
   const [listSearch, setListSearch] = useState([]);
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  let limit = 10;
   const [update, setUpdate] = useState(false);
   const [state, setState] = useState([
     {
@@ -43,7 +46,7 @@ export default function EditarPodcast() {
 
   useEffect(() => {
     exibirPublicidades();
-  }, [update, editMode]);
+  }, [editMode, currentPage]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
@@ -59,6 +62,19 @@ export default function EditarPodcast() {
     const response = await api.get("/publicidades");
     console.log(response.data);
     setPublicidades(response.data);
+
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
+    }
+  }
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    }
   }
 
   async function editarPublicidade(publicidade) {
@@ -227,33 +243,38 @@ export default function EditarPodcast() {
                     }
                   >
                     {searchValue === ""
-                      ? publicidades.map((item) => (
-                          <PodcastList>
-                            <div className="item">
-                              <p
-                                className="linktittle"
-                                style={{ color: "#1bfdbe", fontWeight: "bold" }}
-                              >
-                                {item.pub_descricao}
-                              </p>
-                            </div>
-                            <div className="icons">
-                              <button
-                                className="button edit"
-                                onClick={(e) => editarPublicidade(item)}
-                              >
-                                <FaPen size={18} />
-                              </button>
-                              <button
-                                className="button delete"
-                                onClick={(e) => deletarPublicidade(item)}
-                              >
-                                <FaTimes size={18} />
-                              </button>
-                            </div>
-                          </PodcastList>
-                        ))
-                      : listSearch.map((item) => (
+                      ? publicidades
+                          .slice(0, limit * currentPage)
+                          .map((item) => (
+                            <PodcastList>
+                              <div className="item">
+                                <p
+                                  className="linktittle"
+                                  style={{
+                                    color: "#1bfdbe",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item.pub_descricao}
+                                </p>
+                              </div>
+                              <div className="icons">
+                                <button
+                                  className="button edit"
+                                  onClick={(e) => editarPublicidade(item)}
+                                >
+                                  <FaPen size={18} />
+                                </button>
+                                <button
+                                  className="button delete"
+                                  onClick={(e) => deletarPublicidade(item)}
+                                >
+                                  <FaTimes size={18} />
+                                </button>
+                              </div>
+                            </PodcastList>
+                          ))
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <p
@@ -355,6 +376,19 @@ export default function EditarPodcast() {
                       </Button>
                     </div>
                   </Form>
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 && `Mostrar Mais`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>

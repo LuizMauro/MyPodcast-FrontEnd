@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -25,10 +25,13 @@ export default function Solicitacao() {
   const [endereco, setEndereco] = useState([]);
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(1);
+  let limit = 10;
 
   useEffect(() => {
     exibirSolicitacoes();
-  }, [solicitacao]);
+  }, [solicitacao, currentPage]);
 
   async function toggle(item) {
     setPodcast(item);
@@ -44,8 +47,21 @@ export default function Solicitacao() {
     const response = await api.get("/podcasts/solicitacao");
     console.log(response.data);
     setSolicitacao(response.data);
+
+    if (response.data.length <= limit) {
+      setLoadMore(0);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(1);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
+    }
   }
 
+  async function load() {
+    if (loadMore === 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  }
   async function permitir(pod_id, pod_permissao) {
     try {
       dispatch(updateSolicitacaoRequest(pod_id, pod_permissao));
@@ -91,7 +107,7 @@ export default function Solicitacao() {
                         justifyContent: "space-around",
                       }}
                     >
-                      {solicitacao.map((item) => (
+                      {solicitacao.slice(0, limit * currentPage).map((item) => (
                         <div
                           className="shadow"
                           style={{
@@ -175,6 +191,19 @@ export default function Solicitacao() {
                       Nenhuma solicitação de cadastro no momento.
                     </h2>
                   )}
+                  <Col
+                    lg="12"
+                    sm="12"
+                    style={
+                      loadMore === 0
+                        ? { display: "none" }
+                        : { textAlign: "center" }
+                    }
+                  >
+                    <Button className="btn-primary" onClick={load}>
+                      {loadMore === 1 && `Mostrar Mais`}
+                    </Button>
+                  </Col>
                 </CardBody>
               </Card>
             </Col>
@@ -211,7 +240,7 @@ export default function Solicitacao() {
                 >
                   <div className="img" style={{ padding: 20 }}>
                     <img
-                    alt="podcast cover"
+                      alt="podcast cover"
                       className="shadow podcast-image"
                       src={`http://localhost:3333/files/${podcast.pod_endereco_img}`}
                     />

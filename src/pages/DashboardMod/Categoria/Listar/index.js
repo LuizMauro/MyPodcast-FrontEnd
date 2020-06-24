@@ -31,40 +31,29 @@ export default function EditarPodcast() {
   const [update, setUpdate] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
-  const [categoriaPage, setCategoriaPage] = useState([]);
   const dispatch = useDispatch();
   let limit = 10;
 
   useEffect(() => {
     exibirCategorias();
-  }, [editMode, categorias]);
+  }, [editMode, currentPage]);
 
   async function exibirCategorias() {
     const response = await api.get("/categoria");
-    setCategoriaPage(response.data);
+    setCategorias(response.data);
 
-    if (categoriaPage.length <= limit) {
+    if (response.data.length <= limit) {
       setLoadMore(0);
-    } else if (categorias.length < categoriaPage.length) {
+    } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
-
-    loadCategorias();
   }
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-      loadCategorias();
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
-      loadCategorias();
     }
-  }
-
-  async function loadCategorias() {
-    setCategorias(categoriaPage.slice(0, limit * currentPage));
   }
 
   async function editarCategoria(categoria) {
@@ -147,7 +136,7 @@ export default function EditarPodcast() {
                   >
                     {editMode
                       ? `Editar Categoria`
-                      : `${categoriaPage.length} Categorias cadastradas`}
+                      : `${categorias.length} Categorias cadastradas`}
                   </CardTitle>
 
                   <MdClose
@@ -165,7 +154,7 @@ export default function EditarPodcast() {
                     }
                   >
                     {searchValue === ""
-                      ? categorias.map((item) => (
+                      ? categorias.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <Link
@@ -186,7 +175,7 @@ export default function EditarPodcast() {
                             </div>
                           </PodcastList>
                         ))
-                      : listSearch.map((item) => (
+                      : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
                               <Link
