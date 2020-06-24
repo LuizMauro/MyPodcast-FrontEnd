@@ -46,8 +46,11 @@ export default function EditarPublicidade() {
   ]);
 
   useEffect(() => {
-    exibirPublicidades();
-  }, [editMode, currentPage]);
+    if (!update) {
+      exibirPublicidades();
+      setUpdate(true);
+    }
+  }, [editMode, currentPage, update]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
@@ -68,8 +71,13 @@ export default function EditarPublicidade() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
+<<<<<<< HEAD
     } else if (response.data.length < limit * currentPage) {
       setLoadMore(0);
+=======
+    } else {
+      setLoadMore(2);
+>>>>>>> 1d1100ff17596a2f316526213e1c1ac15f661ecf
     }
   }
 
@@ -77,6 +85,7 @@ export default function EditarPublicidade() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
     }
+    setUpdate(false);
   }
 
   async function editarPublicidade(publicidade) {
@@ -137,6 +146,7 @@ export default function EditarPublicidade() {
 
       api.put(`/publicidade/${pubid}`, data);
       toast.success("Publicidade editada!");
+      setUpdate(false);
       setEditMode(false);
 
       formRef.current.setErrors(false);
@@ -154,7 +164,6 @@ export default function EditarPublicidade() {
         formRef.current.setErrors(errorMessages);
       }
     }
-    setUpdate(update ? false : true);
   }
 
   async function deletarPublicidade(publicidade) {
@@ -165,7 +174,6 @@ export default function EditarPublicidade() {
     } catch (err) {
       toast.error("Erro ao remover Publicidade");
     }
-    setUpdate(update ? false : true);
   }
 
   function searchPublicidade(e) {

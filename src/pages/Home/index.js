@@ -7,14 +7,27 @@ import history from "../../services/history";
 import "./index.css";
 import publicIp from "react-public-ip";
 
+import Carousel, { Dots } from '@brainhubeu/react-carousel'
+import '@brainhubeu/react-carousel/lib/style.css'
+
+import LinesEllipsis from 'react-lines-ellipsis/lib/html';
+
+
 // reactstrap components
-import { Container, Button, Input, FormGroup } from "reactstrap";
+import { Container, Button, Input, FormGroup,   Card,
+  CardBody,
+  Row,
+  Col,
+  CardTitle,
+  CardDeck,
+  CardImg, } from "reactstrap";
 
 export default function Home() {
   const [podcasts, setPodcasts] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
   const [select, setSelect] = useState("");
+  const [publicidades, setPublicidades] = useState([]);
 
   function handleSubmit() {
     history.push(`/pesquisar?select=${select}&pesquisa=${pesquisa}`);
@@ -38,16 +51,51 @@ export default function Home() {
     setCategorias(response.data);
   }
 
+  async function loadPublicidades(){
+    const response = await api.get("/publicidades");
+  
+    setPublicidades(response.data);
+  }
 
   useEffect(() => {
     loadPodCasts();
     loadCategoria();
+    loadPublicidades();
   }, []);
 
   return (
     <>
       <Menu></Menu>
       <Container>
+
+      {publicidades && (
+        <Container style={{paddingTop:40}}>
+        <Carousel slidesPerPage={3} infinite={true} centered  keepDirectionWhenDragging  breakpoints={{
+          640: {
+            slidesPerPage: 1,
+            arrows: false
+          },
+          900: {
+            slidesPerPage: 2,
+            arrows: false
+          }
+        }}   autoPlay={4000} animationSpeed={2000}>
+
+            {publicidades.sort().map((item) => (
+              <Link key={item.pub_id}
+                  to={`podcast/${item.pub_link}`}
+                  style={{ textAlign: "center", color: "#1BFDBE" }}
+              >
+                <img src={`http://localhost:3333/files/${item.pub_endereco_img}`}/>
+              </Link>
+            ))}
+           
+          </Carousel>
+      </Container>
+      )}
+        
+     
+
         <FormGroup className="search-home-shadow">
           <div
             style={{
@@ -55,7 +103,8 @@ export default function Home() {
               direction: "row",
               flex: 0.5,
               justifyContent: "center",
-              marginTop: "10%",
+              marginTop: 30,
+              
             }}
           >
             <div>
@@ -64,7 +113,7 @@ export default function Home() {
                 type="select"
                 name="select"
                 id="exampleSelect"
-                style={{ height: 70 }}
+                style={{ height: 70, textAlign: 'center' }}
                 onChange={(e) => setSelect(e.target.value)}
               >
                 <option disabled selected>
@@ -83,9 +132,9 @@ export default function Home() {
                 onChange={(e) => setPesquisa(e.target.value)}
                 className="input-search-home"
                 type="text"
-                style={{ height: 70 }}
+                style={{ height: 70,  }}
                 name="pesquisa"
-                placeholder="Buscar"
+                placeholder="Busque um podcast aqui:"
               />
             </div>
 
@@ -102,38 +151,94 @@ export default function Home() {
         </FormGroup>
       </Container>
 
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "space-around",
-          flexWrap: "wrap",
-          marginTop: "5%",
-        }}
-      >
-        {podcasts.map(
-          (item) =>
-            item.pod_destaque == 1 &&
-            item.pod_status === 1 && (
-              <div key={item.pod_id} className="card-home">
-                <Link
-                  to={`podcast/${item.pod_id}`}
-                  style={{ width: "100%", height: "100%" }}
-                >
-                  <img
-                    style={{ width: "100%", height: "100%", borderRadius: 15 }}
-                    src={"http://localhost:3333/files/" + item.pod_endereco_img}
-                  />
-                </Link>
-                <h3 style={{ color: "#fff" }} className="text-center">
-                  <Link to={`podcast/${item.pod_id}`} style={{ color: "#fff" }}>
-                    {item.pod_nome}
-                  </Link>
-                </h3>
-              </div>
-            )
-        )}
+      <div style={{display:'flex', flexDirection: 'row', justifyContent:"space-between", flexWrap: "wrap"}}>
+        
+        {/* <div style={{width:180, height: 500, background: "red"}}>
+          teste
+        </div> */}
+
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "space-around",
+            flexWrap: "wrap",
+            marginTop: 30,
+          }}
+        >
+
+<section className="section section-shaped">
+        <Container className="pt-lg-1">
+          <CardDeck>
+            {podcasts.map( (item) => (
+              <Col key={item.pod_id} lg="6" md="6" xs="12" style={{ marginTop: 20, padding: 0 }}>
+                <Card style={{ minHeight: 200, background: "#151734 " }}>
+                  <Row>
+                    <Col lg="6" md="6" xs="12">
+                      <Link to={`podcast/${item.pod_id}`}>
+                        <CardImg
+                          width="100%"
+                          style={{ borderRadius: 4 }}
+                          height="200"
+                          src={`http://localhost:3333/files/${item.pod_endereco_img}`}
+                          alt={item.pod_nome}
+                        />
+                      </Link>
+                    </Col>
+
+                    <Col lg="6" md="6" xs="12">
+                      <CardBody style={{ padding: 0, minHeight: 250}}>
+                        <CardTitle
+                          style={{ fontSize: 20, fontWeight: "normal" }}
+                          className="text-center"
+                        >
+                          <Link
+                            to={`podcast/${item.pod_id}`}
+                            style={{ textAlign: "center", color: "#1BFDBE" }}
+                          >
+                            {item.pod_nome}
+                          </Link>
+                        </CardTitle>
+
+                        <div
+                          style={{
+                            flexWrap: "wrap",
+                            display: "flex",
+                            placeContent: "center",
+                            margin: 0,
+                            padding: 5,
+                            marginTop: 10,
+
+                          }}
+                        >
+                          
+                          <LinesEllipsis style={{textAlign:"justify"}} unsafeHTML={item.pod_descricao}
+                            maxLine='4'
+                            ellipsis='...'
+                            basedOn='letters' />
+                        </div>
+
+                        <Link
+                            to={`podcast/${item.pod_id}`}
+                            style={{ textAlign: "center", color: "#1BFDBE" }}
+                          >
+                            Ver mais
+                        </Link>
+                      </CardBody>
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
+            ))}
+          </CardDeck>
+
+        </Container>
+        </section>
+          
+        </div>
+   
       </div>
+
     </>
   );
 }
