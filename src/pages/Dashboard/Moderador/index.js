@@ -34,7 +34,7 @@ export default function Moderador() {
       exibirUsuarios();
       setUpdate(true);
     }
-  }, [update,currentPage]);
+  }, [update, currentPage]);
 
   async function exibirUsuarios() {
     const response = await api.get("adm/modusers");
@@ -44,17 +44,14 @@ export default function Moderador() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length > limit * currentPage) {
+      setLoadMore(0);
     }
-
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
     setUpdate(false);
   }
@@ -81,7 +78,7 @@ export default function Moderador() {
 
   function searchUsuario(e) {
     setSearch(e.target.value);
-    setLoadMore(0)
+    setLoadMore(0);
 
     setListSearch(
       usuario.filter(({ usu_nome }) =>
@@ -229,7 +226,7 @@ export default function Moderador() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

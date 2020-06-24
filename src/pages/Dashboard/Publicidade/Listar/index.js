@@ -71,16 +71,19 @@ export default function EditarPublicidade() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
+<<<<<<< HEAD
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
+=======
     } else {
       setLoadMore(2);
+>>>>>>> 1d1100ff17596a2f316526213e1c1ac15f661ecf
     }
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
     setUpdate(false);
   }
@@ -395,7 +398,7 @@ export default function EditarPublicidade() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

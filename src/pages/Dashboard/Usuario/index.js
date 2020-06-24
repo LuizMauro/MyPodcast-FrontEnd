@@ -32,27 +32,24 @@ export default function Usuario() {
       exibirUsuarios();
       setUpdate(true);
     }
-    
   }, [update, currentPage]);
 
   async function exibirUsuarios() {
     const response = await api.get("/users");
     setUsuario(response.data);
 
-     if (response.data.length <= limit) {
+    if (response.data.length <= limit) {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
     setUpdate(false);
   }
@@ -66,7 +63,7 @@ export default function Usuario() {
   function mudarStatus(item) {
     try {
       const teste = dispatch(updateStatusRequest(item.usu_id, item.usu_status));
-      console.log('update',update)
+      console.log("update", update);
       setUpdate(false);
       //console.log("teste", teste);
 
@@ -83,8 +80,8 @@ export default function Usuario() {
 
   function searchUsuario(e) {
     setSearch(e.target.value);
-    setLoadMore(0)
-    
+    setLoadMore(0);
+
     setListSearch(
       usuario.filter(({ usu_nome }) =>
         usu_nome.toLowerCase().includes(e.target.value.toLowerCase())
@@ -181,73 +178,73 @@ export default function Usuario() {
                   <ul>
                     {!searchValue
                       ? usuario.slice(0, limit * currentPage).map((item) =>
-                          userStatus === 1 || userStatus === 0 ? (
-                            userStatus === item.usu_status && (
-                              <PodcastList>
-                                <div
-                                  className="subitem"
-                                  style={{
-                                    fontSize: "21px",
-                                    color: "rgb(27, 253, 190",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  {item.usu_nome}
-                                </div>
-                                <div
-                                  className="subitem"
-                                  style={{
-                                    fontSize: "21px",
-                                    color: "rgb(27, 253, 190",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  {item.tus_descricao}
-                                </div>
-                                <div className="icons">
-                                  <button
-                                    style={{ fontSize: "21px" }}
-                                    className="button"
-                                    onClick={(e) => mudarStatus(e)}
+                          userStatus === 1 || userStatus === 0
+                            ? userStatus === item.usu_status && (
+                                <PodcastList>
+                                  <div
+                                    className="subitem"
+                                    style={{
+                                      fontSize: "21px",
+                                      color: "rgb(27, 253, 190",
+                                      fontWeight: "bold",
+                                    }}
                                   >
-                                    {item.usu_status ? "Desativar" : "Ativar"}
-                                  </button>
-                                </div>
-                              </PodcastList>
-                            )
-                          ) : userStatus === 3 && (  
-                            <PodcastList>
-                              <div
-                                className="subitem"
-                                style={{
-                                  fontSize: "21px",
-                                  color: "rgb(27, 253, 190",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                {item.usu_nome}
-                              </div>
-                              <div
-                                className="subitem"
-                                style={{
-                                  fontSize: "21px",
-                                  color: "rgb(27, 253, 190",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                {item.tus_descricao}
-                              </div>
-                              <div className="icons">
-                                <button
-                                  className="button"
-                                  onClick={(e) => mudarStatus(item)}
-                                  style={{ fontSize: "21px" }}
-                                >
-                                  {item.usu_status ? "Desativar" : "Ativar"}
-                                </button>
-                              </div>
-                            </PodcastList>
-                          )
+                                    {item.usu_nome}
+                                  </div>
+                                  <div
+                                    className="subitem"
+                                    style={{
+                                      fontSize: "21px",
+                                      color: "rgb(27, 253, 190",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {item.tus_descricao}
+                                  </div>
+                                  <div className="icons">
+                                    <button
+                                      style={{ fontSize: "21px" }}
+                                      className="button"
+                                      onClick={(e) => mudarStatus(e)}
+                                    >
+                                      {item.usu_status ? "Desativar" : "Ativar"}
+                                    </button>
+                                  </div>
+                                </PodcastList>
+                              )
+                            : userStatus === 3 && (
+                                <PodcastList>
+                                  <div
+                                    className="subitem"
+                                    style={{
+                                      fontSize: "21px",
+                                      color: "rgb(27, 253, 190",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {item.usu_nome}
+                                  </div>
+                                  <div
+                                    className="subitem"
+                                    style={{
+                                      fontSize: "21px",
+                                      color: "rgb(27, 253, 190",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {item.tus_descricao}
+                                  </div>
+                                  <div className="icons">
+                                    <button
+                                      className="button"
+                                      onClick={(e) => mudarStatus(item)}
+                                      style={{ fontSize: "21px" }}
+                                    >
+                                      {item.usu_status ? "Desativar" : "Ativar"}
+                                    </button>
+                                  </div>
+                                </PodcastList>
+                              )
                         )
                       : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
@@ -293,7 +290,7 @@ export default function Usuario() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>

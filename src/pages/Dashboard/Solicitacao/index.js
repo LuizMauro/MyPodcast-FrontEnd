@@ -52,16 +52,14 @@ export default function Solicitacao() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
   }
 
@@ -204,7 +202,7 @@ export default function Solicitacao() {
                     }
                   >
                     <Button className="btn-primary" onClick={load}>
-                      {loadMore === 1 ? `Mostrar Mais` : `Mostrar Menos`}
+                      {loadMore === 1 && `Mostrar Mais`}
                     </Button>
                   </Col>
                 </CardBody>
