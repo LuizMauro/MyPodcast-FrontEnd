@@ -75,7 +75,8 @@ export default function Notifications() {
 
       <NotificationsList visible={visible}>
         <Scroll>
-        {notifications.map((item) => (
+          
+        {notifications.length ? notifications.map((item) => (
           <Notification key={item.key}  unread={item.viewed ? false : true} >
 
             <span  onClick={() => goToLink(item.key, item.url)} style={{cursor:'pointer'}}>
@@ -85,7 +86,7 @@ export default function Notifications() {
 
             <button onClick={() => visualizar(item.key, item.url)} style={{color:"#1BFDBE"}}>Marcar como lida</button>
           </Notification>
-         ))}
+         )) : <span>Sem notificações no momento</span>}
         </Scroll>
       </NotificationsList>
     </Container>
