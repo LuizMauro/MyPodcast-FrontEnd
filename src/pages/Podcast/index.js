@@ -99,11 +99,13 @@ export default function Podcast() {
 
     const comments = response.data.filter((item) => !item.id_comentario_pai);
 
+    console.log('limite',limit,'currentPage',currentPage)
+
     if (comments.length <= limit) {
       setLoadMore(0);
     } else if (comments.length > limit * currentPage) {
       setLoadMore(1);
-    } else if (comments.length === limit * currentPage) {
+    }else if(comments.length < limit * currentPage) {
       setLoadMore(0);
     }
   }
@@ -111,9 +113,8 @@ export default function Podcast() {
   async function load() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
-    } else if (loadMore === 2) {
-      setCurrentPage(currentPage - 1);
     }
+    setUpdate(false);
   }
   //FIM PAGINACAO DE COMENTARIOS
 
