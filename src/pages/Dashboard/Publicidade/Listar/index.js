@@ -46,8 +46,11 @@ export default function EditarPublicidade() {
   ]);
 
   useEffect(() => {
-    exibirPublicidades();
-  }, [editMode, currentPage]);
+    if (!update) {
+      exibirPublicidades();
+      setUpdate(true);
+    }
+  }, [editMode, currentPage, update]);
 
   function getFile(file) {
     setPreview(URL.createObjectURL(file));
@@ -63,14 +66,14 @@ export default function EditarPublicidade() {
     const response = await api.get("/publicidades");
     console.log(response.data);
     setPublicidades(response.data);
-  
+
     if (response.data.length <= limit) {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
     } else {
       setLoadMore(2);
-    } 
+    }
   }
 
   async function load() {
@@ -79,6 +82,7 @@ export default function EditarPublicidade() {
     } else if (loadMore === 2) {
       setCurrentPage(currentPage - 1);
     }
+    setUpdate(false);
   }
 
   async function editarPublicidade(publicidade) {
@@ -139,6 +143,7 @@ export default function EditarPublicidade() {
 
       api.put(`/publicidade/${pubid}`, data);
       toast.success("Publicidade editada!");
+      setUpdate(false);
       setEditMode(false);
 
       formRef.current.setErrors(false);
@@ -156,7 +161,6 @@ export default function EditarPublicidade() {
         formRef.current.setErrors(errorMessages);
       }
     }
-    setUpdate(update ? false : true);
   }
 
   async function deletarPublicidade(publicidade) {
@@ -167,12 +171,11 @@ export default function EditarPublicidade() {
     } catch (err) {
       toast.error("Erro ao remover Publicidade");
     }
-    setUpdate(update ? false : true);
   }
 
   function searchPublicidade(e) {
     setSearch(e.target.value);
-    setLoadMore(0)
+    setLoadMore(0);
 
     setListSearch(
       publicidades.filter(({ pub_descricao }) =>
@@ -249,32 +252,37 @@ export default function EditarPublicidade() {
                     }
                   >
                     {searchValue === ""
-                      ? publicidades.slice(0, limit * currentPage).map((item) => (
-                          <PodcastList>
-                            <div className="item">
-                              <p
-                                className="linktittle"
-                                style={{ color: "#1bfdbe", fontWeight: "bold" }}
-                              >
-                                {item.pub_descricao}
-                              </p>
-                            </div>
-                            <div className="icons">
-                              <button
-                                className="button edit"
-                                onClick={(e) => editarPublicidade(item)}
-                              >
-                                <FaPen size={18} />
-                              </button>
-                              <button
-                                className="button delete"
-                                onClick={(e) => deletarPublicidade(item)}
-                              >
-                                <FaTimes size={18} />
-                              </button>
-                            </div>
-                          </PodcastList>
-                        ))
+                      ? publicidades
+                          .slice(0, limit * currentPage)
+                          .map((item) => (
+                            <PodcastList>
+                              <div className="item">
+                                <p
+                                  className="linktittle"
+                                  style={{
+                                    color: "#1bfdbe",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {item.pub_descricao}
+                                </p>
+                              </div>
+                              <div className="icons">
+                                <button
+                                  className="button edit"
+                                  onClick={(e) => editarPublicidade(item)}
+                                >
+                                  <FaPen size={18} />
+                                </button>
+                                <button
+                                  className="button delete"
+                                  onClick={(e) => deletarPublicidade(item)}
+                                >
+                                  <FaTimes size={18} />
+                                </button>
+                              </div>
+                            </PodcastList>
+                          ))
                       : listSearch.slice(0, limit * currentPage).map((item) => (
                           <PodcastList>
                             <div className="item">
