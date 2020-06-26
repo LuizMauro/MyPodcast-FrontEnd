@@ -41,7 +41,7 @@ export default function EditarPodcast() {
     const response = await api.get("/categoria");
     setCategorias(response.data);
 
-    console.log("alou", categorias.length);
+   
     if (response.data.length <= limit) {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
