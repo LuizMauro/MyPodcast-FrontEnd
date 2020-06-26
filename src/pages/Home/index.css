@@ -6,21 +6,19 @@
   background-color: #1bfdbe !important;
 }
 
-.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
-    background-color: #1bfdbe !important;
+.btn-secondary:not(:disabled):not(.disabled):active,
+.btn-secondary:not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle {
+  background-color: #1bfdbe !important;
 }
 
+.BrainhubCarouselItem img {
+  border-radius: 10px;
+  height: 280px !important;
+  width: 280px !important;
+}
 
-
-
-  
-
-  .BrainhubCarouselItem img{
-   border-radius: 10px;  
-   height: 280px !important;
-   width: 280px !important;
-  }
- 
- 
- 
- 
+.main-title {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+}

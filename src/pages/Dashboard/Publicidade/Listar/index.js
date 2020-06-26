@@ -74,6 +74,8 @@ export default function EditarPublicidade() {
     } else if (response.data.length < limit * currentPage) {
       setLoadMore(0);
     }
+
+    setUpdate(false);
   }
 
   async function load() {
@@ -166,6 +168,7 @@ export default function EditarPublicidade() {
     try {
       api.put(`/removerpublicidade/${pub_id}`);
       toast.success("Publicidade removida");
+      setUpdate(false);
     } catch (err) {
       toast.error("Erro ao remover Publicidade");
     }

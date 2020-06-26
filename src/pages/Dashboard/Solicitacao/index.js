@@ -24,6 +24,7 @@ export default function Solicitacao() {
   const [categoria, setCategoria] = useState([]);
   const [endereco, setEndereco] = useState([]);
   const [modal, setModal] = useState(false);
+  const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
@@ -31,7 +32,7 @@ export default function Solicitacao() {
 
   useEffect(() => {
     exibirSolicitacoes();
-  }, [modal, currentPage]);
+  }, [update, currentPage]);
 
   async function toggle(item) {
     setPodcast(item);
@@ -39,7 +40,6 @@ export default function Solicitacao() {
       setCategoria(item.ctg_descricao.split(","));
       setEndereco(item.end_link.split(","));
     }
-
     setModal(!modal);
   }
 
@@ -61,11 +61,13 @@ export default function Solicitacao() {
     if (loadMore === 1) {
       setCurrentPage(currentPage + 1);
     }
+    setUpdate(update ? false : true);
   }
 
   async function permitir(pod_id, pod_permissao) {
     try {
       dispatch(updateSolicitacaoRequest(pod_id, pod_permissao));
+      setUpdate(update ? false : true);
 
       if (pod_permissao === 1) {
         toast.success("Cadastro de Podcast permitido");
@@ -73,7 +75,7 @@ export default function Solicitacao() {
         toast.success("Cadastro de Podcast recusado");
       }
     } catch (err) {
-      toast.success("Falha ao tentar aprovar/recusar Podcast");
+      toast.error("Falha ao tentar aprovar/recusar Podcast");
     }
 
     console.log("id é", pod_id);
