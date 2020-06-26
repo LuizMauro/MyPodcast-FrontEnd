@@ -78,7 +78,7 @@ export default function Home() {
   }
 
   async function loadPublicidades() {
-    const response = await api.get("/publicidades");
+    const response = await api.get("/pubs");
 
     setPublicidades(response.data);
   }
