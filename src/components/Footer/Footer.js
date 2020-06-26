@@ -37,6 +37,7 @@ export default function Footer() {
                 </li>
               </ul>
             </Col>
+            <Col md-4>
               <h5>Siga-nos</h5>
               <p></p>
             </Col>
