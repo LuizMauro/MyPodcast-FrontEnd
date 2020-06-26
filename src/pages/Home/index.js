@@ -6,6 +6,7 @@ import { IoIosSearch } from "react-icons/io";
 import history from "../../services/history";
 import "./index.css";
 import publicIp from "react-public-ip";
+import Footer from "../../components/Footer/Footer";
 
 import Carousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
@@ -14,11 +15,7 @@ import LinesEllipsis from "react-lines-ellipsis/lib/html";
 
 // reactstrap components
 import {
-  Container,
-  Button,
-  Input,
-  FormGroup,
-  Card,
+  Container, Button, Input, FormGroup, Card,
   CardBody,
   Row,
   Col,
@@ -90,40 +87,34 @@ export default function Home() {
     <>
       <Menu></Menu>
       <Container>
+
         {publicidades && (
           <Container style={{ paddingTop: 40 }}>
-            <Carousel
-              slidesPerPage={3}
-              infinite={true}
-              centered
-              keepDirectionWhenDragging
-              breakpoints={{
-                640: {
-                  slidesPerPage: 1,
-                  arrows: false,
-                },
-                900: {
-                  slidesPerPage: 2,
-                  arrows: false,
-                },
-              }}
-              autoPlay={4000}
-              animationSpeed={2000}
-            >
+            <Carousel slidesPerPage={3} infinite={true} centered keepDirectionWhenDragging breakpoints={{
+              640: {
+                slidesPerPage: 1,
+                arrows: false
+              },
+              900: {
+                slidesPerPage: 2,
+                arrows: false
+              }
+            }} autoPlay={4000} animationSpeed={2000}>
+
               {publicidades.sort().map((item) => (
-                <Link
-                  key={item.pub_id}
+                <Link key={item.pub_id}
                   to={`podcast/${item.pub_link}`}
                   style={{ textAlign: "center", color: "#1BFDBE" }}
                 >
-                  <img
-                    src={`http://localhost:3333/files/${item.pub_endereco_img}`}
-                  />
+                  <img src={`http://localhost:3333/files/${item.pub_endereco_img}`} />
                 </Link>
               ))}
+
             </Carousel>
           </Container>
         )}
+
+
 
         <FormGroup className="search-home-shadow">
           <div
@@ -160,7 +151,7 @@ export default function Home() {
                 onChange={(e) => setPesquisa(e.target.value)}
                 className="input-search-home"
                 type="text"
-                style={{ height: 70 }}
+                style={{ height: 70, }}
                 name="pesquisa"
                 placeholder="Busque um podcast aqui:"
               />
@@ -179,14 +170,8 @@ export default function Home() {
         </FormGroup>
       </Container>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-        }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", flexWrap: "wrap" }}>
+
         {/* <div style={{width:180, height: 500, background: "red"}}>
           teste
         </div> */}
