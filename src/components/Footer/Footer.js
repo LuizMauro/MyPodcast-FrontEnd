@@ -21,23 +21,22 @@ export default function Footer() {
           <Row>
             <Col md-4>
               <h5>Sobre</h5>
-              <p></p>
+              <p>O MyPodcast é uma plataforma para listar, categorizar e exibir informações sobre podcasts dos mais diversos temas. Se você for um criador dessa mídia, cadastre-se e registre seu podcast para que outras pessoas o encontrem em nosso sistema.</p>
             </Col>
             <Col md-4>
               <h5>Contato</h5>
               <ul>
                 <li className="list-unstyled">
-                  <a href="#!">Link 1</a>
+                  <a href="#!">Fatec Guaratinguetá</a>
                 </li>
                 <li className="list-unstyled">
-                  <a href="#!">Link 2</a>
+                  <a href="#!">mypodcastcontato@gmail.com</a>
                 </li>
                 <li className="list-unstyled">
-                  <a href="#!">Link 3</a>
+                  <a href="#!">12 34567788</a>
                 </li>
               </ul>
             </Col>
-            <Col md-4>
               <h5>Siga-nos</h5>
               <p></p>
             </Col>
