@@ -102,12 +102,14 @@ export default function Home() {
             }} autoPlay={4000} animationSpeed={2000}>
 
               {publicidades.sort().map((item) => (
-                <Link key={item.pub_id}
-                  to={`podcast/${item.pub_link}`}
+                <a key={item.pub_id}
+                target="_blank"
+                  href={`https://${item.pub_link}`}
+                  rel="noopener noreferrer"
                   style={{ textAlign: "center", color: "#1BFDBE" }}
                 >
                   <img src={`http://localhost:3333/files/${item.pub_endereco_img}`} />
-                </Link>
+                </a>
               ))}
 
             </Carousel>
