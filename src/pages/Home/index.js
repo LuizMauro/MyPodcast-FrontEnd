@@ -15,7 +15,11 @@ import LinesEllipsis from "react-lines-ellipsis/lib/html";
 
 // reactstrap components
 import {
-  Container, Button, Input, FormGroup, Card,
+  Container,
+  Button,
+  Input,
+  FormGroup,
+  Card,
   CardBody,
   Row,
   Col,
@@ -49,11 +53,14 @@ export default function Home() {
     const response = await api.get("/podcasts");
     setPodcasts(response.data);
 
-    if (response.data.length <= limit) {
+    const pods = response.data.filter((pod) => pod.pod_destaque === 1);
+    console.log('oi',pods);
+
+    if (pods.length <= limit) {
       setLoadMore(0);
-    } else if (response.data.length > limit * currentPage) {
+    } else if (pods.length > limit * currentPage) {
       setLoadMore(1);
-    } else if (response.data.length < limit * currentPage) {
+    } else if (pods.length < limit * currentPage) {
       setLoadMore(0);
     }
 
@@ -87,36 +94,51 @@ export default function Home() {
     <>
       <Menu></Menu>
       <Container>
-
         {publicidades && (
           <Container style={{ paddingTop: 40 }}>
-            <Carousel slidesPerPage={3} infinite={true} centered keepDirectionWhenDragging breakpoints={{
-              640: {
-                slidesPerPage: 1,
-                arrows: false
-              },
-              900: {
-                slidesPerPage: 2,
-                arrows: false
-              }
-            }} autoPlay={4000} animationSpeed={2000}>
-
-              {publicidades.sort().map((item) => (
-                <a key={item.pub_id}
-                target="_blank"
-                  href={`https://${item.pub_link}`}
+            <Carousel
+              slidesPerPage={3}
+              infinite={true}
+              centered
+              keepDirectionWhenDragging
+              breakpoints={{
+                640: {
+                  slidesPerPage: 1,
+                  arrows: false,
+                },
+                900: {
+                  slidesPerPage: 2,
+                  arrows: false,
+                },
+              }}
+              autoPlay={4000}
+              animationSpeed={2000}
+            >
+              {publicidades.map((item) => (
+                <a
+                  key={item.pub_id}
+                  target="_blank"
+                  href={item.pub_link}
                   rel="noopener noreferrer"
                   style={{ textAlign: "center", color: "#1BFDBE" }}
                 >
-                  <img src={`http://localhost:3333/files/${item.pub_endereco_img}`} />
+                  <img
+                    src={`http://localhost:3333/files/${item.pub_endereco_img}`}
+                  />
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      color: " rgb(255, 255, 255)",
+                    }}
+                  >
+                    {item.pub_descricao}
+                  </span>
                 </a>
               ))}
-
             </Carousel>
           </Container>
         )}
-
-
 
         <FormGroup className="search-home-shadow">
           <div
@@ -153,7 +175,7 @@ export default function Home() {
                 onChange={(e) => setPesquisa(e.target.value)}
                 className="input-search-home"
                 type="text"
-                style={{ height: 70, }}
+                style={{ height: 70 }}
                 name="pesquisa"
                 placeholder="Busque um podcast aqui:"
               />
@@ -172,8 +194,14 @@ export default function Home() {
         </FormGroup>
       </Container>
 
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", flexWrap: "wrap" }}>
-
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
         {/* <div style={{width:180, height: 500, background: "red"}}>
           teste
         </div> */}
@@ -283,6 +311,7 @@ export default function Home() {
           </section>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
