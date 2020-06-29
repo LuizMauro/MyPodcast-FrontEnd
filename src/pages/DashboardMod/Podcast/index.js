@@ -31,7 +31,7 @@ export default function EditarPodcast() {
   const [editarPod, setEditarPod] = useState([]);
   const [update, setUpdate] = useState(false);
   const [preview, setPreview] = useState(null);
-
+  const [destaque, setDestaque] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
 
@@ -90,6 +90,8 @@ export default function EditarPodcast() {
 
     const response = await api.get("/categoria");
     setAllCategorias(response.data);
+
+    setDestaque(podcast.pod_destaque)
 
     const respAllCategorias = response.data;
     const categoriasResponse = podcast.ctg_id.split(",");
@@ -167,7 +169,7 @@ export default function EditarPodcast() {
     data.append("pod_duracao", pod_duracao);
     data.append("pod_status", 1);
     data.append("pod_permissao", 1);
-    data.append("pod_destaque", 0);
+    data.append("pod_destaque", destaque);
     data.append("list_of_categoria", arrayFinal);
     data.append("end_link1", end_link1);
     data.append("end_link2", end_link2);
@@ -535,6 +537,18 @@ export default function EditarPodcast() {
                           type="text"
                           placeholder="Endereço 3 do Podcast"
                         />
+                      </Col>
+                      <Col lg="4" xs="12">
+                        <Button
+                          className={
+                            destaque === 1
+                              ? "shadow border-0 pointer relatorio-selected"
+                              : "shadow border-0 pointer"
+                          }
+                          onClick={() => setDestaque(destaque === 1 ? 0 : 1)}
+                        >
+                          destacar
+                        </Button>
                       </Col>
                     </Row>
 

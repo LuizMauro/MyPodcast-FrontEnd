@@ -115,7 +115,7 @@ export default function Home() {
                 <a
                   key={item.pub_id}
                   target="_blank"
-                  href={`https://${item.pub_link}`}
+                  href={item.pub_link}
                   rel="noopener noreferrer"
                   style={{ textAlign: "center", color: "#1BFDBE" }}
                 >

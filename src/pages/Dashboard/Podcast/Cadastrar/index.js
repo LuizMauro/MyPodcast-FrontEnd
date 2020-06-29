@@ -16,7 +16,7 @@ export default function Podcast() {
   const formRef = useRef(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-
+  const [destaque, setDestaque] = useState(0);
   const [selectCategorias, setSelectCategorias] = useState([]);
   const [allCategorias, setAllCategorias] = useState([]);
 
@@ -93,6 +93,7 @@ export default function Podcast() {
     data.append("pod_anocriacao", pod_anocriacao);
     data.append("pod_duracao", pod_duracao);
     data.append("pod_permissao", 1);
+    data.append("pod_destaque", destaque);
     data.append("list_of_categoria", arrayFinal);
     data.append("end_link1", end_link1);
     data.append("end_link2", end_link2);
@@ -187,7 +188,7 @@ export default function Podcast() {
                               onClick={() => deletePreview()}
                             />
                             <img
-                            alt="preview"
+                              alt="preview"
                               style={{
                                 maxHeight: 400,
                                 height: "100%",
@@ -344,6 +345,18 @@ export default function Podcast() {
                           type="text"
                           placeholder="Endereço 3 do Podcast"
                         />
+                      </Col>
+                      <Col lg="4" xs="12">
+                        <Button
+                          className={
+                            destaque === 1
+                              ? "shadow border-0 pointer relatorio-selected"
+                              : "shadow border-0 pointer"
+                          }
+                          onClick={(e) => setDestaque(destaque === 1 ? 0 : 1)}
+                        >
+                          destacar
+                        </Button>
                       </Col>
                     </Row>
 
