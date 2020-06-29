@@ -53,11 +53,14 @@ export default function Home() {
     const response = await api.get("/podcasts");
     setPodcasts(response.data);
 
-    if (response.data.length <= limit) {
+    const pods = response.data.filter((pod) => pod.pod_destaque === 1);
+    console.log('oi',pods);
+
+    if (pods.length <= limit) {
       setLoadMore(0);
-    } else if (response.data.length > limit * currentPage) {
+    } else if (pods.length > limit * currentPage) {
       setLoadMore(1);
-    } else if (response.data.length < limit * currentPage) {
+    } else if (pods.length < limit * currentPage) {
       setLoadMore(0);
     }
 
@@ -122,7 +125,13 @@ export default function Home() {
                   <img
                     src={`http://localhost:3333/files/${item.pub_endereco_img}`}
                   />
-                  <span style={{ display: "flex", justifyContent: "center", color:' rgb(255, 255, 255)'}}>
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      color: " rgb(255, 255, 255)",
+                    }}
+                  >
                     {item.pub_descricao}
                   </span>
                 </a>
