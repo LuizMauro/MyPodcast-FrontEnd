@@ -157,24 +157,6 @@ export default function Mapa() {
                 enctype="multipart/form-data"
               >
                 <CardTitle className="dash-home-title">
-                  Termo de uso
-                </CardTitle>
-                <Link
-                  className="d-flex mt-2"
-                  style={{ justifyContent: "center" }}
-                >
-                  Regras
-                </Link>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="3 mt-3">
-            <Card className="bg-secondary shadow border-0">
-              <CardBody
-                style={{ justifyContent: "center" }}
-                enctype="multipart/form-data"
-              >
-                <CardTitle className="dash-home-title">
                   Mapa do site
                 </CardTitle>
                 <Link
