@@ -333,7 +333,7 @@ export default function Home() {
            
             {topWeekSlider && (
           <Container style={{ paddingTop: 60 }}>
-             <h3 className="main-title" >Top Week Podcasts</h3>
+             <h3 className="main-title" >Podcasts mais visualizados da última semana</h3>
             <Carousel
               slidesPerPage={3}
               infinite={true}
