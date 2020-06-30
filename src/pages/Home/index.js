@@ -198,7 +198,7 @@ export default function Home() {
                 type="text"
                 style={{ height: 70 }}
                 name="pesquisa"
-                placeholder="Busque um podcast aqui1:"
+                placeholder="Busque um podcast aqui:"
               />
             </div>
 
