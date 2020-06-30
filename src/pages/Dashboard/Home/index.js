@@ -143,7 +143,7 @@ export default function Home() {
                   Publicidades Publicadas
                 </CardTitle>
                 <Row className="mt-1" style={{ justifyContent: "center" }}>
-                  <h1 className="dash-home-value">0</h1>
+                  <h1 className="dash-home-value">{relatorio.qtd_publicidade}</h1>
                 </Row>
               </CardBody>
             </Card>

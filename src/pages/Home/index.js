@@ -380,7 +380,7 @@ export default function Home() {
 
 {ultimosPods && (
           <Container style={{ paddingTop: 60 }}>
-             <h3 className="main-title" >Ultimos Podcasts</h3>
+             <h3 className="main-title" >Últimos Podcasts cadastrados</h3>
             <Carousel
               slidesPerPage={3}
               infinite={true}
