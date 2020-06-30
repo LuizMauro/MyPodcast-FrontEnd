@@ -34,16 +34,25 @@ export default function Home() {
   const [pesquisa, setPesquisa] = useState("");
   const [select, setSelect] = useState("");
   const [publicidades, setPublicidades] = useState([]);
+  const [topWeekSlider, setTopWeekSlider] = useState([]);
+  const [ultimosPods, setUltimosPods] =  useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState(1);
   let limit = 6;
 
+
   useEffect(() => {
     loadPodCasts();
     loadCategoria();
     loadPublicidades();
+   
   }, [currentPage]);
+
+  useEffect(() => {
+    loadTopWeek();
+    loadUltimosPods();
+  }, [])
 
   function handleSubmit() {
     history.push(`/pesquisar?select=${select}&pesquisa=${pesquisa}`);
@@ -88,6 +97,18 @@ export default function Home() {
     const response = await api.get("/pubs");
 
     setPublicidades(response.data);
+  }
+
+  async function loadTopWeek(){
+    const response = await api.get("/topweek");
+
+    setTopWeekSlider(response.data[0]);    
+  }
+
+  async function loadUltimosPods(){
+    const response = await api.get("/ultimospods");
+
+    setUltimosPods(response.data);
   }
 
   return (
@@ -177,7 +198,7 @@ export default function Home() {
                 type="text"
                 style={{ height: 70 }}
                 name="pesquisa"
-                placeholder="Busque um podcast aqui:"
+                placeholder="Busque um podcast aqui1:"
               />
             </div>
 
@@ -308,6 +329,103 @@ export default function Home() {
                 </Button>
               </Col>
             </Container>
+            
+           
+            {topWeekSlider && (
+          <Container style={{ paddingTop: 60 }}>
+             <h3 className="main-title" >Top Week Podcasts</h3>
+            <Carousel
+              slidesPerPage={3}
+              infinite={true}
+              centered
+              keepDirectionWhenDragging
+              breakpoints={{
+                640: {
+                  slidesPerPage: 1,
+                  arrows: false,
+                },
+                900: {
+                  slidesPerPage: 2,
+                  arrows: false,
+                },
+              }}
+              autoPlay={4000}
+              animationSpeed={2000}
+            >
+              {topWeekSlider.map((item) => (
+                <a
+                  key={item.id}
+                  target="_blank"
+                  href={`http://localhost:3000/podcast/${item.id}`}
+                  rel="noopener noreferrer"
+                  style={{ textAlign: "center", color: "#1BFDBE" }}
+                >
+                  <img
+                    src={`http://localhost:3333/files/${item.pod_endereco_img}`} alt="img"
+                  />
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      color: " rgb(255, 255, 255)",
+                    }}
+                  >
+                    {item.pod_nome}
+                  </span>
+                </a>
+              ))}
+            </Carousel>
+          </Container>
+        )}
+
+{ultimosPods && (
+          <Container style={{ paddingTop: 60 }}>
+             <h3 className="main-title" >Ultimos Podcasts</h3>
+            <Carousel
+              slidesPerPage={3}
+              infinite={true}
+              centered
+              keepDirectionWhenDragging
+              breakpoints={{
+                640: {
+                  slidesPerPage: 1,
+                  arrows: false,
+                },
+                900: {
+                  slidesPerPage: 2,
+                  arrows: false,
+                },
+              }}
+              autoPlay={4000}
+              animationSpeed={2000}
+            >
+              {ultimosPods.map((item) => (
+                <a
+                  key={item.id}
+                  target="_blank"
+                  href={`http://localhost:3000/podcast/${item.pod_id}`}
+                  rel="noopener noreferrer"
+                  style={{ textAlign: "center", color: "#1BFDBE" }}
+                >
+                  <img
+                    src={`http://localhost:3333/files/${item.pod_endereco_img}`} alt="img"
+                  />
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      color: " rgb(255, 255, 255)",
+                    }}
+                  >
+                    {item.pod_nome}
+                  </span>
+                </a>
+              ))}
+            </Carousel>
+          </Container>
+        )}
+
+
           </section>
         </div>
       </div>
