@@ -74,8 +74,6 @@ export default function EditarPublicidade() {
     } else if (response.data.length < limit * currentPage) {
       setLoadMore(0);
     }
-
-    setUpdate(false);
   }
 
   async function load() {

@@ -48,8 +48,8 @@ export default function Pesquisar() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
@@ -61,8 +61,8 @@ export default function Pesquisar() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
@@ -74,8 +74,8 @@ export default function Pesquisar() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
@@ -88,8 +88,8 @@ export default function Pesquisar() {
       setLoadMore(0);
     } else if (response.data.length > limit * currentPage) {
       setLoadMore(1);
-    } else {
-      setLoadMore(2);
+    } else if (response.data.length < limit * currentPage) {
+      setLoadMore(0);
     }
   }
 
