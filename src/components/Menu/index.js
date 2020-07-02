@@ -1,6 +1,6 @@
 import React from "react";
 
-import Notifications from '../Notifications'
+import Notifications from "../Notifications";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -88,33 +88,26 @@ export default function Index() {
                 {profile ? (
                   profile.tus_descricao === "Administrador" ? (
                     <>
-                    <NavLink
-                      className="nav-link-icon  icone-li home-button"
-                      href="/adm/dashboard"
-                    >
-                      <i className="ni ni-favourite-28" /> Painel
-                    </NavLink>
-                    
+                      <NavLink className="nav-link-icon  icone-li home-button">
+                        <Link to="/adm/dashboard">
+                          <i className="ni ni-favourite-28" /> Painel
+                        </Link>
+                      </NavLink>
                     </>
                   ) : profile.tus_descricao === "Moderador" ? (
-                    <NavLink
-                      className="nav-link-icon icone-li home-button"
-                      href="/mod/dashboard/"
-                    >
-                      <i className="ni ni-favourite-28" /> Painel
+                    <NavLink className="nav-link-icon icone-li home-button">
+                      <Link to="/mod/dashboard">
+                        <i className="ni ni-favourite-28" /> Painel
+                      </Link>
                     </NavLink>
                   ) : profile.tus_descricao === "Podcaster" ? (
-                    <NavLink
-                      className="nav-link-icon icone-li home-button"
-                      href="/podcaster/dashboard/podcasts"
-                    >
-                      <i className="ni ni-favourite-28" /> Painel
+                    <NavLink className="nav-link-icon icone-li home-button">
+                      <Link to="/podcaster/dashboard/podcasts">
+                        <i className="ni ni-favourite-28" /> Painel
+                      </Link>
                     </NavLink>
                   ) : (
-                    <NavLink
-                      className="nav-link-icon icone-li home-button"
-                      href="#"
-                    >
+                    <NavLink className="nav-link-icon icone-li home-button">
                       <i className="ni ni-favourite-28" />{" "}
                       <a onClick={(e) => virarPodcaster(profile)}>
                         Tenho um Podcast
@@ -122,11 +115,10 @@ export default function Index() {
                     </NavLink>
                   )
                 ) : (
-                  <NavLink
-                    className="nav-link-icon icone-li home-button"
-                    href="/login"
-                  >
-                    <i className="ni ni-favourite-28" /> Entrar
+                  <NavLink className="nav-link-icon icone-li home-button">
+                    <Link to="/Login">
+                      <i className="ni ni-favourite-28" /> Entrar
+                    </Link>
                   </NavLink>
                 )}
               </NavItem>
@@ -134,39 +126,36 @@ export default function Index() {
               <NavItem>
                 {profile ? (
                   <>
-                  <NavLink
-                    className="nav-link-icon icone-li home-button"
-                    href="/profile"
-                  >
-                    <FaUserCircle
-                      color={"#FFF"}
-                      size={25}
-                      className="navbar-icon"
-                    />
-                  </NavLink>
+                    <NavLink className="nav-link-icon icone-li home-button">
+                      <Link to="/Profile">
+                        <FaUserCircle
+                          color={"#FFF"}
+                          size={25}
+                          className="navbar-icon"
+                        />
+                      </Link>
+                    </NavLink>
                   </>
                 ) : (
-                  <NavLink
-                    className="nav-link-icon icone-li home-button"
-                    href="/cadastro"
-                  >
-                    <i className="ni ni-favourite-28" /> Cadastrar-se
+                  <NavLink className="nav-link-icon icone-li home-button">
+                    <Link to="/Cadastro">
+                      <i className="ni ni-favourite-28" /> Cadastrar-se
+                    </Link>
                   </NavLink>
                 )}
               </NavItem>
-              
+
               {profile && (
                 <NavItem>
                   <NavLink>
-                    <Notifications></Notifications>
+                    <Notifications />
                   </NavLink>
                 </NavItem>
               )}
-              
 
               <NavItem>
                 {profile && (
-                  <NavLink className="nav-link-icon home-button" href="#">
+                  <NavLink className="nav-link-icon home-button">
                     <FaSignOutAlt
                       color={"#FFF"}
                       size={24}

@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-import "react-perfect-scrollbar/dist/css/styles.css"
+import "react-perfect-scrollbar/dist/css/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 
 export default createGlobalStyle`
@@ -120,7 +120,7 @@ export default createGlobalStyle`
 
 /* navbar menu */
 .icone-li a{
-  color:red !important;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .m-auto{
